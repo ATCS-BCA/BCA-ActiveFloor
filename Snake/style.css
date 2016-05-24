@@ -1,0 +1,39 @@
+body {
+	background-image: url("grid.png");
+	background-repeat: no-repeat;
+	background-position-x: 0px;
+	background-position-y: 22px;
+	font-size: 10pt;
+	color: pink;
+	margin: 0pt;
+    vertical-align: middle;
+    display: block;
+    position: relative;
+}
+
+html {
+    background: black;
+}
+
+body,input {
+	font-family: Verdana;
+}
+
+h1,h2,h3,h4 {
+	font-size: 12pt;
+	text-transform: uppercase;
+	font-weight: strong;
+}
+
+button {
+	/*display: block;*/
+	width: 100pt;
+	height: 40pt;
+	padding: 5pt 5pt;
+	color:#666666;
+	text-decoration: none;
+}
+
+div {
+	padding:10px;
+}
