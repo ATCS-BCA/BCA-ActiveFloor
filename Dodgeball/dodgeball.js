@@ -102,6 +102,7 @@ function updateBalls(){
 function start(){
 	addBall(speed, 10);
 	setInterval(function(){ addBall(speed, 10); }, 10000);
+alert("Starting");
 	requestAnimationFrame(updateBalls);
 }
 

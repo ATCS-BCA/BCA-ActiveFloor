@@ -81,7 +81,7 @@ $(document).ready(function () {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
-//        $("#floorCanvas").addClass("app");
+        $("#floorCanvas").addClass("app");
         
     });git    
 });
