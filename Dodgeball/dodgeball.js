@@ -9,8 +9,8 @@ var balls = [];
 var startX, startY, startW, startH;
 
 function Ball(speed, size){
-	this.dx = Math.floor(Math.random() * (5)) + speed - 1;
-	this.dy = Math.floor(Math.random() * (5)) + speed - 1;
+	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)/4;
+	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)/4;
 	this.radius = size;
 	this.x = Math.floor(Math.random() * 
 		((canvas.width - this.radius) - this.radius + 1)) + this.radius;
@@ -37,8 +37,7 @@ Ball.prototype.update = function(){
 	this.x += this.dx;
 	this.y += this.dy;
 	this.duration--;
-	if (duration <= 0){
-		delete(this);
+	if (this.duration <= 0){
 	}
 };
 
@@ -107,28 +106,23 @@ function updateBalls(){
 }
 
 function start(){
+	context2D.clearRect(0, 0, canvas.width, canvas.height);
 	addBall(speed, 10);
 	setInterval(function(){ addBall(speed, 10); }, 10000);
 	requestAnimationFrame(updateBalls);
 }
 
 function menu(){
-	score = 0;
 	active = true;
-	speed = 2;
-	level = 0;
-	size = 1;
-	productionrate = 1;
-	balls = [];
 	context2D.clearRect(0, 0, canvas.width, canvas.height);
 
 	context2D.fillStyle = 'green';
-    context2D.font = '12px sans-serif';
+    context2D.font = '24px sans-serif';
     
     context2D.fillText('DODGEBALL', ((canvas.width / 2) - 
     	(context2D.measureText('DODGEBALL').width / 2)), 50);
 
-    context2D.font = '6px sans-serif';
+    context2D.font = '12px sans-serif';
     context2D.strokeStyle = 'blue';
     context2D.fillText('Start', 
     	((canvas.width / 2) - (context2D.measureText('Start').width / 2)), 70);
@@ -143,7 +137,7 @@ function menu(){
     	start();
     }
 
-    setTimeout(Menu,1000);
+    setTimeout(menu,1000);
 }
 
 function gameOver(){

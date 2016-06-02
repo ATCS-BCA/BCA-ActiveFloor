@@ -86,7 +86,7 @@ function refreshXML() {
         initCanvas(dataHolderArray);
         if (firstTime == true){
             firstTime = false;
-            start();
+            menu();
         }
     });
 }
