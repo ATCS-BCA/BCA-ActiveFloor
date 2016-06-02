@@ -83,7 +83,7 @@ $(document).ready(function () {
         $("div").addClass("app");
         $("#floorCanvas").addClass("app");
         
-    });git    
+    });    
 });
 
 function startRefresh() {

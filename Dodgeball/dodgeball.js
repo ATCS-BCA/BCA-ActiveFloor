@@ -102,7 +102,6 @@ function updateBalls(){
 function start(){
 	addBall(speed, 10);
 	setInterval(function(){ addBall(speed, 10); }, 10000);
-alert("Starting");
 	requestAnimationFrame(updateBalls);
 }
 
@@ -117,11 +116,11 @@ function gameOver(){
 	context2D.clearRect(0, 0, canvas.width, canvas.height);
 
 	context2D.fillStyle = 'red';
-    context2D.font = '16px sans-serif';
+    context2D.font = '6px sans-serif';
     
     context2D.fillText('Game Over!', ((canvas.width / 2) - (context2D.measureText('Game Over!').width / 2)), 50);
 
-    context2D.font = '12px sans-serif';
+    context2D.font = '6px sans-serif';
     context2D.fillText('Your Score Was: ' + score, 
     	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
     setTimeout(Restart,1000)
