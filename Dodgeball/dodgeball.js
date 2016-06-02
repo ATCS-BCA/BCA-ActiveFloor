@@ -4,7 +4,9 @@ var speed = 2;
 var level = 0;
 var size = 1;
 var productionrate = 1;
+var game = false;
 var balls = [];
+var startX, startY, startW, startH;
 
 function Ball(speed, size){
 	this.dx = Math.floor(Math.random() * (5)) + speed - 1;
@@ -15,6 +17,7 @@ function Ball(speed, size){
 	this.y = Math.floor(Math.random() * 
 		((canvas.height - this.radius) - this.radius + 1)) + this.radius;
 	this.v = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
+	this.duration = 8;
 }
 
 Ball.prototype.update = function(){
@@ -33,6 +36,10 @@ Ball.prototype.update = function(){
 
 	this.x += this.dx;
 	this.y += this.dy;
+	this.duration--;
+	if (duration <= 0){
+		delete(this);
+	}
 };
 
 Ball.prototype.draw = function(){
@@ -105,6 +112,40 @@ function start(){
 	requestAnimationFrame(updateBalls);
 }
 
+function menu(){
+	score = 0;
+	active = true;
+	speed = 2;
+	level = 0;
+	size = 1;
+	productionrate = 1;
+	balls = [];
+	context2D.clearRect(0, 0, canvas.width, canvas.height);
+
+	context2D.fillStyle = 'green';
+    context2D.font = '12px sans-serif';
+    
+    context2D.fillText('DODGEBALL', ((canvas.width / 2) - 
+    	(context2D.measureText('DODGEBALL').width / 2)), 50);
+
+    context2D.font = '6px sans-serif';
+    context2D.strokeStyle = 'blue';
+    context2D.fillText('Start', 
+    	((canvas.width / 2) - (context2D.measureText('Start').width / 2)), 70);
+    context2D.strokeText('Start', 
+    	((canvas.width / 2) - (context2D.measureText('Start').width / 2)), 70);
+    startX = (canvas.width / 2) - (context2D.measureText('Start').width / 2);
+    startY = 70;
+    startW = context2D.measureText('Start').width;
+    startH = context2D.measureText('Start').height;
+
+    if (game == true){
+    	start();
+    }
+
+    setTimeout(Menu,1000);
+}
+
 function gameOver(){
 	score = 0;
 	active = true;
@@ -123,5 +164,5 @@ function gameOver(){
     context2D.font = '6px sans-serif';
     context2D.fillText('Your Score Was: ' + score, 
     	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
-    setTimeout(Restart,1000)
+    setTimeout(gameOver,1000);
 }

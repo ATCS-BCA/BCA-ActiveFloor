@@ -19,21 +19,39 @@ function initCanvas(arr) {
 
     
     var i, tempRow, p, srchStr, tempX, tempY;
-    for (i = 0; i < arr.length; i += 1) {
-        tempRow = arr[i];
-        
-        for (p = 0; p < tempRow.length; p += 1) {
-            srchStr = tempRow.substring(p, p + 1);
-            if (srchStr === charSearch) {
-                tempX = p * ledPerSensorX;
-                tempY = i * ledPerSensorY;
-                hit(tempX, tempY);
-                noTouch = false;
+    if (game = true){
+        for (i = 0; i < arr.length; i += 1) {
+            tempRow = arr[i];
+            
+            for (p = 0; p < tempRow.length; p += 1) {
+                srchStr = tempRow.substring(p, p + 1);
+                if (srchStr === charSearch) {
+                    tempX = p * ledPerSensorX;
+                    tempY = i * ledPerSensorY;
+                    hit(tempX, tempY);
+                    noTouch = false;
+                }
+            }
+        }
+        if (noTouch)
+            active = false;
+    } else {
+        for (i = 0; i < arr.length; i += 1) {
+            tempRow = arr[i];
+            
+            for (p = 0; p < tempRow.length; p += 1) {
+                srchStr = tempRow.substring(p, p + 1);
+                if (srchStr === charSearch) {
+                    tempX = p * ledPerSensorX;
+                    tempY = i * ledPerSensorY;
+                    if(startX <= tempX && tempX <= startX + startW && startY <= tempY 
+                        && tempY <= startY + startH) {
+                        game = true;
+                    }
+                }
             }
         }
     }
-    if (noTouch)
-        active = false;
     
 }
 
