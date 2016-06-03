@@ -19,7 +19,8 @@ function initCanvas(arr) {
 
     
     var i, tempRow, p, srchStr, tempX, tempY;
-    if (game = true){
+    
+    if (game == true){
         for (i = 0; i < arr.length; i += 1) {
             tempRow = arr[i];
             

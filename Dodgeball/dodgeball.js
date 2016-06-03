@@ -12,10 +12,8 @@ function Ball(speed, size){
 	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)/4;
 	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)/4;
 	this.radius = size;
-	this.x = Math.floor(Math.random() * 
-		((canvas.width - this.radius) - this.radius + 1)) + this.radius;
-	this.y = Math.floor(Math.random() * 
-		((canvas.height - this.radius) - this.radius + 1)) + this.radius;
+	this.x = (canvas.width - this.radius)/2;
+	this.y = (canvas.height - this.radius)/2
 	this.v = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
 	this.duration = 8;
 }
@@ -96,7 +94,7 @@ function updateBalls(){
 	}
 
 	context2D.fillStyle = '#000000';
-	context2D.clearRect(0, 0, canvas.width, canvas.height);
+	clear();
 
 	for (var i = 0; i < balls.length; i++){
 		balls[i].draw();
@@ -106,7 +104,7 @@ function updateBalls(){
 }
 
 function start(){
-	context2D.clearRect(0, 0, canvas.width, canvas.height);
+	clear();
 	addBall(speed, 10);
 	setInterval(function(){ addBall(speed, 10); }, 10000);
 	requestAnimationFrame(updateBalls);
@@ -114,30 +112,35 @@ function start(){
 
 function menu(){
 	active = true;
-	context2D.clearRect(0, 0, canvas.width, canvas.height);
 
-	context2D.fillStyle = 'green';
+	startX = (canvas.width / 2) - (context2D.measureText('Start').width / 2);
+    startY = 100;
+    startW = context2D.measureText('Start').width;
+    startH = 15;
+
+	context2D.fillStyle = '#2ecc71';
     context2D.font = '24px sans-serif';
     
     context2D.fillText('DODGEBALL', ((canvas.width / 2) - 
     	(context2D.measureText('DODGEBALL').width / 2)), 50);
 
+	context2D.fillStyle = '#e67e22';
+
     context2D.font = '12px sans-serif';
     context2D.strokeStyle = 'blue';
     context2D.fillText('Start', 
-    	((canvas.width / 2) - (context2D.measureText('Start').width / 2)), 70);
-    context2D.strokeText('Start', 
-    	((canvas.width / 2) - (context2D.measureText('Start').width / 2)), 70);
-    startX = (canvas.width / 2) - (context2D.measureText('Start').width / 2);
-    startY = 70;
-    startW = context2D.measureText('Start').width;
-    startH = context2D.measureText('Start').height;
-
+    	startX, startY);
+	context2D.strokeRect(startX - 20, startY - startH, startW + 40, startH + 5);
+    
     if (game == true){
     	start();
     }
 
-    setTimeout(menu,1000);
+    setTimeout(function() {menu();} ,1);
+}
+
+function clear(){
+	context2D.clearRect(0,0,canvas.width, canvas.height);
 }
 
 function gameOver(){
@@ -148,7 +151,7 @@ function gameOver(){
 	size = 1;
 	productionrate = 1;
 	balls = [];
-	context2D.clearRect(0, 0, canvas.width, canvas.height);
+	clear();
 
 	context2D.fillStyle = 'red';
     context2D.font = '6px sans-serif';
