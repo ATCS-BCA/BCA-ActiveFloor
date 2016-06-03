@@ -17,6 +17,27 @@ function initCanvas(arr) {
     canvas.height = ledsY;
     context2D = canvas.getContext('2d');
 
+    startBtn = {
+        x: (canvas.width / 2) - (context2D.measureText('Start').width / 2),
+        y: 160,
+        w: context2D.measureText('Start').width,
+        h: 15,
+        bx: (canvas.width / 2) - (context2D.measureText('Start').width / 2) - 20,
+        by: 160 - 15,
+        bw: context2D.measureText('Start').width + 40,
+        bh: 15 + 5
+    };
+    // restartBtn = {
+    //     x: (canvas.width / 2) - (context2D.measureText('Restart').width / 2),
+    //     y: startBtn.y,
+    //     w: context2D.measureText('Restart').width, 
+    //     h: startBtn.w,
+    //     bx: (canvas.width / 2) - (context2D.measureText('Restart').width / 2) - 20,
+    //     by: startBtn.by
+    //     bw: context2D.measureText('Restart').width + 40,
+    //     bh: startBtn.bh
+    // };
+
     
     var i, tempRow, p, srchStr, tempX, tempY;
     
@@ -45,8 +66,8 @@ function initCanvas(arr) {
                 if (srchStr === charSearch) {
                     tempX = p * ledPerSensorX;
                     tempY = i * ledPerSensorY;
-                    if(btX <= tempX && tempX <= btX + btW && btY <= tempY 
-                        && tempY <= btY + btH) {
+                    if(startBtn.bx <= tempX && tempX <= startBtn.bx + startBtn.bw && startBtn.by <= tempY 
+                        && tempY <= startBtn.by + startBtn.bh) {
                         game = true;
                     }
                 }

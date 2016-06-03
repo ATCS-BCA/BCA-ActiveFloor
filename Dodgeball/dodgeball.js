@@ -2,19 +2,20 @@ var score = 0;
 var active = true;
 var speed = 2;
 var level = 0;
-var size = 1;
+var size = 10;
 var productionrate = 1;
 var game = false;
 var balls = [];
 var counter =0;
-var startX, startY, startW, startH, btX, btY, btW, btH;
+var startBtn, restartBtn;
+
 
 function Ball(speed, size){
 	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)/4;
 	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)/4;
 	this.radius = size;
-	this.x = (canvas.width - this.radius)/2;
-	this.y = (canvas.height - this.radius)/2
+	this.x = canvas.width/2;
+	this.y = canvas.height/2;
 	this.v = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
 	this.duration = 8;
 }
@@ -85,7 +86,7 @@ function hit(x, y){
 	}
 }
 
-function updateBalls(){
+function animate(){
 	'use strict';
 	if (active == false){
 		gameOver();
@@ -106,32 +107,25 @@ function updateBalls(){
 
 	context2D.fillStyle = '#000000';
 	clear();
-
+	board();
 	for (var i = 0; i < balls.length; i++){
 		balls[i].draw();
 	}
 
-	requestAnimationFrame(updateBalls);
+	requestAnimationFrame(animate);
 }
 
 function start(){
 	clear();
 	addBall(speed, 10);
-	setInterval(function(){ addBall(speed, 10); }, 10000);
-	requestAnimationFrame(updateBalls);
+	board();
+	setInterval(function(){ addBall(speed, size); }, 5000);
+	requestAnimationFrame(animate);
 }
 
 function menu(){
 	active = true;
-
-	startX = (canvas.width / 2) - (context2D.measureText('Start').width / 2);
-    startY = 100;
-    startW = context2D.measureText('Start').width;
-    startH = 15;
-    btH = startH + 5;
-    btW = startW + 40;
-    btX = startX - 20;
-    btY = startY - startH;
+	balls = [];
 
 	context2D.fillStyle = '#2ecc71';
     context2D.font = '24px sans-serif';
@@ -144,8 +138,8 @@ function menu(){
     context2D.font = '12px sans-serif';
     context2D.strokeStyle = 'blue';
     context2D.fillText('Start', 
-    	startX, startY);
-	context2D.strokeRect(btX, btY, btW, btH);
+    	startBtn.x, startBtn.y);
+	context2D.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh);
     
     if (game == true)
     	start();
@@ -157,12 +151,20 @@ function clear(){
 	context2D.clearRect(0,0,canvas.width, canvas.height);
 }
 
+function board(){
+	context2D.strokeStyle = 'blue';
+	context2D.beginPath();
+	context2D.arc(canvas.width/2, canvas.height/2, size, 0, Math.PI * 2);
+	context2D.stroke();
+
+}
+
 function gameOver(){
 	score = 0;
 	active = true;
 	speed = 2;
 	level = 0;
-	size = 1;
+	size = 10;
 	productionrate = 1;
 	balls = [];
 	clear();
@@ -175,6 +177,11 @@ function gameOver(){
     context2D.font = '12px sans-serif';
     context2D.fillText('Your Score Was: ' + score, 
     	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
+    
+    // context2D.strokeStyle = 'blue';
+    // context2D.fillText('Restart', restartBtn.x, restartBtn.y);
+    // context2D.strokeRect(restartBtn.bx, restartBtn.by, restartBtn.bw, restartBtn.bh);
+
     counter++;
     if (counter >= 5000){
     	game = false;
