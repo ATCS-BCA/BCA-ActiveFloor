@@ -6,7 +6,8 @@ var size = 1;
 var productionrate = 1;
 var game = false;
 var balls = [];
-var startX, startY, startW, startH;
+var counter =0;
+var startX, startY, startW, startH, btX, btY, btW, btH,;
 
 function Ball(speed, size){
 	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)/4;
@@ -117,6 +118,10 @@ function menu(){
     startY = 100;
     startW = context2D.measureText('Start').width;
     startH = 15;
+    btH = startH + 5;
+    btW = startW + 40;
+    btX = startX - 20;
+    btY = startY - startH;
 
 	context2D.fillStyle = '#2ecc71';
     context2D.font = '24px sans-serif';
@@ -130,13 +135,12 @@ function menu(){
     context2D.strokeStyle = 'blue';
     context2D.fillText('Start', 
     	startX, startY);
-	context2D.strokeRect(startX - 20, startY - startH, startW + 40, startH + 5);
+	context2D.strokeRect(btX, btY, btW, btH);
     
-    if (game == true){
+    if (game == true)
     	start();
-    }
-
-    setTimeout(function() {menu();} ,1);
+    else
+	    setTimeout(function() {menu();} ,1);
 }
 
 function clear(){
@@ -154,12 +158,15 @@ function gameOver(){
 	clear();
 
 	context2D.fillStyle = 'red';
-    context2D.font = '6px sans-serif';
+    context2D.font = '24px sans-serif';
     
     context2D.fillText('Game Over!', ((canvas.width / 2) - (context2D.measureText('Game Over!').width / 2)), 50);
 
-    context2D.font = '6px sans-serif';
+    context2D.font = '12px sans-serif';
     context2D.fillText('Your Score Was: ' + score, 
     	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
-    setTimeout(gameOver,1000);
+    if (counter++ < 10000)
+	    setTimeout(gameOver, 1);
+    else
+	    setTimeout(menu, 10000)
 }

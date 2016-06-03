@@ -45,8 +45,8 @@ function initCanvas(arr) {
                 if (srchStr === charSearch) {
                     tempX = p * ledPerSensorX;
                     tempY = i * ledPerSensorY;
-                    if(startX <= tempX && tempX <= startX + startW && startY <= tempY 
-                        && tempY <= startY + startH) {
+                    if(btX <= tempX && tempX <= btX + btW && btY <= tempY 
+                        && tempY <= btY + btH) {
                         game = true;
                     }
                 }
