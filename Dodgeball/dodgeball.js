@@ -7,7 +7,7 @@ var productionrate = 1;
 var game = false;
 var balls = [];
 var counter =0;
-var startX, startY, startW, startH, btX, btY, btW, btH,;
+var startX, startY, startW, startH, btX, btY, btW, btH;
 
 function Ball(speed, size){
 	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)/4;
@@ -61,10 +61,20 @@ function checkCollision(b1, b2){
 }
 
 function updateCol(b1, b2){
-	b1.v = (b1.v * (b1.radius - b2.radius) + b2.v * 2 * b2.radius)
+	dx1 = (b1.dx * (b1.radius - b2.radius) + b2.dx * 2 * b2.radius)
 			/(b1.radius + b2.radius);
-	b2.v = (2 * b1.radius * b1.v + (b2.radius - b1.radius) * b2.v)
+	dx2 = (b2.dx * (b2.radius - b1.radius) + b1.dx * 2 * b1.radius)
 			/(b1.radius + b2.radius);
+
+	dy1 = (b1.dy * (b1.radius - b2.radius) + b2.dy * 2 * b2.radius)
+			/(b1.radius + b2.radius);
+	dy2 = (2 * b1.radius * b1.dy + (b2.radius - b1.radius) * b2.dy)
+			/(b1.radius + b2.radius);
+
+	b1.dx = dx1;
+	b2.dx = dx2;
+	b1.dy = dy1;
+	b2.dy = dy2;
 }
 
 function hit(x, y){
@@ -165,8 +175,11 @@ function gameOver(){
     context2D.font = '12px sans-serif';
     context2D.fillText('Your Score Was: ' + score, 
     	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
-    if (counter++ < 10000)
-	    setTimeout(gameOver, 1);
-    else
-	    setTimeout(menu, 10000)
+    counter++;
+    if (counter >= 5000){
+    	game = false;
+    	counter = 0;
+	    setTimeout(menu, 1);
+    }else
+    	setTimeout(gameOver, 1)
 }
