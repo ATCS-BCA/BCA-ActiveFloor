@@ -7,13 +7,82 @@ var productionrate = 1;
 var game = false;
 var balls = [];
 var counter =0;
+var over = false;
 var startBtn, restartBtn;
+var intervals = [];
+var firstRun = true;
 
+
+function menu(){
+	active = true;
+	balls = [];
+
+	context2D.fillStyle = '#2ecc71';
+    context2D.font = '24px sans-serif';
+    
+    context2D.fillText('DODGEBALL', ((canvas.width / 2) - 
+    	(context2D.measureText('DODGEBALL').width / 2)), 50);
+
+	context2D.fillStyle = '#e67e22';
+
+    context2D.font = '12px sans-serif';
+    context2D.strokeStyle = 'blue';
+    context2D.fillText('Start', 
+    	startBtn.x, startBtn.y);
+	context2D.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh);
+    
+    if (game == true)
+    	start();
+    else
+	    setTimeout(function() {menu();} ,1);
+}
+
+function clear(){
+	context2D.clearRect(0,0,canvas.width, canvas.height);
+}
+
+function board(){
+	context2D.strokeStyle = '#3498db';
+	context2D.beginPath();
+	context2D.arc(canvas.width/2, canvas.height/2, size, 0, Math.PI * 2);
+	context2D.stroke();
+
+}
+
+function gameOver(){
+	score = 0;
+	active = true;
+	speed = 2;
+	level = 0;
+	size = 10;
+	productionrate = 1;
+	balls = [];
+
+	context2D.fillStyle = 'red';
+    context2D.font = '24px sans-serif';
+    
+    context2D.fillText('Game Over!', ((canvas.width / 2) - (context2D.measureText('Game Over!').width / 2)), 50);
+
+    context2D.font = '12px sans-serif';
+    context2D.fillText('Your Score Was: ' + score, 
+    	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
+    
+    context2D.strokeStyle = '#3498db';
+    context2D.fillText('Restart', restartBtn.x, restartBtn.y);
+    context2D.strokeRect(restartBtn.bx, restartBtn.by, restartBtn.bw, restartBtn.bh);
+
+    if (!over){
+    	game = false;
+	    setTimeout(menu, 1);
+    }else
+    	setTimeout(gameOver, 1)
+}
 
 function Ball(speed, size){
 	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)/4;
 	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)/4;
 	this.radius = size;
+	this.mass = Math.pow(this.radius, 2);
 	this.x = canvas.width/2;
 	this.y = canvas.height/2;
 	this.v = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
@@ -89,6 +158,9 @@ function hit(x, y){
 function animate(){
 	'use strict';
 	if (active == false){
+		clear();
+		game = false;
+		over = true;
 		gameOver();
 		return;
 	}
@@ -115,78 +187,20 @@ function animate(){
 	requestAnimationFrame(animate);
 }
 
+function instructions(){
+
+}
+
 function start(){
+	over = false;
+	if (firstRun)
+		firstRun = false;
+	else
+		for (var i = 0; i < intervals.length; i++)
+			clearInterval(intervals[i]);
 	clear();
 	addBall(speed, 10);
 	board();
-	setInterval(function(){ addBall(speed, size); }, 5000);
+	intervals.push(setInterval(function(){ addBall(speed, size); }, 10000));
 	requestAnimationFrame(animate);
-}
-
-function menu(){
-	active = true;
-	balls = [];
-
-	context2D.fillStyle = '#2ecc71';
-    context2D.font = '24px sans-serif';
-    
-    context2D.fillText('DODGEBALL', ((canvas.width / 2) - 
-    	(context2D.measureText('DODGEBALL').width / 2)), 50);
-
-	context2D.fillStyle = '#e67e22';
-
-    context2D.font = '12px sans-serif';
-    context2D.strokeStyle = 'blue';
-    context2D.fillText('Start', 
-    	startBtn.x, startBtn.y);
-	context2D.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh);
-    
-    if (game == true)
-    	start();
-    else
-	    setTimeout(function() {menu();} ,1);
-}
-
-function clear(){
-	context2D.clearRect(0,0,canvas.width, canvas.height);
-}
-
-function board(){
-	context2D.strokeStyle = 'blue';
-	context2D.beginPath();
-	context2D.arc(canvas.width/2, canvas.height/2, size, 0, Math.PI * 2);
-	context2D.stroke();
-
-}
-
-function gameOver(){
-	score = 0;
-	active = true;
-	speed = 2;
-	level = 0;
-	size = 10;
-	productionrate = 1;
-	balls = [];
-	clear();
-
-	context2D.fillStyle = 'red';
-    context2D.font = '24px sans-serif';
-    
-    context2D.fillText('Game Over!', ((canvas.width / 2) - (context2D.measureText('Game Over!').width / 2)), 50);
-
-    context2D.font = '12px sans-serif';
-    context2D.fillText('Your Score Was: ' + score, 
-    	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
-    
-    // context2D.strokeStyle = 'blue';
-    // context2D.fillText('Restart', restartBtn.x, restartBtn.y);
-    // context2D.strokeRect(restartBtn.bx, restartBtn.by, restartBtn.bw, restartBtn.bh);
-
-    counter++;
-    if (counter >= 5000){
-    	game = false;
-    	counter = 0;
-	    setTimeout(menu, 1);
-    }else
-    	setTimeout(gameOver, 1)
 }

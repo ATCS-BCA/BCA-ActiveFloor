@@ -27,16 +27,16 @@ function initCanvas(arr) {
         bw: context2D.measureText('Start').width + 40,
         bh: 15 + 5
     };
-    // restartBtn = {
-    //     x: (canvas.width / 2) - (context2D.measureText('Restart').width / 2),
-    //     y: startBtn.y,
-    //     w: context2D.measureText('Restart').width, 
-    //     h: startBtn.w,
-    //     bx: (canvas.width / 2) - (context2D.measureText('Restart').width / 2) - 20,
-    //     by: startBtn.by
-    //     bw: context2D.measureText('Restart').width + 40,
-    //     bh: startBtn.bh
-    // };
+    restartBtn = {
+        x: (canvas.width / 2) - (context2D.measureText('Restart').width / 2),
+        y: startBtn.y - 25,
+        w: context2D.measureText('Restart').width, 
+        h: startBtn.w,
+        bx: (canvas.width / 2) - (context2D.measureText('Restart').width / 2) - 20,
+        by: startBtn.by - 25,
+        bw: context2D.measureText('Restart').width + 40,
+        bh: startBtn.bh
+    };
 
     
     var i, tempRow, p, srchStr, tempX, tempY;
@@ -57,7 +57,23 @@ function initCanvas(arr) {
         }
         if (noTouch)
             active = false;
-    } else {
+    }else if (over == true){
+         for (i = 0; i < arr.length; i += 1) {
+            tempRow = arr[i];
+            
+            for (p = 0; p < tempRow.length; p += 1) {
+                srchStr = tempRow.substring(p, p + 1);
+                if (srchStr === charSearch) {
+                    tempX = p * ledPerSensorX;
+                    tempY = i * ledPerSensorY;
+                    if(restartBtn.bx <= tempX && tempX <= restartBtn.bx + restartBtn.bw && restartBtn.by <= tempY 
+                        && tempY <= restartBtn.by + restartBtn.bh) {
+                        over = false;
+                    }
+                }
+            }
+        }
+    }else {
         for (i = 0; i < arr.length; i += 1) {
             tempRow = arr[i];
             
