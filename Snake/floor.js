@@ -72,9 +72,6 @@ function initCanvas(arr) {
     }
     if (done){
         if (middle>2) refresh();
-        else{
-           // $("body").css("background-image","url('gridStart.png')");
-        }
     }
 
     var winner=Math.max(up,down,left,right);

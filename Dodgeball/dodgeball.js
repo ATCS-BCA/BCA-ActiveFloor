@@ -141,7 +141,7 @@ function checkSpawnCollision(b){
 }
 
 function updateCol(b1, b2){
-	var collisionAngle = Math.atan2(dy, b1.x + b1.dx - b2.x - d2.dx)
+	var collisionAngle = Math.atan(b1.y + b1.dy - b2.y - d2.dy, b1.x + b1.dx - b2.x - d2.dx)
 	dx1 = (b1.dx * (b1.radius - b2.radius) + b2.dx * 2 * b2.radius)
 			/(b1.radius + b2.radius);
 	dx2 = (b2.dx * (b2.radius - b1.radius) + b1.dx * 2 * b1.radius)
