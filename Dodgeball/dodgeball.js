@@ -13,7 +13,9 @@ var intervals = [];
 var firstRun = true;
 var contact = false;
 
-
+//
+// Start Menu
+//
 function menu(){
 	active = true;
 	balls = [];
@@ -38,10 +40,16 @@ function menu(){
 	    setTimeout(function() {menu();} ,1);
 }
 
+//
+// Clear the screen
+//
 function clear(){
 	context2D.clearRect(0,0,canvas.width, canvas.height);
 }
 
+//
+// Draw the board (AKA the spawner)
+//
 function board(){
 	context2D.strokeStyle = '#3498db';
 	context2D.beginPath();
@@ -50,6 +58,9 @@ function board(){
 
 }
 
+//
+// Show gameOver screen
+//
 function gameOver(){
 	for (var i = 0; i < intervals.length; i++)
 		clearInterval(intervals[i]);
@@ -74,6 +85,9 @@ function gameOver(){
     	setTimeout(gameOver, 1)
 }
 
+//
+// Make a ball object
+//
 function Ball(speed, size){
 	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)*3/8;
 	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)*3/8;
@@ -91,18 +105,24 @@ function Ball(speed, size){
 	this.nextY = this.y;
 	
 	this.speed = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
+	this.direction = Math.atan2(this.dy, this.dx);
 
 	this.spawn = false;
 	this.duration = 8;
 }
 
-Ball.prototype.update = function(){
+//
+// Check the wall collision and update
+//
+Ball.prototype.checkWallCollision = function(){
 
 	//move the ball
+	//todo
 	if (this.x + this.dx + this.radius > canvas.width
 		|| this.x - this.radius + this.dx < 0){
 		
 		this.dx *= -1;
+		this.nextX = canvas.width - this.radius;
 	}
 	if ((this.y + this.dy + this.radius > canvas.height)
 		|| (this.y - this.radius + this.dy < 0)){
@@ -110,13 +130,16 @@ Ball.prototype.update = function(){
 		this.dy *= -1;
 	}
 
-	this.x += this.dx;
-	this.y += this.dy;
+	this.x = this.nextX;
+	this.y = this.nextY;
 	this.duration--;
 	if (this.duration <= 0){
 	}
 };
 
+//
+// Draw the ball
+//
 Ball.prototype.draw = function(){
 	context2D.beginPath();
 	context2D.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -126,11 +149,31 @@ Ball.prototype.draw = function(){
 
 };
 
+//
+// update the speed
+//
+Ball.prototype.updateInfo = function(){
+	this.speed = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
+	this.direction = Math.atan2(this.dy, this.dx);
+};
+
+
+Ball.prototype.render = function(){
+	this.speed = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
+	this.direction = Math.atan2(this.dy, this.dx);
+};
+
+//
+// add the ball to the array
+//
 function addBall(speed, size){
 	balls.push(new Ball(speed, size));
 	score++;
 }
 
+//
+// Check if two balls collide
+//
 function checkBallCollision(b1, b2){
 	if (Math.sqrt(Math.pow(b1.x - b2.x, 2) + Math.pow(b1.y - b2.y, 2)) <= b1.radius + b2.radius)
 		return true;
@@ -138,6 +181,9 @@ function checkBallCollision(b1, b2){
 		return false;
 }
 
+//
+// Check if ball collides with the spawner
+//
 function checkSpawnCollision(b){
 	if (Math.sqrt(Math.pow(b.x - canvas.width/2, 2) + Math.pow(b.y - canvas.height/2, 2)) 
 		<= b.radius + spawnRadius)
@@ -146,25 +192,58 @@ function checkSpawnCollision(b){
 		return false;
 }
 
+//
+// If it collides, change the ball direction and speed
+//
 function updateCol(b1, b2){
 	var collisionAngle = Math.atan(b1.nextY - b2.nextY, b1.nextX - b2.nextX)
+	b1.updateInfo();
+	b2.updateInfo();
 
-	var dx1 = (b1.dx * (b1.radius - b2.radius) + b2.dx * 2 * b2.radius)
-			/(b1.radius + b2.radius);
-	var dx2 = (b2.dx * (b2.radius - b1.radius) + b1.dx * 2 * b1.radius)
-			/(b1.radius + b2.radius);
+	// var dx1 = (b1.dx * (b1.radius - b2.radius) + b2.dx * 2 * b2.radius)
+	// 		/(b1.radius + b2.radius);
+	// var dx2 = (b2.dx * (b2.radius - b1.radius) + b1.dx * 2 * b1.radius)
+	// 		/(b1.radius + b2.radius);
 
-	var dy1 = (b1.dy * (b1.radius - b2.radius) + b2.dy * 2 * b2.radius)
-			/(b1.radius + b2.radius);
-	var dy2 = (2 * b1.radius * b1.dy + (b2.radius - b1.radius) * b2.dy)
-			/(b1.radius + b2.radius);
+	// var dy1 = (b1.dy * (b1.radius - b2.radius) + b2.dy * 2 * b2.radius)
+	// 		/(b1.radius + b2.radius);
+	// var dy2 = (2 * b1.radius * b1.dy + (b2.radius - b1.radius) * b2.dy)
+	// 		/(b1.radius + b2.radius);
+	var dx1 = b1.speed * Math.cos(b1.direction - collisionAngle);
+	var dx2 = b2.speed * Math.cos(b2.direction - collisionAngle);
 
-	b1.dx = dx1;
-	b2.dx = dx2;
-	b1.dy = dy1;
-	b2.dy = dy2;
+	var dy1 = b1.speed * Math.sin(b1.direction - collisionAngle);
+	var dy2 = b2.speed * Math.sin(b2.direction - collisionAngle);
+
+	var final_dx1 = ((b1.mass - b2.mass) * dx1 + 2 * b2.mass * dx2)
+		/(b1.mass + b2.mass);
+	var final_dx2 = ((b2.mass - b1.mass) * dx2 + 2 * b1.mass * dx1)/(b1.mass + b2.mass);
+	var final_dy1 = dy1;
+	var final_dy2 = dy2;
+
+	// b1.dx = dx1;
+	// b2.dx = dx2;
+	// b1.dy = dy1;
+	// b2.dy = dy2;
+	b1.dx = Math.cos(collisionAngle) * final_dx1 + 
+		Math.cos(collisionAngle + Math.PI/2) * final_dy1;
+	b2.dx = Math.cos(collisionAngle) * final_dx2 + 
+		Math.cos(collisionAngle + Math.PI/2) * final_dy2;
+	b1.dy = Math.sin(collisionAngle) * final_dx1 + 
+		Math.sin(collisionAngle + Math.PI/2) * final_dy1;
+	b2.dy = Math.sin(collisionAngle) * final_dx2 + 
+		Math.sin(collisionAngle + Math.PI/2) * final_dy2;
+
+	b1.nextX += b1.dx;
+	b2.nextX += b2.dx;
+
+	b1.nextY += b1.dy;
+	b2.nextY += b2.dy;
 }
 
+//
+// Check if the x and y value of player touches the ball
+//
 function checkPlayerHit(x, y){
 	for (var i = 0; i < balls.length; i++){
 		if (Math.pow(x - balls[i].x, 2) + Math.pow(y - balls[i].y, 2)
@@ -173,6 +252,17 @@ function checkPlayerHit(x, y){
 	}
 }
 
+function update(){
+	for (var i = 0; i < balls.length; i++){
+		balls[i].nextX = balls[i].x + balls[i].dx;
+		balls[i].nextY = balls[i].y + balls[i].dy;
+	}
+}
+
+
+//
+// animate the balls
+//
 function animate(){
 	'use strict';
 	if (active == false){
@@ -183,8 +273,12 @@ function animate(){
 		return;
 	}
 
+	update();
+	collide();
+	render();
+
 	for (var i = 0; i < balls.length; i++){
-		balls[i].update();
+		balls[i].checkWallCollision();
 	}
 
 	for (var i = 0; i < balls.length; i++){
@@ -222,6 +316,9 @@ function instructions(){
 
 }
 
+//
+// Start the game
+//
 function start(){
 	score = 0;
 	active = true;
@@ -241,3 +338,4 @@ function start(){
 	intervals.push(setInterval(function(){ addBall(speed, size); }, 10000));
 	requestAnimationFrame(animate);
 }
+
