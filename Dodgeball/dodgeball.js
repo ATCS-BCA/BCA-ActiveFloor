@@ -81,11 +81,17 @@ function Ball(speed, size){
 		this.dx *= -1;
 	if (Math.floor(Math.random() * 2) == 0)
 		this.dy *= -1;
+
 	this.radius = size;
 	this.mass = Math.pow(this.radius, 2);
+	
 	this.x = canvas.width/2;
+	this.nextX = this.x;
 	this.y = canvas.height/2;
-	this.v = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
+	this.nextY = this.y;
+	
+	this.speed = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
+
 	this.spawn = false;
 	this.duration = 8;
 }
@@ -141,15 +147,16 @@ function checkSpawnCollision(b){
 }
 
 function updateCol(b1, b2){
-	var collisionAngle = Math.atan(b1.y + b1.dy - b2.y - d2.dy, b1.x + b1.dx - b2.x - d2.dx)
-	dx1 = (b1.dx * (b1.radius - b2.radius) + b2.dx * 2 * b2.radius)
+	var collisionAngle = Math.atan(b1.nextY - b2.nextY, b1.nextX - b2.nextX)
+
+	var dx1 = (b1.dx * (b1.radius - b2.radius) + b2.dx * 2 * b2.radius)
 			/(b1.radius + b2.radius);
-	dx2 = (b2.dx * (b2.radius - b1.radius) + b1.dx * 2 * b1.radius)
+	var dx2 = (b2.dx * (b2.radius - b1.radius) + b1.dx * 2 * b1.radius)
 			/(b1.radius + b2.radius);
 
-	dy1 = (b1.dy * (b1.radius - b2.radius) + b2.dy * 2 * b2.radius)
+	var dy1 = (b1.dy * (b1.radius - b2.radius) + b2.dy * 2 * b2.radius)
 			/(b1.radius + b2.radius);
-	dy2 = (2 * b1.radius * b1.dy + (b2.radius - b1.radius) * b2.dy)
+	var dy2 = (2 * b1.radius * b1.dy + (b2.radius - b1.radius) * b2.dy)
 			/(b1.radius + b2.radius);
 
 	b1.dx = dx1;
