@@ -50,7 +50,7 @@ function initCanvas(arr) {
                 if (srchStr === charSearch) {
                     tempX = p * ledPerSensorX;
                     tempY = i * ledPerSensorY;
-                    hit(tempX, tempY);
+                    checkPlayerHit(tempX, tempY);
                     noTouch = false;
                 }
             }

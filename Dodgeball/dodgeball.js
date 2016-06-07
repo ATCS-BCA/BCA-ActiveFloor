@@ -6,11 +6,12 @@ var size = 10;
 var productionrate = 1;
 var game = false;
 var balls = [];
-var counter =0;
+var spawnRadius;
 var over = false;
 var startBtn, restartBtn;
 var intervals = [];
 var firstRun = true;
+var contact = false;
 
 
 function menu(){
@@ -44,19 +45,14 @@ function clear(){
 function board(){
 	context2D.strokeStyle = '#3498db';
 	context2D.beginPath();
-	context2D.arc(canvas.width/2, canvas.height/2, size, 0, Math.PI * 2);
+	context2D.arc(canvas.width/2, canvas.height/2, spawnRadius, 0, Math.PI * 2);
 	context2D.stroke();
 
 }
 
 function gameOver(){
-	score = 0;
-	active = true;
-	speed = 2;
-	level = 0;
-	size = 10;
-	productionrate = 1;
-	balls = [];
+	for (var i = 0; i < intervals.length; i++)
+		clearInterval(intervals[i]);
 
 	context2D.fillStyle = 'red';
     context2D.font = '24px sans-serif';
@@ -79,21 +75,26 @@ function gameOver(){
 }
 
 function Ball(speed, size){
-	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)/4;
-	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)/4;
+	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)*3/8;
+	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)*3/8;
+	if (Math.floor(Math.random() * 2) == 0)
+		this.dx *= -1;
+	if (Math.floor(Math.random() * 2) == 0)
+		this.dy *= -1;
 	this.radius = size;
 	this.mass = Math.pow(this.radius, 2);
 	this.x = canvas.width/2;
 	this.y = canvas.height/2;
 	this.v = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
+	this.spawn = false;
 	this.duration = 8;
 }
 
 Ball.prototype.update = function(){
 
 	//move the ball
-	if ((this.x + this.dx + this.radius > canvas.width)
-		|| (this.x - this.radius + this.dx < 0)){
+	if (this.x + this.dx + this.radius > canvas.width
+		|| this.x - this.radius + this.dx < 0){
 		
 		this.dx *= -1;
 	}
@@ -121,16 +122,26 @@ Ball.prototype.draw = function(){
 
 function addBall(speed, size){
 	balls.push(new Ball(speed, size));
+	score++;
 }
 
-function checkCollision(b1, b2){
+function checkBallCollision(b1, b2){
 	if (Math.sqrt(Math.pow(b1.x - b2.x, 2) + Math.pow(b1.y - b2.y, 2)) <= b1.radius + b2.radius)
 		return true;
 	else
 		return false;
 }
 
+function checkSpawnCollision(b){
+	if (Math.sqrt(Math.pow(b.x - canvas.width/2, 2) + Math.pow(b.y - canvas.height/2, 2)) 
+		<= b.radius + spawnRadius)
+		return true;
+	else
+		return false;
+}
+
 function updateCol(b1, b2){
+	var collisionAngle = Math.atan2(dy, b1.x + b1.dx - b2.x - d2.dx)
 	dx1 = (b1.dx * (b1.radius - b2.radius) + b2.dx * 2 * b2.radius)
 			/(b1.radius + b2.radius);
 	dx2 = (b2.dx * (b2.radius - b1.radius) + b1.dx * 2 * b1.radius)
@@ -147,7 +158,7 @@ function updateCol(b1, b2){
 	b2.dy = dy2;
 }
 
-function hit(x, y){
+function checkPlayerHit(x, y){
 	for (var i = 0; i < balls.length; i++){
 		if (Math.pow(x - balls[i].x, 2) + Math.pow(y - balls[i].y, 2)
 			<= Math.pow(balls[i].radius, 2))
@@ -170,10 +181,23 @@ function animate(){
 	}
 
 	for (var i = 0; i < balls.length; i++){
+		contact = false;
+
 		for (var j = i + 1; j < balls.length; j++){
-			if (checkCollision(balls[i], balls[j])){
+			if (checkBallCollision(balls[i], balls[j])){
 				updateCol(balls[i], balls[j]);
+				contact = true;
 			}
+		}
+
+		if (balls[i].spawn){
+			if (checkSpawnCollision(balls[i])){
+				balls[i].dx *= -1;
+				balls[i].dy *= -1;
+			}
+		} else{
+			if (!checkSpawnCollision(balls[i]) && !contact)
+				balls[i].spawn = true;
 		}
 	}
 
@@ -192,12 +216,18 @@ function instructions(){
 }
 
 function start(){
+	score = 0;
+	active = true;
+	speed = 2;
+	level = 0;
+	size = 10;
+	productionrate = 1;
+	balls = [];
 	over = false;
-	if (firstRun)
-		firstRun = false;
-	else
-		for (var i = 0; i < intervals.length; i++)
-			clearInterval(intervals[i]);
+	spawnRadius = size + 5;
+	intervals = [];
+
+
 	clear();
 	addBall(speed, 10);
 	board();

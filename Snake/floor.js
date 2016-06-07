@@ -71,7 +71,7 @@ function initCanvas(arr) {
         }
     }
     if (done){
-        if (middle>5) refresh();
+        if (middle>2) refresh();
         else{
            // $("body").css("background-image","url('gridStart.png')");
         }
@@ -144,3 +144,15 @@ function startRefresh() {
     myInterval = setInterval(function () {refreshXML(); }, refreshTime);
 }
 
+$(document).ready(function () {
+    'use strict';
+    startRefresh();
+    
+    sendSemaphore(function() {
+        // Clear spacing and borders.
+        $("body").addClass("app");
+        $("div").addClass("app");
+//        $("#floorCanvas").addClass("app");
+        
+    });
+});
