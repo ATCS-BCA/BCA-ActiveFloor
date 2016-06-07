@@ -96,6 +96,15 @@ window.onload = function()
         ctx.lineTo(128,128);
         ctx.stroke();
 
+        for (var i=0;i<24;i++){
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            ctx.moveTo(0,i*8);
+            ctx.lineTo(192,i*8);
+            ctx.moveTo(i*8,0);
+            ctx.lineTo(i*8,192);
+        }
+        ctx.stroke();
 
 
 
