@@ -12,7 +12,8 @@ body {
 }
 
 html {
-    	background: black;
+	background: black;
+	overflow:hidden;
 }
 
 body,input {
