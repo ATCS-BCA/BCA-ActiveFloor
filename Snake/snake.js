@@ -10,6 +10,7 @@ function press(num){
     }
 }
 
+
 canvas = document.createElement('canvas'),
 ctx = canvas.getContext('2d'),
 score = 0,
@@ -18,6 +19,21 @@ direction = 0,
 snake = new Array(3),
 active = true,
 speed = 400;
+
+
+
+
+img=new Array(4);
+
+imgcanvas=new Array(4);
+imgctx=new Array(4);
+imgdata=new Array(4);
+
+for (var i=0;i<4;i++){
+    img[i] = document.createElement('img')
+    img[i].src='arrow'+(i+1)+'.png';
+}
+
 window.onload = function()
 {
 
@@ -27,8 +43,8 @@ window.onload = function()
         map[i] = new Array(24);
     }
 
-    canvas.width = 170;
-    canvas.height = 192;
+    canvas.width=192;
+    canvas.height=192;
 
     var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
@@ -59,6 +75,35 @@ window.onload = function()
     {
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(64,64);
+        ctx.lineTo(64,128);
+        ctx.lineTo(0,192);
+        ctx.moveTo(64,64);
+        ctx.lineTo(128,64);
+        ctx.lineTo(192,0);
+        ctx.moveTo(64,128);
+        ctx.lineTo(128,128);
+        ctx.lineTo(192,192);
+        ctx.moveTo(128,64);
+        ctx.lineTo(128,128);
+        ctx.stroke();
+
+
+
+
+        ctx.drawImage(img[0], 128+16, 64+16);
+        ctx.drawImage(img[1], 0+16, 64+16);
+        ctx.drawImage(img[2], 64+16, 128+16);
+        ctx.drawImage(img[3], 64+16, 0+16);
+        
 
         // Traverse all the body pieces of the snake, starting from the last one
         for (var i = snake.length - 1; i >= 0; i--) {
@@ -94,6 +139,8 @@ window.onload = function()
                 // Detect if we hit food and increase the score if we do,
                 // generating a new food position in the process, and also
                 // adding a new element to the snake array.
+                
+                //console.log(snake[0]);
                 if (map[snake[0].x][snake[0].y] === 1) {
                     score += 10;
                     map = generateFood(map);
@@ -130,17 +177,18 @@ window.onload = function()
         }
 
         // Draw the border as well as the score
-        drawMain();
+        drawScore();
 
         // Start cycling the matrix
         for (var x = 0; x < map.length; x++) {
             for (var y = 0; y < map[0].length; y++) {
+                if (x==1 && y==1);
                 if (map[x][y] === 1) {
                     ctx.fillStyle = 'red';
-                    ctx.fillRect(x * 8, y * 7 + 24, 8, 7);
+                    ctx.fillRect(x * 8, y * 8, 8, 8);
                 } else if (map[x][y] === 2) {
                     ctx.fillStyle = 'orange';
-                    ctx.fillRect(x * 8, y * 7 + 24, 8, 7);          
+                    ctx.fillRect(x * 8, y * 8, 8, 8);          
                 }
             }
         }
@@ -151,19 +199,16 @@ window.onload = function()
     }
 
 
-    function drawMain() 
-    {
-        ctx.lineWidth = 2; // Our border will have a thickness of 2 pixels
-        ctx.strokeStyle = 'red'; // The border will also be black
-
-        // The border is drawn on the outside of the rectangle, so we'll
-        // need to move it a bit to the right and up. Also, we'll need
-        // to leave a 20 pixels space on the top to draw the interface.
-        ctx.strokeRect(2, 24, canvas.width - 4, canvas.height - 24);
+    function drawScore(){
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(1, 1, canvas.width-2, canvas.height-2);
 
         ctx.fillStyle = 'red';
         ctx.font = '12px sans-serif';
-        ctx.fillText('Score: ' + score + ' - Level: ' + level, 2, 12);
+        ctx.fillText('Score: ' + score, ((canvas.width / 2) - (ctx.measureText('Score: ' + score).width / 2)), 90);
+        ctx.fillText('Level: ' + level, ((canvas.width / 2) - (ctx.measureText('Level: ' + level).width / 2)), 110);
+            
     }
 
     function generateFood(map)
@@ -212,6 +257,8 @@ window.onload = function()
 
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = 'red';
         ctx.font = '16px sans-serif';
@@ -221,6 +268,12 @@ window.onload = function()
         ctx.font = '12px sans-serif';
 
         ctx.fillText('Your Score Was: ' + score, ((canvas.width / 2) - (ctx.measureText('Your Score Was: ' + score).width / 2)), 70);
+       
+        ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width)/2-1, 86, ctx.measureText('Stand here to restart').width+3, 10+3);
+        
+        ctx.fillStyle = 'black';
+        ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width)/2, 192/2);
+        
         setTimeout(Restart,1000)
     }
 

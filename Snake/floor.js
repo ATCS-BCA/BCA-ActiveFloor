@@ -16,15 +16,15 @@ function Restart(){
 function refresh(){
     if(active == false){
         var a = document.createElement('a');
-        var linkText = document.createTextNode("Restart");
-        a.appendChild(linkText);
         a.id="restart";
         a.title = "Restart";
         a.href = "snake.html";
         document.body.appendChild(a);
+        
+
         document.getElementById('restart').click();
         done=false;
-        $("body").css("background-image","url('grid.png');");
+
     }
 }
 
@@ -71,9 +71,9 @@ function initCanvas(arr) {
         }
     }
     if (done){
-        if (middle>2) refresh();
+        if (middle>5) refresh();
         else{
-            $("body").css("background-image","url('gridStart.png')");
+           // $("body").css("background-image","url('gridStart.png')");
         }
     }
 
@@ -99,13 +99,13 @@ function initCanvas(arr) {
 
     if (key!=-1)
         press(key);
-    console.log(key);
+    //console.log(key);
 }
 
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
-    $.get('http://localhost:8080/', function (data) {
+    $.get('http://10.31.34.74:8080/', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {
@@ -137,14 +137,6 @@ function refreshXML() {
 $(document).ready(function () {
     'use strict';
     startRefresh();
-	
-	sendSemaphore(function() {
-        // Clear spacing and borders.
-        $("body").addClass("app");
-        $("div").addClass("app");
-//        $("#floorCanvas").addClass("app");
-        
-    });
 });
 
 function startRefresh() {
