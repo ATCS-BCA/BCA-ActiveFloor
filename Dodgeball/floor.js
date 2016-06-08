@@ -38,6 +38,10 @@ function initCanvas(arr) {
         bh: startBtn.bh
     };
 
+    if (firstTime == true){
+            firstTime = false;
+            menu();
+    }
     
     var i, tempRow, p, srchStr, tempX, tempY;
     
@@ -95,10 +99,10 @@ function initCanvas(arr) {
 
 function refreshXML() {
     'use strict';
-	// change IP address to match ActiveFloor server address
+    // change IP address to match ActiveFloor server address
     $.get('http://10.31.34.74:8080/', function (data) {
         dataHolderArray = [];
-				
+                
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -110,22 +114,18 @@ function refreshXML() {
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
         });
-				
+                
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
             rowNum = $row.attr('rownum');
             rowVal = $row.attr('values');
             n = rowVal.split(charDivide).join('');
-				
+                
             dataHolderArray.push(n);
         });
-			
+            
         initCanvas(dataHolderArray);
-        if (firstTime == true){
-            firstTime = false;
-            menu();
-        }
     });
 }
 
@@ -146,4 +146,3 @@ function startRefresh() {
     'use strict';
     myInterval = setInterval(function () {refreshXML(); }, refreshTime);
 }
-

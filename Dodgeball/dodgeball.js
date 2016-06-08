@@ -240,7 +240,7 @@ function updateCol(b1, b2){
 //
 function checkPlayerHit(x, y){
 	for (var i = 0; i < balls.length; i++){
-		if (Math.pow(x - balls[i].nextX, 2) + Math.pow(y - balls[i].nextY, 2)
+		if (Math.pow(x - balls[i].x, 2) + Math.pow(y - balls[i].y, 2)
 			<= Math.pow(balls[i].radius, 2))
 			active = false;
 	}
@@ -322,11 +322,11 @@ function start(){
 	spawnRadius = size + 5;
 	intervals = [];
 
-
 	clear();
+
+
 	addBall(speed, 10);
 	board();
 	intervals.push(setInterval(function(){ addBall(speed, Math.floor(Math.random() * (7)) + size - 3); }, 10000));
 	requestAnimationFrame(animate);
 }
-
