@@ -117,32 +117,31 @@ function Ball(speed, size){
 Ball.prototype.checkWallCollision = function(){
 
 	//move the ball
-	//todo
-	if (this.x + this.dx + this.radius > canvas.width
-		|| this.x - this.radius + this.dx < 0){
-		
-		this.dx *= -1;
+	if (this.nextX + this.radius > canvas.width){
+		this.dx *= −1;
 		this.nextX = canvas.width - this.radius;
-	}
-	if ((this.y + this.dy + this.radius > canvas.height)
-		|| (this.y - this.radius + this.dy < 0)){
-		
+	}else if (this.nextX - this.radius + this.dx < 0){
+		this.dx *= -1;
+		this.nextX = this.radius;
+	}else if (this.nextY + this.radius > canvas.height){
 		this.dy *= -1;
-	}
-
-	this.x = this.nextX;
-	this.y = this.nextY;
-	this.duration--;
-	if (this.duration <= 0){
+		this.nextY = canvas.height − this.radius;
+	}else if (this.nextX - this.radius < 0){
+		this.dy *= -1;
+		this.nextY = this.radius;
 	}
 };
 
 //
 // Draw the ball
 //
-Ball.prototype.draw = function(){
+Ball.prototype.render = function(){
+	this.x = this.nextX;
+	this.y = this.nextY;
+
 	context2D.beginPath();
 	context2D.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+	context2D.closePath();
 
 	context2D.fillStyle = '#e74c3c';
 	context2D.fill();
@@ -252,14 +251,6 @@ function checkPlayerHit(x, y){
 	}
 }
 
-function update(){
-	for (var i = 0; i < balls.length; i++){
-		balls[i].nextX = balls[i].x + balls[i].dx;
-		balls[i].nextY = balls[i].y + balls[i].dy;
-	}
-}
-
-
 //
 // animate the balls
 //
@@ -273,14 +264,18 @@ function animate(){
 		return;
 	}
 
-	update();
-	collide();
-	render();
+	//update
+	for (var i = 0; i < balls.length; i++){
+		balls[i].nextX = balls[i].x + balls[i].dx;
+		balls[i].nextY = balls[i].y + balls[i].dy;
+	}
 
+	//update to wall collisions
 	for (var i = 0; i < balls.length; i++){
 		balls[i].checkWallCollision();
 	}
 
+	//update to another ball collisions
 	for (var i = 0; i < balls.length; i++){
 		contact = false;
 
@@ -302,11 +297,14 @@ function animate(){
 		}
 	}
 
+	//prepare for the next draw
 	context2D.fillStyle = '#000000';
 	clear();
 	board();
+
+	//draw the ball
 	for (var i = 0; i < balls.length; i++){
-		balls[i].draw();
+		balls[i].render();
 	}
 
 	requestAnimationFrame(animate);
