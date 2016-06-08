@@ -1129,6 +1129,12 @@ function refreshXML() {
 $(document).ready(function () {
     'use strict';
     startRefresh();
+
+    sendSemaphore(function() {
+        // Clear spacing and borders.
+        $("body").addClass("app");
+        $("div").addClass("app");
+    });        
 });
 
 function startRefresh() {

@@ -2,6 +2,7 @@ body {
 	background: #000000;
 	font-size: 10pt;
 	color: pink;
+  padding:0;
 }
 
 body,input {
@@ -27,6 +28,7 @@ button {
 div {
     width: 184px;
     height: 184px;
+    padding: 0;
 }
 
 div div {
@@ -34,6 +36,7 @@ div div {
   height: 32px;
   outline: 1px solid;
   float: left;
+  padding: 0;
 }
 
 /*#thirtytwo {
