@@ -30,7 +30,7 @@ button {
 }
 
 div {
-  padding:10px;
+  padding:0px;
 }
 
 #floorCanvas {
@@ -60,6 +60,8 @@ div div {
 .grid {
 	width: 192px;
   height: 192px;
+  float: left;
+  padding: 0;
 }
 
 .ArEx {
@@ -181,6 +183,12 @@ div div {
 @keyframes onefr {
    from { background-position:    0px; }
      to { background-position: -32px; }
+}
+
+app {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
 }
 
 
