@@ -47,14 +47,30 @@ var render = function() {
     
     context.beginPath();
     context.moveTo(0,96);
+    context.lineTo(64,96);
+    context.moveTo(128,96);
     context.lineTo(192,96);
+    context.stroke();
+    
+    context.lineWidth = 1;
+    context.beginPath();
+    context.moveTo(64,64);
+    context.lineTo(64,128);
+    context.lineTo(128,128);
+    context.lineTo(128,64);
+    context.lineTo(64,64);
     context.stroke();
 
     context.fillStyle = "white";
     for (var i=0;i<192;i+=2){
+        if (i*2<64 || i*2>128)
         context.fillRect(96,i*2,1,1);
     }
     context.fillStyle = "black";
+    
+    
+    context.fillStyle = 'red';
+    context.fillText('Restart', ((canvas.width / 2) - (context.measureText('Restart').width / 2)), 101);
 };
 
 function Paddle(x, y, width, height) {

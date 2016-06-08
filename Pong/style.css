@@ -6,13 +6,11 @@ body {
 	font-size: 10pt;
 	color: pink;
 	margin: 0pt;
-    vertical-align: middle;
-    display: block;
-    position: relative;
 }
 
 html {
-    	background: black;
+    background: black;
+	overflow:hidden;
 }
 
 body,input {

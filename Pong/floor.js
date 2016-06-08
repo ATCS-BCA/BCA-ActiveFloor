@@ -7,25 +7,15 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 80;
-done=false;
-
-function Restart(){
-    done=true;
-}
 
 function refresh(){
-    if(active == false){
-        var a = document.createElement('a');
-        a.id="restart";
-        a.title = "Restart";
-        a.href = "pong.html";
-        document.body.appendChild(a);
-        
+    var a = document.createElement('a');
+    a.id="restart";
+    a.href = "pong.html";
+    document.body.appendChild(a);
 
-        document.getElementById('restart').click();
-        done=false;
 
-    }
+    document.getElementById('restart').click();
 }
 
 function initCanvas(arr) {
@@ -34,29 +24,29 @@ function initCanvas(arr) {
     var right1=0;
     var left2=0;
     var right2=0;
+    var middle=0;
 
     for (var i=0;i<arr.length;i++){
         for (var j=0;j<arr[i].length;j++){
 
             if (arr[i][j]==="*"){
-                
-                if (i<12){
-                    if (j<12) left1++;
-                    else right1++;
+                if (i>=8 && i<=16 && j>=8 && j<=16){
+                    middle++;
                 }else{
-                    if (j<12) left2++;
-                    else right2++;    
+                    if (i<12){
+                        if (j<12) left1++;
+                        else right1++;
+                    }else{
+                        if (j<12) left2++;
+                        else right2++;    
+                    }
                 }
-
+                
             }
         }
     }
-    if (done){
-        if (middle>5) refresh();
-        else{
-           // $("body").css("background-image","url('gridStart.png')");
-        }
-    }
+    console.log(middle);
+    if (middle>6) refresh();
 
     var winner1=-1;
     if (Math.abs(left1-right1)>=3){
@@ -70,8 +60,8 @@ function initCanvas(arr) {
         else winner2=1;
     }
 
-    console.log("winners: "+winner1+", "+winner2);
-    console.log(left1+", "+right1+", "+left2+", "+right2);
+//    console.log(winner1+", "+winner2);
+//    console.log(left1+", "+right1+", "+left2+", "+right2);
     press(winner2,winner1);
 }
 
