@@ -118,15 +118,15 @@ Ball.prototype.checkWallCollision = function(){
 
 	//move the ball
 	if (this.nextX + this.radius > canvas.width){
-		this.dx *= −1;
+		this.dx *= -1;
 		this.nextX = canvas.width - this.radius;
-	}else if (this.nextX - this.radius + this.dx < 0){
+	}else if (this.nextX - this.radius < 0){
 		this.dx *= -1;
 		this.nextX = this.radius;
 	}else if (this.nextY + this.radius > canvas.height){
 		this.dy *= -1;
-		this.nextY = canvas.height − this.radius;
-	}else if (this.nextX - this.radius < 0){
+		this.nextY = canvas.height - this.radius;
+	}else if (this.nextY - this.radius < 0){
 		this.dy *= -1;
 		this.nextY = this.radius;
 	}
@@ -157,11 +157,6 @@ Ball.prototype.updateInfo = function(){
 };
 
 
-Ball.prototype.render = function(){
-	this.speed = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
-	this.direction = Math.atan2(this.dy, this.dx);
-};
-
 //
 // add the ball to the array
 //
@@ -174,7 +169,7 @@ function addBall(speed, size){
 // Check if two balls collide
 //
 function checkBallCollision(b1, b2){
-	if (Math.sqrt(Math.pow(b1.x - b2.x, 2) + Math.pow(b1.y - b2.y, 2)) <= b1.radius + b2.radius)
+	if (Math.sqrt(Math.pow(b1.nextX - b2.nextX, 2) + Math.pow(b1.nextY - b2.nextY, 2)) <= b1.radius + b2.radius)
 		return true;
 	else
 		return false;
@@ -184,7 +179,7 @@ function checkBallCollision(b1, b2){
 // Check if ball collides with the spawner
 //
 function checkSpawnCollision(b){
-	if (Math.sqrt(Math.pow(b.x - canvas.width/2, 2) + Math.pow(b.y - canvas.height/2, 2)) 
+	if (Math.sqrt(Math.pow(b.nextX - canvas.width/2, 2) + Math.pow(b.nextY - canvas.height/2, 2)) 
 		<= b.radius + spawnRadius)
 		return true;
 	else
@@ -195,7 +190,7 @@ function checkSpawnCollision(b){
 // If it collides, change the ball direction and speed
 //
 function updateCol(b1, b2){
-	var collisionAngle = Math.atan(b1.nextY - b2.nextY, b1.nextX - b2.nextX)
+	var collisionAngle = Math.atan2(b1.nextY - b2.nextY, b1.nextX - b2.nextX)
 	b1.updateInfo();
 	b2.updateInfo();
 
@@ -245,7 +240,7 @@ function updateCol(b1, b2){
 //
 function checkPlayerHit(x, y){
 	for (var i = 0; i < balls.length; i++){
-		if (Math.pow(x - balls[i].x, 2) + Math.pow(y - balls[i].y, 2)
+		if (Math.pow(x - balls[i].nextX, 2) + Math.pow(y - balls[i].nextY, 2)
 			<= Math.pow(balls[i].radius, 2))
 			active = false;
 	}
@@ -277,12 +272,10 @@ function animate(){
 
 	//update to another ball collisions
 	for (var i = 0; i < balls.length; i++){
-		contact = false;
 
 		for (var j = i + 1; j < balls.length; j++){
 			if (checkBallCollision(balls[i], balls[j])){
 				updateCol(balls[i], balls[j]);
-				contact = true;
 			}
 		}
 
@@ -292,7 +285,7 @@ function animate(){
 				balls[i].dy *= -1;
 			}
 		} else{
-			if (!checkSpawnCollision(balls[i]) && !contact)
+			if (!checkSpawnCollision(balls[i]))
 				balls[i].spawn = true;
 		}
 	}
@@ -333,7 +326,7 @@ function start(){
 	clear();
 	addBall(speed, 10);
 	board();
-	intervals.push(setInterval(function(){ addBall(speed, size); }, 10000));
+	intervals.push(setInterval(function(){ addBall(speed, Math.floor(Math.random() * (7)) + size - 3); }, 10000));
 	requestAnimationFrame(animate);
 }
 
