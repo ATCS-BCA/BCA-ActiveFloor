@@ -544,7 +544,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
 
     if((yPos + (yCenter / size)) < 30){
         if((xPos + (xCenter / size)) < 30){
-            var css = '#zero { background: red; }',
+            var css = '#zero { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -560,7 +560,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#zero";
         }
         if((xPos + (xCenter / size)) < 61 && (xPos + (xCenter / size)) > 30){
-            var css = '#one { background: red; }',
+            var css = '#one { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -576,7 +576,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#one";
         }
         if((xPos + (xCenter / size)) < 92 && (xPos + (xCenter / size)) > 61){
-            var css = '#two { background: red; }',
+            var css = '#two { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -592,7 +592,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#two";
         }
         if((xPos + (xCenter / size)) < 123 && (xPos + (xCenter / size)) > 92){
-            var css = '#three { background: red; }',
+            var css = '#three { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -608,7 +608,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#three";
         }
         if((xPos + (xCenter / size)) < 154 && (xPos + (xCenter / size)) > 123){
-            var css = '#four { background: red; }',
+            var css = '#four { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -624,7 +624,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#four";
         }
         if((xPos + (xCenter / size)) > 154) {
-            var css = '#five { background: red; }',
+            var css = '#five { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -643,7 +643,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
 
     if((yPos + (yCenter / size)) < 61 && (yPos + (yCenter / size)) > 30){
         if((xPos + (xCenter / size)) < 30){
-            var css = '#six { background: red; }',
+            var css = '#six { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -659,7 +659,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#six";
         }
         if((xPos + (xCenter / size)) < 61 && (xPos + (xCenter / size)) > 30){
-            var css = '#seven { background: red; }',
+            var css = '#seven { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -675,7 +675,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#seven";
         }
         if((xPos + (xCenter / size)) < 92 && (xPos + (xCenter / size)) > 61){
-            var css = '#eight { background: red; }',
+            var css = '#eight { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -691,7 +691,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#eight";
         }
         if((xPos + (xCenter / size)) < 123 && (xPos + (xCenter / size)) > 92){
-            var css = '#nine { background: red; }',
+            var css = '#nine { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -707,7 +707,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#nine";
         }
         if((xPos + (xCenter / size)) < 154 && (xPos + (xCenter / size)) > 123){
-            var css = '#ten { background: red; }',
+            var css = '#ten { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -723,7 +723,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#ten";
         }
         if((xPos + (xCenter / size)) > 154) {
-            var css = '#eleven { background: red; }',
+            var css = '#eleven { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -742,7 +742,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
 
     if((yPos + (yCenter / size)) < 92 && (yPos + (yCenter / size)) > 61){
         if((xPos + (xCenter / size)) < 30){
-            var css = '#twelve { background: red; }',
+            var css = '#twelve { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -758,7 +758,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twelve";
         }
         if((xPos + (xCenter / size)) < 61 && (xPos + (xCenter / size)) > 30){
-            var css = '#thirteen { background: red; }',
+            var css = '#thirteen { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -774,7 +774,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#thirteen";
         }
         if((xPos + (xCenter / size)) < 92 && (xPos + (xCenter / size)) > 61){
-            var css = '#fourteen { background: red; }',
+            var css = '#fourteen { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -790,7 +790,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#fourteen";
         }
         if((xPos + (xCenter / size)) < 123 && (xPos + (xCenter / size)) > 92){
-            var css = '#fifteen { background: red; }',
+            var css = '#fifteen { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -806,7 +806,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#fifteen";
         }
         if((xPos + (xCenter / size)) < 154 && (xPos + (xCenter / size)) > 123){
-            var css = '#sixteen { background: red; }',
+            var css = '#sixteen { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -822,7 +822,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#sixteen";
         }
         if((xPos + (xCenter / size)) > 154) {
-            var css = '#seventeen { background: red; }',
+            var css = '#seventeen { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -841,7 +841,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
 
     if((yPos + (yCenter / size)) < 123 && (yPos + (yCenter / size)) > 92){
         if((xPos + (xCenter / size)) < 30){
-            var css = '#eighteen { background: red; }',
+            var css = '#eighteen { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -857,7 +857,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#eighteen";
         }
         if((xPos + (xCenter / size)) < 61 && (xPos + (xCenter / size)) > 30){
-            var css = '#nineteen { background: red; }',
+            var css = '#nineteen { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -873,7 +873,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#nineteen";
         }
         if((xPos + (xCenter / size)) < 92 && (xPos + (xCenter / size)) > 61){
-            var css = '#twenty { background: red; }',
+            var css = '#twenty { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -889,7 +889,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twenty";
         }
         if((xPos + (xCenter / size)) < 123 && (xPos + (xCenter / size)) > 92){
-            var css = '#twentyone { background: red; }',
+            var css = '#twentyone { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -905,7 +905,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twentyone";
         }
         if((xPos + (xCenter / size)) < 154 && (xPos + (xCenter / size)) > 123){
-            var css = '#twentytwo { background: red; }',
+            var css = '#twentytwo { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -921,7 +921,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twentytwo";
         }
         if((xPos + (xCenter / size)) > 154) {
-            var css = '#twentythree { background: red; }',
+            var css = '#twentythree { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -940,7 +940,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
 
     if((yPos + (yCenter / size)) < 154 && (yPos + (yCenter / size)) > 123){
         if((xPos + (xCenter / size)) < 30){
-            var css = '#twentyfour { background: red; }',
+            var css = '#twentyfour { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -956,7 +956,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twentyfour";
         }
         if((xPos + (xCenter / size)) < 61 && (xPos + (xCenter / size)) > 30){
-            var css = '#twentyfive { background: red; }',
+            var css = '#twentyfive { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -972,7 +972,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twentyfive";
         }
         if((xPos + (xCenter / size)) < 92 && (xPos + (xCenter / size)) > 61){
-            var css = '#twentysix { background: red; }',
+            var css = '#twentysix { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -988,7 +988,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twentysix";
         }
         if((xPos + (xCenter / size)) < 123 && (xPos + (xCenter / size)) > 92){
-            var css = '#twentyseven { background: red; }',
+            var css = '#twentyseven { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1004,7 +1004,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twentyseven";
         }
         if((xPos + (xCenter / size)) < 154 && (xPos + (xCenter / size)) > 123){
-            var css = '#twentyeight { background: red; }',
+            var css = '#twentyeight { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1020,7 +1020,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#twentyeight";
         }
         if((xPos + (xCenter / size)) > 154) {
-            var css = '#twentynine { background: red; }',
+            var css = '#twentynine { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1039,7 +1039,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
 
     if((yPos + (yCenter / size)) > 154){
         if((xPos + (xCenter / size)) < 30){
-            var css = '#thirty { background: red; }',
+            var css = '#thirty { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1055,7 +1055,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#thirty";
         }
         if((xPos + (xCenter / size)) < 61 && (xPos + (xCenter / size)) > 30){
-            var css = '#thirtyone { background: red; }',
+            var css = '#thirtyone { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1071,7 +1071,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#thirtyone";
         }
         if((xPos + (xCenter / size)) < 92 && (xPos + (xCenter / size)) > 61){
-            var css = '#thirtytwo { background: red; }',
+            var css = '#thirtytwo { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1087,7 +1087,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#thirtytwo";
         }
         if((xPos + (xCenter / size)) < 123 && (xPos + (xCenter / size)) > 92){
-            var css = '#thirtythree { background: red; }',
+            var css = '#thirtythree { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1103,7 +1103,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#thirtythree";
         }
         if((xPos + (xCenter / size)) < 154 && (xPos + (xCenter / size)) > 123){
-            var css = '#thirtyfour { background: red; }',
+            var css = '#thirtyfour { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1119,7 +1119,7 @@ function drawObj(type, xPos, yPos, size, myArr) {
             currentTile = "#thirtyfour";
         }
         if((xPos + (xCenter / size)) > 154) {
-            var css = '#thirtyfive { background: red; }',
+            var css = '#thirtyfive { background: red !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
