@@ -14,7 +14,518 @@ var tileArr = [];
 var tempcounter = 1;
 var counter = 0;
 var numOfSteps = 6;
+//var arr = generateTileArr();
+
+
+var displaycount = 0;
+var superdisplaycount = 0;
+var numOfSteps = 10;
 var arr = generateTileArr();
+//var arr = generateTempTileArr();
+
+var mycounter = 0;
+var instructionNum = 0;
+
+var commandarr = generateCommandArr();
+var cssList = setcssList();
+var myboolean = true;
+
+function setcssList(){
+    tempcssList = [];
+    //tempcssList.push('#six { background: url(images/N-Ar.gif) !important}');
+    /*
+    tempcssList.push('#six { background: url(images/N-Ex.gif) !important; animation-iteration-count: 90} #zero { background: url(images/N-Ar.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#zero { background: url(images/N-E-Tr.gif) !important;}');
+    tempcssList.push('#zero { background: url(images/E-Ex.gif) !important; animation-iteration-count: 90;}#one { background: url(images/E-Ar.gif) !important; animation-iteration-count: 90;}');
+    tempcssList.push('#one { background: url(images/E-S-Tr.gif) !important }');
+    tempcssList.push('#one { background: url(images/SE-SW-Tr.gif) !important }');
+    tempcssList.push('#one { background: url(images/S-W-Tr.gif) !important; animation-iteration-count: 90;} ');
+    tempcssList.push('#one { background: url(images/SW-Ex.gif) !important; animation-iteration-count: 90;} #six { background: url(images/SW-Ar.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#six { background: url(images/SW-SE-Tr.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#six { background: url(images/S-Ex.gif) !important; animation-iteration-count: 90} #twelve { background: url(images/S-Ar.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#twelve { background: url(images/SW-SE-Tr.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#twelve { background: url(images/S-Ex.gif) !important; animation-iteration-count: 90} #eighteen { background: url(images/S-Ar.gif) !important; animation-iteration-count: 90}');
+    */
+
+    for(var i = 0; i < 100; i++){
+        tempcssList.push(generatecssInstruction());
+    }
+
+    return tempcssList;
+}
+
+function generatecssInstruction(){
+try{
+    var css = ' { background: url(images/';
+    var endstuff = '.gif) !important; animation-iteration-count: 900; }';
+    css = arr[mycounter].concat(css);
+    css = css.concat(commandarr[instructionNum]);
+    css = css.concat(endstuff);
+    instructionNum++;
+    if(commandarr[instructionNum].localeCompare("changetiles") === 0){
+        instructionNum++;
+        mycounter++;
+        css = css.concat(arr[mycounter]);
+        css = css.concat(' { background: url(images/');
+        css = css.concat(commandarr[instructionNum]);
+        css = css.concat(endstuff);
+        instructionNum++;
+    }
+    else if(commandarr[instructionNum].localeCompare("done") === 0){
+        myboolean = false;
+    }
+    return css;
+    //will add more later
+}
+catch(err){
+
+}
+
+}
+
+function displayPrompt(){
+    var css = cssList[displaycount],
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+            style.type = 'text/css';
+            if (style.styleSheet){
+                style.styleSheet.cssText = css;
+            } else {
+            style.appendChild(document.createTextNode(css));
+            }
+
+            head.appendChild(style);
+
+    if(displaycount < cssList.length){
+        displaycount++;
+        console.log('before');
+        setTimeout(clearAllTiles, 1000);
+        setTimeout(displayPrompt, 1000);
+    }
+}
+/*
+function displayPrompt(){
+    var css = tileArr[displaycount].concat(' { background: url(images/N-Ex.gif) }'),
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+            style.type = 'text/css';
+            if (style.styleSheet){
+                style.styleSheet.cssText = css;
+            } else {
+            style.appendChild(document.createTextNode(css));
+            }
+
+            head.appendChild(style);
+}
+*/
+
+function generateTempTileArr(){
+    var temparr = [];
+    temparr.push('#six');
+    temparr.push('#zero');
+    temparr.push('#zero');
+    temparr.push('#one');
+    temparr.push('#one');
+    temparr.push('#one');
+    temparr.push('#six');
+    temparr.push('#six');
+    temparr.push('#twelve');
+    temparr.push('#twelve');
+    temparr.push('#eighteen');
+    return temparr;
+}
+
+function clearAllTiles(){
+    for(var i = 0; i < 36; i++){
+            var css = numberToName(i).concat(' { background-image: none !important}'),
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+            style.type = 'text/css';
+            if (style.styleSheet){
+                style.styleSheet.cssText = css;
+            } else {
+            style.appendChild(document.createTextNode(css));
+            }
+
+            head.appendChild(style);
+    }
+}
+
+function generateCommandArr(){
+    var commarr = [];
+    commarr.push("N-Ar");
+
+    //var continueboolean = true;
+
+    if(arr[1].localeCompare('#thirtyone') === 0){
+        commarr.push("N-W-Tr");
+        commarr.push("W-Ex");
+    }
+    else if(arr[1].localeCompare('#thirtythree') === 0){
+        commarr.push("N-E-Tr");
+        commarr.push("E-Ex");
+    }
+    else if(arr[1].localeCompare('#twentyfive') === 0){
+        commarr.push("N-W-Tr");
+        commarr.push("NW-Ex");
+    }
+    else if(arr[1].localeCompare('#twentysix') === 0){
+        commarr.push("NW-NE-Tr");
+        commarr.push("N-Ex");
+    }
+    else if(arr[1].localeCompare('#twentyseven') === 0){
+        commarr.push("N-E-Tr");
+        commarr.push("NE-Ex");
+    }
+
+    for(var i = 1; i < arr.length - 1; i++){
+        
+        if(commarr[commarr.length - 1].localeCompare("N-Ex") === 0){ //leaves last tile going north
+            
+            commarr.push("changetiles");
+            commarr.push("N-Ar"); 
+            
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                commarr.push("N-E-Tr");
+                commarr.push("NE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                commarr.push("N-W-Tr");
+                commarr.push("NW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                commarr.push("N-E-Tr");
+                commarr.push("E-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                commarr.push("N-W-Tr");
+                commarr.push("W-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                commarr.push("N-E-Tr");
+                commarr.push("NE-SE-Tr");
+                commarr.push("S-E-Tr");
+                commarr.push("SE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                commarr.push("N-W-Tr");
+                commarr.push("NW-SW-Tr");
+                commarr.push("S-W-Tr");
+                commarr.push("SW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                //huge problem
+            }
+        }
+        else if(commarr[commarr.length - 1].localeCompare("NE-Ex") === 0){ //leaves last tile going northeast 
+            commarr.push("changetiles");
+            commarr.push("NE-Ar");
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                commarr.push("N-E-Tr");
+                commarr.push("NE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                commarr.push("NW-NE-Tr");
+                commarr.push("NW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                commarr.push("NE-SE-Tr");
+                commarr.push("E-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-W-Tr");
+                commarr.push("NW-SW-Tr");
+                commarr.push("W-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                commarr.push("NE-SE-Tr");
+                commarr.push("SE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                //huge problem
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                commarr.push("NE-SE-Tr");
+                commarr.push("E-S-Tr");
+                commarr.push("SE-SW-Tr");
+                commarr.push("S-Ex");
+            }
+        }
+        else if(commarr[commarr.length - 1].localeCompare("E-Ex") === 0){ //leaves last tile going east 
+            commarr.push("changetiles");
+            commarr.push("E-Ar");
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                commarr.push("E-N-Tr");
+                commarr.push("N-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                commarr.push("N-E-Tr");
+                commarr.push("NE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                commarr.push("E-N-Tr");
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-W-Tr");
+                commarr.push("NW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                commarr.push("NE-SE-Tr");
+                commarr.push("E-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                //huge problem
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                commarr.push("S-E-Tr");
+                commarr.push("SE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                commarr.push("E-S-Tr");
+                commarr.push("SE-SW-Tr");
+                commarr.push("S-W-Tr");
+                commarr.push("SW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                commarr.push("E-S-Tr");
+                commarr.push("S-Ex");
+            }
+        }
+        else if(commarr[commarr.length - 1].localeCompare("SE-Ex") === 0){ //leaves last tile going southeast 
+            commarr.push("changetiles");
+            commarr.push("SE-Ar");
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                commarr.push("SE-NE-Tr");
+                commarr.push("E-N-Tr");
+                commarr.push("NE-NW-Tr");
+                commarr.push("N-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                commarr.push("SE-NE-Tr");
+                commarr.push("NE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                //huge problem
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                commarr.push("NE-SE-Tr");
+                commarr.push("E-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                commarr.push("SE-SW-Tr");
+                commarr.push("S-W-Tr");
+                commarr.push("SW-NW-Tr");
+                commarr.push("W-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                commarr.push("S-E-Tr");
+                commarr.push("SE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                commarr.push("SE-SW-Tr");
+                commarr.push("SW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                commarr.push("SE-SW-Tr");
+                commarr.push("S-Ex");
+            }
+        }
+        else if(commarr[commarr.length - 1].localeCompare("S-Ex") === 0){ //leaves last tile going south 
+            commarr.push("changetiles");
+            commarr.push("S-Ar");
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                //huge problem
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                commarr.push("S-E-Tr");
+                commarr.push("SE-NE-Tr");
+                commarr.push("N-E-Tr");
+                commarr.push("NE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                commarr.push("S-W-Tr");
+                commarr.push("SW-NW-Tr");
+                commarr.push("N-W-Tr");
+                commarr.push("NW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                commarr.push("S-E-Tr");
+                commarr.push("E-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                commarr.push("S-W-Tr");
+                commarr.push("W-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                commarr.push("S-E-Tr");
+                commarr.push("SE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                commarr.push("S-W-Tr");
+                commarr.push("SW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                commarr.push("SW-SE-Tr");
+                commarr.push("S-Ex");
+            }
+        }
+        else if(commarr[commarr.length - 1].localeCompare("SW-Ex") === 0){ //leaves last tile going southwest 
+            commarr.push("changetiles");
+            commarr.push("SW-Ar");
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                commarr.push("SW-NW-Tr");
+                commarr.push("W-N-Tr");
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                //huge problem
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                commarr.push("SW-NW-Tr");
+                commarr.push("NW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                commarr.push("SW-SE-Tr");
+                commarr.push("S-E-Tr");
+                commarr.push("SE-SW-Tr");
+                commarr.push("E-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                commarr.push("NW-SW-Tr");
+                commarr.push("W-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                commarr.push("SW-SE-Tr");
+                commarr.push("SE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                commarr.push("W-S-Tr");
+                commarr.push("SW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                commarr.push("SE-SW-Tr");
+                commarr.push("S-Ex");
+            }
+        }
+        else if(commarr[commarr.length - 1].localeCompare("W-Ex") === 0){ //leaves last tile going west 
+            commarr.push("changetiles");
+            commarr.push("W-Ar");
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                commarr.push("W-N-Tr");
+                commarr.push("N-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                commarr.push("W-N-Tr");
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-E-Tr");
+                commarr.push("NE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                commarr.push("N-W-Tr");
+                commarr.push("NW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                //huge problem
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                commarr.push("NW-SW-Tr");
+                commarr.push("W-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                commarr.push("W-S-Ex");
+                commarr.push("SW-SE-Tr");
+                commarr.push("S-E-Tr");
+                commarr.push("SE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                commarr.push("S-W-Tr");
+                commarr.push("SW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                commarr.push("W-S-Tr");
+                commarr.push("S-Ex");
+            }
+        }
+        else if(commarr[commarr.length - 1].localeCompare("NW-Ex") === 0){ //leaves last tile going northwest 
+            commarr.push("changetiles");
+            commarr.push("NW-Ar");
+            if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 6)) === 0){
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 5)) === 0){
+                commarr.push("NW-NE-Tr");
+                commarr.push("NE-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 7)) === 0)   {
+                commarr.push("N-W-Tr");
+                commarr.push("NW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 1)) === 0)   {
+                commarr.push("NW-NE-Tr");
+                commarr.push("N-E-Tr");
+                commarr.push("NE-SE-Tr");
+                commarr.push("E-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) - 1)) === 0){
+                commarr.push("NW-SW-Tr");
+                commarr.push("W-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 7)) === 0){
+                //huge problem
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 5)) === 0){
+                commarr.push("NW-SW-Tr");
+                commarr.push("SW-Ex");
+            }
+            else if(arr[i+1].localeCompare(numberToName(nameToNumber(arr[i]) + 6)) === 0){
+                commarr.push("NW-SW-Tr");
+                commarr.push("W-S-Tr");
+                commarr.push("SW-SE-Tr");
+                commarr.push("S-Ex");
+            }
+        }   
+    }
+    commarr.push("changetiles");
+    if(commarr[commarr.length - 1].localeCompare("N-Ex") === 0){
+        commarr.push("N-Ar");
+    }
+    else if(commarr[commarr.length - 1].localeCompare("NW-Ex") === 0){
+        commarr.push("NW-Ar");
+    }
+    else if(commarr[commarr.length - 1].localeCompare("W-Ex") === 0){
+        commarr.push("W-Ar");
+    }
+    else if(commarr[commarr.length - 1].localeCompare("SW-Ex") === 0){
+        commarr.push("SW-Ar");
+    }
+    else if(commarr[commarr.length - 1].localeCompare("S-Ex") === 0){
+        commarr.push("S-Ar");
+    }
+    else if(commarr[commarr.length - 1].localeCompare("SE-Ex") === 0){
+        commarr.push("SE-Ar");
+    }
+    else if(commarr[commarr.length - 1].localeCompare("E-Ex") === 0){
+        commarr.push("E-Ar");
+    }
+    else if(commarr[commarr.length - 1].localeCompare("NE-Ex") === 0){
+        commarr.push("NE-Ar");
+    }
+    commarr.push("done");
+    return commarr;
+}
 
 function drawObj(type, xPos, yPos, size, myArr) {
     'use strict';
@@ -691,7 +1202,7 @@ function generateTileArr(){
         }
         tileArr.push(temptile);
     }
-
+/*
     for(var i = 0; i < numOfSteps; i++){
         var css = tileArr[i].concat(' { background: purple; }'),
             head = document.head || document.getElementsByTagName('head')[0],
@@ -706,6 +1217,7 @@ function generateTileArr(){
 
             head.appendChild(style);
     }
+    
     /*
     tileArr.push("#twentysix");
     tileArr.push("#twenty");
@@ -716,22 +1228,6 @@ function generateTileArr(){
 
     return tileArr;
     //make random generator
-}
-
-
-function displayPrompt(){
-    var css = tileArr[i].concat(' { background: url(images/N-Ex.gif) }'),
-            head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
-
-            style.type = 'text/css';
-            if (style.styleSheet){
-                style.styleSheet.cssText = css;
-            } else {
-            style.appendChild(document.createTextNode(css));
-            }
-
-            head.appendChild(style);
 }
 
 function getAdjacentTile(tile){
@@ -1040,7 +1536,7 @@ function numberToName(tileNum){
 }
 
 function done(){
-    var css = '#thirtyfive { background: blue; }',
+    var css = '#thirtyfive { background: blue !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1055,7 +1551,7 @@ function done(){
 }
 
 function fail(){
-    var css = '#thirtyfive { background: white; }',
+    var css = '#thirtyfive { background: white !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
@@ -1124,6 +1620,11 @@ function refreshXML() {
 			
         initCanvas(dataHolderArray);
     });
+
+    if(superdisplaycount === 0){
+        superdisplaycount++;
+        displayPrompt();
+    }
 }
 
 $(document).ready(function () {
