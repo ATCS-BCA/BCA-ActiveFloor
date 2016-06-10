@@ -32,19 +32,19 @@ var myboolean = true;
 
 function setcssList(){
     tempcssList = [];
-    //tempcssList.push('#six { background: url(images/N-Ar.gif) !important}');
+    //tempcssList.push('#six { background: url(revisedimages/N-Ar.gif) !important}');
     /*
-    tempcssList.push('#six { background: url(images/N-Ex.gif) !important; animation-iteration-count: 90} #zero { background: url(images/N-Ar.gif) !important; animation-iteration-count: 90}');
-    tempcssList.push('#zero { background: url(images/N-E-Tr.gif) !important;}');
-    tempcssList.push('#zero { background: url(images/E-Ex.gif) !important; animation-iteration-count: 90;}#one { background: url(images/E-Ar.gif) !important; animation-iteration-count: 90;}');
-    tempcssList.push('#one { background: url(images/E-S-Tr.gif) !important }');
-    tempcssList.push('#one { background: url(images/SE-SW-Tr.gif) !important }');
-    tempcssList.push('#one { background: url(images/S-W-Tr.gif) !important; animation-iteration-count: 90;} ');
-    tempcssList.push('#one { background: url(images/SW-Ex.gif) !important; animation-iteration-count: 90;} #six { background: url(images/SW-Ar.gif) !important; animation-iteration-count: 90}');
-    tempcssList.push('#six { background: url(images/SW-SE-Tr.gif) !important; animation-iteration-count: 90}');
-    tempcssList.push('#six { background: url(images/S-Ex.gif) !important; animation-iteration-count: 90} #twelve { background: url(images/S-Ar.gif) !important; animation-iteration-count: 90}');
-    tempcssList.push('#twelve { background: url(images/SW-SE-Tr.gif) !important; animation-iteration-count: 90}');
-    tempcssList.push('#twelve { background: url(images/S-Ex.gif) !important; animation-iteration-count: 90} #eighteen { background: url(images/S-Ar.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#six { background: url(revisedimages/N-Ex.gif) !important; animation-iteration-count: 90} #zero { background: url(revisedimages/N-Ar.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#zero { background: url(revisedimages/N-E-Tr.gif) !important;}');
+    tempcssList.push('#zero { background: url(revisedimages/E-Ex.gif) !important; animation-iteration-count: 90;}#one { background: url(revisedimages/E-Ar.gif) !important; animation-iteration-count: 90;}');
+    tempcssList.push('#one { background: url(revisedimages/E-S-Tr.gif) !important }');
+    tempcssList.push('#one { background: url(revisedimages/SE-SW-Tr.gif) !important }');
+    tempcssList.push('#one { background: url(revisedimages/S-W-Tr.gif) !important; animation-iteration-count: 90;} ');
+    tempcssList.push('#one { background: url(revisedimages/SW-Ex.gif) !important; animation-iteration-count: 90;} #six { background: url(revisedimages/SW-Ar.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#six { background: url(revisedimages/SW-SE-Tr.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#six { background: url(revisedimages/S-Ex.gif) !important; animation-iteration-count: 90} #twelve { background: url(revisedimages/S-Ar.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#twelve { background: url(revisedimages/SW-SE-Tr.gif) !important; animation-iteration-count: 90}');
+    tempcssList.push('#twelve { background: url(revisedimages/S-Ex.gif) !important; animation-iteration-count: 90} #eighteen { background: url(revisedimages/S-Ar.gif) !important; animation-iteration-count: 90}');
     */
 
     for(var i = 0; i < 100; i++){
@@ -56,7 +56,7 @@ function setcssList(){
 
 function generatecssInstruction(){
 try{
-    var css = ' { background: url(images/';
+    var css = ' { background: url(revisedimages/';
     var endstuff = '.gif) !important; animation-iteration-count: 900; }';
     css = arr[mycounter].concat(css);
     css = css.concat(commandarr[instructionNum]);
@@ -66,7 +66,7 @@ try{
         instructionNum++;
         mycounter++;
         css = css.concat(arr[mycounter]);
-        css = css.concat(' { background: url(images/');
+        css = css.concat(' { background: url(revisedimages/');
         css = css.concat(commandarr[instructionNum]);
         css = css.concat(endstuff);
         instructionNum++;
@@ -106,7 +106,7 @@ function displayPrompt(){
 }
 /*
 function displayPrompt(){
-    var css = tileArr[displaycount].concat(' { background: url(images/N-Ex.gif) }'),
+    var css = tileArr[displaycount].concat(' { background: url(revisedimages/N-Ex.gif) }'),
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 
