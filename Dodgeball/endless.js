@@ -1,6 +1,6 @@
 var score = 0;
 var active = true;
-var speed = 3;
+var speed = 2;
 var level = 0;
 var size = 10;
 var productionrate = 1;
@@ -246,19 +246,6 @@ function checkPlayerHit(x, y){
 	}
 }
 
-function updateSpawnCollision(b){
-	var scalar = (2*(b.dx * (b.x - canvas.width/2) + b.dy * (b.y - canvas.height/2)))
-			/(Math.pow((b.x - canvas.width/2),2) + Math.pow((b.y - canvas.heigth/2), 2));
-
-	var dx = b.dx - scalar * (b.x - canvas.width/2);
-	var dy = b.dy - scalar * (b.y - canvas.height/2);
-
-	print(x);
-
-	b.dx = dx;
-	b.dy = dy;
-}
-
 //
 // animate the balls
 //
@@ -294,7 +281,8 @@ function animate(){
 
 		if (balls[i].spawn){
 			if (checkSpawnCollision(balls[i])){
-				updateSpawnCollision(balls[i]);
+				balls[i].dx *= -1;
+				balls[i].dy *= -1;
 			}
 		} else{
 			if (!checkSpawnCollision(balls[i]))
@@ -339,6 +327,6 @@ function start(){
 
 	addBall(speed, 10);
 	board();
-	intervals.push(setInterval(function(){ addBall(speed, Math.floor(Math.random() * (7)) + size - 3); }, 8000));
+	intervals.push(setInterval(function(){ addBall(speed, Math.floor(Math.random() * (7)) + size - 3); }, 10000));
 	requestAnimationFrame(animate);
 }
