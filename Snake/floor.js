@@ -8,6 +8,7 @@ var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 80;
 done=false;
+canType=true;
 
 function Restart(){
     done=true;
@@ -36,10 +37,22 @@ function initCanvas(arr) {
     var right=0;
     var middle=0;
 
+    var letterCounts=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var letter;
+
     for (var i=0;i<arr.length;i++){
         for (var j=0;j<arr[i].length;j++){
 
             if (arr[i][j]==="*"){
+                var tmp=hit(i,j);
+                if(tmp!=-1){ //highscore
+                    letterCounts[tmp]++;
+                }
+
+
+
+
+
                 if (i>=8 && i<=15 && j>=8 && j<=15) middle++;
 
                 if (i>=0 && i<=7){
@@ -70,6 +83,33 @@ function initCanvas(arr) {
             }
         }
     }
+
+    var max=0;
+    for (var i=1;i<letterCounts.length;i++){
+        if (letterCounts[i]>letterCounts[max]){
+            max=i;
+        }
+    }
+
+    if (canType){
+        switch(max){
+            case 26:
+                rem();
+                break;
+            case 27:
+                done();
+                break;
+            default:
+                if (letterCounts[max]>1){
+                    type(65+max);
+                }
+        }
+        canType=false;
+        setTimeout(function(){ 
+            canType=true;; 
+        }, 100);
+    }
+
     if (done){
         if (middle>2) refresh();
     }
