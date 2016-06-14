@@ -295,6 +295,9 @@ highscore=false;
 
 function hit(a,b){
    //if (highscore){
+        var tempa=a;
+        a=b;
+        b=tempa;
         if (b>=8){
             if (a>5 && b>=20){
                 if (a>=11){ //delete
@@ -342,7 +345,7 @@ function rem(){
     }
 }
 function type(ascii){
-    console.log("type("+ascii+")");
+    console.log("type("+(ascii-65)+")");
     for (var i=0;i<3;i++){
         if (letters[i]=="_"){
             letters[i]=String.fromCharCode(ascii);
