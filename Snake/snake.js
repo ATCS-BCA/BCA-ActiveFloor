@@ -319,12 +319,14 @@ function hit(a,b){
     //}
 }
 function done(){
+    console.log("done()");
     localStorage.winner=letters.join('').replaceAll("_","");
     highscore=false;
     letters=[];
     showGameOver();
 }
 function rem(){
+    console.log("rem()");
     deleted=false;
     for (var i=0;i<3;i++){
         if (letters[i]=="_"){
@@ -340,6 +342,7 @@ function rem(){
     }
 }
 function type(ascii){
+    console.log("type("+ascii+")");
     for (var i=0;i<3;i++){
         if (letters[i]=="_"){
             letters[i]=String.fromCharCode(ascii);

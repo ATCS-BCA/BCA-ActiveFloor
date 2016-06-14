@@ -84,6 +84,7 @@ function initCanvas(arr) {
         }
     }
 
+    //console.log(letterCounts);
     var max=0;
     for (var i=1;i<letterCounts.length;i++){
         if (letterCounts[i]>letterCounts[max]){
