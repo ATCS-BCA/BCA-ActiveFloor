@@ -38,12 +38,13 @@ function menu(){
     	startBtn.x, startBtn.y);
 	context2D.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh);
 
+    setTimeout(
     intervals.push(setInterval(function(){
     	if (game){
     		clearIntervals();
     		start();
     	}
-    }, 10));
+    }, 10)), 1000);
 }
 
 //
