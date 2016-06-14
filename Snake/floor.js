@@ -111,7 +111,7 @@ function initCanvas(arr) {
         }, 100);
     }
 
-    if (done){
+    if (done && !highscore){
         if (middle>2) refresh();
     }
 
