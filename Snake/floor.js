@@ -92,7 +92,7 @@ function initCanvas(arr) {
         }
     }
 
-    if (canType){
+    if (canType && highscore){
         switch(max){
             case 26:
                 rem();

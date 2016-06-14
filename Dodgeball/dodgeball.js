@@ -3,20 +3,24 @@ var active = true;
 var speed = 3;
 var level = 0;
 var size = 10;
-var productionrate = 1;
+var prodPause = 7;
 var game = false;
 var balls = [];
-var spawnRadius;
 var over = false;
 var startBtn, restartBtn;
 var intervals = [];
+var spawner;
 var firstRun = true;
 var contact = false;
+var screen = 0;
+var spawnTimer;
 
 //
 // Start Menu
 //
 function menu(){
+	screen = 0;
+	clear();
 	active = true;
 	balls = [];
 
@@ -35,8 +39,8 @@ function menu(){
 	context2D.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh);
 
     intervals.push(setInterval(function(){
-    	if (checkStartBtn()){
-    		game = true;
+    	if (game){
+    		clearIntervals();
     		start();
     	}
     }, 10));
@@ -55,9 +59,15 @@ function clear(){
 function board(){
 	context2D.strokeStyle = '#3498db';
 	context2D.beginPath();
-	context2D.arc(canvas.width/2, canvas.height/2, spawnRadius, 0, Math.PI * 2);
+	context2D.arc(spawner.x, spawner.y, spawner.radius, 0, Math.PI * 2);
 	context2D.stroke();
+	spawnTime();
+	context2D.closePath();
+}
 
+function spawnTime(){
+	context2D.fillStyle = 'white';
+	context2D.fillText(spawnTimer, spawner.x - context2D.measureText(spawnTimer).width / 2, spawner.y  + 5);
 }
 
 function clearIntervals(){
@@ -71,6 +81,7 @@ function clearIntervals(){
 // Show gameOver screen
 //
 function gameOver(){
+	screen = 3;
 	clearIntervals();
 
 	context2D.fillStyle = 'red';
@@ -89,20 +100,29 @@ function gameOver(){
 	game = false;
 
 
-	intervals.push(setInterval(function(){
-    	if(checkRestartBtn()){
-    		clear();
-    		menu();
-    	}
-    }, 10));
+	// intervals.push(setInterval(function(){
+ //    	if(over){
+ //    		clear();
+ //    		menu();
+ //    	}
+ //    }, 10));
+}
+
+
+function getRandomIntInclusive(min, max) {
+	x = Math.floor(Math.random() * (max - min + 1)) + min;
+	if (x == 0)
+		x = getRandomIntInclusive(min, max);
+	return x;
 }
 
 //
 // Make a ball object
 //
 function Ball(speed, size){
-	this.dx = (Math.floor(Math.random() * (5)) + speed - 1)*3/8;
-	this.dy = (Math.floor(Math.random() * (5)) + speed - 1)*3/8;
+	this.dx = getRandomIntInclusive(speed - 2, speed + 2)*3/16;
+	this.dy = getRandomIntInclusive(speed - 2, speed + 2)*3/16;
+
 	if (Math.floor(Math.random() * 2) == 0)
 		this.dx *= -1;
 	if (Math.floor(Math.random() * 2) == 0)
@@ -190,8 +210,8 @@ function checkBallCollision(b1, b2){
 // Check if ball collides with the spawner
 //
 function checkSpawnCollision(b){
-	if (Math.sqrt(Math.pow(b.nextX - canvas.width/2, 2) + Math.pow(b.nextY - canvas.height/2, 2)) 
-		<= b.radius + spawnRadius)
+	if (Math.sqrt(Math.pow(b.nextX - spawner.x, 2) + Math.pow(b.nextY - spawner.y, 2)) 
+		<= b.radius + spawner.radius)
 		return true;
 	else
 		return false;
@@ -226,30 +246,45 @@ function updateCol(b1, b2){
 	b2.dy = Math.sin(collisionAngle) * final_dx2 + 
 		Math.sin(collisionAngle + Math.PI/2) * final_dy2;
 
-	b1.nextX += b1.dx;
-	b2.nextX += b2.dx;
+	// b1.nextX += b1.dx;
+	// b2.nextX += b2.dx;
 
-	b1.nextY += b1.dy;
-	b2.nextY += b2.dy;
+	// b1.nextY += b1.dy;
+	// b2.nextY += b2.dy;
 }
 
-function updateSpawnCollision(b){
+function updateSpawnCollision(b1, b2){
 	// var scalar = (2*(b.dx * (b.x - canvas.width/2) + b.dy * (b.y - canvas.height/2)))
 	// 		/(Math.pow((b.x - canvas.width/2),2) + Math.pow((b.y - canvas.heigth/2), 2));
 
 	// var dx = b.dx - scalar * (b.x - canvas.width/2);
 	// var dy = b.dy - scalar * (b.y - canvas.height/2);
 
-	var dx = b.nextX - spawnRadius;
-	var dy = b.nextY - spawnRadius;
+	// var dx = b.nextX - spawnRadius;
+	// var dy = b.nextY - spawnRadius;
 
-	var speed = Math.sqrt(Math.pow(b.nextX, 2) + Math.pow(b.nextY, 2));
+	// var speed = Math.sqrt(Math.pow(b.nextX, 2) + Math.pow(b.nextY, 2));
 
-	var angle = Math.atan2(-dy,dx);
-	var oldAngle = Math.atan2(-b.dy,b.dx);
-	var newAngle = 2 * angle - oldAngle;
-	b.dx = -speed * Math.cos(newAngle);
-	b.dy = -speed * Math.sin(newAngle);
+	// var angle = Math.atan2(-dy,dx);
+	// var oldAngle = Math.atan2(-b.dy,b.dx);
+	// var newAngle = 2 * angle - oldAngle;
+	// b.dx = -speed * Math.cos(newAngle);
+	// b.dy = -speed * Math.sin(newAngle);
+	var collisionAngle = Math.atan2(b1.nextY - b2.nextY, b1.nextX - b2.nextX)
+	b1.updateInfo();
+
+
+	var dx1 = b1.speed * Math.cos(b1.direction - collisionAngle);
+	var dy1 = b1.speed * Math.sin(b1.direction - collisionAngle);
+
+	var final_dx1 = ((b1.mass - b2.mass) * dx1)
+		/(b1.mass + b2.mass);
+	var final_dy1 = dy1;
+
+	b1.dx = Math.cos(collisionAngle) * final_dx1 + 
+		Math.cos(collisionAngle + Math.PI/2) * final_dy1;
+	b1.dy = Math.sin(collisionAngle) * final_dx1 + 
+		Math.sin(collisionAngle + Math.PI/2) * final_dy1;
 }
 
 //
@@ -263,6 +298,9 @@ function animate(){
 		over = true;
 		gameOver();
 		return;
+	}else{
+		over = false;
+		game = true;
 	}
 
 	//update
@@ -281,8 +319,7 @@ function animate(){
 		if (balls[i].spawn){
 			if (checkSpawnCollision(balls[i])){
 				// updateSpawnCollision(balls[i]);
-				balls[i].dx *= -1;
-				balls[i].dy *= -1;
+				updateSpawnCollision(balls[i], spawner);
 			}
 		} else{
 			if (!checkSpawnCollision(balls[i]))
@@ -309,25 +346,41 @@ function animate(){
 	requestAnimationFrame(animate);
 }
 
+function checkPlayerHit(x, y){
+	for (var i = 0; i < balls.length; i++){
+		if (Math.pow(x - balls[i].x, 2) + Math.pow(y - balls[i].y, 2)
+			<= Math.pow(balls[i].radius, 2))
+			active = false;
+	}
+}
+
 //
 // Start the game
 //
 function start(){
+	screen = 1;
 	score = 0;
 	active = true;
 	speed = 2;
 	level = 0;
-	size = 10;
+	size = 7;
 	balls = [];
 	game = true;
 	over = false;
-	spawnRadius = size + 5;
+	spawnTimer = 3;
+
 	clearIntervals();
 
 	clear();
 	board();
 
-	addBall(speed, 10);
-	intervals.push(setInterval(function(){ addBall(speed, Math.floor(Math.random() * (7)) + size - 3); }, 8000));
+	intervals.push(setInterval(function(){
+		spawnTimer--;
+		if (spawnTimer < 0){
+			spawnTimer = prodPause;
+			addBall(speed, Math.floor(Math.random() * (5)) + size - 2);
+		}
+	}, 1000));
+
 	requestAnimationFrame(animate);
 }
