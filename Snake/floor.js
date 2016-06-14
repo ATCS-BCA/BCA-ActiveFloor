@@ -101,14 +101,14 @@ function initCanvas(arr) {
                 done();
                 break;
             default:
-                if (letterCounts[max]>1){
+                if (letterCounts[max]>0){
                     type(65+max);
                 }
         }
         canType=false;
         setTimeout(function(){ 
-            canType=true;; 
-        }, 100);
+            canType=true; 
+        }, 500);
     }
 
     if (done && !highscore){
