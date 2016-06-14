@@ -6,6 +6,9 @@ const cellCol = 4;
 var blocksX = [];
 var blocksY = [];
 var blocksNum = [];
+var movable = [];
+var xSpace = 15;
+var ySpace = 24;
 const blockInterval = 30;
 
 window.onload = function(){	
@@ -14,6 +17,12 @@ window.onload = function(){
 	
 	var framesPerSecond = 5;
 	initBoard();
+	movable = checkIfMovable(12);
+	console.log(movable[0]);
+	console.log(movable[1]);
+	console.log(movable[2]);
+	console.log(movable[3]);
+	
 	setInterval(function() {
 		//move(14);
 		drawBoard();
@@ -22,11 +31,10 @@ window.onload = function(){
 	
 };
 
-	
 function initBoard(){
 	var count = 1;
-	for(var i = 24; i < 4 * blockInterval; i += blockInterval){
-		for(var j = 15; j < 4 * blockInterval; j += blockInterval){
+	for(var i = ySpace; i < 4 * blockInterval; i += blockInterval){
+		for(var j = xSpace; j < 4 * blockInterval; j += blockInterval){
 			if(count===16){break;}
 			
 			drawBox(j,i,"white",count);
@@ -62,23 +70,55 @@ function move(num){
 }
 
 function checkIfMovable(num){
+	moveRight = true;
+	moveLeft = true;
+	moveUp = true;
+	moveDown = true;
+	
 	for(var i = 0; i < blocksX.length;i++){
 		//Checking for a block on the right
 		if(blocksX[num] + blockInterval === blocksX[i] && blocksY[num] === blocksY[i]){
-			//Checking for a block on the left
-			if(blocksX[num] - blockInterval === blocksX[i] && blocksY[num] === blocksY[i]){
-				//Checking for a block on the top
-				if(blocksY[num] - blockInterval === blocksX[i] && blocksX[num] === blocksX[i]){
-					//Checking for a block on the bottom
-					if(blocksY[num] - blockInterval === blocksX[i] && blocksX[num] === blocksX[i]){
-						
-					}	
-				}			
-			}
+			
+			moveRight = false;	
+			
 		}
-	}
+		else if(blocksX[num] - blockInterval === blocksX[i] && blocksY[num] === blocksY[i]){
+			
+			moveLeft = false;
+		}
+		else if(blocksY[num] - blockInterval === blocksY[i] && blocksX[num] === blocksX[i]){
+			
+			moveUp = false;
 
-	return true;
+		}
+		else if(blocksY[num] + blockInterval === blocksY[i] && blocksX[num] === blocksX[i]){
+			
+			moveDown = false;
+		
+		}
+
+		//Checking if off board
+		if(blocksX[num] + blockInterval >= blockInterval * 4 + xSpace){
+			moveRight = false;
+		}
+		else if(blocksX[num] - blockInterval <= xSpace){
+			moveLeft = false;
+		}
+		//FIX Up TESTER
+		else if(blocksY[num] - blockInterval === 0){
+			console.log("In up tester");
+			moveUp = false;
+		}
+						
+		else if(blocksY[num] + blockInterval >= blockInterval * 4 + ySpace){
+			moveDown = false;
+		}
+	}						
+						
+	movable = [moveRight,moveLeft,moveUp,moveDown];	
+	
+
+	return movable ;
 }
 
 
