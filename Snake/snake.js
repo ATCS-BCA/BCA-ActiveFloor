@@ -319,6 +319,7 @@ function hit(a,b){
     //}
 }
 function done(){
+    console.log("done()");
     localStorage.winner=letters.join('').replaceAll("_","");
     highscore=false;
     letters=[];
