@@ -281,7 +281,7 @@ function showGameOver()
     ctx.fillText('Record Holder: ' + localStorage.winner, ((canvas.width / 2) - (ctx.measureText('Record Holder: ' + localStorage.winner).width / 2)), 138);
     
 
-    if(localStorage.highscore==null || localStorage.highscore<score){
+    if(localStorage.highscore<score){
         localStorage.highscore=score;
         highscore=true;
         showHighscore();
@@ -319,14 +319,12 @@ function hit(a,b){
     //}
 }
 function done(){
-    console.log("done()");
     localStorage.winner=letters.join('').replaceAll("_","");
     highscore=false;
     letters=[];
     showGameOver();
 }
 function rem(){
-    console.log("rem()");
     deleted=false;
     for (var i=0;i<3;i++){
         if (letters[i]=="_"){
@@ -342,13 +340,14 @@ function rem(){
     }
 }
 function type(ascii){
-    console.log("type("+(ascii-65)+")");
+    console.log(letters);
     for (var i=0;i<3;i++){
         if (letters[i]=="_"){
             letters[i]=String.fromCharCode(ascii);
             break;
         }
     }
+    console.log(letters);
 }
 
 function showHighscore(){
