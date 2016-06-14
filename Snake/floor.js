@@ -44,7 +44,7 @@ function initCanvas(arr) {
         for (var j=0;j<arr[i].length;j++){
 
             if (arr[i][j]==="*"){
-                var tmp=hit(i,j);
+                var tmp=hit(j,i);
                 if(tmp!=-1){ //highscore
                     letterCounts[tmp]++;
                 }
