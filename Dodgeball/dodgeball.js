@@ -3,7 +3,7 @@ var active = true;
 var speed = 3;
 var level = 0;
 var size = 10;
-var prodPause = 7;
+var prodPause = 5;
 var game = false;
 var balls = [];
 var over = false;
@@ -121,8 +121,8 @@ function getRandomIntInclusive(min, max) {
 // Make a ball object
 //
 function Ball(speed, size){
-	this.dx = getRandomIntInclusive(speed - 2, speed + 2)*3/16;
-	this.dy = getRandomIntInclusive(speed - 2, speed + 2)*3/16;
+	this.dx = getRandomIntInclusive(speed - 2, speed + 5)*3/16;
+	this.dy = getRandomIntInclusive(speed - 2, speed + 5)*3/16;
 
 	if (Math.floor(Math.random() * 2) == 0)
 		this.dx *= -1;
@@ -246,31 +246,9 @@ function updateCol(b1, b2){
 		Math.sin(collisionAngle + Math.PI/2) * final_dy1;
 	b2.dy = Math.sin(collisionAngle) * final_dx2 + 
 		Math.sin(collisionAngle + Math.PI/2) * final_dy2;
-
-	// b1.nextX += b1.dx;
-	// b2.nextX += b2.dx;
-
-	// b1.nextY += b1.dy;
-	// b2.nextY += b2.dy;
 }
 
 function updateSpawnCollision(b1, b2){
-	// var scalar = (2*(b.dx * (b.x - canvas.width/2) + b.dy * (b.y - canvas.height/2)))
-	// 		/(Math.pow((b.x - canvas.width/2),2) + Math.pow((b.y - canvas.heigth/2), 2));
-
-	// var dx = b.dx - scalar * (b.x - canvas.width/2);
-	// var dy = b.dy - scalar * (b.y - canvas.height/2);
-
-	// var dx = b.nextX - spawnRadius;
-	// var dy = b.nextY - spawnRadius;
-
-	// var speed = Math.sqrt(Math.pow(b.nextX, 2) + Math.pow(b.nextY, 2));
-
-	// var angle = Math.atan2(-dy,dx);
-	// var oldAngle = Math.atan2(-b.dy,b.dx);
-	// var newAngle = 2 * angle - oldAngle;
-	// b.dx = -speed * Math.cos(newAngle);
-	// b.dy = -speed * Math.sin(newAngle);
 	var collisionAngle = Math.atan2(b1.nextY - b2.nextY, b1.nextX - b2.nextX)
 	b1.updateInfo();
 
@@ -349,7 +327,7 @@ function animate(){
 
 function checkPlayerHit(x, y){
 	for (var i = 0; i < balls.length; i++){
-		if (Math.pow(x - balls[i].x, 2) + Math.pow(y - balls[i].y, 2)
+		if (Math.pow(x - balls[i].nextX, 2) + Math.pow(y - balls[i].nextY, 2)
 			<= Math.pow(balls[i].radius, 2))
 			active = false;
 	}
