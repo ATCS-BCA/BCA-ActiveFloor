@@ -295,9 +295,6 @@ highscore=false;
 
 function hit(a,b){
    //if (highscore){
-        var tempa=a;
-        a=b;
-        b=tempa;
         if (b>=8){
             if (a>5 && b>=20){
                 if (a>=11){ //delete
