@@ -1,18 +1,25 @@
+var myInterval;
+var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
+var dataHolderArray = [];
+var charSearch = '*';
+var charDivide = ',';
+var canvas, context2D;
+
+var refreshTime = 17;
 var canvasContext;
-const cellWidth = 23;
-const cellHeight = 23;
+const cellWidth = 26;
+const cellHeight = 26;
 const cellRow = 4;
 const cellCol = 4;
 var blocksX = [];
 var blocksY = [];
 var blocksNum = [];
 var movable = [];
-var xSpace = 15;
-var ySpace = 24;
-var blockInterval = 30;
+var xSpace = 20;
+var ySpace = 25;
+var blockInterval = 45;
 var start = true;
 var moving = false;
-
 window.onload = function(){	
 	canvas = document.getElementById('floorCanvas');
 	canvasContext = canvas.getContext("2d");
@@ -20,14 +27,44 @@ window.onload = function(){
 	var framesPerSecond = 60;
 	initBoard();
 	getRandomBoard();
-	console.log(checkIfMovable(0))
-	setInterval(function() {
+	//setInterval(function() {
 		//scramble();		
-		drawBoard();
-	} , 1000/framesPerSecond);
+//		drawBoard();
+//	} , 1000/framesPerSecond);
 	
 	
 };
+
+function refreshXML() {
+    'use strict';
+    $.get('http://127.0.0.1:8080/', function (data) {
+        dataHolderArray = [];
+				
+        $(data).find('BLFloor').each(function () {
+            $item = $(this);
+            ledsX = $item.attr('ledsX');
+            ledsY = $item.attr('ledsY');
+            sensorsX = $item.attr('sensorsX');
+            sensorsY = $item.attr('sensorsY');
+            ledPerSensorX = (ledsX / sensorsX);
+            ledPerSensorY = (ledsY / sensorsY);
+            xCenter = ledPerSensorX / 2;
+            yCenter = ledPerSensorY / 2;
+        });
+				
+        $(data).find('Row').each(function () {
+            var $row, rowNum, rowVal, n;
+            $row = $(this);
+            rowNum = $row.attr('rownum');
+            rowVal = $row.attr('values');
+            n = rowVal.split(charDivide).join('');
+				
+            dataHolderArray.push(n);
+        });
+			
+        drawBoard(dataHolderArray);
+    });
+}
 
 function initBoard(){
 	var count = 1;
@@ -44,14 +81,11 @@ function initBoard(){
 		}
 	}
 	
-	canvasContext.fillStyle = "red";
-	canvasContext.fillText("Slide Puzzle!",16,16);
-	canvasContext.fillStyle = "yellow";
-	canvasContext.fillText("?",137,140);
+	
 	
 }
 
-function drawBoard(){
+function drawBoard(dataArr){
 	//clearAll();
 	can = canvas.getContext("2d");
 	can.clearRect(0,0,400,400);
@@ -70,9 +104,9 @@ function drawBoard(){
 	}
 		
 	canvasContext.fillStyle = "red";
-	canvasContext.fillText("Slide Puzzle!",16,16);
+	canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
 	canvasContext.fillStyle = "yellow";
-	canvasContext.fillText("?",137,140);
+	canvasContext.fillText("?",170,150);
 	
 }
 
@@ -170,7 +204,7 @@ function getRandomBoard(){
 	}
 	for(var i = 0; i < blocksX.length;i++){
 		//keep generating num until new num
-		var num = Math.floor(Math.random() * (14 + 1));
+		//var num = Math.floor(Math.random() * (14 + 1));
 		
 		newBlocksX[i] = blocksX[num];
 		newBlocksY[i] = blocksY[num];
