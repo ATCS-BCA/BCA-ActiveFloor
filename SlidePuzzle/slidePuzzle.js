@@ -164,9 +164,14 @@ function dirMove(i,r,l,u,d){
 function getRandomBoard(){
 	var newBlocksX = [];
 	var newBlocksY = [];	
+	var numHolder = [];
+	for(var i = 0; i < 15; i++){
+		numHolder[i] = i;
+	}
 	for(var i = 0; i < blocksX.length;i++){
+		//keep generating num until new num
 		var num = Math.floor(Math.random() * (14 + 1));
-		//don't reuse numbers	
+		
 		newBlocksX[i] = blocksX[num];
 		newBlocksY[i] = blocksY[num];
 			//blocksX[num] = null;
@@ -232,8 +237,14 @@ function giveUp(){
 
 }
 
-function gameWon(){
+function checkIfGameWon(){
+	//blocksX = solved x
+	//blocksY = solved y
+	//gameWon()
+}
 
+function gameWon(){
+	
 }
 
 function drawBox(x,y,color,text){
