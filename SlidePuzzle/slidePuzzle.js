@@ -1,6 +1,6 @@
 var canvasContext;
-const cellWidth = 25;
-const cellHeight = 25;
+const cellWidth = 23;
+const cellHeight = 23;
 const cellRow = 4;
 const cellCol = 4;
 var blocksX = [];
@@ -9,22 +9,20 @@ var blocksNum = [];
 var movable = [];
 var xSpace = 15;
 var ySpace = 24;
-const blockInterval = 30;
+var blockInterval = 30;
+var start = true;
+var moving = false;
 
 window.onload = function(){	
 	canvas = document.getElementById('floorCanvas');
 	canvasContext = canvas.getContext("2d");
 	
-	var framesPerSecond = 5;
+	var framesPerSecond = 60;
 	initBoard();
-	movable = checkIfMovable(12);
-	console.log(movable[0]);
-	console.log(movable[1]);
-	console.log(movable[2]);
-	console.log(movable[3]);
-	
+	getRandomBoard();
+	console.log(checkIfMovable(0))
 	setInterval(function() {
-		//move(14);
+		//scramble();		
 		drawBoard();
 	} , 1000/framesPerSecond);
 	
@@ -35,40 +33,150 @@ function initBoard(){
 	var count = 1;
 	for(var i = ySpace; i < 4 * blockInterval; i += blockInterval){
 		for(var j = xSpace; j < 4 * blockInterval; j += blockInterval){
-			if(count===16){break;}
+			if(count === 16){
+				break;
+			}
 			
 			drawBox(j,i,"white",count);
 			blocksX[count - 1] = j;
 			blocksY[count - 1] = i;
-			blocksNum[count - 1] = count;
 			count++;
 		}
 	}
+	
 	canvasContext.fillStyle = "red";
 	canvasContext.fillText("Slide Puzzle!",16,16);
 	canvasContext.fillStyle = "yellow";
-	canvasContext.fillText("?",135,140);
+	canvasContext.fillText("?",137,140);
+	
 }
 
 function drawBoard(){
-
+	//clearAll();
+	can = canvas.getContext("2d");
+	can.clearRect(0,0,400,400);
 	var count = 1;
 	for(var i = 0; i < blocksX.length;i++){
-		drawBox(blocksX[i],blocksY[i],"white",count);
+		/*
+		if(i === 15){
+			break;
+		}
+		else{
+		*/
+			drawBox(blocksX[i],blocksY[i],"white",count);
+		
 		count++;
 		
 	}
 		
+	canvasContext.fillStyle = "red";
+	canvasContext.fillText("Slide Puzzle!",16,16);
+	canvasContext.fillStyle = "yellow";
+	canvasContext.fillText("?",137,140);
 	
 }
 
-function move(num){
-	var x = blocksX[num];
-	while(blocksX[num] <= x + 30){
-		blocksX[num] += 1;
+function moveBlock(num,dir){
+	if(dir === "right"){
+		var x = ((num % 4 + 1)) * blockInterval + xSpace;
+		if(blocksX[num] <= x){
+			blocksX[num] += 1;
+		}
+		
 	}
+	else if(dir === "left"){
+		var x = ( (num % 4 - 1)) * blockInterval + xSpace;
+		if(blocksX[num] >= x){
+			blocksX[num] -= 1;
+		}
+		
+	}
+	else if(dir === "up"){
+		var y = (num % 4 + 2) * blockInterval + ySpace;
+		if(blocksY[num] >= y){
+			blocksY[num] -= 1;
+		}
+		
+	}
+	else if(dir === "down"){
+		var y = ( (num % 4 + 2)) * blockInterval + ySpace;
+		if(blocksY[num] <= y){
+			blocksY[num] += 1;
+		}
+		
+	}	
 }
 
+		
+/*
+function scramble(){
+	var movArr = [];
+	
+	/*
+	for(var i = 0; i < blocksX.length; i++){
+		movArr = checkIfMovable(i);
+		if(movArr[0]){
+			moveBlock(i,"right");
+		}			
+		else if(movArr[1]){
+			moving = true;
+			moveBlock(i,"left");
+		}	 
+		else if(movArr[2]){
+			moving = true;
+			moveBlock(i,"up");
+		}
+		else if(movArr[3]){
+			moving = true;
+			moveBlock(i,"down");
+		}
+	}
+	
+	for(var i = 0; i < 15; i++){
+		var tempArr = [];
+		tempArr = checkIfMovable(i);
+		dirMove(i,tempArr[0],tempArr[1],tempArr[2],tempArr[3]);
+	}
+		
+	
+	start = false;
+}
+
+function dirMove(i,r,l,u,d){
+	//console.log(i + " " + tempArr[i])
+	if (r){
+		moveBlock(i, "right");
+	}
+	else if (l){
+		moveBlock(i, "left");	
+	
+	}
+	else if (u){
+		moveBlock(i, "up")
+	}
+	else if (d){
+		moveBlock(i, "down");
+	}
+}
+/
+*/
+
+function getRandomBoard(){
+	var newBlocksX = [];
+	var newBlocksY = [];	
+	for(var i = 0; i < blocksX.length;i++){
+		var num = Math.floor(Math.random() * (14 + 1));
+		//don't reuse numbers	
+		newBlocksX[i] = blocksX[num];
+		newBlocksY[i] = blocksY[num];
+			//blocksX[num] = null;
+			//blocksY[num] = null;
+		
+	}
+		blocksX = newBlocksX;
+		blocksY = newBlocksY;
+
+}
 function checkIfMovable(num){
 	moveRight = true;
 	moveLeft = true;
@@ -101,20 +209,18 @@ function checkIfMovable(num){
 		if(blocksX[num] + blockInterval >= blockInterval * 4 + xSpace){
 			moveRight = false;
 		}
-		else if(blocksX[num] - blockInterval <= xSpace){
+		if(blocksX[num] - blockInterval <= xSpace){
 			moveLeft = false;
 		}
 		//FIX Up TESTER
-		else if(blocksY[num] - blockInterval === 0){
-			console.log("In up tester");
+		if(blocksY[num] - blockInterval < 0){
 			moveUp = false;
 		}
 						
-		else if(blocksY[num] + blockInterval >= blockInterval * 4 + ySpace){
+		if(blocksY[num] + blockInterval >= blockInterval * 4){
 			moveDown = false;
 		}
 	}						
-						
 	movable = [moveRight,moveLeft,moveUp,moveDown];	
 	
 
@@ -137,5 +243,5 @@ function drawBox(x,y,color,text){
 	canvasContext.fillRect(x,y,cellWidth,cellHeight);
 	canvasContext.fillStyle = 'blue';
 	canvasContext.fillText(text,x + 3,y + 18);
-
+	
 }
