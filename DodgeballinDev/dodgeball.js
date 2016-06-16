@@ -121,8 +121,8 @@ function getRandomIntInclusive(min, max) {
 // Make a ball object
 //
 function Ball(speed, size){
-	this.dx = getRandomIntInclusive(speed - 2, speed + 3)*3/16;
-	this.dy = getRandomIntInclusive(speed - 2, speed + 3)*3/16;
+	this.dx = getRandomIntInclusive(speed - 2, speed + 5)*3/16;
+	this.dy = getRandomIntInclusive(speed - 2, speed + 5)*3/16;
 
 	if (Math.floor(Math.random() * 2) == 0)
 		this.dx *= -1;
