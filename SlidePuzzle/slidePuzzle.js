@@ -15,11 +15,13 @@ var blocksX = [];
 var blocksY = [];
 var blocksNum = [];
 var movable = [];
-var xSpace = 20;
+var xSpace = 10;
 var ySpace = 25;
 var blockInterval = 45;
 var start = true;
 var moving = false;
+var moveStart = 0;
+
 window.onload = function(){	
 	canvas = document.getElementById('floorCanvas');
 	canvasContext = canvas.getContext("2d");
@@ -27,14 +29,15 @@ window.onload = function(){
 	var framesPerSecond = 60;
 	initBoard();
 	getRandomBoard();
-	//setInterval(function() {
+	setInterval(function() {
 		//scramble();		
-//		drawBoard();
-//	} , 1000/framesPerSecond);
+		drawBoard();
+		
+	} , 1000/framesPerSecond);
 	
 	
 };
-
+/*
 function refreshXML() {
     'use strict';
     $.get('http://127.0.0.1:8080/', function (data) {
@@ -65,6 +68,7 @@ function refreshXML() {
         drawBoard(dataHolderArray);
     });
 }
+*/
 
 function initBoard(){
 	var count = 1;
@@ -73,14 +77,14 @@ function initBoard(){
 			if(count === 16){
 				break;
 			}
-			
+		
 			drawBox(j,i,"white",count);
 			blocksX[count - 1] = j;
 			blocksY[count - 1] = i;
 			count++;
 		}
 	}
-	
+
 	
 	
 }
@@ -97,48 +101,68 @@ function drawBoard(dataArr){
 		}
 		else{
 		*/
-			drawBox(blocksX[i],blocksY[i],"white",count);
+		drawBox(blocksX[i],blocksY[i],"white",count);
 		
 		count++;
 		
 	}
-		
 	canvasContext.fillStyle = "red";
-	canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
+	//canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
+	canvasContext.fillText("Slide Puzzle!",xSpace + 40,16);	
 	canvasContext.fillStyle = "yellow";
-	canvasContext.fillText("?",170,150);
+	canvasContext.fillText("?",180,180);
 	
 }
 
 function moveBlock(num,dir){
+	//fix resesting moveStart
 	if(dir === "right"){
-		var x = ((num % 4 + 1)) * blockInterval + xSpace;
-		if(blocksX[num] <= x){
+		var x = blockInterval;
+		if(moveStart <= x){
 			blocksX[num] += 1;
+			moveStart+=1;
+		}
+		if(moveStart === x){
+			moveStart = 0;
 		}
 		
 	}
 	else if(dir === "left"){
-		var x = ( (num % 4 - 1)) * blockInterval + xSpace;
-		if(blocksX[num] >= x){
+		var x = blockInterval;
+		if(moveStart <= x){
 			blocksX[num] -= 1;
+			moveStart+=1;
+			console.log(moveStart);
+		}
+		if(moveStart === x){
+			moveStart = 0;
 		}
 		
 	}
 	else if(dir === "up"){
-		var y = (num % 4 + 2) * blockInterval + ySpace;
-		if(blocksY[num] >= y){
+		var y = blockInterval;
+		if(moveStart <= y){
 			blocksY[num] -= 1;
+			moveStart+=1;
+			console.log(moveStart);
+		}
+		if(moveStart === y){
+			moveStart = 0;
 		}
 		
 	}
 	else if(dir === "down"){
-		var y = ( (num % 4 + 2)) * blockInterval + ySpace;
-		if(blocksY[num] <= y){
+		var y = blockInterval;
+		if(moveStart <= y){
 			blocksY[num] += 1;
+			moveStart+=1;
+			console.log(moveStart);
+		}
+		if(moveStart === y){
+			moveStart = 0;
 		}
 		
-	}	
+	}
 }
 
 		
@@ -195,19 +219,38 @@ function dirMove(i,r,l,u,d){
 /
 */
 
+function checkInArray(num,numHolder){
+	for(var i = 0; i < 15; i++){
+		if(numHolder[i] == num){
+			return true;
+		}
+	}
+	return false;
+}
+
 function getRandomBoard(){
 	var newBlocksX = [];
 	var newBlocksY = [];	
 	var numHolder = [];
+	/*
 	for(var i = 0; i < 15; i++){
 		numHolder[i] = i;
 	}
+	*/
 	for(var i = 0; i < blocksX.length;i++){
 		//keep generating num until new num
-		//var num = Math.floor(Math.random() * (14 + 1));
+		var isNewNum = false;
+		while(!isNewNum){
+			var num = Math.floor(Math.random() * (14 + 1));
+			if(!checkInArray(num,numHolder)){
+			newBlocksX[i] = blocksX[num];
+			newBlocksY[i] = blocksY[num];
+			numHolder[numHolder.length] = num;
+			console.log(numHolder);
+			isNewNum = true;
+			}
+		}	
 		
-		newBlocksX[i] = blocksX[num];
-		newBlocksY[i] = blocksY[num];
 			//blocksX[num] = null;
 			//blocksY[num] = null;
 		
