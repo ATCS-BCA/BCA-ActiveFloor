@@ -16,6 +16,7 @@ function drawObj(type, xPos, yPos, size) {
     }
 }
 */
+/*
 function refreshXML() {
     'use strict';
     $.get('http://127.0.0.1:8080/', function (data) {
@@ -46,7 +47,7 @@ function refreshXML() {
         drawBoard(dataHolderArray);
     });
 }
-
+*/
 
 $(document).ready(function () {
     'use strict';

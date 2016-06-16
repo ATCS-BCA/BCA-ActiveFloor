@@ -15,7 +15,7 @@ var blocksX = [];
 var blocksY = [];
 var blocksNum = [];
 var movable = [];
-var xSpace = 10;
+var xSpace = 25;
 var ySpace = 25;
 var blockInterval = 45;
 var start = true;
@@ -25,19 +25,19 @@ var moveStart = 0;
 window.onload = function(){	
 	canvas = document.getElementById('floorCanvas');
 	canvasContext = canvas.getContext("2d");
-	
 	var framesPerSecond = 60;
 	initBoard();
 	getRandomBoard();
+	/*
 	setInterval(function() {
 		//scramble();		
 		drawBoard();
 		
 	} , 1000/framesPerSecond);
-	
+	*/
 	
 };
-/*
+
 function refreshXML() {
     'use strict';
     $.get('http://127.0.0.1:8080/', function (data) {
@@ -53,6 +53,7 @@ function refreshXML() {
             ledPerSensorY = (ledsY / sensorsY);
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
+
         });
 				
         $(data).find('Row').each(function () {
@@ -64,11 +65,10 @@ function refreshXML() {
 				
             dataHolderArray.push(n);
         });
-			
-        drawBoard(dataHolderArray);
+		drawBoard(dataHolderArray);
     });
 }
-*/
+
 
 function initBoard(){
 	var count = 1;
@@ -94,6 +94,18 @@ function drawBoard(dataArr){
 	can = canvas.getContext("2d");
 	can.clearRect(0,0,400,400);
 	var count = 1;
+	var string = "asdfasdf";
+	//console.log(dataArr);
+	//checking for touch
+	/*
+	for(var i = 0; i < dataArr.length; i++){
+		for(j = 0; j < dataArr.length; j++){
+			if(dataArr[i][j] == "*"){
+				searchForMove(i,j);
+			}
+		}
+	}
+	*/
 	for(var i = 0; i < blocksX.length;i++){
 		/*
 		if(i === 15){
@@ -110,10 +122,12 @@ function drawBoard(dataArr){
 	//canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
 	canvasContext.fillText("Slide Puzzle!",xSpace + 40,16);	
 	canvasContext.fillStyle = "yellow";
-	canvasContext.fillText("?",180,180);
+	canvasContext.fillText("?",175,180);
 	
 }
+function searchForMove(x,y){
 
+}
 function moveBlock(num,dir){
 	//fix resesting moveStart
 	if(dir === "right"){
