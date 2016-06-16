@@ -86,6 +86,7 @@ window.onload = function()
 }
 
 function drawMain() {
+    var allFull=true;
     for (var i=0;i<3;i++){
         for (var j=0;j<3;j++){
             if (map[i][j]==0){
@@ -101,9 +102,11 @@ function drawMain() {
                 ctx.stroke();
             }else{
                 map[i][j]=-1;
+                allFull=false;
             }
         }
     }
+    if (allFull) win=true;
 }
 
 function press(a,b){
