@@ -1,0 +1,12 @@
+Sensors
+
+	XSENSORS
+		Block1:3 & 4
+		Block2:8 & 9
+		Block3:14 & 15
+		Block4:19 & 20
+	YSENSORS		
+		Block1:3 & 4
+		Block2:8 & 9
+		Block3:14 & 15
+		Block4:19 & 20

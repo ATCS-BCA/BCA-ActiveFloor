@@ -7,20 +7,24 @@ var canvas, context2D;
 
 var refreshTime = 17;
 var canvasContext;
-const cellWidth = 26;
-const cellHeight = 26;
+const cellWidth = 25;
+const cellHeight = 25;
 const cellRow = 4;
 const cellCol = 4;
 var blocksX = [];
 var blocksY = [];
 var blocksNum = [];
 var movable = [];
-var xSpace = 25;
-var ySpace = 25;
+var isMovable = true;
+var xSpace = 20;
+var ySpace = 20;
 var blockInterval = 45;
 var start = true;
 var moving = false;
 var moveStart = 0;
+var sensorArr = [2,3,7,8,13,14,18,19];
+var blocksXInit = [];
+var blocksYInit = [];
 
 window.onload = function(){	
 	canvas = document.getElementById('floorCanvas');
@@ -28,16 +32,16 @@ window.onload = function(){
 	var framesPerSecond = 60;
 	initBoard();
 	getRandomBoard();
-	/*
+	
+	
 	setInterval(function() {
 		//scramble();		
 		drawBoard();
-		
+		moveBlock(11,"right");
 	} , 1000/framesPerSecond);
-	*/
 	
 };
-
+/*
 function refreshXML() {
     'use strict';
     $.get('http://127.0.0.1:8080/', function (data) {
@@ -65,11 +69,11 @@ function refreshXML() {
 				
             dataHolderArray.push(n);
         });
+        moveStart = 0;
 		drawBoard(dataHolderArray);
     });
 }
-
-
+*/
 function initBoard(){
 	var count = 1;
 	for(var i = ySpace; i < 4 * blockInterval; i += blockInterval){
@@ -81,8 +85,12 @@ function initBoard(){
 			drawBox(j,i,"white",count);
 			blocksX[count - 1] = j;
 			blocksY[count - 1] = i;
+			
 			count++;
+
 		}
+		blocksXInit = blocksX;
+		blocksYInit = blocksY;
 	}
 
 	
@@ -92,20 +100,19 @@ function initBoard(){
 function drawBoard(dataArr){
 	//clearAll();
 	can = canvas.getContext("2d");
-	can.clearRect(0,0,400,400);
+	can.clearRect(0,0,canvas.width,canvas.height);
 	var count = 1;
-	var string = "asdfasdf";
 	//console.log(dataArr);
 	//checking for touch
-	/*
+	
 	for(var i = 0; i < dataArr.length; i++){
-		for(j = 0; j < dataArr.length; j++){
-			if(dataArr[i][j] == "*"){
-				searchForMove(i,j);
+		for(j = 0; j < dataArr[i].length; j++){
+			if(dataArr[i][j] == "*" && searchForMove(i,j) ){
+				var blockPos = findSensorBlock(i,j);
 			}
 		}
 	}
-	*/
+	
 	for(var i = 0; i < blocksX.length;i++){
 		/*
 		if(i === 15){
@@ -126,8 +133,23 @@ function drawBoard(dataArr){
 	
 }
 function searchForMove(x,y){
+	for(var i = 0; i < sensorArr.length; i++){
+		for(var j = 0; j < sensorArr.length; j++){
+			if(x === sensorArr[i] && y === sensorArr[j]){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		
+	}
+}
+
+function findSensorBlock(x,y){
 
 }
+
 function moveBlock(num,dir){
 	//fix resesting moveStart
 	if(dir === "right"){
@@ -136,9 +158,11 @@ function moveBlock(num,dir){
 			blocksX[num] += 1;
 			moveStart+=1;
 		}
+		/*
 		if(moveStart === x){
 			moveStart = 0;
 		}
+		*/
 		
 	}
 	else if(dir === "left"){
@@ -146,11 +170,9 @@ function moveBlock(num,dir){
 		if(moveStart <= x){
 			blocksX[num] -= 1;
 			moveStart+=1;
-			console.log(moveStart);
+			
 		}
-		if(moveStart === x){
-			moveStart = 0;
-		}
+		
 		
 	}
 	else if(dir === "up"){
@@ -158,25 +180,18 @@ function moveBlock(num,dir){
 		if(moveStart <= y){
 			blocksY[num] -= 1;
 			moveStart+=1;
-			console.log(moveStart);
 		}
-		if(moveStart === y){
-			moveStart = 0;
-		}
-		
-	}
+			}
 	else if(dir === "down"){
 		var y = blockInterval;
 		if(moveStart <= y){
 			blocksY[num] += 1;
 			moveStart+=1;
-			console.log(moveStart);
-		}
-		if(moveStart === y){
-			moveStart = 0;
 		}
 		
+		
 	}
+	
 }
 
 		
@@ -260,7 +275,6 @@ function getRandomBoard(){
 			newBlocksX[i] = blocksX[num];
 			newBlocksY[i] = blocksY[num];
 			numHolder[numHolder.length] = num;
-			console.log(numHolder);
 			isNewNum = true;
 			}
 		}	
@@ -273,7 +287,7 @@ function getRandomBoard(){
 		blocksY = newBlocksY;
 
 }
-function checkIfMovable(num){
+function checkDirMove(num){
 	moveRight = true;
 	moveLeft = true;
 	moveUp = true;
@@ -322,7 +336,48 @@ function checkIfMovable(num){
 
 	return movable ;
 }
+function checkIfMovable(num){
+	isMovable = true;
+	for(var i = 0; i < blocksX.length;i++){
+		//Checking for a block on the right
+		if(blocksX[num] + blockInterval === blocksX[i] && blocksY[num] === blocksY[i]){
+			
+			isMovable = false;	
+			
+		}
+		else if(blocksX[num] - blockInterval === blocksX[i] && blocksY[num] === blocksY[i]){
+			
+			isMovable = false;
+		}
+		else if(blocksY[num] - blockInterval === blocksY[i] && blocksX[num] === blocksX[i]){
+			
+			isMovable = false;
 
+		}
+		else if(blocksY[num] + blockInterval === blocksY[i] && blocksX[num] === blocksX[i]){
+			
+			isMovable = false;
+		
+		}
+
+		//Checking if off board
+		if(blocksX[num] + blockInterval >= blockInterval * 4 + xSpace){
+			isMovable = false;
+		}
+		if(blocksX[num] - blockInterval <= xSpace){
+			isMovable = false;
+		}
+		if(blocksY[num] - blockInterval < 0){
+			isMovable = false;
+		}
+						
+		if(blocksY[num] + blockInterval >= blockInterval * 4){
+			isMovable = false;
+		}
+	}						
+
+	return isMovable;
+}
 
 function giveUp(){
 
