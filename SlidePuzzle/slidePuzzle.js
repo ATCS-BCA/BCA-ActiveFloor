@@ -22,8 +22,11 @@ var blockInterval = 45;
 var start = true;
 var moving = false;
 var moveStart = 0;
+var sensorArrSplit = ["2,3","7,8","13,14","18,19"];
 var sensorArr = [2,3,7,8,13,14,18,19];
-var blocksXInit = [];
+var sensorArr1 = [2,7,13,18];
+var sensorArr2 = [3,8,14,19];
+vafvbhr blocksXInit = [];
 var blocksYInit = [];
 
 window.onload = function(){	
@@ -32,12 +35,12 @@ window.onload = function(){
 	var framesPerSecond = 60;
 	initBoard();
 	getRandomBoard();
-	
-	
+	console.log(blocksXInit);
+	console.log(blocksYInit);
 	setInterval(function() {
 		//scramble();		
 		drawBoard();
-		moveBlock(11,"right");
+		
 	} , 1000/framesPerSecond);
 	
 };
@@ -89,8 +92,7 @@ function initBoard(){
 			count++;
 
 		}
-		blocksXInit = blocksX;
-		blocksYInit = blocksY;
+		
 	}
 
 	
@@ -102,13 +104,15 @@ function drawBoard(dataArr){
 	can = canvas.getContext("2d");
 	can.clearRect(0,0,canvas.width,canvas.height);
 	var count = 1;
+	var blockX;
+	var blockY;
 	//console.log(dataArr);
 	//checking for touch
 	
 	for(var i = 0; i < dataArr.length; i++){
 		for(j = 0; j < dataArr[i].length; j++){
-			if(dataArr[i][j] == "*" && searchForMove(i,j) ){
-				var blockPos = findSensorBlock(i,j);
+			if(dataArr[i][j] == "*" && searchForMove(j,i) ){
+				blockX,blockY = findSensorBlock(j,i);
 			}
 		}
 	}
@@ -127,9 +131,9 @@ function drawBoard(dataArr){
 	}
 	canvasContext.fillStyle = "red";
 	//canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
-	canvasContext.fillText("Slide Puzzle!",xSpace + 40,16);	
+	canvasContext.fillText("Slide Puzzle!",canvas.width/4,canvas.height/14);	
 	canvasContext.fillStyle = "yellow";
-	canvasContext.fillText("?",175,180);
+	canvasContext.fillText("?",canvas.width*10/11,canvas.height*10/11);
 	
 }
 function searchForMove(x,y){
@@ -147,7 +151,19 @@ function searchForMove(x,y){
 }
 
 function findSensorBlock(x,y){
-
+	var tempX;
+	var tempY;
+	for(var i = 0; i < sensorArr1.length;i++){
+		if(x === sensorArr1[i] || y === sensorArr2[i]){
+			tempX = i + 1;
+		}
+		if(y === sensorArr1[j] || y ===sensorArr2[i]){
+			tempY = i + 1;
+		}
+	}
+	tempX = (tempX * blockInterval) + xSpace;
+	tempY = (tempY * blockInterval) + ySpace;	
+	return tempX,tempY;
 }
 
 function moveBlock(num,dir){
@@ -285,6 +301,8 @@ function getRandomBoard(){
 	}
 		blocksX = newBlocksX;
 		blocksY = newBlocksY;
+		blocksXInit = blocksX;
+		blocksYInit = blocksY;
 
 }
 function checkDirMove(num){
