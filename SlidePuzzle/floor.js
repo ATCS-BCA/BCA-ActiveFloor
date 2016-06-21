@@ -16,11 +16,12 @@ function drawObj(type, xPos, yPos, size) {
     }
 }
 */
-
+/*
 function refreshXML() {
     'use strict';
     $.get('http://127.0.0.1:8080/', function (data) {
         dataHolderArray = [];
+                
                 
         $(data).find('BLFloor').each(function () {
             $item = $(this);
@@ -47,7 +48,7 @@ function refreshXML() {
         drawBoard(dataHolderArray);
     });
 }
-
+*/
 $(document).ready(function () {
     'use strict';
     
