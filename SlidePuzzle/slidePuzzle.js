@@ -74,7 +74,7 @@ function refreshXML() {
             dataHolderArray.push(n);
         });
         moveStart = 0;
-		drawBoard(dataHolderArray);
+        drawBoard(dataHolderArray);
     });
 }
 
@@ -126,10 +126,10 @@ function drawBoard(dataArr){
 	var dirStr = "";
 	//console.log(dataArr);
 	//checking for touch
-	
+
 	for(var i = 0; i < dataArr.length; i++){
 		for(var j = 0; j < dataArr[i].length; j++){
-			if(dataArr[i][j] == "*" && searchForMove(j,i) ){
+			if(dataArr[i][j] === "*" && searchForMove(j,i) ){
 				blockX,blockY = findSensorBlock(j,i);
 				blockNum = findBlockNum(blockX,blockY);
 				if(checkIfMovable(blockNum)){
@@ -149,6 +149,7 @@ function drawBoard(dataArr){
 					moveBlock(blockNum,dirStr);
 
 				}
+				
 				
 			}
 		}
@@ -190,7 +191,7 @@ function findSensorBlock(x,y){
 		if(x === sensorArr1[i] || x === sensorArr2[i]){
 			tempX = i + 1;
 		}
-		if(y === sensorArr1[j] || y ===sensorArr2[i]){
+		if(y === sensorArr1[i] || y ===sensorArr2[i]){
 			tempY = i + 1;
 		}
 	}
