@@ -122,35 +122,16 @@ function drawBoard(dataArr){
 	var blockX;
 	var blockY;
 	var blockNum;
-	var blockMoveDir = [];
-	var dirStr = "";
 	//console.log(dataArr);
 	//checking for touch
 
 	for(var i = 0; i < dataArr.length; i++){
 		for(var j = 0; j < dataArr[i].length; j++){
 			if(dataArr[i][j] === "*" && searchForMove(j,i) ){
-				blockX,blockY = findSensorBlock(j,i);
-				blockNum = findBlockNum(blockX,blockY);
+				blockNum = findSensorBlock(j,i);
 				if(checkIfMovable(blockNum)){
-					blockMoveDir = checkDirMove(blockNum);
-					if(blockMoveDir[0]){
-						dirStr = "right";
-					}
-					else if(blockMoveDir[1]){
-						dirStr = "left";
-					}
-					else if(blockMoveDir[2]){
-						dirStr = "up";
-					}
-					else if(blockMoveDir[3]){
-						dirStr = "down";
-					}
-					moveBlock(blockNum,dirStr);
-
-				}
-				
-				
+					moveBlock(blockNum);
+				}	
 			}
 		}
 	}
@@ -176,17 +157,18 @@ function searchForMove(x,y){
 			if(x === sensorArr[i] && y === sensorArr[j]){
 				return true;
 			}
-			else{
-				return false;
-			}
+				
 		}
 		
 	}
+	return false;			
 }
 
 function findSensorBlock(x,y){
 	var tempX;
 	var tempY;
+	var block;
+
 	for(var i = 0; i < sensorArr1.length;i++){
 		if(x === sensorArr1[i] || x === sensorArr2[i]){
 			tempX = i + 1;
@@ -197,24 +179,37 @@ function findSensorBlock(x,y){
 	}
 	tempX = (tempX * blockInterval) + xSpace;
 	tempY = (tempY * blockInterval) + ySpace;	
-	
-	return tempX,tempY;
+	block = findBlockNum(tempX,tempY);
+				
+	return block;
 }
 
-function moveBlock(num,dir){
+function moveBlock(num){
 	//fix resesting moveStart
+	var blockMoveDir = [];
+	var dir = "";
+
+	blockMoveDir = checkDirMove(blockNum);
+	
+	if(blockMoveDir[0]){
+		dir = "right";
+	}
+	else if(blockMoveDir[1]){
+		dir = "left";
+	}
+	else if(blockMoveDir[2]){
+		dir = "up";
+	}
+	else if(blockMoveDir[3]){
+		dir = "down";
+	}
+					
 	if(dir === "right"){
 		var x = blockInterval;
 		if(moveStart <= x){
 			blocksX[num] += 1;
 			moveStart+=1;
 		}
-		/*
-		if(moveStart === x){
-			moveStart = 0;
-		}
-		*/
-		
 	}
 	else if(dir === "left"){
 		var x = blockInterval;
