@@ -6,63 +6,39 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 80;
+var refreshTime = 1000/60;
 
 function refresh(){
-    var a = document.createElement('a');
-    a.id="restart";
-    a.href = "pong.html";
-    document.body.appendChild(a);
+    if(active == false){
+        var a = document.createElement('a');
+        a.id="restart";
+        a.title = "Restart";
+        a.href = "tictactoe.html";
+        document.body.appendChild(a);
+        
 
+        document.getElementById('restart').click();
+        done=false;
 
-    document.getElementById('restart').click();
+    }
 }
 
 function initCanvas(arr) {
     'use strict';
-    var left1=0;
-    var right1=0;
-    var left2=0;
-    var right2=0;
     var middle=0;
 
     for (var i=0;i<arr.length;i++){
         for (var j=0;j<arr[i].length;j++){
 
             if (arr[i][j]==="*"){
-                if (i>=8 && i<=16 && j>=8 && j<=16){
-                    middle++;
-                }else{
-                    if (i<12){
-                        if (j<12) left1++;
-                        else right1++;
-                    }else{
-                        if (j<12) left2++;
-                        else right2++;    
-                    }
-                }
-                
+                if (i>=8 && i<=16 && j>=8 && j<=16) middle++;
+                press(Math.floor(i/8),Math.floor(j/8));
             }
         }
     }
-    console.log(middle);
-    if (middle>6) refresh();
 
-    var winner1=-1;
-    if (Math.abs(left1-right1)>=3){
-        if (left1>right1) winner1=0;
-        else winner1=1;
-    }
+    if (middle>2) refresh();
 
-    var winner2=-1;
-    if (Math.abs(left2-right2)>=3){
-        if (left2>right2) winner2=0;
-        else winner2=1;
-    }
-
-//    console.log(winner1+", "+winner2);
-//    console.log(left1+", "+right1+", "+left2+", "+right2);
-    press(winner2,winner1);
 }
 
 function refreshXML() {

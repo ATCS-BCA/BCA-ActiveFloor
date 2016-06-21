@@ -117,22 +117,24 @@ function initCanvas(arr) {
 
     var winner=Math.max(up,down,left,right);
     var key;
-    switch (winner){
-       case 0:
-           key=-1;
-           break;
-        case up:
-            key=38;
-            break;
-        case down:
-            key=40;
-            break;
-        case left:
-            key=37;
-            break;
-        case right:
-            key=39;
-            break;
+    if (winner>1){
+        switch (winner){
+           case 0:
+               key=-1;
+               break;
+            case up:
+                key=38;
+                break;
+            case down:
+                key=40;
+                break;
+            case left:
+                key=37;
+                break;
+            case right:
+                key=39;
+                break;
+        }
     }
 
     if (key!=-1)
@@ -143,7 +145,7 @@ function initCanvas(arr) {
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
-    $.get('http://10.31.34.74:8080/', function (data) {
+    $.get('http://10.31.34.221:8080/', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {

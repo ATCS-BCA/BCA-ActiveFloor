@@ -7,32 +7,43 @@ var canvas, context2D;
 
 var refreshTime = 17;
 var canvasContext;
-const cellWidth = 26;
-const cellHeight = 26;
+const cellWidth = 25;
+const cellHeight = 25;
 const cellRow = 4;
 const cellCol = 4;
 var blocksX = [];
 var blocksY = [];
 var blocksNum = [];
 var movable = [];
+var isMovable = true;
 var xSpace = 20;
-var ySpace = 25;
+var ySpace = 20;
 var blockInterval = 45;
 var start = true;
 var moving = false;
+var moveStart = 0;
+var sensorArrSplit = ["2,3","7,8","13,14","18,19"];
+var sensorArr = [2,3,7,8,13,14,18,19];
+var sensorArr1 = [2,7,13,18];
+var sensorArr2 = [3,8,14,19];
+var blocksXInit = [];
+var blocksYInit = [];
+var blocksXSolved = [];
+var blocksYSolved = [];
+
 window.onload = function(){	
 	canvas = document.getElementById('floorCanvas');
 	canvasContext = canvas.getContext("2d");
-	
 	var framesPerSecond = 60;
 	initBoard();
 	getRandomBoard();
-	//setInterval(function() {
+	/*
+	setInterval(function() {
 		//scramble();		
-//		drawBoard();
-//	} , 1000/framesPerSecond);
-	
-	
+		drawBoard();
+		
+	} , 1000/framesPerSecond);
+	*/
 };
 
 function refreshXML() {
@@ -50,6 +61,7 @@ function refreshXML() {
             ledPerSensorY = (ledsY / sensorsY);
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
+
         });
 				
         $(data).find('Row').each(function () {
@@ -61,7 +73,7 @@ function refreshXML() {
 				
             dataHolderArray.push(n);
         });
-			
+        moveStart = 0;
         drawBoard(dataHolderArray);
     });
 }
@@ -73,72 +85,159 @@ function initBoard(){
 			if(count === 16){
 				break;
 			}
-			
+		
 			drawBox(j,i,"white",count);
 			blocksX[count - 1] = j;
 			blocksY[count - 1] = i;
+			
 			count++;
+
+
+
 		}
+		
 	}
+	blocksXSolved = blocksX;
+	blocksYSolved = blocksY;
 	
 	
-	
+}
+
+function findBlockNum(x,y){
+	for(var i = 0; i < blocksX.length; i++){
+		for(var j = 0; j < blocksY.length; j++){
+			if(x === blocksX[i] && y === blocksY[i]){
+				return i;
+			}	
+		}
+		
+	}
 }
 
 function drawBoard(dataArr){
 	//clearAll();
 	can = canvas.getContext("2d");
-	can.clearRect(0,0,400,400);
+	can.clearRect(0,0,canvas.width,canvas.height);
 	var count = 1;
-	for(var i = 0; i < blocksX.length;i++){
-		/*
-		if(i === 15){
-			break;
+	var blockX;
+	var blockY;
+	var blockNum;
+	//console.log(dataArr);
+	//checking for touch
+
+	for(var i = 0; i < dataArr.length; i++){
+		for(var j = 0; j < dataArr[i].length; j++){
+			if(dataArr[i][j] === "*" && searchForMove(j,i) ){
+				blockNum = findSensorBlock(j,i);
+				if(checkIfMovable(blockNum)){
+					moveBlock(blockNum);
+				}	
+			}
 		}
-		else{
-		*/
-			drawBox(blocksX[i],blocksY[i],"white",count);
+	}
+	
+	for(var i = 0; i < blocksX.length;i++){
+		drawBox(blocksX[i],blocksY[i],"white",count);
 		
 		count++;
 		
 	}
-		
+	checkIfGameWon();
+
 	canvasContext.fillStyle = "red";
-	canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
+	//canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
+	canvasContext.fillText("Slide Puzzle!",canvas.width/4,canvas.height/14);	
 	canvasContext.fillStyle = "yellow";
-	canvasContext.fillText("?",170,150);
+	canvasContext.fillText("?",canvas.width*10/11,canvas.height*10/11);
 	
 }
-
-function moveBlock(num,dir){
-	if(dir === "right"){
-		var x = ((num % 4 + 1)) * blockInterval + xSpace;
-		if(blocksX[num] <= x){
-			blocksX[num] += 1;
+function searchForMove(x,y){
+	for(var i = 0; i < sensorArr.length; i++){
+		for(var j = 0; j < sensorArr.length; j++){
+			if(x === sensorArr[i] && y === sensorArr[j]){
+				return true;
+			}
+				
 		}
 		
 	}
-	else if(dir === "left"){
-		var x = ( (num % 4 - 1)) * blockInterval + xSpace;
-		if(blocksX[num] >= x){
-			blocksX[num] -= 1;
+	return false;			
+}
+
+function findSensorBlock(x,y){
+	var tempX;
+	var tempY;
+	var block;
+
+	for(var i = 0; i < sensorArr1.length;i++){
+		if(x === sensorArr1[i] || x === sensorArr2[i]){
+			tempX = i + 1;
 		}
+		if(y === sensorArr1[i] || y ===sensorArr2[i]){
+			tempY = i + 1;
+		}
+	}
+	tempX = (tempX * blockInterval) + xSpace;
+	tempY = (tempY * blockInterval) + ySpace;	
+	block = findBlockNum(tempX,tempY);
+				
+	return block;
+}
+
+function moveBlock(num){
+	//fix resesting moveStart
+	var blockMoveDir = [];
+	var dir = "";
+
+	blockMoveDir = checkDirMove(blockNum);
+	
+	if(blockMoveDir[0]){
+		dir = "right";
+	}
+	else if(blockMoveDir[1]){
+		dir = "left";
+	}
+	else if(blockMoveDir[2]){
+		dir = "up";
+	}
+	else if(blockMoveDir[3]){
+		dir = "down";
+	}
+					
+	if(dir === "right"){
+		var x = blockInterval;
+		if(moveStart <= x){
+			blocksX[num] += 1;
+			moveStart+=1;
+		}
+	}
+	else if(dir === "left"){
+		var x = blockInterval;
+		if(moveStart <= x){
+			blocksX[num] -= 1;
+			moveStart+=1;
+			
+		}
+		
 		
 	}
 	else if(dir === "up"){
-		var y = (num % 4 + 2) * blockInterval + ySpace;
-		if(blocksY[num] >= y){
+		var y = blockInterval;
+		if(moveStart <= y){
 			blocksY[num] -= 1;
+			moveStart+=1;
 		}
+			}
+	else if(dir === "down"){
+		var y = blockInterval;
+		if(moveStart <= y){
+			blocksY[num] += 1;
+			moveStart+=1;
+		}
+		
 		
 	}
-	else if(dir === "down"){
-		var y = ( (num % 4 + 2)) * blockInterval + ySpace;
-		if(blocksY[num] <= y){
-			blocksY[num] += 1;
-		}
-		
-	}	
+	
 }
 
 		
@@ -195,28 +294,48 @@ function dirMove(i,r,l,u,d){
 /
 */
 
+function checkInArray(num,numHolder){
+	for(var i = 0; i < 15; i++){
+		if(numHolder[i] == num){
+			return true;
+		}
+	}
+	return false;
+}
+
 function getRandomBoard(){
 	var newBlocksX = [];
 	var newBlocksY = [];	
 	var numHolder = [];
+	/*
 	for(var i = 0; i < 15; i++){
 		numHolder[i] = i;
 	}
+	*/
 	for(var i = 0; i < blocksX.length;i++){
 		//keep generating num until new num
-		//var num = Math.floor(Math.random() * (14 + 1));
+		var isNewNum = false;
+		while(!isNewNum){
+			var num = Math.floor(Math.random() * (14 + 1));
+			if(!checkInArray(num,numHolder)){
+			newBlocksX[i] = blocksX[num];
+			newBlocksY[i] = blocksY[num];
+			numHolder[numHolder.length] = num;
+			isNewNum = true;
+			}
+		}	
 		
-		newBlocksX[i] = blocksX[num];
-		newBlocksY[i] = blocksY[num];
 			//blocksX[num] = null;
 			//blocksY[num] = null;
 		
-	}
+	}	
 		blocksX = newBlocksX;
 		blocksY = newBlocksY;
+		blocksXInit = blocksX;
+		blocksYInit = blocksY;
 
 }
-function checkIfMovable(num){
+function checkDirMove(num){
 	moveRight = true;
 	moveLeft = true;
 	moveUp = true;
@@ -265,16 +384,60 @@ function checkIfMovable(num){
 
 	return movable ;
 }
+function checkIfMovable(num){
+	isMovable = true;
+	for(var i = 0; i < blocksX.length;i++){
+		//Checking for a block on the right
+		if(blocksX[num] + blockInterval === blocksX[i] && blocksY[num] === blocksY[i]){
+			
+			isMovable = false;	
+			
+		}
+		else if(blocksX[num] - blockInterval === blocksX[i] && blocksY[num] === blocksY[i]){
+			
+			isMovable = false;
+		}
+		else if(blocksY[num] - blockInterval === blocksY[i] && blocksX[num] === blocksX[i]){
+			
+			isMovable = false;
 
+		}
+		else if(blocksY[num] + blockInterval === blocksY[i] && blocksX[num] === blocksX[i]){
+			
+			isMovable = false;
+		
+		}
+
+		//Checking if off board
+		if(blocksX[num] + blockInterval >= blockInterval * 4 + xSpace){
+			isMovable = false;
+		}
+		if(blocksX[num] - blockInterval <= xSpace){
+			isMovable = false;
+		}
+		if(blocksY[num] - blockInterval < 0){
+			isMovable = false;
+		}
+						
+		if(blocksY[num] + blockInterval >= blockInterval * 4){
+			isMovable = false;
+		}
+	}						
+
+	return isMovable;
+}
 
 function giveUp(){
 
 }
 
 function checkIfGameWon(){
-	//blocksX = solved x
-	//blocksY = solved y
-	//gameWon()
+	for(var i = 0; i < blocksX; i++){
+		if(blocksX[i] !== blocksXSolved[i] || blocksY[i] !== blocksYSolved[i]){
+			return false;
+		}
+	}
+	return true;
 }
 
 function gameWon(){
