@@ -1,64 +1,12 @@
-var score = 0;
-var active = true;
-var speed = 3;
-var level = 0;
 var size = 10;
-var prodPause = 5;
-var game = false;
 var balls = [];
-var over = false;
-var startBtn, restartBtn;
-var intervals = [];
 var spawner;
-var firstRun = true;
-var contact = false;
-var screen = 0;
-var spawnTimer;
 
 //
-// Start Menu
+// Draw the survivalBoard (AKA the spawner)
 //
-function menu(){
-	screen = 0;
-	clear();
-	active = true;
-	balls = [];
-
-	context2D.fillStyle = '#2ecc71';
-    context2D.font = '24px sans-serif';
-    
-    context2D.fillText('DODGEBALL', ((canvas.width / 2) - 
-    	(context2D.measureText('DODGEBALL').width / 2)), 50);
-
-	context2D.fillStyle = '#e67e22';
-
-    context2D.font = '12px sans-serif';
-    context2D.strokeStyle = 'blue';
-    context2D.fillText('Start', 
-    	startBtn.x, startBtn.y);
-	context2D.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh);
-
-    setTimeout(
-    intervals.push(setInterval(function(){
-    	if (game){
-    		clearIntervals();
-    		start();
-    	}
-    }, 10)), 1000);
-}
-
-//
-// Clear the screen
-//
-function clear(){
-	context2D.clearRect(0,0,canvas.width, canvas.height);
-}
-
-//
-// Draw the board (AKA the spawner)
-//
-function board(){
-	context2D.strokeStyle = '#3498db';
+function survivalBoard(){
+	context2D.strokeStyle = spawner.strokeColor;
 	context2D.beginPath();
 	context2D.arc(spawner.x, spawner.y, spawner.radius, 0, Math.PI * 2);
 	context2D.stroke();
@@ -70,51 +18,9 @@ function board(){
 // Draw the time until new spawn
 //
 function spawnTime(){
-	context2D.fillStyle = 'white';
-	context2D.fillText(spawnTimer, spawner.x - context2D.measureText(spawnTimer).width / 2, spawner.y  + 5);
-}
-
-//
-// clear all the events running
-//
-function clearIntervals(){
-	for (var i = 0; i < intervals.length; i++)
-		clearInterval(intervals[i]);
-
-	intervals = [];
-}
-
-//
-// Show gameOver screen
-//
-function gameOver(){
-	screen = 3;
-	clearIntervals();
-
-	context2D.fillStyle = 'red';
-    context2D.font = '24px sans-serif';
-    
-    context2D.fillText('Game Over!', ((canvas.width / 2) - (context2D.measureText('Game Over!').width / 2)), 50);
-
-    context2D.font = '12px sans-serif';
-    context2D.fillText('Your Score Was: ' + score, 
-    	((canvas.width / 2) - (context2D.measureText('Your Score Was: ' + score).width / 2)), 70);
-    
-    context2D.strokeStyle = '#3498db';
-    context2D.fillText('Restart', restartBtn.x, restartBtn.y);
-    context2D.strokeRect(restartBtn.bx, restartBtn.by, restartBtn.bw, restartBtn.bh);
-
-	game = false;
-}
-
-//
-// get Random number from min to max inclusive
-//
-function getRandomIntInclusive(min, max) {
-	x = Math.floor(Math.random() * (max - min + 1)) + min;
-	if (x == 0)
-		x = getRandomIntInclusive(min, max);
-	return x;
+	context2D.fillStyle = spawner.fillColor;
+	context2D.fillText(spawner.timer, 
+		spawner.x - context2D.measureText(spawner.timer).width / 2, spawner.y  + 5);
 }
 
 //
@@ -270,19 +176,17 @@ function updateSpawnCollision(b1, b2){
 }
 
 //
-// animate the balls
+// animate the balls in survival mode
 //
 function animate(){
 	'use strict';
-	if (active == false){
+	if (!active){
 		clear();
-		game = false;
+		game = -1;
 		over = true;
+		screen = 3;
 		gameOver();
 		return;
-	}else{
-		over = false;
-		game = true;
 	}
 
 	//update
@@ -320,7 +224,7 @@ function animate(){
 	//prepare for the next draw
 	context2D.fillStyle = '#000000';
 	clear();
-	board();
+	survivalBoard();
 
 	//draw the ball
 	for (var i = 0; i < balls.length; i++){
@@ -333,7 +237,7 @@ function animate(){
 //
 // Start the game
 //
-function startSurvival(){
+function start(){
 	screen = 1;
 	score = 0;
 	active = true;
@@ -343,18 +247,19 @@ function startSurvival(){
 	balls = [];
 	game = true;
 	over = false;
-	spawnTimer = 3;
+	spawner.timer = 3;
+	spawner.maxTime = 8;
 
 	clearIntervals();
 
 	clear();
-	board();
+	survivalBoard();
 
-	//after every prodPause seconds, spawn it and update the timer
+	//after every spawner.maxTime seconds, spawn it and update the timer
 	intervals.push(setInterval(function(){
-		spawnTimer--;
-		if (spawnTimer < 0){
-			spawnTimer = prodPause;
+		spawner.timer--;
+		if (spawner.timer < 0){
+			spawner.timer = spawner.maxTime;
 			addBall(speed, Math.floor(Math.random() * (5)) + size - 2);
 		}
 	}, 1000));
