@@ -105,11 +105,10 @@ function initBoard(){
 
 function findBlockNum(x,y){
 	for(var i = 0; i < blocksX.length; i++){
-		for(var j = 0; j < blocksY.length; j++){
-			if(x === blocksX[i] && y === blocksY[i]){
-				return i;
-			}	
-		}
+		if(x === blocksX[i] && y === blocksY[i]){
+			return i;
+		}	
+		
 		
 	}
 }
@@ -123,8 +122,9 @@ function drawBoard(dataArr){
 	var blockY;
 	var blockNum;
 	//console.log(dataArr);
-	//checking for touch
 
+	
+	//checking for touch
 	for(var i = 0; i < dataArr.length; i++){
 		for(var j = 0; j < dataArr[i].length; j++){
 			if(dataArr[i][j] === "*" && searchForMove(j,i) ){
@@ -173,7 +173,7 @@ function findSensorBlock(x,y){
 		if(x === sensorArr1[i] || x === sensorArr2[i]){
 			tempX = i + 1;
 		}
-		if(y === sensorArr1[i] || y ===sensorArr2[i]){
+		if(y === sensorArr1[i] || y === sensorArr2[i]){
 			tempY = i + 1;
 		}
 	}
@@ -215,11 +215,8 @@ function moveBlock(num){
 		var x = blockInterval;
 		if(moveStart <= x){
 			blocksX[num] -= 1;
-			moveStart+=1;
-			
+			moveStart+=1;	
 		}
-		
-		
 	}
 	else if(dir === "up"){
 		var y = blockInterval;
@@ -227,15 +224,14 @@ function moveBlock(num){
 			blocksY[num] -= 1;
 			moveStart+=1;
 		}
-			}
+	}
 	else if(dir === "down"){
 		var y = blockInterval;
 		if(moveStart <= y){
 			blocksY[num] += 1;
 			moveStart+=1;
 		}
-		
-		
+			
 	}
 	
 }
@@ -415,7 +411,7 @@ function checkIfMovable(num){
 		if(blocksX[num] - blockInterval <= xSpace){
 			isMovable = false;
 		}
-		if(blocksY[num] - blockInterval < 0){
+		if(blocksY[num] - blockInterval <= 0){
 			isMovable = false;
 		}
 						
