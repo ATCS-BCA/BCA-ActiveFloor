@@ -27,8 +27,8 @@ function spawnTime(){
 // Make a ball object
 //
 function Ball(speed, size){
-	this.dx = getRandomIntInclusive(speed - 2, speed + 5)*3/16;
-	this.dy = getRandomIntInclusive(speed - 2, speed + 5)*3/16;
+	this.dx = getRandomIntInclusive(speed, speed + 10)*3/16;
+	this.dy = getRandomIntInclusive(speed, speed + 10)*3/16;
 
 	if (Math.floor(Math.random() * 2) == 0)
 		this.dx *= -1;
@@ -248,7 +248,7 @@ function start(){
 	game = true;
 	over = false;
 	spawner.timer = 3;
-	spawner.maxTime = 8;
+	spawner.maxTime = 5;
 
 	clearIntervals();
 
@@ -265,4 +265,17 @@ function start(){
 	}, 1000));
 
 	requestAnimationFrame(animate);
+}
+
+//
+// Check if player coordinates are inside a ball
+//
+function checkPlayerHit(x, y){
+	for (var i = 0; i < balls.length; i++){
+		if (Math.pow(x - balls[i].x, 2) + Math.pow(y - balls[i].y, 2)
+			<= Math.pow(balls[i].radius, 2)){
+			active = false;
+			game = -1;
+		}
+	}
 }

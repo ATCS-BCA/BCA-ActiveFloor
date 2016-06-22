@@ -30,6 +30,8 @@ var blocksXInit = [];
 var blocksYInit = [];
 var blocksXSolved = [];
 var blocksYSolved = [];
+var blockNum;
+
 
 window.onload = function(){	
 	canvas = document.getElementById('floorCanvas');
@@ -102,7 +104,8 @@ function initBoard(){
 
 function findBlockNum(x,y){
 	for(var i = 0; i < blocksX.length; i++){
-		if(x === blocksX[i] && y === blocksY[i]){
+		if(x === (blocksX[i] ) && y === blocksY[i]){
+			
 			return i;
 		}	
 		
@@ -112,12 +115,9 @@ function findBlockNum(x,y){
 
 function drawBoard(dataArr){
 	//clearAll();
-	can = canvas.getContext("2d");
-	can.clearRect(0,0,canvas.width,canvas.height);
 	var count = 1;
 	var blockX;
 	var blockY;
-	var blockNum;
 	//console.log(dataArr);
 
 	
@@ -126,12 +126,17 @@ function drawBoard(dataArr){
 		for(var j = 0; j < dataArr[i].length; j++){
 			if(dataArr[i][j] === "*" && searchForMove(j,i) ){
 				blockNum = findSensorBlock(j,i);
-				if(checkIfMovable(blockNum)){
+				moveBlockSimple(blockNum);
+				//break;
+				/*if(checkIfMovable(blockNum)){
 					moveBlockSimple(blockNum);
-				}	
+					break;
+				}*/	
 			}
 		}
 	}
+	can = canvas.getContext("2d");
+	can.clearRect(0,0,canvas.width,canvas.height);
 	
 	for(var i = 0; i < blocksX.length;i++){
 		drawBox(blocksX[i],blocksY[i],"white",count);
@@ -168,16 +173,15 @@ function findSensorBlock(x,y){
 
 	for(var i = 0; i < sensorArr1.length;i++){
 		if(x === sensorArr1[i] || x === sensorArr2[i]){
-			tempX = i + 1;
+			tempX = i;
 		}
 		if(y === sensorArr1[i] || y === sensorArr2[i]){
-			tempY = i + 1;
+			tempY = i;
 		}
 	}
 	tempX = (tempX * blockInterval) + xSpace;
 	tempY = (tempY * blockInterval) + ySpace;	
 	block = findBlockNum(tempX,tempY);
-				
 	return block;
 }
 
@@ -237,8 +241,7 @@ function moveBlockSimple(num){
 	//fix resesting moveStart
 	var blockMoveDir = [];
 	var dir = "";
-
-	blockMoveDir = checkDirMove(blockNum);
+	blockMoveDir = checkDirMove(num);
 	
 	if(blockMoveDir[0]){
 		dir = "right";
@@ -252,7 +255,8 @@ function moveBlockSimple(num){
 	else if(blockMoveDir[3]){
 		dir = "down";
 	}
-					
+
+
 	if(dir === "right"){
 		blocksX[num] += blockInterval;	
 	}
@@ -396,7 +400,7 @@ function checkDirMove(num){
 		if(blocksX[num] + blockInterval >= blockInterval * 4 + xSpace){
 			moveRight = false;
 		}
-		if(blocksX[num] - blockInterval <= xSpace){
+		if(blocksX[num] - blockInterval < xSpace){
 			moveLeft = false;
 		}
 		//FIX Up TESTER

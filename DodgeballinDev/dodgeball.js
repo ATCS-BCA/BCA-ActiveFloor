@@ -32,16 +32,22 @@ function menu(){
     context2D.font = '12px sans-serif';
 
     context2D.strokeStyle = survivalBtn.strokeColor;
+    context2D.fillStyle = survivalBtn.fillColor;
     context2D.fillText(survivalBtn.string, 
     	survivalBtn.x, survivalBtn.y);
 	context2D.strokeRect(survivalBtn.bx, survivalBtn.by, survivalBtn.bw, survivalBtn.bh);
+
+    context2D.strokeStyle = laserBtn.strokeColor;
+    context2D.fillStyle = laserBtn.fillColor;
+    context2D.fillText(laserBtn.string, 
+    	laserBtn.x, laserBtn.y);
+	context2D.strokeRect(laserBtn.bx, laserBtn.by, laserBtn.bw, laserBtn.bh);
 
     setTimeout(
     intervals.push(setInterval(function(){
     	if (game != -1){
     		clearIntervals();
     		chooseMode();
-    		start();
     	}
     }, 10)), 1000);
 }
@@ -50,14 +56,18 @@ function menu(){
 // 
 //
 function chooseMode(){
+	var head = document.getElementsByTagName('head')[0];
 	script = document.createElement("script");
 	script.type = "text/javascript";
+	script.onload = function() {
+		start();
+	}
 	if (game == 0){//survival
 		script.src = survivalBtn.file;
 	} else if (game == 1){//laser
 		script.src = laserBtn.file;
 	}
-	document.head.appendChild(script);
+	head.appendChild(script);
 }
 
 //
@@ -116,6 +126,13 @@ function getRandomIntInclusive(min, max) {
 	if (x == 0)
 		x = getRandomIntInclusive(min, max);
 	return x;
+}
+
+//
+// Returns a random number between min (inclusive) and max (exclusive)
+//
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
 //

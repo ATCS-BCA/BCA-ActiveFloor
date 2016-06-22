@@ -86,7 +86,7 @@ function setObjects(){
         y: 160,
         w: context2D.measureText('Survival').width,
         h: 15,
-        bx: (canvas.width / 2) - (context2D.measureText('Survival').width / 2) - 20,
+        bx: (canvas.width / 2) - (context2D.measureText('Survival').width / 2) - 17,
         by: 160 - 15,
         bw: context2D.measureText('Survival').width + 40,
         bh: 15 + 5
@@ -115,8 +115,8 @@ function setObjects(){
         y: 130,
         w: context2D.measureText('Laser').width,
         h: 15,
-        bx: (canvas.width / 2) - (context2D.measureText('Laser').width / 2) - 20,
-        by: 160 - 15,
+        bx: (canvas.width / 2) - (context2D.measureText('Laser').width / 2) - 18,
+        by: 130 - 15,
         bw: context2D.measureText('Laser').width + 40,
         bh: 15 + 5
     };
@@ -141,6 +141,7 @@ function setObjects(){
     safeArea = {
         fillColor: 'white',
         strokeColor: '#3498db',
+        lineWidth: 1,
         x: canvas.width/10,
         y: canvas.height/10,
         w: canvas.width*4/5,

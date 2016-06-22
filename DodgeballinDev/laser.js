@@ -4,33 +4,41 @@ var lasers = [];
 //
 // Draw the board (AKA the place where lasers doesn't spawn)
 //
-function Laserboard(){
+function laserBoard(){
 	context2D.strokeStyle = safeArea.strokeColor;
-	context2D.fillRect(safeArea.x, safeArea.y, safeArea.w, safeArea.h);
+	context2D.lineWidth = safeArea.lineWidth;
+	context2D.strokeRect(safeArea.x, safeArea.y, safeArea.w, safeArea.h);
+	context2D.fillStyle = spawner.fillColor;
+	context2D.fillText(spawner.timer, 
+		spawner.x - context2D.measureText(spawner.timer).width / 2, spawner.y  + 5);
 }
 
 //
 // Make a laser object
 //
-function Laser(speed, thickness, slope, yint){
+function Laser(speed, thickness){
 	this.speed = getRandomIntInclusive(speed - 2, speed + 4)*3/16;
 
 	this.thickness = thickness;
-	
-	this.m = slope;
-	this.b = yint;
-	this.nextB = this.b;
+	this.mode;
 
-	this.x1 = 0;
-	this.y1 = b;
+	this.int = this.getRandomSpawn();
 	
-	this.x2 = canvas.width;
-	this.y2 = this.x2 * m + b;
-
-	this.nextX1 = 0;
-	this.nextX2 = canvas.width();
-	this.nextY1 = this.y1;
-	this.nextY2 = this.y2;
+	var num = getRandomIntInclusive(0, 1);
+	if (this.mode == 'v'){
+		this.y1 = this.int;
+		this.y2 = this.int;
+		this.x1 = 0;
+		this.x2 = canvas.width;
+	} else if (this.mode == 'h'){
+		this.x1 = this.int;
+		this.x2 = this.int;
+		this.y1 = 0;
+		this.y2 = canvas.width;
+	}
+	// else
+	// 	this.mode = 'r'
+	this.nextInt = this.int;
 	this.spawn = false;
 }
 
@@ -39,10 +47,15 @@ function Laser(speed, thickness, slope, yint){
 // Draw the Laser
 //
 Laser.prototype.render = function(){
-	this.x = this.nextX;
-	this.y = this.nextY;
-	this.b = this.nextB;
-
+	if (this.mode == 'v'){
+		this.y1 = this.nextInt;
+		this.y2 = this.nextInt;
+	} else if (this.mode == 'h'){
+		this.x1 = this.nextInt;
+		this.x2 = this.nextInt;
+	}
+	this.int = this.nextInt;
+	
 	context2D.beginPath();
 	context2D.lineWidth = this.thickness;
 	context2D.moveTo(this.x1,this.y1);
@@ -58,41 +71,64 @@ Laser.prototype.render = function(){
 // update the coordinates
 //
 Laser.prototype.update = function(){
-	this.nextY1 = this.nextB;
-	this.nextY2 = canvas.width * this.m + this.nextB;
+	this.nextInt += this.speed;
 };
+
+Laser.prototype.getRandomSpawn = function(){
+	if (Math.floor(Math.random() * 2) == 0){
+		if (Math.floor(Math.random() * 2) == 0){//left
+			if (this.speed < 0)
+				this.speed *= -1;
+			return getRandomArbitrary(0, safeArea.x);
+		} else{//right
+			if (this.speed > 0)
+				this.speed *= -1;
+			return getRandomArbitrary(safeArea.x + safeArea.w, canvas.width);
+		}
+		this.mode = 'v';
+	} else{
+		if (Math.floor(Math.random() * 2) == 0){//up
+			if (this.speed < 0)
+				this.speed *= -1;
+			return getRandomArbitrary(0, safeArea.y);
+		} else{//down
+			if (this.speed > 0)
+				this.speed *= -1;
+			return getRandomArbitrary(safeArea.y + safeArea.h, canvas.height);
+		}
+		this.mode = 'h';
+	}
+
+}
 
 //
 //
 //
 Laser.prototype.checkSpawnIntersection = function(){
-	if ((this.nextX1 < safeArea.x && this.nextX2 < safeArea.x)
-		|| (this.nextX1 > safeArea.x + safeArea.w && this.nextX2 > safeArea.x + safeArea.w))
+	if ((this.x1 < safeArea.x && this.x2 < safeArea.x)
+		|| (this.x1 > safeArea.x + safeArea.w && this.x2 > safeArea.x + safeArea.w))
 		return true;
-	else if ((this.nextY1 < safeArea.y && this.nextY2 < safeArea.y)
-		|| (this.nextY1 > safeArea.y + safeArea.h && this.nextY2 > safeArea.y + safeArea.h))
+	else if ((this.y1 < safeArea.y && this.y2 < safeArea.y)
+		|| (this.y1 > safeArea.y + safeArea.h && this.y2 > safeArea.y + safeArea.h))
 		return true;
 	else
 		return false;
 };
 
 //
-// add the laser to the array
 //
-function addLaser(speed, thickness, slope, yint){
-	laser.push(new Laser(speed, thickness, slope, yint));
-	score++;
+//
+function updateSpawnIntersection(l){
+	l.speed *= -1;
+	l.spawn = false;
 }
 
 //
-// Check if Laser collides with the spawner
+// add the laser to the array
 //
-function checkSpawnCollision(b){
-	if (Math.sqrt(Math.pow(b.nextX - spawner.x, 2) + Math.pow(b.nextY - spawner.y, 2)) 
-		<= b.radius + spawner.radius)
-		return true;
-	else
-		return false;
+function addLaser(speed, thickness){
+	lasers.push(new Laser(speed, thickness));
+	score++;
 }
 
 //
@@ -111,22 +147,20 @@ function animate(){
 
 	//update
 	for (var i = 0; i < lasers.length; i++){
-		lasers[i].nextB = lasers[i].b + lasers[i].speed;
-		laserts[i].update();
+		lasers[i].update();
 	}
 
 	//update to another Laser and spawner collisions
 	for (var i = 0; i < lasers.length; i++){
 		// check the spawn
 		if (lasers[i].spawn){
-			if (checkSpawnIntersection(lasers[i])){
-				lasers[i].spawn = false;
-				updateSpawnIntersection(lasers[i], spawner);
+			if (lasers[i].checkSpawnIntersection()){
+				updateSpawnIntersection(lasers[i]);
 			}
 			
 		} else{
 			//only if didn't leave spawner after spawn to avoid getting stuck
-			if (!checkSpawnIntersection(lasers[i]))
+			if (!lasers[i].checkSpawnIntersection())
 				lasers[i].spawn = true;
 		}
 	}
@@ -134,7 +168,7 @@ function animate(){
 	//prepare for the next draw
 	context2D.fillStyle = '#000000';
 	clear();
-	survivalBoard();
+	laserBoard();
 
 	//draw the Laser
 	for (var i = 0; i < lasers.length; i++){
@@ -158,21 +192,35 @@ function start(){
 	game = true;
 	over = false;
 	spawner.timer = 3;
-	spawner.maxTime = 8;
+	spawner.maxTime = 5;
 
 	clearIntervals();
 
 	clear();
-	survivalBoard();
+	laserBoard();
 
 	//after every spawner.maxTime seconds, spawn it and update the timer
 	intervals.push(setInterval(function(){
 		spawner.timer--;
 		if (spawner.timer < 0){
 			spawner.timer = spawner.maxTime;
-			addLaser(speed, Math.floor(Math.random() * (5)) + size - 2);
+			addLaser(speed, getRandomIntInclusive(1, 5));
 		}
 	}, 1000));
 
 	requestAnimationFrame(animate);
+}
+
+
+//
+// Check if player coordinates are inside a ball
+//
+function checkPlayerHit(x, y){
+	for (var i = 0; i < lasers.length; i++){
+		if ((lasers[i].mode == 'v' && y == lasers[i].int)
+			|| (lasers[i].mode == 'h' && x == lasers[i].int)){
+			active = false;
+			game = -1;
+		}
+	}
 }
