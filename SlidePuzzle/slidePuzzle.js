@@ -24,13 +24,14 @@ var moving = false;
 var moveStart = 0;
 var sensorArrSplit = ["2,3","7,8","13,14","18,19"];
 var sensorArr = [2,3,7,8,13,14,18,19];
-var sensorArr1 = [2,7,13,18];
-var sensorArr2 = [3,8,14,19];
+var sensorArr1 = [2,7,13,19];
+var sensorArr2 = [3,8,14,20];
 var blocksXInit = [];
 var blocksYInit = [];
 var blocksXSolved = [];
 var blocksYSolved = [];
 var blockNum;
+
 
 
 window.onload = function(){	
@@ -467,10 +468,9 @@ function giveUp(){
 function checkIfGameWon(){
 	for(var i = 0; i < blocksX; i++){
 		if(blocksX[i] !== blocksXSolved[i] || blocksY[i] !== blocksYSolved[i]){
-			return false;
+			gameWon();
 		}
 	}
-	return true;
 }
 
 function gameWon(){
