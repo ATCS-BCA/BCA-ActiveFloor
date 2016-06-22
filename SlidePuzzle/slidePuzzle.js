@@ -91,9 +91,6 @@ function initBoard(){
 			blocksY[count - 1] = i;
 			
 			count++;
-
-
-
 		}
 		
 	}
@@ -130,7 +127,7 @@ function drawBoard(dataArr){
 			if(dataArr[i][j] === "*" && searchForMove(j,i) ){
 				blockNum = findSensorBlock(j,i);
 				if(checkIfMovable(blockNum)){
-					moveBlock(blockNum);
+					moveBlockSimple(blockNum);
 				}	
 			}
 		}
@@ -236,6 +233,42 @@ function moveBlock(num){
 	
 }
 
+function moveBlockSimple(num){
+	//fix resesting moveStart
+	var blockMoveDir = [];
+	var dir = "";
+
+	blockMoveDir = checkDirMove(blockNum);
+	
+	if(blockMoveDir[0]){
+		dir = "right";
+	}
+	else if(blockMoveDir[1]){
+		dir = "left";
+	}
+	else if(blockMoveDir[2]){
+		dir = "up";
+	}
+	else if(blockMoveDir[3]){
+		dir = "down";
+	}
+					
+	if(dir === "right"){
+		blocksX[num] += blockInterval;	
+	}
+	else if(dir === "left"){
+		blocksX[num] -= blockInterval;	
+	}
+	else if(dir === "up"){
+		blocksY[num] -= blockInterval;
+		
+	}
+	else if(dir === "down"){
+		blocksY[num] += blockInterval;
+			
+	}
+	
+}
 		
 /*
 function scramble(){
