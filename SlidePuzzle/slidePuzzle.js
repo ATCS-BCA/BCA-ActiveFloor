@@ -27,7 +27,7 @@ var sensorArr = [2,3,7,8,13,14,18,19];
 var sensorArr1 = [2,7,13,19];
 var sensorArr2 = [3,8,14,20];
 var sensorArrStart = [2,7,13,19];
-var sensorArrEnd = [5,10,16,22];
+var sensorArrEnd = [8,13,19,23];
 var blocksXInit = [];
 var blocksYInit = [];
 var blocksXSolved = [];
@@ -178,7 +178,7 @@ function findSensorBlock(x,y){
 		if(x >= sensorArrStart[i] && x <= sensorArrEnd[i]){
 			tempX = i;
 		}
-		if(y >= sensorArr1[i] && y <= sensorArr2[i]){
+		if(y >= sensorArrStart[i] && y <= sensorArrEnd[i]){
 			tempY = i;
 		}
 	}
