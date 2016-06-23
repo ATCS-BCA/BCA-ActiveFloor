@@ -7,8 +7,8 @@ var canvas, context2D;
 
 var refreshTime = 17;
 var canvasContext;
-const cellWidth = 25;
-const cellHeight = 25;
+const cellWidth = 24;
+const cellHeight = 24;
 const cellRow = 4;
 const cellCol = 4;
 var blocksX = [];
@@ -16,9 +16,9 @@ var blocksY = [];
 var blocksNum = [];
 var movable = [];
 var isMovable = true;
-var xSpace = 20;
-var ySpace = 20;
-var blockInterval = 45;
+var xSpace = 17;
+var ySpace = 17;
+var blockInterval = 46;
 var start = true;
 var moving = false;
 var moveStart = 0;
@@ -26,6 +26,8 @@ var sensorArrSplit = ["2,3","7,8","13,14","18,19"];
 var sensorArr = [2,3,7,8,13,14,18,19];
 var sensorArr1 = [2,7,13,19];
 var sensorArr2 = [3,8,14,20];
+var sensorArrStart = [2,7,13,19];
+var sensorArrEnd = [5,10,16,22];
 var blocksXInit = [];
 var blocksYInit = [];
 var blocksXSolved = [];
@@ -173,10 +175,10 @@ function findSensorBlock(x,y){
 	var block;
 
 	for(var i = 0; i < sensorArr1.length;i++){
-		if(x === sensorArr1[i] || x === sensorArr2[i]){
+		if(x >= sensorArrStart[i] && x <= sensorArrEnd[i]){
 			tempX = i;
 		}
-		if(y === sensorArr1[i] || y === sensorArr2[i]){
+		if(y >= sensorArr1[i] && y <= sensorArr2[i]){
 			tempY = i;
 		}
 	}
