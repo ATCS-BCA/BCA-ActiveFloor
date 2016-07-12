@@ -82,6 +82,7 @@ function startRefresh() {
     'use strict';
     myInterval = setInterval(function () {refreshXML(); }, refreshTime);
 }
+//
 
 $(document).ready(function () {
     'use strict';
