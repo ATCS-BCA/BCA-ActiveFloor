@@ -21,7 +21,7 @@ function refresh(){
         a.title = "Restart";
         a.href = "snake.html";
         document.body.appendChild(a);
-        
+
 
         document.getElementById('restart').click();
         done=false;
@@ -106,8 +106,8 @@ function initCanvas(arr) {
                 }
         }
         canType=false;
-        setTimeout(function(){ 
-            canType=true; 
+        setTimeout(function(){
+            canType=true;
         }, 500);
     }
 
@@ -147,7 +147,7 @@ function refreshXML() {
 	// change IP address to match ActiveFloor server address
     $.get('http://127.0.0.1:8080/', function (data) {
         dataHolderArray = [];
-				
+
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -159,25 +159,20 @@ function refreshXML() {
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
         });
-				
+
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
             rowNum = $row.attr('rownum');
             rowVal = $row.attr('values');
             n = rowVal.split(charDivide).join('');
-				
+
             dataHolderArray.push(n);
         });
-			
+
         initCanvas(dataHolderArray);
     });
 }
-
-$(document).ready(function () {
-    'use strict';
-    startRefresh();
-});
 
 function startRefresh() {
     'use strict';
@@ -187,12 +182,12 @@ function startRefresh() {
 $(document).ready(function () {
     'use strict';
     startRefresh();
-    
+
     sendSemaphore(function() {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
 //        $("#floorCanvas").addClass("app");
-        
+
     });
 });
