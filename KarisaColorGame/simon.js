@@ -4,6 +4,7 @@ active = false;
 game = true;
 score = 0;
 var color;
+first = true;
 
 // this is all that happens when the window is loaded up
 window.onload = function() {
@@ -59,6 +60,31 @@ window.onload = function() {
         // show the lines
         ctx.stroke();
 
+        // dark red
+        ctx.fillStyle = '#c0392b';
+        ctx.fillRect(0, 0, 64, 64);
+        // dark orange
+        ctx.fillStyle = '#d35400';
+        ctx.fillRect(64, 0, 64, 64);
+        // dark yellow
+        ctx.fillStyle = '#f39c12';
+        ctx.fillRect(128, 0, 64, 64);
+        // dark green
+        ctx.fillStyle = '#27ae60';
+        ctx.fillRect(0, 64, 64, 64);
+        // dark blue
+        ctx.fillStyle = '#2980b9';
+        ctx.fillRect(128, 64, 64, 64);
+        // dark bluegreen
+        ctx.fillStyle = '#16a085';
+        ctx.fillRect(0, 128, 64, 64);
+        // dark purple
+        ctx.fillStyle = '#8e44ad';
+        ctx.fillRect(64, 128, 64, 64);
+        // dark pink
+        ctx.fillStyle = 'd90d36';
+        ctx.fillRect(128, 128, 64, 64);
+
         drawScore();
 
         while (game != false) {
@@ -71,7 +97,12 @@ window.onload = function() {
         }
     }
 
-    showGameOver();
+    if (first) {
+        setTimeout(function() { first=false; }, 3000);
+    }
+
+    if (game) setTimeout(showGameOver,1000);
+    if (!game) setTimeout(drawGame,1000/60);
 }
 
 // shows the score in the middle box
@@ -92,28 +123,28 @@ function playColor() {
     // sets variable "color" to the right color that needs to show
     numbercolor(a[sequence]);
     // light up that color variable
-    showColor()
+    showColor();
   }
 }
 
 // when you put in an array d, index e...
-// this sets the colors from the randomly generated number
+// this sets the colors from the number
 function numbercolor(d[e]) {
-  // alizarin red
+  // light red
   if (d[e]=1) color = "#e74c3c";
-  // carrot orange
+  // light orange
   else if (d[e]=2) color = "#e67e22";
-  // sunflower yellow
+  // light yellow
   else if (d[e]=3) color = "#f1c40f";
-  // emerald green
+  // light green
   else if (d[e]=4) color = "#2ecc71";
-  // turquoise bluegreen
+  // light bluegreen
   else if (d[e]=5) color = "#1abc9c";
-  // peterriver blue
+  // light blue
   else if (d[e]=6) color = "#3498db";
-  // amethyst purple
+  // light purple
   else if (d[e]=7) color = "#9b59b6";
-  // radicalred pink
+  // light pink
   else color = "#ff355e";
 }
 
@@ -131,6 +162,10 @@ function playerTurn() {
     while (game = true) {
       active = true;
       // the next thing (number? color?) the player steps on becomes stored as a[step]
+      function press(a,b) {
+          // if not first (so first == false),
+          if(!first) map[b][a] = a[step];
+      }
       // also SHOW the color that was stepped on!!
       /* a[step] = */
       showColor()
