@@ -58,6 +58,11 @@ function drawObj(xPos, yPos, size, numShape, canSee) {
                 context2D.fillStyle = 'grey';
                 context2D.fillRect(xPos2, yPos2, size2, size2);
                 break;
+            default:
+                break;
+
+            setTimer(drawObj, 3000);
+
         }
 
 
@@ -118,8 +123,8 @@ function refreshXML() {
 
         drawCanvas(dataHolderArray);
 
-        for(var i = 0; i < ledPerSensorX; i++) {
-            for(var j = 0; j < ledPerSensorY; j++) {
+        for(var i = 0; i < sensorsX; i++) {
+            for(var j = 0; j < sensorsY; j++) {
                 if(dataHolderArray[i][j] === charSearch) {
                     var k = Math.floor(i/6);
                     var t = Math.floor(j/6);
