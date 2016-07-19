@@ -85,7 +85,6 @@ function drawCanvas(arr) {
             }
         }
     }
-
     // NOT SURE WHAT THIS MEAN?
     if (middle>2) refresh();
 }
@@ -96,7 +95,6 @@ function Restart(){
 
 $(document).ready(function () {
     'use strict';
-
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
 

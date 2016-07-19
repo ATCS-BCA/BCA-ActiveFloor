@@ -6,7 +6,6 @@ score = 0;
 var color;
 first = true;
 
-// this is all that happens when the window is loaded up
 window.onload = function() {
     // Initialize the matrix.
     // create array with empty map[0], map[1], map[2]
@@ -62,28 +61,28 @@ window.onload = function() {
 
         // dark red
         ctx.fillStyle = '#c0392b';
-        ctx.fillRect(0, 0, 64, 64);
+        ctx.fillRect(0, 0, 60, 60);
         // dark orange
         ctx.fillStyle = '#d35400';
-        ctx.fillRect(64, 0, 64, 64);
+        ctx.fillRect(64, 0, 60, 60);
         // dark yellow
         ctx.fillStyle = '#f39c12';
-        ctx.fillRect(128, 0, 64, 64);
+        ctx.fillRect(128, 0, 60, 60);
         // dark green
         ctx.fillStyle = '#27ae60';
-        ctx.fillRect(0, 64, 64, 64);
+        ctx.fillRect(0, 64, 60, 60);
         // dark blue
         ctx.fillStyle = '#2980b9';
-        ctx.fillRect(128, 64, 64, 64);
+        ctx.fillRect(128, 64, 60, 60);
         // dark bluegreen
         ctx.fillStyle = '#16a085';
-        ctx.fillRect(0, 128, 64, 64);
+        ctx.fillRect(0, 128, 60, 60);
         // dark purple
         ctx.fillStyle = '#8e44ad';
-        ctx.fillRect(64, 128, 64, 64);
+        ctx.fillRect(64, 128, 60, 60);
         // dark pink
         ctx.fillStyle = 'd90d36';
-        ctx.fillRect(128, 128, 64, 64);
+        ctx.fillRect(128, 128, 60, 60);
 
         drawScore();
 
