@@ -138,7 +138,6 @@ function refreshXML() {
 
 $(document).ready(function () {
     'use strict';
-    alert("hello");
 
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
