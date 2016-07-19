@@ -167,7 +167,8 @@ function playerTurn() {
           if(!first) map[b][a] = a[step];
       }
       // also SHOW the color that was stepped on!!
-      /* a[step] = */
+      // sets variable "color" to the right color that needs to show
+      numbercolor(a[step]);
       showColor()
 
       // if the player steps incorrectly, game over
@@ -212,17 +213,6 @@ function showGameOver() {
 
     ctx.fillStyle = 'black';
     ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width)/2, 192/2);
-
-    ctx.fillStyle='red';
-    ctx.fillText('Highscore: ' + localStorage.highscore, ((canvas.width / 2) - (ctx.measureText('Highscore: ' + localStorage.highscore).width / 2)), 120);
-    ctx.fillText('Record Holder: ' + localStorage.winner, ((canvas.width / 2) - (ctx.measureText('Record Holder: ' + localStorage.winner).width / 2)), 138);
-
-    if(localStorage.highscore<score) {
-        localStorage.highscore=score;
-        highscore=true;
-        showHighscore();
-    }
-    if (!highscore) setTimeout(showGameOver,1000/60);
 }
 
 String.prototype.replaceAll = function(str1, str2, ignore) {
