@@ -71,12 +71,12 @@ window.onload = function() {
         // dark green - 4
         ctx.fillStyle = '#27ae60';
         ctx.fillRect(128+2, 64+2, 60, 60);
-        // dark blue - 5
-        ctx.fillStyle = '#2980b9';
-        ctx.fillRect(64+2, 128+2, 60, 60);
         // dark bluegreen - 6
         ctx.fillStyle = '#16a085';
         ctx.fillRect(128+2, 128+2, 60, 60);
+        // dark blue - 5
+        ctx.fillStyle = '#2980b9';
+        ctx.fillRect(64+2, 128+2, 60, 60);
         // dark purple - 7
         ctx.fillStyle = '#8e44ad';
         ctx.fillRect(0+2, 128+2, 60, 60);
@@ -87,7 +87,7 @@ window.onload = function() {
         drawScore();
 
         while (game != false) {
-          playColor();
+          playColor(a);
 
           playerTurn();
 
@@ -116,11 +116,11 @@ function drawScore() {
 }
 
 // here shows the sequence of colors
-function playColor() {
+function playColor(a) {
   // for every color, indexed by score, board area lights up
   for (sequence = 0; sequence <= score; sequence++) {
     // sets variable "color" to the right color that needs to show
-    numbercolor(a[sequence]);
+    numbercolor(a,sequence);
     // light up that color variable
     showColor();
   }
@@ -152,7 +152,23 @@ function showColor() {
   // make new box (light color) cover box (first dark color)
   ctx.fillStyle = color;
   // shows rectangle for 3000 milliseconds
-  setTimeout(ctx.fillRect(i*64, j*64, 64, 64), 3000);
+  // light red - 1
+  if color = "#e74c3c" ctx.fillRect(0+2, 0+2, 60, 60);
+  // light orange - 2
+  else if color = "#e67e22" ctx.fillRect(64+2, 0+2, 60, 60);
+  // light yellow - 3
+  else if color = "#f1c40f" ctx.fillRect(128+2, 0+2, 60, 60);
+  // light green - 4
+  else if color = "#2ecc71" ctx.fillRect(128+2, 64+2, 60, 60);
+  // light bluegreen - 5
+  else if color = "#1abc9c" ctx.fillRect(128+2, 128+2, 60, 60);
+  // light blue - 6
+  else if color = "#3498db" ctx.fillRect(64+2, 128+2, 60, 60);
+  // light purple - 7
+  else if color = "#9b59b6" ctx.fillRect(0+2, 128+2, 60, 60);
+  // light pink - 8
+  else ctx.fillRect(0+2, 64+2, 60, 60);
+  //setTimeout(ctx.fillRect(i*64, j*64, 64, 64), 3000);
 }
 
 // player's turn to copy the sequence
