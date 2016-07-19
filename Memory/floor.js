@@ -58,6 +58,11 @@ function drawObj(xPos, yPos, size, numShape, canSee) {
                 context2D.fillStyle = 'grey';
                 context2D.fillRect(xPos2, yPos2, size2, size2);
                 break;
+            default:
+                break;
+
+            setTimer(drawObj, 3000);
+
         }
 
 
@@ -91,7 +96,7 @@ function drawCanvas(arr) {
 
 function refreshXML() {
     'use strict';
-    $.get('http://127.0.0.1:8080/', function (data) {
+    $.get('http://10.31.33.66:8080/', function (data) {
         dataHolderArray = [];
 
         $(data).find('BLFloor').each(function () {
@@ -116,8 +121,10 @@ function refreshXML() {
             dataHolderArray.push(n);
         });
 
-        for(var i = 0; i < ledPerSensorX; i++) {
-            for(var j = 0; j < ledPerSensorY; j++) {
+        drawCanvas(dataHolderArray);
+
+        for(var i = 0; i < sensorsX; i++) {
+            for(var j = 0; j < sensorsY; j++) {
                 if(dataHolderArray[i][j] === charSearch) {
                     var k = Math.floor(i/6);
                     var t = Math.floor(j/6);
@@ -126,13 +133,16 @@ function refreshXML() {
                 }
             }
         }
-
-        drawCanvas(dataHolderArray);
     });
 }
 
 $(document).ready(function () {
     'use strict';
+    alert("hello");
+
+    // Start getting floor data automatically (assuming Floor Server is running).
+    startRefresh();
+
     sendSemaphore(function () {
         // Clear spacing and borders.
         $("body").addClass("app");
@@ -140,9 +150,6 @@ $(document).ready(function () {
         $("#floorCanvas").addClass("app");
 
     });
-
-    // Start getting floor data automatically (assuming Floor Server is running).
-    startRefresh();
 
     var numArry1 = [
         0, 0, 1, 1,
