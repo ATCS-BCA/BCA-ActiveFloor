@@ -141,12 +141,8 @@ $(document).ready(function () {
 
     });
 
-    alert("Hello");
-
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
-
-
 
     var numArry1 = [
         0, 0, 1, 1,
