@@ -22,7 +22,7 @@ window.onload = function() {
     body.appendChild(canvas);
 
     // begins empty array for color sequence
-    var a = newArray();
+    var a = new Array();
     // score is already set to 0
     a[0] = numbercolor(Math.floor((Math.random()*5)+1));
 
@@ -59,30 +59,30 @@ window.onload = function() {
         // show the lines
         ctx.stroke();
 
-        // dark red
+        // dark red - 1
         ctx.fillStyle = '#c0392b';
-        ctx.fillRect(0, 0, 60, 60);
-        // dark orange
+        ctx.fillRect(0+2, 0+2, 60, 60);
+        // dark orange - 2
         ctx.fillStyle = '#d35400';
-        ctx.fillRect(64, 0, 60, 60);
-        // dark yellow
+        ctx.fillRect(64+2, 0+2, 60, 60);
+        // dark yellow - 3
         ctx.fillStyle = '#f39c12';
-        ctx.fillRect(128, 0, 60, 60);
-        // dark green
+        ctx.fillRect(128+2, 0+2, 60, 60);
+        // dark green - 4
         ctx.fillStyle = '#27ae60';
-        ctx.fillRect(0, 64, 60, 60);
-        // dark blue
+        ctx.fillRect(128+2, 64+2, 60, 60);
+        // dark blue - 5
         ctx.fillStyle = '#2980b9';
-        ctx.fillRect(128, 64, 60, 60);
-        // dark bluegreen
+        ctx.fillRect(64+2, 128+2, 60, 60);
+        // dark bluegreen - 6
         ctx.fillStyle = '#16a085';
-        ctx.fillRect(0, 128, 60, 60);
-        // dark purple
+        ctx.fillRect(128+2, 128+2, 60, 60);
+        // dark purple - 7
         ctx.fillStyle = '#8e44ad';
-        ctx.fillRect(64, 128, 60, 60);
-        // dark pink
+        ctx.fillRect(0+2, 128+2, 60, 60);
+        // dark pink - 8
         ctx.fillStyle = 'd90d36';
-        ctx.fillRect(128, 128, 60, 60);
+        ctx.fillRect(0+2, 64+2, 60, 60);
 
         drawScore();
 
@@ -128,7 +128,7 @@ function playColor() {
 
 // when you put in an array d, index e...
 // this sets the colors from the number
-function numbercolor(d[e]) {
+function numbercolor(d,e) {
   // light red
   if (d[e]=1) color = "#e74c3c";
   // light orange

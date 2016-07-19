@@ -73,18 +73,13 @@ function drawCanvas(arr) {
                 if (i>=8 && i<=16 && j>=8 && j<=16) middle++;
                 // method "press" in TTTfloor.js, "Math.floor()" function returns the largest integer less than or equal to a given number
                 // for example, if (8, 8) is stepped on, then press (1, 1)
-                // for example, if (9, 9) is stepped on, then press (1, 1)
-                // for example, if (10, 10) is stepped on, then press (1, 1)
-                // for example, if (11, 11) is stepped on, then press (1, 1)
-                // for example, if (12, 12) is stepped on, then press (1, 1)
-                // for example, if (13, 13) is stepped on, then press (1, 1)
-                // for example, if (14, 14) is stepped on, then press (1, 1)
                 // for example, if (15, 15) is stepped on, then press (1, 1)
                 // for example, if (16, 16) is stepped on, then press (2, 2)
                 press(Math.floor(i/8),Math.floor(j/8));
             }
         }
     }
+
     // NOT SURE WHAT THIS MEAN?
     if (middle>2) refresh();
 }
@@ -95,6 +90,7 @@ function Restart(){
 
 $(document).ready(function () {
     'use strict';
+
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
 
