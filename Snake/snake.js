@@ -250,32 +250,147 @@ window.onload = function()
         return map;
     }
 
-    function showGameOver()
-    {
-        // Disable the game.
-        active = false;
+};
 
-        // Clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+function showGameOver()
+{
+    // Disable the game.
+    active = false;
+    
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = 'red';
-        ctx.font = '16px sans-serif';
-        
-        ctx.fillText('Game Over!', ((canvas.width / 2) - (ctx.measureText('Game Over!').width / 2)), 50);
+    ctx.fillStyle = 'red';
+    ctx.font = '16px sans-serif';
+    
+    ctx.fillText('Game Over!', ((canvas.width / 2) - (ctx.measureText('Game Over!').width / 2)), 50);
 
-        ctx.font = '12px sans-serif';
+    ctx.font = '12px sans-serif';
 
-        ctx.fillText('Your Score Was: ' + score, ((canvas.width / 2) - (ctx.measureText('Your Score Was: ' + score).width / 2)), 70);
-       
-        ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width)/2-1, 86, ctx.measureText('Stand here to restart').width+3, 10+3);
-        
-        ctx.fillStyle = 'black';
-        ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width)/2, 192/2);
-        
-        setTimeout(Restart,1000)
+    ctx.fillText('Your Score Was: ' + score, ((canvas.width / 2) - (ctx.measureText('Your Score Was: ' + score).width / 2)), 70);
+    
+    ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width)/2-1, 86, ctx.measureText('Stand here to restart').width+3, 10+3);
+    
+    ctx.fillStyle = 'black';
+    ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width)/2, 192/2);
+    
+    ctx.fillStyle='red';
+    ctx.fillText('Highscore: ' + localStorage.highscore, ((canvas.width / 2) - (ctx.measureText('Highscore: ' + localStorage.highscore).width / 2)), 120);
+    ctx.fillText('Record Holder: ' + localStorage.winner, ((canvas.width / 2) - (ctx.measureText('Record Holder: ' + localStorage.winner).width / 2)), 138);
+    
+
+    if(localStorage.highscore<score){
+        localStorage.highscore=score;
+        highscore=true;
+        showHighscore();
     }
+    if (!highscore) setTimeout(showGameOver,1000/60);
+}
 
     
-};
+letters=["_","_","_"];
+highscore=false;
+
+function hit(a,b){
+   //if (highscore){
+        if (b>=8){
+            if (a>5 && b>=20){
+                if (a>=11){ //delete
+                    return 26;
+                    // rem();
+                }else{ //done
+                    return 27;
+                    // done();
+                }
+            }else{
+                var x=Math.floor(a/3);
+                var y=Math.floor((b-8)/4);
+                var ascii=8*y+x;
+                return ascii;
+                // type(ascii);
+                
+            }
+        }
+        return -1;
+        // console.log("x: "+x+", y: "+y);
+        // console.log(String.fromCharCode(ascii));
+    //}
+}
+function done(){
+    console.log("done()");
+    localStorage.winner=letters.join('').replaceAll("_","");
+    highscore=false;
+    letters=[];
+    showGameOver();
+}
+function rem(){
+    deleted=false;
+    for (var i=0;i<3;i++){
+        if (letters[i]=="_"){
+            if (i!=0){
+                letters[i-1]="_";
+            }
+            deleted=true;
+            break;
+        }
+    }
+    if (!deleted){
+        letters[2]="_";
+    }
+}
+function type(ascii){
+    console.log(letters);
+    for (var i=0;i<3;i++){
+        if (letters[i]=="_"){
+            letters[i]=String.fromCharCode(ascii);
+            break;
+        }
+    }
+    console.log(letters);
+}
+
+function showHighscore(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'red';
+    ctx.font = '20px Courier New';
+    
+    ctx.fillText(letters.join(" "), (canvas.width-ctx.measureText(letters.join(" ")).width)/2, 30);
+    ctx.fillText('A B C D E F G H', 6, 93);
+    ctx.fillText('I J K L M N O P', 6, 123);
+    ctx.fillText('Q R S T U V W X', 6, 153);
+    ctx.fillText('Y Z DONE DELETE', 6, 183);
+
+    ctx.beginPath();
+    for (var i=-1;i<4;i++){
+        ctx.moveTo(0,101+i*30);
+        ctx.lineTo(192,101+i*30);
+    }
+    for (var i=0;i<=8;i++){
+        if (i==0){
+            ctx.moveTo(1,71);
+            ctx.lineTo(1,191);
+        }else if (i==8){
+            ctx.moveTo(191,71);
+            ctx.lineTo(191,191);
+        }else{
+            ctx.moveTo(i*24,71);
+            if (i<=2){
+                ctx.lineTo(i*24,191);
+            }else{
+                ctx.lineTo(i*24,161);
+            }
+        }
+    }
+    ctx.moveTo(108,161);
+    ctx.lineTo(108,191);
+    ctx.stroke();
+        
+    if (highscore) setTimeout(showHighscore,1000/60);
+}
+
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 

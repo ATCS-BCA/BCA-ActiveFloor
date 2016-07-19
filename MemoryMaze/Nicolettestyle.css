@@ -1,0 +1,145 @@
+body {
+	background: #000000;
+	font-size: 10pt;
+	color: pink;
+}
+
+body,input {
+	font-family: Verdana;
+}
+
+h1,h2,h3,h4 {
+	font-size: 12pt;
+	text-transform: uppercase;
+	font-weight: strong;
+}
+
+button {
+	/*display: block;*/
+	width: 100pt;
+	height: 40pt;
+	padding: 5pt 5pt;
+	color:#666666;
+	text-decoration: none;
+}
+
+div {
+	padding:10px;
+}
+
+.ArEx {
+	height: 32px;
+	width: 32px;
+	padding: 0;
+	display: none;
+	
+	-webkit-animation: fourfr 1s steps(4) 1;
+       -moz-animation: fourfr 1s steps(4) 1;
+        -ms-animation: fourfr 1s steps(4) 1;
+         -o-animation: fourfr 1s steps(4) 1;
+            animation: fourfr 1s steps(4) 1;
+}
+
+.Tr3 {
+	height: 32px;
+	width: 32px;
+	padding: 0;
+	display: none;
+	
+	-webkit-animation: threefr 1s steps(3) 1;
+       -moz-animation: threefr 1s steps(3) 1;
+        -ms-animation: threefr 1s steps(3) 1;
+         -o-animation: threefr 1s steps(3) 1;
+            animation: threefr 1s steps(3) 1;
+}
+
+.Tr1 {
+	height: 32px;
+	width: 32px;
+	padding: 0;
+	display: none;
+	
+	-webkit-animation: onefr 1s steps(1) 1;
+       -moz-animation: onefr 1s steps(1) 1;
+        -ms-animation: onefr 1s steps(1) 1;
+         -o-animation: onefr 1s steps(1) 1;
+            animation: onefr 1s steps(1) 1;
+}
+
+/*4 Frame Spritesheets*/
+@-webkit-keyframes fourfr {
+   from { background-position:    0px; }
+     to { background-position: -128px; }
+}
+
+@-moz-keyframes fourfr {
+   from { background-position:    0px; }
+     to { background-position: -128px; }
+}
+
+@-ms-keyframes fourfr {
+   from { background-position:    0px; }
+     to { background-position: -128px; }
+}
+
+@-o-keyframes fourfr {
+   from { background-position:    0px; }
+     to { background-position: -128px; }
+}
+
+@keyframes fourfr {
+   from { background-position:    0px; }
+     to { background-position: -128px; }
+}
+
+/*3 Frame Spritesheets*/
+@-webkit-keyframes threefr {
+   from { background-position:    0px; }
+     to { background-position: -96px; }
+}
+
+@-moz-keyframes threefr {
+   from { background-position:    0px; }
+     to { background-position: -96px; }
+}
+
+@-ms-keyframes threefr {
+   from { background-position:    0px; }
+     to { background-position: -96px; }
+}
+
+@-o-keyframes threefr {
+   from { background-position:    0px; }
+     to { background-position: -96px; }
+}
+
+@keyframes threefr {
+   from { background-position:    0px; }
+     to { background-position: -96px; }
+}
+
+/*1 Frame Spritesheets*/
+@-webkit-keyframes onefr {
+   from { background-position:    0px; }
+     to { background-position: -32x; }
+}
+
+@-moz-keyframes onefr {
+   from { background-position:    0px; }
+     to { background-position: -32px; }
+}
+
+@-ms-keyframes onefr {
+   from { background-position:    0px; }
+     to { background-position: -32px; }
+}
+
+@-o-keyframes onefr {
+   from { background-position:    0px; }
+     to { background-position: -32px; }
+}
+
+@keyframes onefr {
+   from { background-position:    0px; }
+     to { background-position: -32px; }
+}

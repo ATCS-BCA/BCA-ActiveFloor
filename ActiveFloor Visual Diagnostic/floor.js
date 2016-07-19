@@ -22,7 +22,7 @@ function drawObj(type, xPos, yPos, size) {
     }
 }
 
-function initCanvas(arr) {
+function drawCanvas(arr) {
     'use strict';
     canvas = document.getElementById('floorCanvas');
     canvas.width = ledsX;
@@ -71,7 +71,7 @@ function refreshXML() {
             dataHolderArray.push(n);
         });
 			
-        initCanvas(dataHolderArray);
+        drawCanvas(dataHolderArray);
     });
 }
 

@@ -33,44 +33,45 @@ function initCanvas(arr) {
                 if (i>=8 && i<=16 && j>=8 && j<=16){
                     middle++;
                 }else{
-                    if (i<12){
-                        if (j<12) left1++;
-                        else right1++;
-                    }else{
-                        if (j<12) left2++;
-                        else right2++;    
+                    if (i>=4 && i<=8){
+                        if (j>=4 && j<=8) left1++;
+                        if (j>=16 && j<=20) right1++;
+                    }
+
+                    if (i>=16 && i<=20){
+                        if (j>=4 && j<=8) left2++;
+                        if (j>=16 && j<=20) right2++;
                     }
                 }
                 
             }
         }
     }
-    console.log(middle);
     if (middle>6) refresh();
 
     var winner1=-1;
-    if (Math.abs(left1-right1)>=3){
+    if (Math.abs(left1-right1)>=1){
         if (left1>right1) winner1=0;
         else winner1=1;
     }
 
     var winner2=-1;
-    if (Math.abs(left2-right2)>=3){
+    if (Math.abs(left2-right2)>=1){
         if (left2>right2) winner2=0;
         else winner2=1;
     }
 
-//    console.log(winner1+", "+winner2);
+    console.log(winner1+", "+winner2);
 //    console.log(left1+", "+right1+", "+left2+", "+right2);
     press(winner2,winner1);
 }
 
 function refreshXML() {
     'use strict';
-	// change IP address to match ActiveFloor server address
-    $.get('http://10.31.34.74:8080/', function (data) {
+    // change IP address to match ActiveFloor server address
+    $.get('http://10.31.34.221:8080/', function (data) {
         dataHolderArray = [];
-				
+                
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -82,17 +83,17 @@ function refreshXML() {
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
         });
-				
+                
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
             rowNum = $row.attr('rownum');
             rowVal = $row.attr('values');
             n = rowVal.split(charDivide).join('');
-				
+                
             dataHolderArray.push(n);
         });
-			
+            
         initCanvas(dataHolderArray);
     });
 }
