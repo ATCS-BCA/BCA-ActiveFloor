@@ -14,17 +14,23 @@ var visible = [[false, false, false, false],
     [false, false, false, false]
 ];
 
-function drawObj(xPos, yPos, size, numShape, canSee) {
+function drawObj(xPos, yPos, size, canSee) {
     'use strict';
 
     context2D.fillStyle = 'red';
     context2D.fillRect(xPos, yPos, size, size);
 
+    if (canSee) {
+        drawShape();
+    }
+}
+
+function drawShape(numShape) {
+
     var xPos2 = xPos + 3;
     var yPos2 = yPos + 3;
     var size2 = size - 6;
 
-    if (canSee) {
         switch (numShape) {
             case 0:
                 context2D.fillStyle = 'black';
@@ -61,13 +67,8 @@ function drawObj(xPos, yPos, size, numShape, canSee) {
             default:
                 break;
 
-            setTimer(drawObj, 3000);
-
         }
-
-
-    }
-
+        setTimeout(drawObj, 3000);
 
 }
 
