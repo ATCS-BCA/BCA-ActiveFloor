@@ -6,10 +6,33 @@ score = 0;
 var color;
 first = true;
 
+/*var cells = [
+  "",
+  {"lightColor": "#e74c3c", "x":2, "y":2},
+  {"lightColor": "#e67e22", "x":66, "y":2},
+  {"lightColor": "#f1c40f", "x":130, "y":2},
+  {"lightColor": "#2ecc71", "x":130, "y":66},
+  {"lightColor": "#1abc9c", "x":130, "y":130},
+  {"lightColor": "#3498db", "x":66, "y":130},
+  {"lightColor": "#9b59b6", "x":2, "y":130},
+  {"lightColor": "#ff355e", "x":2, "y":66}
+];
+*/
+var cells = [
+  "",
+  {"lightColor": "black", "x":2, "y":2},
+  {"lightColor": "black", "x":66, "y":2},
+  {"lightColor": "black", "x":130, "y":2},
+  {"lightColor": "black", "x":130, "y":66},
+  {"lightColor": "black", "x":130, "y":130},
+  {"lightColor": "black", "x":66, "y":130},
+  {"lightColor": "black", "x":2, "y":130},
+  {"lightColor": "black", "x":2, "y":66}
+];
+
+
 // begins empty array for color sequence
 var a = new Array();
-// begins empty array for player step sequence (gets rewritten each round)
-var playerSteps = new Array()
 
 window.onload = function() {
     // Initialize the matrix.
@@ -27,7 +50,15 @@ window.onload = function() {
     body.appendChild(canvas);
 
     // score is already set to 0
-    a[0] = numbercolor(Math.floor((Math.random()*5)+1));
+    a[0] = Math.floor((Math.random()*5)+1);
+    a[1] = Math.floor((Math.random()*5)+1);
+    a[2] = Math.floor((Math.random()*5)+1);
+    a[3] = Math.floor((Math.random()*5)+1);
+    a[4] = Math.floor((Math.random()*5)+1);
+    a[5] = Math.floor((Math.random()*5)+1);
+
+    // begins empty array for player step sequence (gets rewritten each round)
+    var playerSteps = new Array();
 
     drawGame();
 
@@ -86,22 +117,41 @@ window.onload = function() {
 
         drawScore();
 
-        while (game != false) {
-          playColor(a);
+        if (game != false) {
 
-          playerTurn(a);
+          //
+          var timer = 3000;
+          for (var seq = 0; seq <= 5; seq++) {
+            // light up that color variable
+            cell = cells[a[seq]];
+            ctx.fillStyle = cell["lightColor"];
+            ctx.fillRect(cell["x"], cell["y"], 60, 60);
+
+            if (timer <= 0) {
+              seq++;
+              timer = 3000;
+
+            }
+                          timer -= refreshTime;
+          }
+          //
+
+//          playColor(a);
+
+//          playerTurn(playerSteps, a);
 
           // after each round, if game not over (game != false), call function "addColor()"
-          addColor();
+//          addColor();
         }
     }
 
-    if (first) {
+/*    if (first) {
         setTimeout(function() { first=false; }, 3000);
     }
 
     if (game) setTimeout(showGameOver,1000);
     if (!game) setTimeout(drawGame,1000/60);
+*/
 }
 
 // shows the score in the middle box
@@ -119,62 +169,17 @@ function drawScore() {
 function playColor(a) {
   // for every color, indexed by score, board area lights up
   for (sequence = 0; sequence <= score; sequence++) {
-    // sets variable "color" to the right color that needs to show
-    numbercolor(a[sequence]);
     // light up that color variable
-    showColor();
+    cell = cells[a[sequence]];
+    ctx.fillStyle = cell["lightColor"];
+    ctx.fillRect(cell["x"], cell["y"], 60, 60);
   }
 }
 
-// when you put in an array d, index e...
-// this sets the colors from the number
-function numbercolor(d) {
-  // light red
-  if (d = 1) color = "#e74c3c";
-  // light orange
-  else if (d = 2) color = "#e67e22";
-  // light yellow
-  else if (d = 3) color = "#f1c40f";
-  // light green
-  else if (d = 4) color = "#2ecc71";
-  // light bluegreen
-  else if (d = 5) color = "#1abc9c";
-  // light blue
-  else if (d = 6) color = "#3498db";
-  // light purple
-  else if (d = 7) color = "#9b59b6";
-  // light pink
-  else color = "#ff355e";
-}
-
-// displays colors
-function showColor() {
-  // make new box (light color) cover box (first dark color)
-  ctx.fillStyle = color;
-  // shows rectangle for 3000 milliseconds
-  // light red - 1
-  if (color = "#e74c3c") ctx.fillRect(0+2, 0+2, 60, 60);
-  // light orange - 2
-  else if (color = "#e67e22") ctx.fillRect(64+2, 0+2, 60, 60);
-  // light yellow - 3
-  else if (color = "#f1c40f") ctx.fillRect(128+2, 0+2, 60, 60);
-  // light green - 4
-  else if (color = "#2ecc71") ctx.fillRect(128+2, 64+2, 60, 60);
-  // light bluegreen - 5
-  else if (color = "#1abc9c") ctx.fillRect(128+2, 128+2, 60, 60);
-  // light blue - 6
-  else if (color = "#3498db") ctx.fillRect(64+2, 128+2, 60, 60);
-  // light purple - 7
-  else if (color = "#9b59b6") ctx.fillRect(0+2, 128+2, 60, 60);
-  // light pink - 8
-  else ctx.fillRect(0+2, 64+2, 60, 60);
-  //setTimeout(ctx.fillRect(i*64, j*64, 64, 64), 3000);
-}
-
 // player's turn to copy the sequence
-function playerTurn(a) {
+function playerTurn(b, a) {
   for (step = 0; step < a.length; step++) {
-    while (game = true) {
+    if (game == true) {
       active = true;
       // the next thing (number? color?) the player steps on becomes stored as a[step]
       if (pressed != 0) {
@@ -183,10 +188,10 @@ function playerTurn(a) {
       // also SHOW the color that was stepped on!!
       // sets variable "color" to the right color that needs to show
       numbercolor(a[step]);
-      showColor()
+      showColor();
 
       // if the player steps incorrectly, game over
-      if (playerSteps[step] != a[step]) {
+      if (b[step] != a[step]) {
         game = false;
       }
     }
