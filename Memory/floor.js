@@ -137,9 +137,9 @@ function refreshXML() {
                     if (visible[i][j] > 0)
                         numSelected++;
 
-                    if (tempShownShape === shapes[i][j]) {
-                        shapes.splice(shapes[i][j]);
+                    if(tempShownShape === shapes[i][j]) {
                         shapes.splice(tempShownShape);
+                        shapes.splice([i][j]);
                     }
                 }
             }
@@ -155,7 +155,7 @@ function refreshXML() {
                     // draws colored shape and sets timer
                     if (numSelected < 2) {
                         visible[k][t] = displayTime;
-                        shapes[k][j] = tempShownShape;
+                        tempShownShape = shapes[k][t];
                     }
 
                 }
