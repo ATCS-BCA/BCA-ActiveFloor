@@ -74,7 +74,7 @@ function drawShape(xPos, yPos, size, numShape, canSee) {
             if (dataHolderArray[i][j] === ".") {
                 var k = Math.floor(i / 6);
                 var t = Math.floor(j / 6);
-                visible[k][t] -= 1000;
+                visible[k][t] -= 1;
 
             }
         }
