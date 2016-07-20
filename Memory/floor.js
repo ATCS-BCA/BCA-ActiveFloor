@@ -14,6 +14,7 @@ var visible = [[0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
 var displayTime = 4000;
+var numVisible;
 
 function drawObj(xPos, yPos, size, numShape, canSee) {
     'use strict';
@@ -70,17 +71,7 @@ function drawShape(xPos, yPos, size, numShape) {
 
     }
 
-    // while elements in array are above 0, will draw shape
-    for (var i = 0; i < sensorsX; i++) {
-        for (var j = 0; j < sensorsY; j++) {
-            if (dataHolderArray[i][j] === ".") {
-                var k = Math.floor(i / 6);
-                var t = Math.floor(j / 6);
-                visible[k][t] -= 1;
 
-            }
-        }
-    }
 
 }
 
@@ -134,7 +125,18 @@ function refreshXML() {
             dataHolderArray.push(n);
         });
 
-        drawCanvas(dataHolderArray);
+        var numSelected = 0;
+        // while elements in visible array are above 0, will draw shape
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < 4; j++) {
+                if (visible[i][j] >0) {
+                    visible[i][j] -= refreshTime;
+
+                    if (visible[i][j]>0)
+                        numSelected++;
+                }
+            }
+        }
 
         // if sensors are stepped on, will convert sensor pos to array pos
         for (var i = 0; i < sensorsX; i++) {
@@ -142,11 +144,13 @@ function refreshXML() {
                 if (dataHolderArray[i][j] === charSearch) {
                     var k = Math.floor(i / 6);
                     var t = Math.floor(j / 6);
-                    visible[k][t] = displayTime;
-
+                    if (numSelected < 2)
+                        visible[k][t] = displayTime;
                 }
             }
         }
+
+        drawCanvas(dataHolderArray);
     });
 }
 
