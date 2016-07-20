@@ -22,11 +22,11 @@ function drawObj(xPos, yPos, size, numShape, canSee) {
     context2D.fillRect(xPos, yPos, size, size);
 
     if (canSee > 0) {
-        drawShape(xPos, yPos, size, numShape, canSee);
+        drawShape(xPos, yPos, size, numShape);
     }
 }
 
-function drawShape(xPos, yPos, size, numShape, canSee) {
+function drawShape(xPos, yPos, size, numShape) {
 
     var xPos2 = xPos + 3;
     var yPos2 = yPos + 3;
@@ -69,6 +69,8 @@ function drawShape(xPos, yPos, size, numShape, canSee) {
             break;
 
     }
+
+    // while elements in array are above 0, will draw shape
     for (var i = 0; i < sensorsX; i++) {
         for (var j = 0; j < sensorsY; j++) {
             if (dataHolderArray[i][j] === ".") {
@@ -79,9 +81,6 @@ function drawShape(xPos, yPos, size, numShape, canSee) {
             }
         }
     }
-
-    canSee = false;
-    setTimeout(drawObj, 3000);
 
 }
 
@@ -98,8 +97,9 @@ function drawCanvas(arr) {
 
         for (j = 0; j < tempRow.length; j += 1) {
 
-            tempX = j * ledPerSensorX * 6;
-            tempY = i * ledPerSensorY * 6;
+            // * 6 makes 4 separate squares
+            tempX = j * ledPerSensorX * 6 + ledPerSensorX;
+            tempY = i * ledPerSensorY * 6 + ledPerSensorY;
             var shapeArrayIndexValue = shapes[i][j];
             drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, visible[i][j]);
         }
@@ -136,6 +136,7 @@ function refreshXML() {
 
         drawCanvas(dataHolderArray);
 
+        // if sensors are stepped on, will convert sensor pos to array pos
         for (var i = 0; i < sensorsX; i++) {
             for (var j = 0; j < sensorsY; j++) {
                 if (dataHolderArray[i][j] === charSearch) {
@@ -173,6 +174,7 @@ $(document).ready(function () {
 
     shuffle(numArry1);
 
+    // assigns shuffled array to new array
     shapes = [
         [numArry1[0], numArry1[1], numArry1[2], numArry1[3]],
         [numArry1[4], numArry1[5], numArry1[6], numArry1[7]],
