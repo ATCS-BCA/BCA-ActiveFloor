@@ -14,7 +14,6 @@ var visible = [[0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
 var displayTime = 4000;
-var numVisible;
 
 function drawObj(xPos, yPos, size, numShape, canSee) {
     'use strict';
@@ -72,7 +71,6 @@ function drawShape(xPos, yPos, size, numShape) {
     }
 
 
-
 }
 
 function drawCanvas(arr) {
@@ -126,29 +124,44 @@ function refreshXML() {
         });
 
         var numSelected = 0;
-        // while elements in visible array are above 0, will draw shape
+        var tempShownShape;
+
+        // timer on colored squares
+        // while elements in visible array are above 0, will draw colored shape
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
-                if (visible[i][j] >0) {
+                if (visible[i][j] > 0) {
                     visible[i][j] -= refreshTime;
 
-                    if (visible[i][j]>0)
+                    // prevents more than 2 cards to be turned
+                    if (visible[i][j] > 0)
                         numSelected++;
+
+                    if (tempShownShape === shapes[i][j]) {
+                        shapes.splice(shapes[i][j]);
+                        shapes.splice(tempShownShape);
+                    }
                 }
             }
         }
 
+        //draws colored shape
         // if sensors are stepped on, will convert sensor pos to array pos
         for (var i = 0; i < sensorsX; i++) {
             for (var j = 0; j < sensorsY; j++) {
                 if (dataHolderArray[i][j] === charSearch) {
                     var k = Math.floor(i / 6);
                     var t = Math.floor(j / 6);
-                    if (numSelected < 2)
+                    // draws colored shape and sets timer
+                    if (numSelected < 2) {
                         visible[k][t] = displayTime;
+                        shapes[k][j] = tempShownShape;
+                    }
+
                 }
             }
         }
+
 
         drawCanvas(dataHolderArray);
     });
