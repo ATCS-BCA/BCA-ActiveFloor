@@ -8,12 +8,17 @@ var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;
 var shapes = [];
-var visible = [[0, 0, 0, 0],
+var visible = [
+    [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
 var displayTime = 4000;
+var solved = [false, false, false, false,
+    false, false, false, false,
+    false, false, false, false,
+    false, false, false, false];
 
 function drawObj(xPos, yPos, size, numShape, canSee) {
     'use strict';
@@ -133,14 +138,14 @@ function refreshXML() {
                 if (visible[i][j] > 0) {
                     visible[i][j] -= refreshTime;
 
+                    if(tempShownShape === shapes[i][j]) {
+                        solved[shapes.indexOf(tempShownShape)] = true;
+                        solved[[i][j]] = true;
+                    }
+
                     // prevents more than 2 cards to be turned
                     if (visible[i][j] > 0)
                         numSelected++;
-
-                    if(tempShownShape === shapes[i][j]) {
-                        shapes.splice(tempShownShape);
-                        shapes.splice([i][j]);
-                    }
                 }
             }
         }
