@@ -13,7 +13,7 @@ var visible = [[0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
-var displayTime = 3000;
+var displayTime = 4000;
 
 function drawObj(xPos, yPos, size, numShape, canSee) {
     'use strict';
@@ -97,7 +97,7 @@ function drawCanvas(arr) {
 
         for (j = 0; j < tempRow.length; j += 1) {
 
-            // * 6 makes 4 separate squares
+            // * 6 makes 4 separate squares; + ledPerSensor centers
             tempX = j * ledPerSensorX * 6 + ledPerSensorX;
             tempY = i * ledPerSensorY * 6 + ledPerSensorY;
             var shapeArrayIndexValue = shapes[i][j];
