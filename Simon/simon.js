@@ -6,6 +6,11 @@ score = 0;
 var color;
 first = true;
 
+// begins empty array for color sequence
+var a = new Array();
+// begins empty array for player step sequence (gets rewritten each round)
+var playerSteps = new Array()
+
 window.onload = function() {
     // Initialize the matrix.
     // create array with empty map[0], map[1], map[2]
@@ -21,13 +26,8 @@ window.onload = function() {
     var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
 
-    // begins empty array for color sequence
-    var a = new Array();
     // score is already set to 0
     a[0] = numbercolor(Math.floor((Math.random()*5)+1));
-
-    // begins empty array for player step sequence (gets rewritten each round)
-    var playerSteps = new Array()
 
     drawGame();
 
@@ -89,7 +89,7 @@ window.onload = function() {
         while (game != false) {
           playColor(a);
 
-          playerTurn();
+          playerTurn(a);
 
           // after each round, if game not over (game != false), call function "addColor()"
           addColor();
@@ -120,7 +120,7 @@ function playColor(a) {
   // for every color, indexed by score, board area lights up
   for (sequence = 0; sequence <= score; sequence++) {
     // sets variable "color" to the right color that needs to show
-    numbercolor(a,sequence);
+    numbercolor(a[sequence]);
     // light up that color variable
     showColor();
   }
@@ -128,21 +128,21 @@ function playColor(a) {
 
 // when you put in an array d, index e...
 // this sets the colors from the number
-function numbercolor(d,e) {
+function numbercolor(d) {
   // light red
-  if (d[e]=1) color = "#e74c3c";
+  if (d = 1) color = "#e74c3c";
   // light orange
-  else if (d[e]=2) color = "#e67e22";
+  else if (d = 2) color = "#e67e22";
   // light yellow
-  else if (d[e]=3) color = "#f1c40f";
+  else if (d = 3) color = "#f1c40f";
   // light green
-  else if (d[e]=4) color = "#2ecc71";
+  else if (d = 4) color = "#2ecc71";
   // light bluegreen
-  else if (d[e]=5) color = "#1abc9c";
+  else if (d = 5) color = "#1abc9c";
   // light blue
-  else if (d[e]=6) color = "#3498db";
+  else if (d = 6) color = "#3498db";
   // light purple
-  else if (d[e]=7) color = "#9b59b6";
+  else if (d = 7) color = "#9b59b6";
   // light pink
   else color = "#ff355e";
 }
@@ -153,33 +153,32 @@ function showColor() {
   ctx.fillStyle = color;
   // shows rectangle for 3000 milliseconds
   // light red - 1
-  if color = "#e74c3c" ctx.fillRect(0+2, 0+2, 60, 60);
+  if (color = "#e74c3c") ctx.fillRect(0+2, 0+2, 60, 60);
   // light orange - 2
-  else if color = "#e67e22" ctx.fillRect(64+2, 0+2, 60, 60);
+  else if (color = "#e67e22") ctx.fillRect(64+2, 0+2, 60, 60);
   // light yellow - 3
-  else if color = "#f1c40f" ctx.fillRect(128+2, 0+2, 60, 60);
+  else if (color = "#f1c40f") ctx.fillRect(128+2, 0+2, 60, 60);
   // light green - 4
-  else if color = "#2ecc71" ctx.fillRect(128+2, 64+2, 60, 60);
+  else if (color = "#2ecc71") ctx.fillRect(128+2, 64+2, 60, 60);
   // light bluegreen - 5
-  else if color = "#1abc9c" ctx.fillRect(128+2, 128+2, 60, 60);
+  else if (color = "#1abc9c") ctx.fillRect(128+2, 128+2, 60, 60);
   // light blue - 6
-  else if color = "#3498db" ctx.fillRect(64+2, 128+2, 60, 60);
+  else if (color = "#3498db") ctx.fillRect(64+2, 128+2, 60, 60);
   // light purple - 7
-  else if color = "#9b59b6" ctx.fillRect(0+2, 128+2, 60, 60);
+  else if (color = "#9b59b6") ctx.fillRect(0+2, 128+2, 60, 60);
   // light pink - 8
   else ctx.fillRect(0+2, 64+2, 60, 60);
   //setTimeout(ctx.fillRect(i*64, j*64, 64, 64), 3000);
 }
 
 // player's turn to copy the sequence
-function playerTurn() {
+function playerTurn(a) {
   for (step = 0; step < a.length; step++) {
     while (game = true) {
       active = true;
       // the next thing (number? color?) the player steps on becomes stored as a[step]
-      function press(a,b) {
-          // if not first (so first == false),
-          if(!first) map[b][a] = a[step];
+      if (pressed != 0) {
+        a[step] = pressed;
       }
       // also SHOW the color that was stepped on!!
       // sets variable "color" to the right color that needs to show
@@ -203,7 +202,7 @@ function addColor() {
   score++;
   // for next level, assigns random color from 1 to 8
   a[score] = Math.floor((Math.random()*5)+1);
-  numbercolor();
+  numbercolor(a[score]);
 }
 
 function showGameOver() {
