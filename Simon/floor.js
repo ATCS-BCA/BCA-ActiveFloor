@@ -7,6 +7,7 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;
+var pressed;
 
 function refreshXML() {
     'use strict';
@@ -59,29 +60,27 @@ function refresh() {
 // put in an array "arr" to draw canvas
 function drawCanvas(arr) {
     'use strict';
-    // variable "middle" starting at 0
-    var middle=0;
 
+    var i, tempRow, j, srchStr;
     // first, for every variable "i" going from 0 to the length of the array,
-    for (var i=0;i<arr.length;i++) {
+    for (i = 0; i < arr.length; i++) {
+        tempRow = arr[i];
         // there's another variable "j" going from 0 to the same length of the array
-        for (var j=0;j<arr[i].length;j++) {
-
-            // row "i", column "j"... if there is someone stepping there,
-            if (arr[i][j]==="*") {
-                // if it's in the middle box, then add 1 to "middle"
-                if (i>=8 && i<=16 && j>=8 && j<=16) middle++;
-                // method "press" in TTTfloor.js, "Math.floor()" function returns the largest integer less than or equal to a given number
-                // for example, if (8, 8) is stepped on, then press (1, 1)
-                // for example, if (15, 15) is stepped on, then press (1, 1)
-                // for example, if (16, 16) is stepped on, then press (2, 2)
-                press(Math.floor(i/8),Math.floor(j/8));
+        for (j = 0; j < tempRow.length; j++) {
+            srchStr = tempRow.substring(j, j + 1);
+            if (srchStr === charSearch) {
+                if (i < 8 && j < 8) pressed = 1;
+                else if (i > 8 && i < 16 && j < 8) pressed = 2;
+                else if (i > 16 && j < 8) pressed = 3;
+                else if (i > 16 && j > 8 && j < 16) pressed = 4;
+                else if (i > 16 && j > 16) pressed = 5;
+                else if (i > 8 && i < 16 && j > 16) pressed = 6;
+                else if (i < 8 && j > 16) pressed = 7;
+                else if (i < 8 && j > 8 && j < 16) pressed = 8;
+                else pressed = 0;
             }
         }
     }
-
-    // NOT SURE WHAT THIS MEAN?
-    if (middle>2) refresh();
 }
 
 function Restart(){
@@ -99,7 +98,6 @@ $(document).ready(function () {
         $("body").addClass("app");
         $("div").addClass("app");
         $("#floorCanvas").addClass("app");
-
     });
 });
 
