@@ -20,13 +20,12 @@ function drawObj(xPos, yPos, size, numShape, canSee) {
     context2D.fillStyle = 'red';
     context2D.fillRect(xPos, yPos, size, size);
 
-    console.log(canSee);
     if (canSee) {
-        drawShape(xPos, yPos, size, numShape);
+        drawShape(xPos, yPos, size, numShape, canSee);
     }
 }
 
-function drawShape(xPos, yPos, size, numShape) {
+function drawShape(xPos, yPos, size, numShape, canSee) {
 
     var xPos2 = xPos + 3;
     var yPos2 = yPos + 3;
@@ -69,7 +68,8 @@ function drawShape(xPos, yPos, size, numShape) {
                 break;
 
         }
-        setTimeout(drawObj, 3000);
+    canSee = false;
+    setTimeout(drawObj, 3000);
 
 }
 
