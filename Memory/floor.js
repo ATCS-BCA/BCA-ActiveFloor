@@ -8,11 +8,12 @@ var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;
 var shapes = [];
-var visible = [[false, false, false, false],
-    [false, false, false, false],
-    [false, false, false, false],
-    [false, false, false, false]
+var visible = [[0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
 ];
+var displayTime = 3000;
 
 function drawObj(xPos, yPos, size, numShape, canSee) {
     'use strict';
@@ -20,7 +21,7 @@ function drawObj(xPos, yPos, size, numShape, canSee) {
     context2D.fillStyle = 'red';
     context2D.fillRect(xPos, yPos, size, size);
 
-    if (canSee) {
+    if (canSee > 0) {
         drawShape(xPos, yPos, size, numShape, canSee);
     }
 }
@@ -31,43 +32,54 @@ function drawShape(xPos, yPos, size, numShape, canSee) {
     var yPos2 = yPos + 3;
     var size2 = size - 6;
 
-        switch (numShape) {
-            case 0:
-                context2D.fillStyle = 'black';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 1:
-                context2D.fillStyle = 'yellow';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 2:
-                context2D.fillStyle = 'green';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 3:
-                context2D.fillStyle = 'purple';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 4:
-                context2D.fillStyle = 'orange';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 5:
-                context2D.fillStyle = 'pink';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 6:
-                context2D.fillStyle = 'blue';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 7:
-                context2D.fillStyle = 'grey';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            default:
-                break;
+    switch (numShape) {
+        case 0:
+            context2D.fillStyle = 'black';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 1:
+            context2D.fillStyle = 'yellow';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 2:
+            context2D.fillStyle = 'green';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 3:
+            context2D.fillStyle = 'purple';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 4:
+            context2D.fillStyle = 'orange';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 5:
+            context2D.fillStyle = 'pink';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 6:
+            context2D.fillStyle = 'blue';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 7:
+            context2D.fillStyle = 'grey';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        default:
+            break;
 
+    }
+    for (var i = 0; i < sensorsX; i++) {
+        for (var j = 0; j < sensorsY; j++) {
+            if (dataHolderArray[i][j] === ".") {
+                var k = Math.floor(i / 6);
+                var t = Math.floor(j / 6);
+                visible[k][t] -= 1000;
+
+            }
         }
+    }
+
     canSee = false;
     setTimeout(drawObj, 3000);
 
@@ -124,12 +136,12 @@ function refreshXML() {
 
         drawCanvas(dataHolderArray);
 
-        for(var i = 0; i < sensorsX; i++) {
-            for(var j = 0; j < sensorsY; j++) {
-                if(dataHolderArray[i][j] === charSearch) {
-                    var k = Math.floor(i/6);
-                    var t = Math.floor(j/6);
-                    visible[k][t] = true;
+        for (var i = 0; i < sensorsX; i++) {
+            for (var j = 0; j < sensorsY; j++) {
+                if (dataHolderArray[i][j] === charSearch) {
+                    var k = Math.floor(i / 6);
+                    var t = Math.floor(j / 6);
+                    visible[k][t] = displayTime;
 
                 }
             }
