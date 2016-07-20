@@ -14,18 +14,19 @@ var visible = [[false, false, false, false],
     [false, false, false, false]
 ];
 
-function drawObj(xPos, yPos, size, canSee) {
+function drawObj(xPos, yPos, size, numShape, canSee) {
     'use strict';
 
     context2D.fillStyle = 'red';
     context2D.fillRect(xPos, yPos, size, size);
 
+    console.log(canSee);
     if (canSee) {
-        drawShape();
+        drawShape(xPos, yPos, size, numShape);
     }
 }
 
-function drawShape(numShape) {
+function drawShape(xPos, yPos, size, numShape) {
 
     var xPos2 = xPos + 3;
     var yPos2 = yPos + 3;
@@ -88,8 +89,7 @@ function drawCanvas(arr) {
             tempX = j * ledPerSensorX * 6;
             tempY = i * ledPerSensorY * 6;
             var shapeArrayIndexValue = shapes[i][j];
-            var canSee = visible[i][j];
-            drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, canSee);
+            drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, visible[i][j]);
         }
     }
 }
