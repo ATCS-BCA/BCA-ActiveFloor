@@ -9,11 +9,12 @@ var canvas, context2D;
 var refreshTime = 17;
 var shapes = [];
 var visible = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0]
+    [false, false, false, false],
+    [false, false, false, false],
+    [false, false, false, false],
+    [false, false, false, false]
 ];
+var visibleTimer = 0;
 var displayTime = 3000;
 var solved = [[false, false, false, false],
     [false, false, false, false],
@@ -27,7 +28,7 @@ function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     context2D.fillStyle = 'red';
     context2D.fillRect(xPos, yPos, size, size);
 
-    if (canSee > 0 || solved) {
+    if (canSee || solved) {
         drawShape(xPos, yPos, size, numShape);
     }
 }
@@ -78,18 +79,6 @@ function drawShape(xPos, yPos, size, numShape) {
     }
 
 
-}
-
-function noMatch(displayNoMatch) {
-    'use strict';
-    //if (displayNoMatch > 0) {
-        context2D.fillStyle = '#B00909';
-        context2D.fillRect(0, canvas.height / 5, canvas.width, (canvas.height / 5) * 3);
-        context2D.font = '20px sans-serif';
-        context2D.fillStyle = 'black';
-        context2D.fillText('No match', ((canvas.width / 2) - (context2D.measureText('No match').width / 2)), canvas.height / 2);
-       // displayNoMatch -= refreshTime;
-    //}
 }
 
 function drawCanvas(arr) {
@@ -150,35 +139,42 @@ function refreshXML() {
         // while elements in visible array are above 0, will draw colored shape
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
-                if (visible[i][j] > 0) {
-                    visible[i][j] -= refreshTime;
+                if (visible[i][j]) {
 
-                    // prevents more than 2 cards to be turned
-                    // sets up check for match
-                    if (visible[i][j] > 0) {
-                        selectedCells[numSelected] = shapes[i][j];
+                    // sets up for comparison
+                    selectedCells[numSelected] = shapes[i][j];
 
-                        if (numSelected == 0) {
-                            cellX1 = i;
-                            cellY1 = j;
-                        }
-                        else if (numSelected == 1) {
-                            cellX2 = i;
-                            cellY2 = j;
-                        }
-                        numSelected++;
+                    if (numSelected == 0) {
+                        cellX1 = i;
+                        cellY1 = j;
                     }
+                    else if (numSelected == 1) {
+                        cellX2 = i;
+                        cellY2 = j;
+                    }
+                    numSelected++;
                 }
             }
         }
 
+        // makes two selected squares have same timer
         if (numSelected == 2) {
+            if (visibleTimer <= 0)
+                visibleTimer = 3000;
+            else {
+                visibleTimer-=refreshTime;
+                if (visibleTimer <= 0) {
+                    visible = [
+                        [false, false, false, false],
+                        [false, false, false, false],
+                        [false, false, false, false],
+                        [false, false, false, false]
+                    ];
+                }
+            }
             if (selectedCells[0] === selectedCells[1]) {
                 solved[cellX1][cellY1] = true;
                 solved[cellX2][cellY2] = true;
-            }
-            if (selectedCells[0] !== selectedCells[1]){
-                noMatch();
             }
         }
 
@@ -192,7 +188,7 @@ function refreshXML() {
                     var t = Math.floor(j / 6);
                     // draws colored shape and sets timer
                     if (numSelected < 2) {
-                        visible[k][t] = displayTime;
+                        visible[k][t] = true;
                     }
 
                 }
