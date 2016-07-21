@@ -36,7 +36,6 @@ function refreshXML() {
 
             dataHolderArray.push(n);
         });
-        //DIFFERENT FROM SP (SP HAS LINE: moveStart = 0;)
         drawCanvas(dataHolderArray);
     });
 }
@@ -47,13 +46,13 @@ function refresh() {
     if (active == false) {
         // there is a variable that creates an element "a"
         var a = document.createElement('a');
-        a.id="restart";
+        a.id = "restart";
         a.title = "Restart";
         a.href = "tictactoe.html";
         document.body.appendChild(a);
 
         document.getElementById('restart').click();
-        done=false;
+        done = false;
     }
 }
 
@@ -81,10 +80,11 @@ function drawCanvas(arr) {
             }
         }
     }
+    drawGame();
 }
 
 function Restart(){
-    done=true;
+    done = true;
 }
 
 $(document).ready(function () {

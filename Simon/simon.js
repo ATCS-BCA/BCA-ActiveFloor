@@ -5,8 +5,13 @@ game = true;
 score = 0;
 var color;
 first = true;
+timer = 3000;
+seq = 0;
 
-/*var cells = [
+// begins empty array for player step sequence (gets rewritten each round)
+playerSteps = new Array();
+
+var cells = [
   "",
   {"lightColor": "#e74c3c", "x":2, "y":2},
   {"lightColor": "#e67e22", "x":66, "y":2},
@@ -17,7 +22,8 @@ first = true;
   {"lightColor": "#9b59b6", "x":2, "y":130},
   {"lightColor": "#ff355e", "x":2, "y":66}
 ];
-*/
+
+/*
 var cells = [
   "",
   {"lightColor": "black", "x":2, "y":2},
@@ -29,7 +35,7 @@ var cells = [
   {"lightColor": "black", "x":2, "y":130},
   {"lightColor": "black", "x":2, "y":66}
 ];
-
+*/
 
 // begins empty array for color sequence
 var a = new Array();
@@ -50,108 +56,99 @@ window.onload = function() {
     body.appendChild(canvas);
 
     // score is already set to 0
-    a[0] = Math.floor((Math.random()*5)+1);
-    a[1] = Math.floor((Math.random()*5)+1);
-    a[2] = Math.floor((Math.random()*5)+1);
-    a[3] = Math.floor((Math.random()*5)+1);
-    a[4] = Math.floor((Math.random()*5)+1);
-    a[5] = Math.floor((Math.random()*5)+1);
+    a[0] = Math.floor((Math.random()*8)+1);
+    a[1] = Math.floor((Math.random()*8)+1);
+    a[2] = Math.floor((Math.random()*8)+1);
+    a[3] = Math.floor((Math.random()*8)+1);
+    a[4] = Math.floor((Math.random()*8)+1);
+    a[5] = Math.floor((Math.random()*8)+1);
 
-    // begins empty array for player step sequence (gets rewritten each round)
-    var playerSteps = new Array();
-
-    drawGame();
-
-    function drawGame() {
-        // Clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Fill everything with black color
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // create the grid outline
-        ctx.strokeStyle = 'white';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        // draw the vertical 1st line
-        // start at row 64, column 0
-        ctx.moveTo(64,0);
-        // end line at same row, but column 192
-        ctx.lineTo(64,192);
-        // draw the vertical 2nd line
-        ctx.moveTo(128,0);
-        ctx.lineTo(128,192);
-        // draw the horizontal 1st line
-        ctx.moveTo(0,64);
-        ctx.lineTo(192,64);
-        // draw the horizontal 2nd line
-        ctx.moveTo(0,128);
-        ctx.lineTo(192,128);
-        // show the lines
-        ctx.stroke();
-
-        // dark red - 1
-        ctx.fillStyle = '#c0392b';
-        ctx.fillRect(0+2, 0+2, 60, 60);
-        // dark orange - 2
-        ctx.fillStyle = '#d35400';
-        ctx.fillRect(64+2, 0+2, 60, 60);
-        // dark yellow - 3
-        ctx.fillStyle = '#f39c12';
-        ctx.fillRect(128+2, 0+2, 60, 60);
-        // dark green - 4
-        ctx.fillStyle = '#27ae60';
-        ctx.fillRect(128+2, 64+2, 60, 60);
-        // dark bluegreen - 6
-        ctx.fillStyle = '#16a085';
-        ctx.fillRect(128+2, 128+2, 60, 60);
-        // dark blue - 5
-        ctx.fillStyle = '#2980b9';
-        ctx.fillRect(64+2, 128+2, 60, 60);
-        // dark purple - 7
-        ctx.fillStyle = '#8e44ad';
-        ctx.fillRect(0+2, 128+2, 60, 60);
-        // dark pink - 8
-        ctx.fillStyle = 'd90d36';
-        ctx.fillRect(0+2, 64+2, 60, 60);
-
-        drawScore();
-
-        if (game != false) {
-
-          //
-          var timer = 3000;
-          for (var seq = 0; seq <= 5; seq++) {
-            // light up that color variable
-            cell = cells[a[seq]];
-            ctx.fillStyle = cell["lightColor"];
-            ctx.fillRect(cell["x"], cell["y"], 60, 60);
-
-            if (timer <= 0) {
-              seq++;
-              timer = 3000;
-
-            }
-                          timer -= refreshTime;
-          }
-          //
-
-//          playColor(a);
-
-//          playerTurn(playerSteps, a);
-
-          // after each round, if game not over (game != false), call function "addColor()"
-//          addColor();
-        }
-    }
-
-/*    if (first) {
+/*  if (first) {
         setTimeout(function() { first=false; }, 3000);
     }
 
     if (game) setTimeout(showGameOver,1000);
     if (!game) setTimeout(drawGame,1000/60);
 */
+}
+
+function drawGame() {
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Fill everything with black color
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // create the grid outline
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    // draw the vertical 1st line
+    // start at row 64, column 0
+    ctx.moveTo(64,0);
+    // end line at same row, but column 192
+    ctx.lineTo(64,192);
+    // draw the vertical 2nd line
+    ctx.moveTo(128,0);
+    ctx.lineTo(128,192);
+    // draw the horizontal 1st line
+    ctx.moveTo(0,64);
+    ctx.lineTo(192,64);
+    // draw the horizontal 2nd line
+    ctx.moveTo(0,128);
+    ctx.lineTo(192,128);
+    // show the lines
+    ctx.stroke();
+
+    // dark red - 1
+    ctx.fillStyle = '#c0392b';
+    ctx.fillRect(0+2, 0+2, 60, 60);
+    // dark orange - 2
+    ctx.fillStyle = '#d35400';
+    ctx.fillRect(64+2, 0+2, 60, 60);
+    // dark yellow - 3
+    ctx.fillStyle = '#f39c12';
+    ctx.fillRect(128+2, 0+2, 60, 60);
+    // dark green - 4
+    ctx.fillStyle = '#27ae60';
+    ctx.fillRect(128+2, 64+2, 60, 60);
+    // dark bluegreen - 6
+    ctx.fillStyle = '#16a085';
+    ctx.fillRect(128+2, 128+2, 60, 60);
+    // dark blue - 5
+    ctx.fillStyle = '#2980b9';
+    ctx.fillRect(64+2, 128+2, 60, 60);
+    // dark purple - 7
+    ctx.fillStyle = '#8e44ad';
+    ctx.fillRect(0+2, 128+2, 60, 60);
+    // dark pink - 8
+    ctx.fillStyle = 'd90d36';
+    ctx.fillRect(0+2, 64+2, 60, 60);
+
+    drawScore();
+
+    if (game != false) {
+      if (seq <= 5) {
+        // light up that color variable
+        cell = cells[a[seq]];
+        ctx.fillStyle = cell["lightColor"];
+        ctx.fillRect(cell["x"], cell["y"], 60, 60);
+        if (timer > 0) {
+          timer -= refreshTime;
+        }
+        if (timer <= 0) {
+          seq++;
+          timer = 1000;
+        }
+      }
+
+//          playColor(a);
+
+//          playerTurn(playerSteps, a);
+
+      // after each round, if game not over (game != false), call function "addColor()"
+//          addColor();
+    }
 }
 
 // shows the score in the middle box
@@ -206,7 +203,7 @@ function addColor() {
   // increase the score...
   score++;
   // for next level, assigns random color from 1 to 8
-  a[score] = Math.floor((Math.random()*5)+1);
+  a[score] = Math.floor((Math.random()*8)+1);
   numbercolor(a[score]);
 }
 
