@@ -14,20 +14,20 @@ var visible = [
     [0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
-var displayTime = 4000;
-var solved = [false, false, false, false,
-    false, false, false, false,
-    false, false, false, false,
-    false, false, false, false];
+var displayTime = 3000;
+var solved = [[false, false, false, false],
+    [false, false, false, false],
+    [false, false, false, false],
+    [false, false, false, false]];
 var displayNoMatch;
 
-function drawObj(xPos, yPos, size, numShape, canSee) {
+function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
 
     context2D.fillStyle = 'red';
     context2D.fillRect(xPos, yPos, size, size);
 
-    if (canSee > 0) {
+    if (canSee > 0 || solved) {
         drawShape(xPos, yPos, size, numShape);
     }
 }
@@ -80,16 +80,16 @@ function drawShape(xPos, yPos, size, numShape) {
 
 }
 
-function noMatch() {
+function noMatch(displayNoMatch) {
     'use strict';
-    context2D.fillStyle = '#B00909';
-    context2D.fillRect(0, canvas.height / 5, canvas.width, (canvas.height / 5) * 3);
-    context2D.font = '20px sans-serif';
-
-    if(displayNoMatch > 0) {
-        context2D.fillText('No match', ((canvas.width / 2) - (context2D.measureText('No match').width / 2)), 50);
-        displayNoMatch -= refreshTime;
-    }
+    //if (displayNoMatch > 0) {
+        context2D.fillStyle = '#B00909';
+        context2D.fillRect(0, canvas.height / 5, canvas.width, (canvas.height / 5) * 3);
+        context2D.font = '20px sans-serif';
+        context2D.fillStyle = 'black';
+        context2D.fillText('No match', ((canvas.width / 2) - (context2D.measureText('No match').width / 2)), canvas.height / 2);
+       // displayNoMatch -= refreshTime;
+    //}
 }
 
 function drawCanvas(arr) {
@@ -109,7 +109,7 @@ function drawCanvas(arr) {
             tempX = j * ledPerSensorX * 6 + ledPerSensorX;
             tempY = i * ledPerSensorY * 6 + ledPerSensorY;
             var shapeArrayIndexValue = shapes[i][j];
-            drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, visible[i][j]);
+            drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, visible[i][j], solved[i][j]);
         }
     }
 }
@@ -158,11 +158,11 @@ function refreshXML() {
                     if (visible[i][j] > 0) {
                         selectedCells[numSelected] = shapes[i][j];
 
-                        if(numSelected == 0) {
+                        if (numSelected == 0) {
                             cellX1 = i;
                             cellY1 = j;
                         }
-                        else if(numSelected = 1) {
+                        else if (numSelected == 1) {
                             cellX2 = i;
                             cellY2 = j;
                         }
@@ -171,16 +171,17 @@ function refreshXML() {
                 }
             }
         }
+
         if (numSelected == 2) {
-            if(selectedCells[0] == selectedCells[1]) {
+            if (selectedCells[0] === selectedCells[1]) {
                 solved[cellX1][cellY1] = true;
                 solved[cellX2][cellY2] = true;
             }
-            else {
-                displayNoMatch = 3000;
-                noMatch(displayNoMatch);
+            if (selectedCells[0] !== selectedCells[1]){
+                noMatch();
             }
         }
+
 
         //draws colored shape
         // if sensors are stepped on, will convert sensor pos to array pos
