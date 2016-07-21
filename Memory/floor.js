@@ -19,6 +19,7 @@ var solved = [false, false, false, false,
     false, false, false, false,
     false, false, false, false,
     false, false, false, false];
+var displayNoMatch;
 
 function drawObj(xPos, yPos, size, numShape, canSee) {
     'use strict';
@@ -32,6 +33,7 @@ function drawObj(xPos, yPos, size, numShape, canSee) {
 }
 
 function drawShape(xPos, yPos, size, numShape) {
+    'use strict';
 
     var xPos2 = xPos + 3;
     var yPos2 = yPos + 3;
@@ -76,6 +78,18 @@ function drawShape(xPos, yPos, size, numShape) {
     }
 
 
+}
+
+function noMatch() {
+    'use strict';
+    context2D.fillStyle = '#B00909';
+    context2D.fillRect(0, canvas.height / 5, canvas.width, (canvas.height / 5) * 3);
+    context2D.font = '20px sans-serif';
+
+    if(displayNoMatch > 0) {
+        context2D.fillText('No match', ((canvas.width / 2) - (context2D.measureText('No match').width / 2)), 50);
+        displayNoMatch -= refreshTime;
+    }
 }
 
 function drawCanvas(arr) {
@@ -129,7 +143,8 @@ function refreshXML() {
         });
 
         var numSelected = 0;
-        var tempShownShape;
+        var selectedCells = [];
+        var cellX1, cellY1, cellX2, cellY2;
 
         // timer on colored squares
         // while elements in visible array are above 0, will draw colored shape
@@ -139,9 +154,31 @@ function refreshXML() {
                     visible[i][j] -= refreshTime;
 
                     // prevents more than 2 cards to be turned
-                    if (visible[i][j] > 0)
+                    // sets up check for match
+                    if (visible[i][j] > 0) {
+                        selectedCells[numSelected] = shapes[i][j];
+
+                        if(numSelected == 0) {
+                            cellX1 = i;
+                            cellY1 = j;
+                        }
+                        else if(numSelected = 1) {
+                            cellX2 = i;
+                            cellY2 = j;
+                        }
                         numSelected++;
+                    }
                 }
+            }
+        }
+        if (numSelected == 2) {
+            if(selectedCells[0] == selectedCells[1]) {
+                solved[cellX1][cellY1] = true;
+                solved[cellX2][cellY2] = true;
+            }
+            else {
+                displayNoMatch = 3000;
+                noMatch(displayNoMatch);
             }
         }
 
@@ -155,14 +192,6 @@ function refreshXML() {
                     // draws colored shape and sets timer
                     if (numSelected < 2) {
                         visible[k][t] = displayTime;
-
-                        if (numSelected = 1)
-                        tempShownShape = shapes[k][t]
-
-                        if(tempShownShape === shapes[i][j]) {
-                            solved[shapes.indexOf(tempShownShape)] = true;
-                            solved[[i][j]] = true;
-                        }
                     }
 
                 }
