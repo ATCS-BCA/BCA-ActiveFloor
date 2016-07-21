@@ -138,11 +138,6 @@ function refreshXML() {
                 if (visible[i][j] > 0) {
                     visible[i][j] -= refreshTime;
 
-                    if(tempShownShape === shapes[i][j]) {
-                        solved[shapes.indexOf(tempShownShape)] = true;
-                        solved[[i][j]] = true;
-                    }
-
                     // prevents more than 2 cards to be turned
                     if (visible[i][j] > 0)
                         numSelected++;
@@ -160,7 +155,14 @@ function refreshXML() {
                     // draws colored shape and sets timer
                     if (numSelected < 2) {
                         visible[k][t] = displayTime;
-                        tempShownShape = shapes[k][t];
+
+                        if (numSelected = 1)
+                        tempShownShape = shapes[k][t]
+
+                        if(tempShownShape === shapes[i][j]) {
+                            solved[shapes.indexOf(tempShownShape)] = true;
+                            solved[[i][j]] = true;
+                        }
                     }
 
                 }
