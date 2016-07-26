@@ -182,7 +182,12 @@ function refreshXML() {
         //draws colored shape
         // if sensors are stepped on, will convert sensor pos to array pos
         for (var i = 0; i < sensorsX; i++) {
+            if (i%6 == 0 || i%6 == 5)
+                continue;
+
             for (var j = 0; j < sensorsY; j++) {
+                if (j%6 == 0 || j%6 == 5)
+                    continue;
                 if (dataHolderArray[i][j] === charSearch) {
                     var k = Math.floor(i / 6);
                     var t = Math.floor(j / 6);
@@ -265,4 +270,15 @@ function shuffle(array) {
 
     return array;
 
+}
+
+
+// returns true or false for potential prime sensor
+function isPrime(value) {
+    for(var i = 2; i < value; i++) {
+        if(value % i === 0) {
+            return false;
+        }
+    }
+    return (value > 1);
 }
