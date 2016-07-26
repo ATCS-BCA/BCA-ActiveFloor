@@ -281,9 +281,9 @@ function shuffle(array) {
 }
 
 function allTrue(solved) {
-    for(var o in solved) {}
-        for(var p in solved) {
-            if (!solved[o][p])
+    for(var o = 0; o < 4; o++) {}
+        for(var p = 0; p < 4; p++) {
+            if (solved[o][p] == false)
                 return false;
         }
 
@@ -291,6 +291,8 @@ function allTrue(solved) {
 }
 
 function endScreen() {
+    context2D.fillStyle = 'black';
+    context2D.fillRect(0, 0, canvas.width, canvas.height);
     context2D.fillStyle = 'white';
     context2D.font = '16px serif';
     context2D.fillText("Game Over",(canvas.width/2 - (context2D.measureText('Game Over').width / 2)), canvas.height/2),
