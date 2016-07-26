@@ -71,7 +71,9 @@ function drawShape(xPos, yPos, size, numShape) {
             break;
         case 7:
             context2D.fillStyle = 'grey';
-            context2D.fillRect(xPos2, yPos2, size2, size2);
+            context2D.begeinPath();
+            context2D.arc(xPos2, yPos2, size/2, 0, 2*Math.PI);
+            context2D.fill();
             break;
         default:
             break;
