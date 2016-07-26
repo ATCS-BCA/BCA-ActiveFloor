@@ -8,58 +8,81 @@ var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;
 var shapes = [];
-var visible = [[false, false, false, false],
+var visible = [
+    [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false]
 ];
+var visibleTimer = 0;
+var displayTime = 3000;
+var solved = [[false, false, false, false],
+    [false, false, false, false],
+    [false, false, false, false],
+    [false, false, false, false]];
+var displayNoMatch;
 
-function drawObj(xPos, yPos, size, numShape, canSee) {
+function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
 
     context2D.fillStyle = 'red';
     context2D.fillRect(xPos, yPos, size, size);
 
+    if (canSee || solved) {
+        drawShape(xPos, yPos, size, numShape);
+    }
+}
+
+function drawShape(xPos, yPos, size, numShape) {
+    'use strict';
+
     var xPos2 = xPos + 3;
     var yPos2 = yPos + 3;
     var size2 = size - 6;
 
-    if (canSee) {
-        switch (numShape) {
-            case 0:
-                context2D.fillStyle = 'black';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 1:
-                context2D.fillStyle = 'yellow';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 2:
-                context2D.fillStyle = 'green';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 3:
-                context2D.fillStyle = 'purple';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 4:
-                context2D.fillStyle = 'orange';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 5:
-                context2D.fillStyle = 'pink';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 6:
-                context2D.fillStyle = 'blue';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-            case 7:
-                context2D.fillStyle = 'grey';
-                context2D.fillRect(xPos2, yPos2, size2, size2);
-                break;
-        }
-
+    switch (numShape) {
+        case 0:
+            context2D.fillStyle = 'black';
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
+            break;
+        case 1:
+            context2D.fillStyle = 'yellow';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 2:
+            context2D.fillStyle = 'green';
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
+            break;
+        case 3:
+            context2D.fillStyle = 'purple';
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
+            break;
+        case 4:
+            context2D.fillStyle = 'white';
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
+            break;
+        case 5:
+            context2D.fillStyle = 'pink';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 6:
+            context2D.fillStyle = 'blue';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        case 7:
+            context2D.fillStyle = 'grey';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
+            break;
+        default:
+            break;
 
     }
 
@@ -79,11 +102,11 @@ function drawCanvas(arr) {
 
         for (j = 0; j < tempRow.length; j += 1) {
 
-            tempX = j * ledPerSensorX * 6;
-            tempY = i * ledPerSensorY * 6;
+            // * 6 makes 4 separate squares; + ledPerSensor centers
+            tempX = j * ledPerSensorX * 6 + ledPerSensorX;
+            tempY = i * ledPerSensorY * 6 + ledPerSensorY;
             var shapeArrayIndexValue = shapes[i][j];
-            var canSee = visible[i][j];
-            drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, canSee);
+            drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, visible[i][j], solved[i][j]);
         }
     }
 }
@@ -91,7 +114,7 @@ function drawCanvas(arr) {
 
 function refreshXML() {
     'use strict';
-    $.get('http://127.0.0.1:8080/', function (data) {
+    $.get('http://10.31.33.66:8080/', function (data) {
         dataHolderArray = [];
 
         $(data).find('BLFloor').each(function () {
@@ -116,16 +139,75 @@ function refreshXML() {
             dataHolderArray.push(n);
         });
 
-        for(var i = 0; i < ledPerSensorX; i++) {
-            for(var j = 0; j < ledPerSensorY; j++) {
-                if(dataHolderArray[i][j] === charSearch) {
-                    var k = Math.floor(i/6);
-                    var t = Math.floor(j/6);
-                    visible[k][t] = true;
+        var numSelected = 0;
+        var selectedCells = [];
+        var cellX1, cellY1, cellX2, cellY2;
+
+        // timer on colored squares
+        // while elements in visible array are above 0, will draw colored shape
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < 4; j++) {
+                if (visible[i][j]) {
+
+                    // sets up for comparison
+                    selectedCells[numSelected] = shapes[i][j];
+
+                    if (numSelected == 0) {
+                        cellX1 = i;
+                        cellY1 = j;
+                    }
+                    else if (numSelected == 1) {
+                        cellX2 = i;
+                        cellY2 = j;
+                    }
+                    numSelected++;
+                }
+            }
+        }
+
+        // makes two selected squares have same timer
+        if (numSelected == 2) {
+            if (visibleTimer <= 0)
+                visibleTimer = 3000;
+            else {
+                visibleTimer-=refreshTime;
+                if (visibleTimer <= 0) {
+                    visible = [
+                        [false, false, false, false],
+                        [false, false, false, false],
+                        [false, false, false, false],
+                        [false, false, false, false]
+                    ];
+                }
+            }
+            if (selectedCells[0] === selectedCells[1]) {
+                solved[cellX1][cellY1] = true;
+                solved[cellX2][cellY2] = true;
+            }
+        }
+
+
+        //draws colored shape
+        // if sensors are stepped on, will convert sensor pos to array pos
+        for (var i = 0; i < sensorsX; i++) {
+            if (i%6 == 0 || i%6 == 5)
+                continue;
+
+            for (var j = 0; j < sensorsY; j++) {
+                if (j%6 == 0 || j%6 == 5)
+                    continue;
+                if (dataHolderArray[i][j] === charSearch) {
+                    var k = Math.floor(i / 6);
+                    var t = Math.floor(j / 6);
+                    // draws colored shape and sets timer
+                    if (numSelected < 2) {
+                        visible[k][t] = true;
+                    }
 
                 }
             }
         }
+
 
         drawCanvas(dataHolderArray);
     });
@@ -133,6 +215,10 @@ function refreshXML() {
 
 $(document).ready(function () {
     'use strict';
+
+    // Start getting floor data automatically (assuming Floor Server is running).
+    startRefresh();
+
     sendSemaphore(function () {
         // Clear spacing and borders.
         $("body").addClass("app");
@@ -140,13 +226,6 @@ $(document).ready(function () {
         $("#floorCanvas").addClass("app");
 
     });
-
-    alert("Hello");
-
-    // Start getting floor data automatically (assuming Floor Server is running).
-    startRefresh();
-
-
 
     var numArry1 = [
         0, 0, 1, 1,
@@ -158,6 +237,7 @@ $(document).ready(function () {
 
     shuffle(numArry1);
 
+    // assigns shuffled array to new array
     shapes = [
         [numArry1[0], numArry1[1], numArry1[2], numArry1[3]],
         [numArry1[4], numArry1[5], numArry1[6], numArry1[7]],
@@ -198,4 +278,15 @@ function shuffle(array) {
 
     return array;
 
+}
+
+
+// returns true or false for potential prime sensor
+function isPrime(value) {
+    for(var i = 2; i < value; i++) {
+        if(value % i === 0) {
+            return false;
+        }
+    }
+    return (value > 1);
 }
