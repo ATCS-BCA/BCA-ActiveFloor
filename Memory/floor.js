@@ -43,7 +43,9 @@ function drawShape(xPos, yPos, size, numShape) {
     switch (numShape) {
         case 0:
             context2D.fillStyle = 'black';
-            context2D.fillRect(xPos2, yPos2, size2, size2);
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
             break;
         case 1:
             context2D.fillStyle = 'yellow';
@@ -51,15 +53,21 @@ function drawShape(xPos, yPos, size, numShape) {
             break;
         case 2:
             context2D.fillStyle = 'green';
-            context2D.fillRect(xPos2, yPos2, size2, size2);
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
             break;
         case 3:
             context2D.fillStyle = 'purple';
-            context2D.fillRect(xPos2, yPos2, size2, size2);
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
             break;
         case 4:
-            context2D.fillStyle = 'orange';
-            context2D.fillRect(xPos2, yPos2, size2, size2);
+            context2D.fillStyle = 'white';
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
             break;
         case 5:
             context2D.fillStyle = 'pink';
@@ -71,9 +79,7 @@ function drawShape(xPos, yPos, size, numShape) {
             break;
         case 7:
             context2D.fillStyle = 'grey';
-            context2D.begeinPath();
-            context2D.arc(xPos2, yPos2, size/2, 0, 2*Math.PI);
-            context2D.fill();
+            context2D.fillRect(xPos2, yPos2, size2, size2);
             break;
         default:
             break;
