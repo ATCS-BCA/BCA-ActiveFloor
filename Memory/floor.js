@@ -15,17 +15,15 @@ var visible = [
     [false, false, false, false]
 ];
 var visibleTimer = 0;
-var displayTime = 3000;
 var solved = [[false, false, false, false],
     [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false]];
-var displayNoMatch;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
 
-    context2D.fillStyle = 'red';
+    context2D.fillStyle = '#E8ECED';
     context2D.fillRect(xPos, yPos, size, size);
 
     if (canSee || solved) {
@@ -64,14 +62,14 @@ function drawShape(xPos, yPos, size, numShape) {
             context2D.fill();
             break;
         case 4:
-            context2D.fillStyle = 'white';
-            context2D.beginPath();
-            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
-            context2D.fill();
+            context2D.fillStyle = 'red';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
             break;
         case 5:
             context2D.fillStyle = 'pink';
-            context2D.fillRect(xPos2, yPos2, size2, size2);
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
             break;
         case 6:
             context2D.fillStyle = 'blue';
@@ -147,7 +145,7 @@ function refreshXML() {
         // while elements in visible array are above 0, will draw colored shape
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
-                if (visible[i][j]) {
+                if (visible[i][j] && solved[i][j] == false) {
 
                     // sets up for comparison
                     selectedCells[numSelected] = shapes[i][j];
@@ -245,6 +243,8 @@ $(document).ready(function () {
         [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
     ];
 
+    startGameScreen();
+
 
 });
 
@@ -278,15 +278,4 @@ function shuffle(array) {
 
     return array;
 
-}
-
-
-// returns true or false for potential prime sensor
-function isPrime(value) {
-    for(var i = 2; i < value; i++) {
-        if(value % i === 0) {
-            return false;
-        }
-    }
-    return (value > 1);
 }
