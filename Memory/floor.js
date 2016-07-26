@@ -107,6 +107,9 @@ function drawCanvas(arr) {
             drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, visible[i][j], solved[i][j]);
         }
     }
+
+    if(allTrue())
+        endScreen();
 }
 
 
@@ -205,9 +208,6 @@ function refreshXML() {
                 }
             }
         }
-        /* if(allTrue()) */
-            endScreen();
-
 
         drawCanvas(dataHolderArray);
     });
@@ -292,7 +292,7 @@ function allTrue(solved) {
 
 function endScreen() {
     context2D.fillStyle = 'white';
-    context2D.font = '16px sans-serif';
+    context2D.font = '16px serif';
     context2D.fillText("Game Over",(canvas.width/2 - (context2D.measureText('Game Over').width / 2)), canvas.height/2),
         75;
 }
