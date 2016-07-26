@@ -147,7 +147,7 @@ function refreshXML() {
         // while elements in visible array are above 0, will draw colored shape
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
-                if (visible[i][j]) {
+                if (visible[i][j] && solved[i][j] == false) {
 
                     // sets up for comparison
                     selectedCells[numSelected] = shapes[i][j];
@@ -278,15 +278,4 @@ function shuffle(array) {
 
     return array;
 
-}
-
-
-// returns true or false for potential prime sensor
-function isPrime(value) {
-    for(var i = 2; i < value; i++) {
-        if(value % i === 0) {
-            return false;
-        }
-    }
-    return (value > 1);
 }
