@@ -205,6 +205,8 @@ function refreshXML() {
                 }
             }
         }
+        /* if(allTrue()) */
+            endScreen();
 
 
         drawCanvas(dataHolderArray);
@@ -243,8 +245,6 @@ $(document).ready(function () {
         [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
     ];
 
-    startGameScreen();
-
 
 });
 
@@ -278,4 +278,21 @@ function shuffle(array) {
 
     return array;
 
+}
+
+function allTrue(solved) {
+    for(var o in solved) {}
+        for(var p in solved) {
+            if (!solved[o][p])
+                return false;
+        }
+
+    return true;
+}
+
+function endScreen() {
+    context2D.fillStyle = 'white';
+    context2D.font = '16px sans-serif';
+    context2D.fillText("Game Over",(canvas.width/2 - (context2D.measureText('Game Over').width / 2)), canvas.height/2),
+        75;
 }
