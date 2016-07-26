@@ -25,7 +25,7 @@ var displayNoMatch;
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
 
-    context2D.fillStyle = 'red';
+    context2D.fillStyle = '#E8ECED';
     context2D.fillRect(xPos, yPos, size, size);
 
     if (canSee || solved) {
@@ -64,14 +64,14 @@ function drawShape(xPos, yPos, size, numShape) {
             context2D.fill();
             break;
         case 4:
-            context2D.fillStyle = 'white';
-            context2D.beginPath();
-            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
-            context2D.fill();
+            context2D.fillStyle = 'red';
+            context2D.fillRect(xPos2, yPos2, size2, size2);
             break;
         case 5:
             context2D.fillStyle = 'pink';
-            context2D.fillRect(xPos2, yPos2, size2, size2);
+            context2D.beginPath();
+            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.fill();
             break;
         case 6:
             context2D.fillStyle = 'blue';
