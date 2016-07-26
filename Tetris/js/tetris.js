@@ -20,7 +20,7 @@ var shapes = [
       1, 1, 1 ]
 ];
 var colors = [
-    'cyan', 'orange', 'blue', 'yellow', 'red', 'green', 'purple'
+    'orange', 'blue', 'green', 'purple', 'yellow', 'red', 'cyan'
 ];
 
 function newShape() {
