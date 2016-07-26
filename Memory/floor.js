@@ -15,12 +15,10 @@ var visible = [
     [false, false, false, false]
 ];
 var visibleTimer = 0;
-var displayTime = 3000;
 var solved = [[false, false, false, false],
     [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false]];
-var displayNoMatch;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
@@ -244,6 +242,8 @@ $(document).ready(function () {
         [numArry1[8], numArry1[9], numArry1[10], numArry1[11]],
         [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
     ];
+
+    startGameScreen();
 
 
 });
