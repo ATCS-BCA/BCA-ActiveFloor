@@ -19,9 +19,7 @@ var solved = [[false, false, false, false],
     [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false]];
-var startTimer = false;
-var time = 0;
-
+var startTime, currentTime;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
@@ -111,17 +109,6 @@ function drawCanvas(arr) {
         }
     }
 
-    // start timer of game
-    for (var r = 0; r < 4; r++) {
-        for (var s = 0; s < 4; s++) {
-            if (visible[r][s]) {
-                var newTime = time.getTime();
-            }
-            if(time > 0) {
-                time = newTime - time;
-            }
-        }
-    }
 
     if(allTrue(solved))
         endScreen();
@@ -223,6 +210,11 @@ function refreshXML() {
                 }
             }
         }
+        currentTime = (new Date()).getTime();
+
+        if(numSelected > 0 && startTime == 0) {
+            startTime = (new Date()).getTime();
+        }
 
         drawCanvas(dataHolderArray);
     });
@@ -314,8 +306,8 @@ function endScreen() {
     context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 2),
         75;
 
-   /* time /= 1000;
+   var time = (currentTime - startTime) / 1000;
     context2D.fillText(time.toString(), (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)),
         canvas.height / 2 + 10);
-        */
+
 }
