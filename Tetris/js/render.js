@@ -1,5 +1,5 @@
-var canvas = document.getElementsByTagName( 'canvas' )[ 0 ];
-var ctx = canvas.getContext( '2d' );
+var canvas;
+var ctx;
 var W = 96, H = 192;
 var BLOCK_W = W / COLS, BLOCK_H = H / ROWS;
 function drawBlock( x, y ) {
@@ -8,7 +8,7 @@ function drawBlock( x, y ) {
 }
 function render() {
     ctx.clearRect( 0, 0, W, H );
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = 'lightgrey';
     for ( var x = 0; x < COLS; ++x ) {
         for ( var y = 0; y < ROWS; ++y ) {
             if ( board[ y ][ x ] ) {
@@ -18,7 +18,7 @@ function render() {
         }
     }
     ctx.fillStyle = 'red';
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = 'lightgrey';
     for ( var y = 0; y < 4; ++y ) {
         for ( var x = 0; x < 4; ++x ) {
             if ( current[ y ][ x ] ) {
@@ -28,4 +28,3 @@ function render() {
         }
     }
 }
-setInterval( render, 30 );

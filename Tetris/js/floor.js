@@ -7,6 +7,7 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 80;
+var highscore = 0;
 done=false;
 canType=true;
 
@@ -137,15 +138,15 @@ function initCanvas(arr) {
         }
     }
 
-    if (key!=-1)
-        press(key);
+    // if (key!=-1)
+    //     press(key);
     //console.log(key);
 }
 
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
-    $.get('http://10.31.34.221:8080/', function (data) {
+    $.get('http://10.31.33.66:8080/', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {
@@ -174,25 +175,26 @@ function refreshXML() {
     });
 }
 
-$(document).ready(function () {
-    'use strict';
-    startRefresh();
-});
-
 function startRefresh() {
     'use strict';
     myInterval = setInterval(function () {refreshXML(); }, refreshTime);
+
+    setInterval( render, 30 );
+
 }
 
 $(document).ready(function () {
     'use strict';
+    canvas = document.getElementsByTagName( 'canvas' )[ 0 ];
+    ctx = canvas.getContext( '2d' );
+    newGame();
+
     startRefresh();
     
     sendSemaphore(function() {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
-//        $("#floorCanvas").addClass("app");
-        
+        $("#floorCanvas").addClass("app");
     });
 });
