@@ -19,7 +19,7 @@ function refresh(){
         var a = document.createElement('a');
         a.id="restart";
         a.title = "Restart";
-        a.href = "snake.html";
+        a.href = "index.html";
         document.body.appendChild(a);
         
 
