@@ -19,6 +19,9 @@ var solved = [[false, false, false, false],
     [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false]];
+var startTimer = false;
+var time = 0;
+
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
@@ -108,7 +111,19 @@ function drawCanvas(arr) {
         }
     }
 
-    if(allTrue())
+    // start timer of game
+    for (var r = 0; r < 4; r++) {
+        for (var s = 0; s < 4; s++) {
+            if (visible[r][s]) {
+                var newTime = time.getTime();
+            }
+            if(time > 0) {
+                time = newTime - time;
+            }
+        }
+    }
+
+    if(allTrue(solved))
         endScreen();
 }
 
@@ -281,18 +296,26 @@ function shuffle(array) {
 }
 
 function allTrue(solved) {
-    for(var o in solved) {}
-        for(var p in solved) {
-            if (!solved[o][p])
+    for(var o = 0; o < 4; o++) {
+        for (var p = 0; p < 4; p++) {
+            if (solved[o][p] == false)
                 return false;
         }
+    }
 
     return true;
 }
 
 function endScreen() {
     context2D.fillStyle = 'white';
+    context2D.fillRect(canvas.width / 4, canvas.height / 5 * 2, 95, 60);
+    context2D.fillStyle = 'black';
     context2D.font = '16px serif';
-    context2D.fillText("Game Over",(canvas.width/2 - (context2D.measureText('Game Over').width / 2)), canvas.height/2),
+    context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 2),
         75;
+
+   /* time /= 1000;
+    context2D.fillText(time.toString(), (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)),
+        canvas.height / 2 + 10);
+        */
 }
