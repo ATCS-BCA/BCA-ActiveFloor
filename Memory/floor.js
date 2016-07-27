@@ -19,7 +19,9 @@ var solved = [[false, false, false, false],
     [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false]];
-var startTime, currentTime;
+var startTime = 0
+var currentTime;
+var minutes = 0;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
@@ -109,6 +111,12 @@ function drawCanvas(arr) {
         }
     }
 
+    var time = (currentTime - startTime) / 1000;
+    var seconds = Math.floor(time % 60);
+    if(seconds % 60 == 0)
+        minutes += 1;
+    context2D.fillText(minutes + ":" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
+        canvas.height / 2);
 
     if(allTrue(solved))
         endScreen();
@@ -212,10 +220,6 @@ function refreshXML() {
         }
         currentTime = (new Date()).getTime();
 
-        if(numSelected > 0 && startTime == 0) {
-            startTime = (new Date()).getTime();
-        }
-
         drawCanvas(dataHolderArray);
     });
 }
@@ -307,7 +311,10 @@ function endScreen() {
         75;
 
    var time = (currentTime - startTime) / 1000;
-    context2D.fillText(time.toString(), (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)),
-        canvas.height / 2 + 10);
+    var seconds = Math.floor(time % 60);
+    for(var minutes = 0; minutes < time; minutes += 60000)
+        minutes += 1;
+    context2D.fillText(minutes + ":" + seconds, (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)),
+        canvas.height / 2 + 20);
 
 }
