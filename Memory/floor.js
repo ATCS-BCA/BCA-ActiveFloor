@@ -281,11 +281,12 @@ function shuffle(array) {
 }
 
 function allTrue(solved) {
-    for(var o in solved) {}
-        for(var p in solved) {
-            if (!solved[o][p])
+    for(var o in solved) {
+        for (var p in o) {
+            if (!p)
                 return false;
         }
+    }
 
     return true;
 }
