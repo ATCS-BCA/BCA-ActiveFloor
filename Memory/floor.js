@@ -19,7 +19,7 @@ var solved = [[false, false, false, false],
     [false, false, false, false],
     [false, false, false, false],
     [false, false, false, false]];
-var startTime = 0
+var startTime = (new Date()).getTime();
 var currentTime;
 var minutes = 0;
 
@@ -111,10 +111,10 @@ function drawCanvas(arr) {
         }
     }
 
-    var time = (currentTime - startTime) / 1000;
-    var seconds = Math.floor(time % 60);
-    if(seconds % 60 == 0)
-        minutes += 1;
+    var time = Math.floor((currentTime - startTime) / 1000);
+    var seconds = time % 60;
+    var minutes = Math.floor(time/60);
+
     context2D.fillText(minutes + ":" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
         canvas.height / 2);
 
