@@ -21,7 +21,7 @@ var solved = [[false, false, false, false],
     [false, false, false, false]];
 var startTime = (new Date()).getTime();
 var currentTime;
-var restartBtn;
+var restartBtn = false;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
@@ -108,7 +108,6 @@ function drawCanvas(arr) {
             tempY = i * ledPerSensorY * 6 + ledPerSensorY;
             var shapeArrayIndexValue = shapes[i][j];
             drawObj(tempX, tempY, 4 * ledPerSensorX, shapeArrayIndexValue, visible[i][j], solved[i][j]);
-            console.log("being stepped on");
         }
     }
 
@@ -130,8 +129,6 @@ function drawCanvas(arr) {
 
     if (allTrue(solved)) {
         endScreen();
-        if (tempX <= 10 && tempX >= 14 && tempY <= 13 && tempY >= 14)
-            return restartBtn = true;
     }
 
 }
@@ -230,6 +227,10 @@ function refreshXML() {
                     }
 
                 }
+                if (i >= 10 && i <= 14 && j >= 13 && j <= 14)
+                    // (restartBtn && i >= 10 && i <= 14 && j >= 13 && j <= 14 && dataHolderArray[i][j] === charSearch)
+                    // startGame();
+                    restartBtn = true;
             }
         }
         currentTime = (new Date()).getTime();
@@ -303,7 +304,7 @@ function allTrue(solved) {
 function endScreen() {
     // game over sign
     context2D.fillStyle = 'white';
-    context2D.fillRect(canvas.width / 4, canvas.height / 5 * 2, 95, 60);
+    context2D.fillRect(canvas.width / 4, canvas.height / 5, 95, 95);
     context2D.fillStyle = 'black';
     context2D.font = '16px serif';
     context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 4 + 10);
@@ -351,4 +352,13 @@ function startGame() {
         [numArry1[8], numArry1[9], numArry1[10], numArry1[11]],
         [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
     ];
+
+    for (var e = 0; e < 4; e++) {
+        for (var q = 0; q < 4; q++) {
+            visible[e][q] = false;
+            solved[e][q] = false;
+        }
+    }
+    restartBtn = false;
+    startTime = (new Date()).getTime();
 }
