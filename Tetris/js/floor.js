@@ -65,6 +65,7 @@ function initCanvas(arr) {
 
             if (arr[i][j]==="*"){
                 keyPress('rotate');
+
             }
         }
     }
