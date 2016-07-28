@@ -225,12 +225,12 @@ function refreshXML() {
                     if (numSelected < 2) {
                         visible[k][t] = true;
                     }
-
+                    if (k >= 10 && k <= 14 && t >= 13 && t <= 14)
+                        restartBtn = true;
                 }
-                if (i >= 10 && i <= 14 && j >= 13 && j <= 14)
+
                     // (restartBtn && i >= 10 && i <= 14 && j >= 13 && j <= 14 && dataHolderArray[i][j] === charSearch)
                     // startGame();
-                    restartBtn = true;
             }
         }
         currentTime = (new Date()).getTime();
