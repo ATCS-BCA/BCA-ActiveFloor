@@ -21,6 +21,7 @@ var solved = [[false, false, false, false],
     [false, false, false, false]];
 var startTime = (new Date()).getTime();
 var currentTime;
+var restartBtn;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
@@ -125,8 +126,12 @@ function drawCanvas(arr) {
             canvas.height / 2);
     }
 
-    if (allTrue(solved))
+    if (allTrue(solved)) {
         endScreen();
+        if (tempX <= 1 && tempX >= 2 && tempY <= 4 && tempY >= 5)
+            return restartBtn = true;
+    }
+
 }
 
 
@@ -321,6 +326,8 @@ function endScreen() {
     context2D.rect(canvas.width / 2 - (context2D.measureText('Restart').width / 2), canvas.height / 2 + 20, context2D.measureText("Restart").width, 20);
     context2D.stroke();
     context2D.fillText("Restart", (canvas.width / 2 - (context2D.measureText('Restart').width / 2)), canvas.height / 2 + 30);
+    if (restartBtn == true)
+        startGame();
 
 
 }
