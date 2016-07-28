@@ -117,6 +117,7 @@ function drawCanvas(arr) {
     var seconds = time % 60;
     var minutes = Math.floor(time / 60);
 
+    context2D.fillStyle = 'white';
     if (seconds < 10) {
         context2D.fillText(minutes + ":0" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
             canvas.height / 2);
@@ -129,7 +130,7 @@ function drawCanvas(arr) {
 
     if (allTrue(solved)) {
         endScreen();
-        if (tempX <= 1 && tempX >= 2 && tempY <= 4 && tempY >= 5)
+        if (tempX <= 10 && tempX >= 14 && tempY <= 13 && tempY >= 14)
             return restartBtn = true;
     }
 
