@@ -22,7 +22,6 @@ var shapes = [
 var colors = [
     'orange', 'blue', 'green', 'purple', 'yellow', 'red', 'cyan'
 ];
-
 function newShape() {
     var id = Math.floor( Math.random() * shapes.length );
     var shape = shapes[ id ];
@@ -168,7 +167,7 @@ function newGame() {
     init();
     newShape();
     lose = false;
-    interval = setInterval( tick, 400 );
+    interval = setInterval( tick, 600 );
     
 }
 

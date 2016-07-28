@@ -29,112 +29,120 @@ function refresh(){
 
     }
 }
-
+var timer = 0;
 function initCanvas(arr) {
-    window.setTimeout(initCanvas,5000);
-    'use strict';
-    var up=0;
-    var down=0;
-    var left=0;
-    var right=0;
-    var middle=0;
+    if (timer <= 0) {
+        timer = 0;
+        window.setTimeout(initCanvas, 5000);
+        'use strict';
+        var up = 0;
+        var down = 0;
+        var left = 0;
+        var right = 0;
+        var middle = 0;
 
-    var letterCounts=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var letter;
+        var letterCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var letter;
 
-    for (var i=14;i<=18;i++){
-        for (var j=12;j<14;j++){
+        for (var i = 14; i <= 18; i++) {
+            for (var j = 12; j < 14; j++) {
 
-            if (arr[i][j]==="*"){
-                keyPress('left');
-            }
-        }
-    }
-
-    for (var i=14;i<=18;i++){
-        for (var j=21;j<23;j++){
-
-            if (arr[i][j]==="*"){
-                keyPress('right');
-            }
-        }
-    }
-
-    for (var i=9;i<=13;i++){
-        for (var j=16;j<21;j++){
-
-            if (arr[i][j]==="*"){
-                keyPress('rotate');
-
-            }
-        }
-    }
-
-    for (var i=20;i<=23;i++){
-        for (var j=16;j<21;j++){
-
-            if (arr[i][j]==="*"){
-                keyPress('down');
-            }
-        }
-    }
-
-    //console.log(letterCounts);
-    var max=0;
-    for (var i=1;i<letterCounts.length;i++){
-        if (letterCounts[i]>letterCounts[max]){
-            max=i;
-        }
-    }
-
-    if (canType && highscore){
-        switch(max){
-            case 26:
-                rem();
-                break;
-            case 27:
-                done();
-                break;
-            default:
-                if (letterCounts[max]>0){
-                    type(65+max);
+                if (arr[i][j] === "*") {
+                    timer = 250;
+                    keyPress('left');
                 }
+            }
         }
-        canType=false;
-        setTimeout(function(){ 
-            canType=true; 
-        }, 500);
-    }
 
-    if (done && !highscore){
-        if (middle>2) refresh();
-    }
+        for (var i = 14; i <= 18; i++) {
+            for (var j = 21; j < 23; j++) {
 
-    var winner=Math.max(up,down,left,right);
-    var key;
-    if (winner>1){
-        switch (winner){
-           case 0:
-               key=-1;
-               break;
-            case up:
-                key=38;
-                break;
-            case down:
-                key=40;
-                break;
-            case left:
-                key=37;
-                break;
-            case right:
-                key=39;
-                break;
+                if (arr[i][j] === "*") {
+                    timer = 250;
+                    keyPress('right');
+                }
+            }
         }
-    }
 
-    // if (key!=-1)
-    //     press(key);
-    //console.log(key);
+        for (var i = 9; i <= 13; i++) {
+            for (var j = 16; j < 21; j++) {
+
+                if (arr[i][j] === "*") {
+                    timer = 3500;
+                    keyPress('rotate');
+
+                }
+            }
+        }
+
+        for (var i = 20; i <= 23; i++) {
+            for (var j = 16; j < 21; j++) {
+
+                if (arr[i][j] === "*") {
+                    timer = 50;
+                    keyPress('down');
+                }
+            }
+        }
+
+        //console.log(letterCounts);
+        var max = 0;
+        for (var i = 1; i < letterCounts.length; i++) {
+            if (letterCounts[i] > letterCounts[max]) {
+                max = i;
+            }
+        }
+
+        if (canType && highscore) {
+            switch (max) {
+                case 26:
+                    rem();
+                    break;
+                case 27:
+                    done();
+                    break;
+                default:
+                    if (letterCounts[max] > 0) {
+                        type(65 + max);
+                    }
+            }
+            canType = false;
+            setTimeout(function () {
+                canType = true;
+            }, 500);
+        }
+
+        if (done && !highscore) {
+            if (middle > 2) refresh();
+        }
+
+        var winner = Math.max(up, down, left, right);
+        var key;
+        if (winner > 1) {
+            switch (winner) {
+                case 0:
+                    key = -1;
+                    break;
+                case up:
+                    key = 38;
+                    break;
+                case down:
+                    key = 40;
+                    break;
+                case left:
+                    key = 37;
+                    break;
+                case right:
+                    key = 39;
+                    break;
+            }
+        }
+
+        // if (key!=-1)
+        //     press(key);
+        //console.log(key);
+    }
+    timer =- 1;
 }
 
 function refreshXML() {
