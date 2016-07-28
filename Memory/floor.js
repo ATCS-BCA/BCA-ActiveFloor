@@ -21,6 +21,7 @@ var solved = [[false, false, false, false],
     [false, false, false, false]];
 var startTime = (new Date()).getTime();
 var currentTime;
+var restartBtn;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
@@ -126,8 +127,12 @@ function drawCanvas(arr) {
             canvas.height / 2);
     }
 
-    if (allTrue(solved))
+    if (allTrue(solved)) {
         endScreen();
+        if (tempX <= 1 && tempX >= 2 && tempY <= 4 && tempY >= 5)
+            return restartBtn = true;
+    }
+
 }
 
 
@@ -246,24 +251,7 @@ $(document).ready(function () {
 
     });
 
-    var numArry1 = [
-        0, 0, 1, 1,
-        2, 2, 3, 3,
-        4, 4, 5, 5,
-        6, 6, 7, 7
-    ];
-
-
-    shuffle(numArry1);
-
-    // assigns shuffled array to new array
-    shapes = [
-        [numArry1[0], numArry1[1], numArry1[2], numArry1[3]],
-        [numArry1[4], numArry1[5], numArry1[6], numArry1[7]],
-        [numArry1[8], numArry1[9], numArry1[10], numArry1[11]],
-        [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
-    ];
-    // startGame();
+    startGame();
 
 
 });
@@ -339,10 +327,28 @@ function endScreen() {
     context2D.rect(canvas.width / 2 - (context2D.measureText('Restart').width / 2), canvas.height / 2 + 20, context2D.measureText("Restart").width, 20);
     context2D.stroke();
     context2D.fillText("Restart", (canvas.width / 2 - (context2D.measureText('Restart').width / 2)), canvas.height / 2 + 30);
+    if (restartBtn == true)
+        startGame();
 
 
 }
 
 function startGame() {
+    var numArry1 = [
+        0, 0, 1, 1,
+        2, 2, 3, 3,
+        4, 4, 5, 5,
+        6, 6, 7, 7
+    ];
 
+
+    shuffle(numArry1);
+
+    // assigns shuffled array to new array
+    shapes = [
+        [numArry1[0], numArry1[1], numArry1[2], numArry1[3]],
+        [numArry1[4], numArry1[5], numArry1[6], numArry1[7]],
+        [numArry1[8], numArry1[9], numArry1[10], numArry1[11]],
+        [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
+    ];
 }
