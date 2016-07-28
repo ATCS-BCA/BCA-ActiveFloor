@@ -31,6 +31,7 @@ function refresh(){
 }
 
 function initCanvas(arr) {
+    window.setTimeout(initCanvas,5000);
     'use strict';
     var up=0;
     var down=0;
@@ -45,7 +46,8 @@ function initCanvas(arr) {
         for (var j=0;j<arr[i].length;j++){
 
             if (arr[i][j]==="*"){
-                key = 37; //LOOK AT MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+                keyPress('left');
+
             }
         }
     }
