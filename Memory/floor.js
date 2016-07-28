@@ -251,24 +251,7 @@ $(document).ready(function () {
 
     });
 
-    var numArry1 = [
-        0, 0, 1, 1,
-        2, 2, 3, 3,
-        4, 4, 5, 5,
-        6, 6, 7, 7
-    ];
-
-
-    shuffle(numArry1);
-
-    // assigns shuffled array to new array
-    shapes = [
-        [numArry1[0], numArry1[1], numArry1[2], numArry1[3]],
-        [numArry1[4], numArry1[5], numArry1[6], numArry1[7]],
-        [numArry1[8], numArry1[9], numArry1[10], numArry1[11]],
-        [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
-    ];
-    // startGame();
+    startGame();
 
 
 });
@@ -351,5 +334,21 @@ function endScreen() {
 }
 
 function startGame() {
+    var numArry1 = [
+        0, 0, 1, 1,
+        2, 2, 3, 3,
+        4, 4, 5, 5,
+        6, 6, 7, 7
+    ];
 
+
+    shuffle(numArry1);
+
+    // assigns shuffled array to new array
+    shapes = [
+        [numArry1[0], numArry1[1], numArry1[2], numArry1[3]],
+        [numArry1[4], numArry1[5], numArry1[6], numArry1[7]],
+        [numArry1[8], numArry1[9], numArry1[10], numArry1[11]],
+        [numArry1[12], numArry1[13], numArry1[14], numArry1[15]]
+    ];
 }
