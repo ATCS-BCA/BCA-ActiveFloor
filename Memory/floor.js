@@ -225,7 +225,7 @@ function refreshXML() {
                     if (numSelected < 2) {
                         visible[k][t] = true;
                     }
-                    if (k >= 10 && k <= 14 && t >= 13 && t <= 14)
+                    if (k >= 10 && k <= 14 && t >= 13 && t <= 14 && allTrue(solved))
                         restartBtn = true;
                 }
 
