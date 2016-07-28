@@ -21,6 +21,7 @@ var solved = [[false, false, false, false],
     [false, false, false, false]];
 var startTime = (new Date()).getTime();
 var currentTime;
+var finalTime = 0;
 var restartBtn = false;
 
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
@@ -128,6 +129,8 @@ function drawCanvas(arr) {
     }
 
     if (allTrue(solved)) {
+        if (finalTime == 0)
+            finalTime = Math.floor((currentTime - startTime) / 1000);
         endScreen();
     }
 
@@ -225,12 +228,11 @@ function refreshXML() {
                     if (numSelected < 2) {
                         visible[k][t] = true;
                     }
-                    if (k >= 10 && k <= 14 && t >= 13 && t <= 14 && allTrue(solved))
-                        restartBtn = true;
                 }
+                    if (dataHolderArray[i][j] === charSearch && i>= 10 && i <= 14 && j >= 13 &&  j <= 14 && allTrue(solved))
+                        setTimeout(startGame(), 3000);
 
-                // (restartBtn && i >= 10 && i <= 14 && j >= 13 && j <= 14 && dataHolderArray[i][j] === charSearch)
-                // startGame();
+
             }
         }
         currentTime = (new Date()).getTime();
@@ -310,9 +312,9 @@ function endScreen() {
     context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 4 + 10);
 
     // timer
-    var time = Math.floor((currentTime - startTime) / 1000);
-    var seconds = time % 60;
-    var minutes = Math.floor(time / 60);
+    // var time = Math.floor((currentTime - startTime) / 1000);
+    var seconds = finalTime % 60;
+    var minutes = Math.floor(finalTime / 60);
 
     if (seconds < 10) {
         context2D.fillText(minutes + ":0" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
@@ -328,8 +330,7 @@ function endScreen() {
     context2D.rect(canvas.width / 2 - (context2D.measureText('Restart').width / 2), canvas.height / 4 + 50, context2D.measureText("Restart").width, 20);
     context2D.stroke();
     context2D.fillText("Restart", (canvas.width / 2 - (context2D.measureText('Restart').width / 2)), canvas.height / 4 + 63);
-    if (restartBtn == true)
-        startGame();
+   
 
 
 }
@@ -361,4 +362,5 @@ function startGame() {
     }
     restartBtn = false;
     startTime = (new Date()).getTime();
+    finalTime = 0;
 }
