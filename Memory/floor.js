@@ -229,8 +229,8 @@ function refreshXML() {
                         restartBtn = true;
                 }
 
-                    // (restartBtn && i >= 10 && i <= 14 && j >= 13 && j <= 14 && dataHolderArray[i][j] === charSearch)
-                    // startGame();
+                // (restartBtn && i >= 10 && i <= 14 && j >= 13 && j <= 14 && dataHolderArray[i][j] === charSearch)
+                // startGame();
             }
         }
         currentTime = (new Date()).getTime();
