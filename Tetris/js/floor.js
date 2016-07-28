@@ -42,12 +42,38 @@ function initCanvas(arr) {
     var letterCounts=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var letter;
 
-    for (var i=0;i<arr.length;i++){
-        for (var j=0;j<arr[i].length;j++){
+    for (var i=14;i<=18;i++){
+        for (var j=12;j<14;j++){
 
             if (arr[i][j]==="*"){
                 keyPress('left');
+            }
+        }
+    }
 
+    for (var i=14;i<=18;i++){
+        for (var j=21;j<23;j++){
+
+            if (arr[i][j]==="*"){
+                keyPress('right');
+            }
+        }
+    }
+
+    for (var i=9;i<=13;i++){
+        for (var j=16;j<21;j++){
+
+            if (arr[i][j]==="*"){
+                keyPress('rotate');
+            }
+        }
+    }
+
+    for (var i=20;i<=23;i++){
+        for (var j=16;j<21;j++){
+
+            if (arr[i][j]==="*"){
+                keyPress('down');
             }
         }
     }
