@@ -306,8 +306,7 @@ function endScreen() {
     context2D.fillRect(canvas.width / 4, canvas.height / 5 * 2, 95, 60);
     context2D.fillStyle = 'black';
     context2D.font = '16px serif';
-    context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 2),
-        75;
+    context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 4 + 10;
 
     // timer
     var time = Math.floor((currentTime - startTime) / 1000);
@@ -316,18 +315,18 @@ function endScreen() {
 
     if (seconds < 10) {
         context2D.fillText(minutes + ":0" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
-            canvas.height / 2 + 20);
+            canvas.height / 4 + 35);
     }
 
     else {
         context2D.fillText(minutes + ":" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
-            canvas.height / 2 + 20);
+            canvas.height / 4 + 35);
     }
 
     // restart button
-    context2D.rect(canvas.width / 2 - (context2D.measureText('Restart').width / 2), canvas.height / 2 + 20, context2D.measureText("Restart").width, 20);
+    context2D.rect(canvas.width / 2 - (context2D.measureText('Restart').width / 2), canvas.height / 4 + 50, context2D.measureText("Restart").width, 20);
     context2D.stroke();
-    context2D.fillText("Restart", (canvas.width / 2 - (context2D.measureText('Restart').width / 2)), canvas.height / 2 + 30);
+    context2D.fillText("Restart", (canvas.width / 2 - (context2D.measureText('Restart').width / 2)), canvas.height / 4 + 63);
     if (restartBtn == true)
         startGame();
 
