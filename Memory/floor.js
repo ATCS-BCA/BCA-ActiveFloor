@@ -306,7 +306,7 @@ function endScreen() {
     context2D.fillRect(canvas.width / 4, canvas.height / 5 * 2, 95, 60);
     context2D.fillStyle = 'black';
     context2D.font = '16px serif';
-    context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 4 + 10;
+    context2D.fillText("Game Over", (canvas.width / 2 - (context2D.measureText('Game Over').width / 2)), canvas.height / 4 + 10);
 
     // timer
     var time = Math.floor((currentTime - startTime) / 1000);
