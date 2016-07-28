@@ -45,42 +45,7 @@ function initCanvas(arr) {
         for (var j=0;j<arr[i].length;j++){
 
             if (arr[i][j]==="*"){
-                var tmp=hit(j,i);
-                if(tmp!=-1){ //highscore
-                    letterCounts[tmp]++;
-                }
-
-
-
-
-
-                if (i>=8 && i<=15 && j>=8 && j<=15) middle++;
-
-                if (i>=0 && i<=7){
-                    if (j>=8 && j<=15) up++;
-
-                    if (j>=0 && j<=7 && j>i) up++;
-                    if (j>=0 && j<=7 && j<i) left++;
-
-                    if (j>=16 && j<=23 && i+j<23) up++;
-                    if (j>=16 && j<=23 && i+j>23) right++;
-                }
-                else if (i>=8 && i<=15){
-                    if (j>=0 && j<=7) left++;
-                    else if (j>=16 && j<=23) right++;
-                }
-
-                else if(i>=16 && i<=23){
-                    if (j>=8 && j<=15) down++;
-
-                    if (j>=0 && j<=7 && i+j<23) left++;
-                    if (j>=0 && j<=7 && i+j>23) down++;
-
-                    if (j>=16 && j<=23 && i>j) down++;
-                    if (j>=16 && j<=23 && i<j) right++;
-                }
-
-
+                key = 37; //LOOK AT MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
             }
         }
     }
