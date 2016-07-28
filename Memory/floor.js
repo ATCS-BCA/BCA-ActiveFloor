@@ -44,7 +44,7 @@ function drawShape(xPos, yPos, size, numShape) {
         case 0:
             context2D.fillStyle = 'black';
             context2D.beginPath();
-            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.arc(xPos2 + size2 / 2, yPos2 + size2 / 2, size2 / 2, 0, 2 * Math.PI);
             context2D.fill();
             break;
         case 1:
@@ -54,13 +54,13 @@ function drawShape(xPos, yPos, size, numShape) {
         case 2:
             context2D.fillStyle = 'green';
             context2D.beginPath();
-            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.arc(xPos2 + size2 / 2, yPos2 + size2 / 2, size2 / 2, 0, 2 * Math.PI);
             context2D.fill();
             break;
         case 3:
             context2D.fillStyle = 'purple';
             context2D.beginPath();
-            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.arc(xPos2 + size2 / 2, yPos2 + size2 / 2, size2 / 2, 0, 2 * Math.PI);
             context2D.fill();
             break;
         case 4:
@@ -70,7 +70,7 @@ function drawShape(xPos, yPos, size, numShape) {
         case 5:
             context2D.fillStyle = 'pink';
             context2D.beginPath();
-            context2D.arc(xPos2 + size2/2, yPos2 + size2/2, size2/2, 0, 2*Math.PI);
+            context2D.arc(xPos2 + size2 / 2, yPos2 + size2 / 2, size2 / 2, 0, 2 * Math.PI);
             context2D.fill();
             break;
         case 6:
@@ -113,9 +113,9 @@ function drawCanvas(arr) {
     // timer
     var time = Math.floor((currentTime - startTime) / 1000);
     var seconds = time % 60;
-    var minutes = Math.floor(time/60);
+    var minutes = Math.floor(time / 60);
 
-    if(seconds < 10) {
+    if (seconds < 10) {
         context2D.fillText(minutes + ":0" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
             canvas.height / 2);
     }
@@ -125,7 +125,7 @@ function drawCanvas(arr) {
             canvas.height / 2);
     }
 
-    if(allTrue(solved))
+    if (allTrue(solved))
         endScreen();
 }
 
@@ -188,7 +188,7 @@ function refreshXML() {
             if (visibleTimer <= 0)
                 visibleTimer = 3000;
             else {
-                visibleTimer-=refreshTime;
+                visibleTimer -= refreshTime;
                 if (visibleTimer <= 0) {
                     visible = [
                         [false, false, false, false],
@@ -208,11 +208,11 @@ function refreshXML() {
         //draws colored shape
         // if sensors are stepped on, will convert sensor pos to array pos
         for (var i = 0; i < sensorsX; i++) {
-            if (i%6 == 0 || i%6 == 5)
+            if (i % 6 == 0 || i % 6 == 5)
                 continue;
 
             for (var j = 0; j < sensorsY; j++) {
-                if (j%6 == 0 || j%6 == 5)
+                if (j % 6 == 0 || j % 6 == 5)
                     continue;
                 if (dataHolderArray[i][j] === charSearch) {
                     var k = Math.floor(i / 6);
@@ -283,7 +283,7 @@ function shuffle(array) {
 }
 
 function allTrue(solved) {
-    for(var o = 0; o < 4; o++) {
+    for (var o = 0; o < 4; o++) {
         for (var p = 0; p < 4; p++) {
             if (solved[o][p] == false)
                 return false;
@@ -305,9 +305,9 @@ function endScreen() {
     // timer
     var time = Math.floor((currentTime - startTime) / 1000);
     var seconds = time % 60;
-    var minutes = Math.floor(time/60);
+    var minutes = Math.floor(time / 60);
 
-    if(seconds < 10) {
+    if (seconds < 10) {
         context2D.fillText(minutes + ":0" + seconds, (canvas.width / 2 - (context2D.measureText(minutes + ":" + seconds).width / 2)),
             canvas.height / 2 + 20);
     }
@@ -321,7 +321,6 @@ function endScreen() {
     context2D.rect(canvas.width / 2 - (context2D.measureText('Restart').width / 2), canvas.height / 2 + 20, context2D.measureText("Restart").width, 20);
     context2D.stroke();
     context2D.fillText("Restart", (canvas.width / 2 - (context2D.measureText('Restart').width / 2)), canvas.height / 2 + 30);
-
 
 
 }
