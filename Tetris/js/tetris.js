@@ -167,7 +167,7 @@ function newGame() {
     init();
     newShape();
     lose = false;
-    interval = setInterval( tick, 600 );
+    interval = setInterval( tick, 750 );
     
 }
 
