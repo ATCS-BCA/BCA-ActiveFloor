@@ -16,11 +16,10 @@ function laserBoard(){
 //
 // Make a laser object
 //
-function Laser(speed, thickness){
-	this.speed = getRandomIntInclusive(speed - 2, speed + 4)*3/16;
-
-	this.thickness = thickness;
-	this.mode;
+function Laser(){
+	this.thickness = 5;
+	this.speed = this.changeSpeed();
+	this.mode = 'v';
 
 	this.int = this.getRandomSpawn();
 	
@@ -76,6 +75,7 @@ Laser.prototype.update = function(){
 
 Laser.prototype.getRandomSpawn = function(){
 	if (Math.floor(Math.random() * 2) == 0){
+		this.mode = 'v';
 		if (Math.floor(Math.random() * 2) == 0){//left
 			if (this.speed < 0)
 				this.speed *= -1;
@@ -85,8 +85,8 @@ Laser.prototype.getRandomSpawn = function(){
 				this.speed *= -1;
 			return getRandomArbitrary(safeArea.x + safeArea.w, canvas.width);
 		}
-		this.mode = 'v';
 	} else{
+		this.mode = 'h';
 		if (Math.floor(Math.random() * 2) == 0){//up
 			if (this.speed < 0)
 				this.speed *= -1;
@@ -96,7 +96,6 @@ Laser.prototype.getRandomSpawn = function(){
 				this.speed *= -1;
 			return getRandomArbitrary(safeArea.y + safeArea.h, canvas.height);
 		}
-		this.mode = 'h';
 	}
 
 }
@@ -105,15 +104,22 @@ Laser.prototype.getRandomSpawn = function(){
 //
 //
 Laser.prototype.checkSpawnIntersection = function(){
-	if ((this.x1 < safeArea.x && this.x2 < safeArea.x)
-		|| (this.x1 > safeArea.x + safeArea.w && this.x2 > safeArea.x + safeArea.w))
+	if ((this.x1 < spawnArea.x && this.x2 < spawnArea.x)
+		|| (this.x1 > spawnArea.x + spawnArea.w && this.x2 > spawnArea.x + spawnArea.w))
 		return true;
-	else if ((this.y1 < safeArea.y && this.y2 < safeArea.y)
-		|| (this.y1 > safeArea.y + safeArea.h && this.y2 > safeArea.y + safeArea.h))
+	else if ((this.y1 < spawnArea.y && this.y2 < spawnArea.y)
+		|| (this.y1 > spawnArea.y + spawnArea.h && this.y2 > spawnArea.y + spawnArea.h))
 		return true;
 	else
 		return false;
 };
+
+//
+//
+//
+Laser.prototype.changeSpeed = function(){
+	return this.thickness * getRandomIntInclusive(4,8)/32;
+}
 
 //
 //
@@ -126,8 +132,8 @@ function updateSpawnIntersection(l){
 //
 // add the laser to the array
 //
-function addLaser(speed, thickness){
-	lasers.push(new Laser(speed, thickness));
+function addLaser(){
+	lasers.push(new Laser());
 	score++;
 }
 
@@ -204,7 +210,7 @@ function start(){
 		spawner.timer--;
 		if (spawner.timer < 0){
 			spawner.timer = spawner.maxTime;
-			addLaser(speed, getRandomIntInclusive(1, 5));
+			addLaser();
 		}
 	}, 1000));
 

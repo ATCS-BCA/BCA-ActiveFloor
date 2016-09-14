@@ -147,6 +147,13 @@ function setObjects(){
         w: canvas.width*4/5,
         h: canvas.height*4/5
     };
+
+    spawnArea = {
+        x: canvas.width,
+        y: canvas.height,
+        w: canvas.width,
+        h: canvas.height
+    };
 }
 
 function startCanvas(){
