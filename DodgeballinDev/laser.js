@@ -23,7 +23,6 @@ function Laser(){
 
 	this.int = this.getRandomSpawn();
 	
-	var num = getRandomIntInclusive(0, 1);
 	if (this.mode == 'v'){
 		this.y1 = this.int;
 		this.y2 = this.int;
@@ -104,11 +103,11 @@ Laser.prototype.getRandomSpawn = function(){
 //
 //
 Laser.prototype.checkSpawnIntersection = function(){
-	if ((this.x1 < spawnArea.x && this.x2 < spawnArea.x)
-		|| (this.x1 > spawnArea.x + spawnArea.w && this.x2 > spawnArea.x + spawnArea.w))
+	if ((this.x1 < 0 && this.x2 < 0)
+		|| (this.x1 > canvas.width && this.x2 > canvas.width))
 		return true;
-	else if ((this.y1 < spawnArea.y && this.y2 < spawnArea.y)
-		|| (this.y1 > spawnArea.y + spawnArea.h && this.y2 > spawnArea.y + spawnArea.h))
+	else if ((this.y1 < 0 && this.y2 < 0)
+		|| (this.y1 > canvas.height && this.y2 > canvas.height))
 		return true;
 	else
 		return false;
@@ -127,6 +126,8 @@ Laser.prototype.changeSpeed = function(){
 function updateSpawnIntersection(l){
 	l.speed *= -1;
 	l.spawn = false;
+	l.thickness--;
+	l.speed = l.changeSpeed();
 }
 
 //
