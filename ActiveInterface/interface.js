@@ -1,35 +1,10 @@
-$(document).ready(function () {
-    'use strict';
-    
-    // Start getting floor data automatically (assuming Floor Server is running).
-    startRefresh();
-    
-    sendSemaphore(function() {
-        // Clear spacing and borders.
-        $("body").addClass("app");
-        $("div").addClass("app");
-        $("#floorCanvas").addClass("app");
-        
-    });
-});
-
-function startRefresh() {
-    'use strict';
-    myInterval = setInterval(function () {refreshXML(); }, refreshTime);
-}
-
-function stopRefresh() {
-    'use strict';
-    clearInterval(myInterval);
-}
-
-
 window.onload = function(){ 
     canvas = document.getElementById('floorCanvas');
     canvasContext = canvas.getContext("2d");
+    canvasContext.fillStyle = "black";
+    
     var framesPerSecond = 60;
     initBoard();
-    getRandomBoard();
     /*
     setInterval(function() {
         //scramble();       
@@ -69,4 +44,14 @@ function refreshXML() {
         moveStart = 0;
         drawBoard(dataHolderArray);
     });
+}
+
+function initBoard(){
+    canvasContext.font = '25px sans-serif';
+    canvasContext.fillText("Welcome To BCA!",0,50);    
+    canvasContext.fillRect(200,100,10,10);s
+    
+}
+function drawBoard(dataArr){
+       
 }
