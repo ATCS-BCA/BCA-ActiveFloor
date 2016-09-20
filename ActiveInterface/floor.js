@@ -1,7 +1,9 @@
-refreshTime = 1000
+var refreshTime = 100;
+var myInterval;
+
 $(document).ready(function () {
     'use strict';
-    
+
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
     
@@ -17,9 +19,4 @@ $(document).ready(function () {
 function startRefresh() {
     'use strict';
     myInterval = setInterval(function () {refreshXML(); }, refreshTime);
-}
-
-function stopRefresh() {
-    'use strict';
-    clearInterval(myInterval);
 }
