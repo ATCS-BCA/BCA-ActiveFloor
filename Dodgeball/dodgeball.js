@@ -358,6 +358,9 @@ function start(){
 	spawnTimer = 3;
 
 	clearIntervals();
+    // sample code to switch to a different app
+    //window.location = "http://localhost:9090?appmode=activemath";
+    //window.location = "../snake/snake.html";
 
 	clear();
 	board();
