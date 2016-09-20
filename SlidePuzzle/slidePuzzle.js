@@ -149,7 +149,7 @@ function drawBoard(dataArr){
 	}
 	checkIfGameWon();
 
-	canvasContext.fillStyle = "red";
+	//canvasContext.fillStyle = "red";
 	//canvasContext.fillText("Slide Puzzle!",ledsX/4 - 10,16);
 	canvasContext.fillText("Slide Puzzle!",canvas.width/4,canvas.height/14);	
 	canvasContext.fillStyle = "yellow";
