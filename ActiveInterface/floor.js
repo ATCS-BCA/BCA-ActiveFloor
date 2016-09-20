@@ -1,3 +1,4 @@
+refreshTime = 1000
 $(document).ready(function () {
     'use strict';
     

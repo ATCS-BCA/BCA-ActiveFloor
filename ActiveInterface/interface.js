@@ -1,17 +1,10 @@
 window.onload = function(){ 
     canvas = document.getElementById('floorCanvas');
     canvasContext = canvas.getContext("2d");
-    canvasContext.fillStyle = "black";
     
     var framesPerSecond = 60;
     initBoard();
-    /*
-    setInterval(function() {
-        //scramble();       
-        drawBoard();
-        
-    } , 1000/framesPerSecond);
-    */
+    
 };
 
 function refreshXML() {
@@ -49,9 +42,11 @@ function refreshXML() {
 function initBoard(){
     canvasContext.font = '25px sans-serif';
     canvasContext.fillText("Welcome To BCA!",0,50);    
-    canvasContext.fillRect(200,100,10,10);s
     
+    canvasContext.fillrect(5,5,200,30);
+    console.log("inited")
 }
+
 function drawBoard(dataArr){
        
 }
