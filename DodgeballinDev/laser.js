@@ -219,12 +219,14 @@ function start(){
 
 
 //
-// Check if player coordinates are inside a ball
+// Check if player coordinates touches the laster
 //
 function checkPlayerHit(x, y){
 	for (var i = 0; i < lasers.length; i++){
-		if ((lasers[i].mode == 'v' && y == lasers[i].int)
-			|| (lasers[i].mode == 'h' && x == lasers[i].int)){
+		if ((lasers[i].mode == 'v' && 
+				(y > lasers[i].int - lasters[i].thickness/2 || y < lasers[i].int + lasters[i].thickness/2))
+			|| (lasers[i].mode == 'h' && 
+				(y > lasers[i].int - lasters[i].thickness/2 || y < lasers[i].int + lasters[i].thickness/2))){
 			active = false;
 			game = -1;
 		}
