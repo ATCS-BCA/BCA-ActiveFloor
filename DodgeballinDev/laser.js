@@ -104,10 +104,10 @@ Laser.prototype.getRandomSpawn = function(){
 //
 Laser.prototype.checkSpawnIntersection = function(){
 	if ((this.x1 < 0 && this.x2 < 0)
-		|| (this.x1 > canvas.width && this.x2 > canvas.width))
+		|| (this.x1 > canvas.width - this.thickness && this.x2 > canvas.width - this.thickness))
 		return true;
 	else if ((this.y1 < 0 && this.y2 < 0)
-		|| (this.y1 > canvas.height && this.y2 > canvas.height))
+		|| (this.y1 > canvas.height - this.thickness && this.y2 > canvas.height - this.thickness))
 		return true;
 	else
 		return false;
