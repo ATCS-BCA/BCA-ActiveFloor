@@ -224,7 +224,7 @@ function start(){
 function checkPlayerHit(x, y){
 	for (var i = 0; i < lasers.length; i++){
 		if ((lasers[i].mode == 'v' && 
-				(y > lasers[i].int - lasters[i].thickness/2 || y < lasers[i].int + lasters[i].thickness/2))
+				(x > lasers[i].int - lasters[i].thickness/2 || x < lasers[i].int + lasters[i].thickness/2))
 			|| (lasers[i].mode == 'h' && 
 				(y > lasers[i].int - lasters[i].thickness/2 || y < lasers[i].int + lasters[i].thickness/2))){
 			active = false;
