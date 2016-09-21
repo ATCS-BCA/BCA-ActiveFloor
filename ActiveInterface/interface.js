@@ -64,7 +64,7 @@ function checkForStart(dataArr){
                     menuPage = false;
 
 
-                    window.location = "..ActiveInterface/interface.html";
+                    window.location = "menu.html";
                 }
             }
         }

@@ -32,6 +32,7 @@ function menu(){
     context2D.font = '12px sans-serif';
 
     context2D.strokeStyle = survivalBtn.strokeColor;
+    context2D.lineWidth = survivalBtn.lineWidth;
     context2D.fillStyle = survivalBtn.fillColor;
     context2D.fillText(survivalBtn.string, 
     	survivalBtn.x, survivalBtn.y);
@@ -39,6 +40,7 @@ function menu(){
 
     context2D.strokeStyle = laserBtn.strokeColor;
     context2D.fillStyle = laserBtn.fillColor;
+    context2D.lineWidth = laserBtn.lineWidth;
     context2D.fillText(laserBtn.string, 
     	laserBtn.x, laserBtn.y);
 	context2D.strokeRect(laserBtn.bx, laserBtn.by, laserBtn.bw, laserBtn.bh);
@@ -112,6 +114,7 @@ function gameOver(){
     
     context2D.fillStyle = restartBtn.fillColor;
     context2D.strokeStyle = restartBtn.strokeColor;
+    context2D.lineWidth = restartBtn.lineWidth;
     context2D.fillText(restartBtn.string, restartBtn.x, restartBtn.y);
     context2D.strokeRect(restartBtn.bx, restartBtn.by, restartBtn.bw, restartBtn.bh);
 
@@ -133,17 +136,4 @@ function getRandomIntInclusive(min, max) {
 //
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
-}
-
-//
-// Check if player coordinates are inside a ball
-//
-function checkPlayerHit(x, y){
-	for (var i = 0; i < balls.length; i++){
-		if (Math.pow(x - balls[i].nextX, 2) + Math.pow(y - balls[i].nextY, 2)
-			<= Math.pow(balls[i].radius, 2)){
-			active = false;
-			game = -1;
-		}
-	}
 }

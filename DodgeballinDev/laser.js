@@ -73,17 +73,17 @@ Laser.prototype.update = function(){
 };
 
 Laser.prototype.getRandomSpawn = function(){
-	var dir = getRandomIntInclusive(0,1);
-	if (dir == 0){//left || up
+	var dir = getRandomIntInclusive(1,2);
+	if (dir == 1){//left || up
 		if (this.speed < 0)
 			this.speed *= -1;
 	} else{//right || down
 		if (this.speed > 0)
 			this.speed *= -1;
 	}
-	if (getRandomIntInclusive(0,1) == 0){
+	if (getRandomIntInclusive(1,2) == 1){
 		this.mode = 'v';
-		if (dir == 0){//left
+		if (dir == 1){//left
 			return getRandomArbitrary(0, safeArea.x);
 		} else{//right
 			if (this.speed > 0)
@@ -92,7 +92,7 @@ Laser.prototype.getRandomSpawn = function(){
 		}
 	} else{
 		this.mode = 'h';
-		if (Math.floor(Math.random() * 2) == 0){//up
+		if (dir == 1){//up
 			return getRandomArbitrary(0, safeArea.y);
 		} else{//down
 			return getRandomArbitrary(safeArea.y + safeArea.h, canvas.height);
@@ -225,10 +225,10 @@ function start(){
 //
 function checkPlayerHit(x, y){
 	for (var i = 0; i < lasers.length; i++){
-		if ((lasers[i].mode == 'v' && 
-				(x > lasers[i].int - lasters[i].thickness/2 && x < lasers[i].int + lasters[i].thickness/2))
-			|| (lasers[i].mode == 'h' && 
-				(y > lasers[i].int - lasters[i].thickness/2 && y < lasers[i].int + lasters[i].thickness/2))){
+		if ((lasers[i].mode == 'h' && 
+				(x > lasers[i].int - lasers[i].thickness/2 && x < lasers[i].int + lasers[i].thickness/2))
+			|| (lasers[i].mode == 'v' && 
+				(y > lasers[i].int - lasers[i].thickness/2 && y < lasers[i].int + lasers[i].thickness/2))){
 			active = false;
 			game = -1;
 		}

@@ -78,6 +78,7 @@ function initCanvas(arr) {
 
 function setObjects(){
     survivalBtn = {
+        lineWidth: 1,
         string: 'Survival',
         file: 'survival.js',
         fillColor: '#e67e22',
@@ -93,6 +94,7 @@ function setObjects(){
     };
 
     restartBtn = {
+        lineWidth: 1,
         string: 'Restart',
         fillColor: '#e74c3c',
         strokeColor: '#3498db',
@@ -111,6 +113,7 @@ function setObjects(){
         file: 'laser.js',
         fillColor: '#9b59b6',
         strokeColor: '#2980b9',
+        lineWidth: 1,
         x: (canvas.width / 2) - (context2D.measureText('Laser').width / 2),
         y: 130,
         w: context2D.measureText('Laser').width,
