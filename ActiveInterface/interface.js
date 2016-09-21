@@ -56,13 +56,13 @@ function drawBoard(dataArr){
 }
 
 function checkForStart(dataArr){
-    console.log("checking")
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
             if(dataArr[i][j] === "*"){
                 if(i > 16 && (j > 2 && j < 22)){
                     console.log("selected");
-                    window.location = "..\\SlidePuzzle/slidePuzzle.html"
+                    menuPage = false;
+                    window.open("..\\dodgeball/dodgeball.html");
                 }
             }
         }
