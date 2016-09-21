@@ -63,7 +63,7 @@ function checkForStart(dataArr){
                     console.log("selected");
                     menuPage = false;
 
-                    window.location = "../dodgeball/dodgeball.html";
+                    window.location = "..ActiveInterface/interface.html";
                 }
             }
         }
