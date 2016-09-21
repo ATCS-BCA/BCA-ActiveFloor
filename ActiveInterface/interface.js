@@ -62,7 +62,7 @@ function checkForStart(dataArr){
                 if(i > 16 && (j > 2 && j < 22)){
                     console.log("selected");
                     menuPage = false;
-                    window.open("..\\dodgeball/dodgeball.html");
+                    window.location("..dodgeball/dodgeball.html");
                 }
             }
         }
