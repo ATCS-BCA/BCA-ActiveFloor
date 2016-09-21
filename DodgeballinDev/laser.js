@@ -125,7 +125,6 @@ Laser.prototype.changeSpeed = function(){
 //
 function updateSpawnIntersection(l){
 	l.speed *= -1;
-	l.spawn = false;
 	l.thickness--;
 	l.speed = l.changeSpeed();
 }
