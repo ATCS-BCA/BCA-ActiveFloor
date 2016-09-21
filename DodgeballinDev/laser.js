@@ -104,10 +104,10 @@ Laser.prototype.getRandomSpawn = function(){
 //
 Laser.prototype.checkSpawnIntersection = function(){
 	if ((this.x1 < 0 && this.x2 < 0)
-		|| (this.x1 > canvas.width && this.x2 > canvas.width))
+		|| (this.x1 > canvas.width - this.thickness && this.x2 > canvas.width - this.thickness))
 		return true;
 	else if ((this.y1 < 0 && this.y2 < 0)
-		|| (this.y1 > canvas.height && this.y2 > canvas.height))
+		|| (this.y1 > canvas.height - this.thickness && this.y2 > canvas.height - this.thickness))
 		return true;
 	else
 		return false;
@@ -125,7 +125,6 @@ Laser.prototype.changeSpeed = function(){
 //
 function updateSpawnIntersection(l){
 	l.speed *= -1;
-	l.spawn = false;
 	l.thickness--;
 	l.speed = l.changeSpeed();
 }
@@ -220,12 +219,14 @@ function start(){
 
 
 //
-// Check if player coordinates are inside a ball
+// Check if player coordinates touches the laster
 //
 function checkPlayerHit(x, y){
 	for (var i = 0; i < lasers.length; i++){
-		if ((lasers[i].mode == 'v' && y == lasers[i].int)
-			|| (lasers[i].mode == 'h' && x == lasers[i].int)){
+		if ((lasers[i].mode == 'v' && 
+				(x > lasers[i].int - lasters[i].thickness/2 || x < lasers[i].int + lasters[i].thickness/2))
+			|| (lasers[i].mode == 'h' && 
+				(y > lasers[i].int - lasters[i].thickness/2 || y < lasers[i].int + lasters[i].thickness/2))){
 			active = false;
 			game = -1;
 		}
