@@ -38,7 +38,7 @@ function refreshXML() {
             yCenter = ledPerSensorY / 2;
 
         });
-                
+        
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
