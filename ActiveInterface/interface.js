@@ -40,8 +40,11 @@ function refreshXML() {
             dataHolderArray.push(n);
         });
 
-        if (menuPage){
+        if (!menuPage){
             checkForStart(dataHolderArray);
+        }
+        else{
+            runMenuPage(dataHolderArray);
         }
         drawBoard(dataHolderArray);
     });
@@ -56,6 +59,7 @@ function drawBoard(dataArr){
 }
 
 function checkForStart(dataArr){
+    
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
             if(dataArr[i][j] === "*"){
@@ -69,4 +73,8 @@ function checkForStart(dataArr){
             }
         }
     }
+}
+
+function runMenuPage(){
+
 }

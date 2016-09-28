@@ -34,3 +34,7 @@ p{
     border: 3px solid black;
     text-align: center;
 }
+
+#gameList{
+    list-style: none;
+}
