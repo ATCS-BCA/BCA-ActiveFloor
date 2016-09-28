@@ -222,7 +222,7 @@ function start(){
 	game = true;
 	over = false;
 	spawner.timer = 3;
-	spawner.maxTime = 3;
+	spawner.maxTime = 5;
 
 	clearIntervals();
 

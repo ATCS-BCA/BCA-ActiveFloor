@@ -9,8 +9,7 @@ var refreshTime = 17;
 var startBtn;
 var firstTime = true;
 
-window.onload = function(){
-
+window.onload = function() {
     
     /*var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
