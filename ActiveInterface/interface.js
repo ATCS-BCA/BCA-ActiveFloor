@@ -3,22 +3,31 @@ var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCent
 var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
-var canvas, context2D;
+var canvas, ctx;
 var menuPage = false;
 var refreshTime = 17;
 var startBtn;
+var firstTime = true;
 
-var canvas = document.createElement('canvas');
-var canvasContext = canvas.getContext('2d');
-
-window.onload = function(){
-
+window.onload = function() {
+    
+    /*var body = document.getElementsByTagName('body')[0];
+    body.appendChild(canvas);
+    */
+    canvas = document.createElement('canvas')
+    ctx = canvas.getContext('2d');
+    
     var framesPerSecond = 60;
-    canvas.width = 192;
-    canvas.height = 192;
 
-    setObjects();
+    if (firstTime){
+        canvas.width = 192;
+        canvas.height = 192;
+        startCanvas();
+        setObjects();
 
+        firstTime = false;
+    }
+    
 };
 
 function refreshXML() {
@@ -55,8 +64,18 @@ function refreshXML() {
         else{
             runMenuPage(dataHolderArray);
         }
+        
         drawBoard(dataHolderArray);
     });
+}
+
+
+    
+
+
+function startCanvas(){
+    //var canvas = document.getElementById('floorCanvas');
+    
 }
 
 function initBoard(){
@@ -68,12 +87,13 @@ function drawBoard(dataArr){
 }
 
 function checkForStart(dataArr){
-
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-    canvasContext.fillStyle = 'black';
-
-    canvasContext.strokeStyle = 'black';
-    canvasContext.stokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)
+    // console.log(startBtn.text + ":" + startBtn.x)
+    /*ctx.clearRect(0, 0, canvas.width, canvas.height);*/
+    ctx.fillStyle = 'black';
+    ctx.font = '24px sans-serif';
+    ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)
 
 
     for(var i = 0; i < dataArr.length; i++){
@@ -90,17 +110,18 @@ function checkForStart(dataArr){
 }
 
 function runMenuPage(){
-
+}
 function setObjects() {
     startBtn = {
-        x: (canvas.width*2 / 3) - (context2D.measureText('Step to Begin').width / 2),
+        x: 80,
         y: 160,
-        w: context2D.measureText('Step to Begin').width,
+        w: 70,
         h: 15,
-        bx: (canvas.width / 2) - (context2D.measureText('Step To Begin').width / 2) - 20,
+        bx: (canvas.width / 2) - 20,
         by: 160 - 15,
-        bw: context2D.measureText('Step To Begin').width + 40,
-        bh: 15 + 5
+        bw: 40,
+        bh: 15 + 5,
+        text: 'Step to Begin'
     }
 }
 

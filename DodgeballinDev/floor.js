@@ -145,10 +145,10 @@ function setObjects(){
         fillColor: 'white',
         strokeColor: '#3498db',
         lineWidth: 1,
-        x: canvas.width/10,
-        y: canvas.height/10,
-        w: canvas.width*4/5,
-        h: canvas.height*4/5
+        x: canvas.width/11,
+        y: canvas.height/11,
+        w: canvas.width*5/6,
+        h: canvas.height*5/6
     };
 
     spawnArea = {

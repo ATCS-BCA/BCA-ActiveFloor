@@ -1,4 +1,4 @@
-var thick = 2;
+var thick = 10;
 var lasers = [];
 
 //
@@ -17,22 +17,22 @@ function laserBoard(){
 // Make a laser object
 //
 function Laser(){
-	this.thickness = 5;
-	this.speed = this.changeSpeed();
-	this.mode = 'v';
+	this.thickness = 8;
+	this.mode;
+	this.speed = 1/this.thickness * 8;
 
-	this.int = this.getRandomSpawn();
+	this.int = getRandomSpawn(this);
 	
-	if (this.mode == 'v'){
+	if (this.mode == 'h'){
 		this.y1 = this.int;
 		this.y2 = this.int;
 		this.x1 = 0;
 		this.x2 = canvas.width;
-	} else if (this.mode == 'h'){
+	} else if (this.mode == 'v'){
 		this.x1 = this.int;
 		this.x2 = this.int;
 		this.y1 = 0;
-		this.y2 = canvas.width;
+		this.y2 = canvas.height;
 	}
 	// else
 	// 	this.mode = 'r'
@@ -40,17 +40,16 @@ function Laser(){
 	this.spawn = false;
 }
 
-
 //
 // Draw the Laser
 //
 Laser.prototype.render = function(){
 	if (this.mode == 'v'){
-		this.y1 = this.nextInt;
-		this.y2 = this.nextInt;
-	} else if (this.mode == 'h'){
 		this.x1 = this.nextInt;
 		this.x2 = this.nextInt;
+	} else if (this.mode == 'h'){
+		this.y1 = this.nextInt;
+		this.y2 = this.nextInt;
 	}
 	this.int = this.nextInt;
 	
@@ -72,26 +71,26 @@ Laser.prototype.update = function(){
 	this.nextInt += this.speed;
 };
 
-Laser.prototype.getRandomSpawn = function(){
+function getRandomSpawn(l){
 	var dir = getRandomIntInclusive(1,2);
+	
 	if (dir == 1){//left || up
-		if (this.speed < 0)
-			this.speed *= -1;
+		if (l.speed < 0)
+			l.speed *= -1;
 	} else{//right || down
-		if (this.speed > 0)
-			this.speed *= -1;
+		if (l.speed > 0)
+			l.speed *= -1;
 	}
+
 	if (getRandomIntInclusive(1,2) == 1){
-		this.mode = 'v';
+		l.mode = 'v';
 		if (dir == 1){//left
 			return getRandomArbitrary(0, safeArea.x);
 		} else{//right
-			if (this.speed > 0)
-				this.speed *= -1;
 			return getRandomArbitrary(safeArea.x + safeArea.w, canvas.width);
 		}
 	} else{
-		this.mode = 'h';
+		l.mode = 'h';
 		if (dir == 1){//up
 			return getRandomArbitrary(0, safeArea.y);
 		} else{//down
@@ -104,32 +103,51 @@ Laser.prototype.getRandomSpawn = function(){
 //
 //
 //
-Laser.prototype.checkSpawnIntersection = function(){
-	if ((this.x1 < 0 && this.x2 < 0)
-		|| (this.x1 > canvas.width - this.thickness && this.x2 > canvas.width - this.thickness))
-		return true;
-	else if ((this.y1 < 0 && this.y2 < 0)
-		|| (this.y1 > canvas.height - this.thickness && this.y2 > canvas.height - this.thickness))
-		return true;
-	else
-		return false;
+Laser.prototype.checkWallIntersection = function(){
+	if (this.mode == 'v'){
+		if (this.int <= 0){
+			if (!this.spawn)
+				this.speed *= -1;
+				this.thickness -= 2;
+				this.speed = this.changeSpeed();
+				this.nextInt = this.speed;
+		} else if (this.int >= canvas.width){
+			if (!this.spawn)
+				this.speed *= -1;
+				this.thickness -= 2;
+				this.speed = this.changeSpeed();
+				this.nextInt = canvas.width + this.speed;
+				return true;
+		}
+		
+	} else if (this.mode == 'h'){
+		if (this.int <= 0){
+			if (!this.spawn)
+				this.speed *= -1;
+				this.thickness -= 2;
+				this.speed = this.changeSpeed();
+				this.nextInt = this.speed;
+				return true;
+		}
+		else if (this.int >= canvas.height){
+			if (!this.spawn)
+				this.speed *= -1;
+				this.thickness -= 2;
+				this.speed = this.changeSpeed();
+				this.nextInt = canvas.height + this.speed;
+				return true;
+		}
+	}
+	return false;
 };
 
 //
 //
 //
 Laser.prototype.changeSpeed = function(){
-	return this.thickness * getRandomIntInclusive(4,8)/32;
+	return 1/this.thickness * 8;
 }
 
-//
-//
-//
-function updateSpawnIntersection(l){
-	l.speed *= -1;
-	l.thickness--;
-	l.speed = l.changeSpeed();
-}
 
 //
 // add the laser to the array
@@ -139,8 +157,10 @@ function addLaser(){
 	score++;
 }
 
+
+
 //
-// animate the lasers in survival mode
+// animate the lasers in laser mode
 //
 function animate(){
 	'use strict';
@@ -158,19 +178,21 @@ function animate(){
 		lasers[i].update();
 	}
 
-	//update to another Laser and spawner collisions
+	//update wall collisions
 	for (var i = 0; i < lasers.length; i++){
-		// check the spawn
+		// check the wall
 		if (lasers[i].spawn){
-			if (lasers[i].checkSpawnIntersection()){
-				updateSpawnIntersection(lasers[i]);
-			}
-			
+			if (lasers[i].checkWallIntersection())
+			lasers[i].spawn = false;			
 		} else{
 			//only if didn't leave spawner after spawn to avoid getting stuck
-			if (!lasers[i].checkSpawnIntersection())
-				lasers[i].spawn = true;
+			lasers[i].checkWallIntersection()
 		}
+
+		// if (lasers[i].checkInsideSpawn())
+		// 	lasers[i].spawn = true;
+		// else
+		// 	lasers[i].spawn = false;
 	}
 
 	//prepare for the next draw
@@ -221,14 +243,14 @@ function start(){
 
 
 //
-// Check if player coordinates touches the laster
+// Check if player coordinates touches the laser
 //
 function checkPlayerHit(x, y){
 	for (var i = 0; i < lasers.length; i++){
 		if ((lasers[i].mode == 'h' && 
-				(x > lasers[i].int - lasers[i].thickness/2 && x < lasers[i].int + lasers[i].thickness/2))
+				(y >= lasers[i].int - lasers[i].thickness/2 && y <= lasers[i].int + lasers[i].thickness/2))
 			|| (lasers[i].mode == 'v' && 
-				(y > lasers[i].int - lasers[i].thickness/2 && y < lasers[i].int + lasers[i].thickness/2))){
+				(x >= lasers[i].int - lasers[i].thickness/2 && x <= lasers[i].int + lasers[i].thickness/2))){
 			active = false;
 			game = -1;
 		}
