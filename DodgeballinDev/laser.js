@@ -1,5 +1,6 @@
 var thick = 10;
 var lasers = [];
+var num;
 
 //
 // Draw the board (AKA the place where lasers doesn't spawn)
@@ -11,15 +12,21 @@ function laserBoard(){
 	context2D.fillStyle = spawner.fillColor;
 	context2D.fillText(spawner.timer, 
 		spawner.x - context2D.measureText(spawner.timer).width / 2, spawner.y  + 5);
+
+	context2D.fillStyle = '#2ecc71';
+	context2D.font = '10px Arial';
+	context2D.fillText('Score: ' + score, 
+		canvas.width - context2D.measureText('Score:' + score).width - 5, 10);
 }
 
 //
 // Make a laser object
 //
 function Laser(){
-	this.thickness = 8;
+	this.id = num++;
+	this.thickness = 10;
 	this.mode;
-	this.speed = 1/this.thickness * 8;
+	this.speed = 1/this.thickness * 10;
 
 	this.int = getRandomSpawn(this);
 	
@@ -34,10 +41,10 @@ function Laser(){
 		this.y1 = 0;
 		this.y2 = canvas.height;
 	}
-	// else
-	// 	this.mode = 'r'
+
 	this.nextInt = this.int;
 	this.spawn = false;
+	this.draw = true;
 }
 
 //
@@ -107,15 +114,16 @@ Laser.prototype.checkWallIntersection = function(){
 	if (this.mode == 'v'){
 		if (this.int <= 0){
 			if (!this.spawn)
-				this.speed *= -1;
 				this.thickness -= 2;
 				this.speed = this.changeSpeed();
 				this.nextInt = this.speed;
+				return true;
+
 		} else if (this.int >= canvas.width){
 			if (!this.spawn)
-				this.speed *= -1;
 				this.thickness -= 2;
 				this.speed = this.changeSpeed();
+				this.speed *= -1;
 				this.nextInt = canvas.width + this.speed;
 				return true;
 		}
@@ -123,7 +131,6 @@ Laser.prototype.checkWallIntersection = function(){
 	} else if (this.mode == 'h'){
 		if (this.int <= 0){
 			if (!this.spawn)
-				this.speed *= -1;
 				this.thickness -= 2;
 				this.speed = this.changeSpeed();
 				this.nextInt = this.speed;
@@ -131,9 +138,9 @@ Laser.prototype.checkWallIntersection = function(){
 		}
 		else if (this.int >= canvas.height){
 			if (!this.spawn)
-				this.speed *= -1;
 				this.thickness -= 2;
 				this.speed = this.changeSpeed();
+				this.speed *= -1;
 				this.nextInt = canvas.height + this.speed;
 				return true;
 		}
@@ -145,10 +152,30 @@ Laser.prototype.checkWallIntersection = function(){
 //
 //
 Laser.prototype.changeSpeed = function(){
-	return 1/this.thickness * 8;
+	return 1/this.thickness * 10;
+};
+
+//
+// check if left out of spawn
+//
+Laser.prototype.insideSafe = function(){
+	if (this.mode == 'v'){
+		if (this.int >= safeArea.x && this.int <= safeArea.x + safeArea.w)
+			return true;
+	}else if (this.mode = 'h'){
+		if (this.int >= safeArea.y && this.int <= safeArea.y + safeArea.h)
+			return true;
+	}
+	return false;
+};
+
+//
+//update score
+//
+function updateScore(l){
+	var multiplier = ((thick - l.thickness)/2 + 1);
+	score += multiplier;
 }
-
-
 //
 // add the laser to the array
 //
@@ -157,7 +184,12 @@ function addLaser(){
 	score++;
 }
 
-
+//
+// Remove laser from array
+//
+function removeLaser(i){
+	lasers.splice(i, 1);
+}
 
 //
 // animate the lasers in laser mode
@@ -182,17 +214,19 @@ function animate(){
 	for (var i = 0; i < lasers.length; i++){
 		// check the wall
 		if (lasers[i].spawn){
-			if (lasers[i].checkWallIntersection())
-			lasers[i].spawn = false;			
+			if (lasers[i].insideSafe())
+				lasers[i].spawn = false;			
 		} else{
 			//only if didn't leave spawner after spawn to avoid getting stuck
-			lasers[i].checkWallIntersection()
+			if (lasers[i].checkWallIntersection())
+				updateScore(lasers[i]);
 		}
+	}
 
-		// if (lasers[i].checkInsideSpawn())
-		// 	lasers[i].spawn = true;
-		// else
-		// 	lasers[i].spawn = false;
+	//check if laser should be removed
+	for (var i = 0; i < lasers.length; i++){
+		if (lasers[i].thickness <= (thick - 8))
+			removeLaser(i);
 	}
 
 	//prepare for the next draw
@@ -222,7 +256,8 @@ function start(){
 	game = true;
 	over = false;
 	spawner.timer = 3;
-	spawner.maxTime = 5;
+	spawner.maxTime = 3;
+	num = 0;
 
 	clearIntervals();
 
@@ -247,10 +282,8 @@ function start(){
 //
 function checkPlayerHit(x, y){
 	for (var i = 0; i < lasers.length; i++){
-		if ((lasers[i].mode == 'h' && 
-				(y >= lasers[i].int - lasers[i].thickness/2 && y <= lasers[i].int + lasers[i].thickness/2))
-			|| (lasers[i].mode == 'v' && 
-				(x >= lasers[i].int - lasers[i].thickness/2 && x <= lasers[i].int + lasers[i].thickness/2))){
+		if ((lasers[i].mode == 'h' && Math.abs(y - lasers[i].int) <= lasers[i].thickness/2)
+			|| (lasers[i].mode == 'v' && Math.abs(x - lasers[i].int) <= lasers[i].thickness/2)){
 			active = false;
 			game = -1;
 		}

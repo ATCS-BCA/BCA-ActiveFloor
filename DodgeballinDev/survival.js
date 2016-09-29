@@ -1,4 +1,4 @@
-var size = 10;
+var size;
 var balls = [];
 var spawner;
 
@@ -12,6 +12,11 @@ function survivalBoard(){
 	context2D.stroke();
 	spawnTime();
 	context2D.closePath();
+
+	context2D.fillStyle = '#2ecc71';
+	context2D.font = '10px Arial';
+	context2D.fillText('Score: ' + score, 
+		canvas.width - context2D.measureText('Score:' + score).width - 5, 10);
 }
 
 //
@@ -20,15 +25,15 @@ function survivalBoard(){
 function spawnTime(){
 	context2D.fillStyle = spawner.fillColor;
 	context2D.fillText(spawner.timer, 
-		spawner.x - context2D.measureText(spawner.timer).width / 2, spawner.y  + 5);
+		spawner.x - context2D.measureText(spawner.timer).width / 2, spawner.y  + 3);
 }
 
 //
 // Make a ball object
 //
 function Ball(speed, size){
-	this.dx = getRandomIntInclusive(speed, speed + 10)*3/16;
-	this.dy = getRandomIntInclusive(speed, speed + 10)*3/16;
+	this.dx = getRandomIntInclusive(speed, speed + 10)*11/64;
+	this.dy = getRandomIntInclusive(speed, speed + 10)*11/64;
 
 	if (Math.floor(Math.random() * 2) == 0)
 		this.dx *= -1;

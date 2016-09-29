@@ -5,7 +5,7 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var firstTime = true;
-var refreshTime = 80;
+var refreshTime = 60;
 var noTouch = true;
 
 function initCanvas(arr) {
