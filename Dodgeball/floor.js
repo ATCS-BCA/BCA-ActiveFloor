@@ -5,7 +5,7 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var firstTime = true;
-var refreshTime = 80;
+var refreshTime = 60;
 var noTouch = true;
 
 function initCanvas(arr) {
@@ -30,15 +30,17 @@ function initCanvas(arr) {
                 if (srchStr === charSearch) {
                     tempX = p * ledPerSensorX;
                     tempY = i * ledPerSensorY;
-                    if(startBtn.bx <= tempX && tempX <= startBtn.bx + startBtn.bw && startBtn.by <= tempY 
-                        && tempY <= startBtn.by + startBtn.bh) {
-                        game = true;
-                        start();
+                    if(survivalBtn.bx <= tempX && tempX <= survivalBtn.bx + survivalBtn.bw && survivalBtn.by <= tempY 
+                        && tempY <= survivalBtn.by + survivalBtn.bh) {
+                        game = 0;
+                    } else if(laserBtn.bx <= tempX && tempX <= laserBtn.bx + laserBtn.bw 
+                        && laserBtn.by <= tempY && tempY <= laserBtn.by + laserBtn.bh) {
+                        game = 1;
                     }
                 }
             }
         }
-    } else if (screen == 1){//game
+    } else if (screen == 1){//in game screen
         for (i = 0; i < arr.length; i += 1) {
             tempRow = arr[i];
             
@@ -75,28 +77,58 @@ function initCanvas(arr) {
 }
 
 function setObjects(){
-    startBtn = {
-        x: (canvas.width / 2) - (context2D.measureText('Start').width / 2),
+    survivalBtn = {
+        lineWidth: 1,
+        string: 'Survival',
+        file: 'survival.js',
+        fillColor: '#e67e22',
+        strokeColor: '#2980b9',
+        x: (canvas.width / 2) - (context2D.measureText('Survival').width / 2),
         y: 160,
-        w: context2D.measureText('Start').width,
+        w: context2D.measureText('Survival').width,
         h: 15,
-        bx: (canvas.width / 2) - (context2D.measureText('Start').width / 2) - 20,
+        bx: (canvas.width / 2) - (context2D.measureText('Survival').width / 2) - 17,
         by: 160 - 15,
-        bw: context2D.measureText('Start').width + 40,
+        bw: context2D.measureText('Survival').width + 40,
         bh: 15 + 5
     };
+
     restartBtn = {
+        lineWidth: 1,
+        string: 'Restart',
+        fillColor: '#e74c3c',
+        strokeColor: '#3498db',
         x: (canvas.width / 2) - (context2D.measureText('Restart').width / 2),
-        y: startBtn.y - 25,
+        y: survivalBtn.y - 25,
         w: context2D.measureText('Restart').width, 
-        h: startBtn.w,
+        h: survivalBtn.w,
         bx: (canvas.width / 2) - (context2D.measureText('Restart').width / 2) - 20,
-        by: startBtn.by - 25,
+        by: survivalBtn.by - 25,
         bw: context2D.measureText('Restart').width + 40,
-        bh: startBtn.bh
+        bh: survivalBtn.bh
+    };
+
+    laserBtn = {
+        string: 'Laser',
+        file: 'laser.js',
+        fillColor: '#9b59b6',
+        strokeColor: '#2980b9',
+        lineWidth: 1,
+        x: (canvas.width / 2) - (context2D.measureText('Laser').width / 2),
+        y: 130,
+        w: context2D.measureText('Laser').width,
+        h: 15,
+        bx: (canvas.width / 2) - (context2D.measureText('Laser').width / 2) - 18,
+        by: 130 - 15,
+        bw: context2D.measureText('Laser').width + 40,
+        bh: 15 + 5
     };
 
     spawner = {
+        maxTime: 8,
+        timer: 8,
+        fillColor: 'white',
+        strokeColor: '#3498db',
         x: canvas.width/2,
         y: canvas.height/2,
         nextX: canvas.width/2,
@@ -107,6 +139,23 @@ function setObjects(){
         speed: 0,
         radius: size + 5,
         mass: 100000000
+    };
+
+    safeArea = {
+        fillColor: 'white',
+        strokeColor: '#3498db',
+        lineWidth: 1,
+        x: canvas.width/11,
+        y: canvas.height/11,
+        w: canvas.width*5/6,
+        h: canvas.height*5/6
+    };
+
+    spawnArea = {
+        x: 0,
+        y: 0,
+        w: canvas.width,
+        h: canvas.height
     };
 }
 
