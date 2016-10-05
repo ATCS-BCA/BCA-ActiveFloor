@@ -29,9 +29,9 @@ function initCanvas(arr) {
                 if (srchStr === charSearch) {
                     tempX = p * ledPerSensorX;
                     tempY = i * ledPerSensorY;
-                    if(buttonPressed(survivalBtn, tempX, tempY)) {
+                    if(buttonPressed(survivalBtn, x, y)) {
                         game = 0;
-                    } else if(buttonPressed(laserBtn, tempX, tempY)) {
+                    } else if(buttonPressed(laserBtn, x, y)) {
                         game = 1;
                     }
                 }
