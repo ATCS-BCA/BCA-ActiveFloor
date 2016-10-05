@@ -14,20 +14,26 @@ window.onload = function() {
     /*var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
     */
-    canvas = document.createElement('canvas')
+    canvas = document.getElementById('floorCanvas')
+    canvas.width = ledsX;
+    canvas.height = ledsY;
     ctx = canvas.getContext('2d');
+
+
     
     var framesPerSecond = 60;
 
     if (firstTime){
         canvas.width = 192;
         canvas.height = 192;
-        startCanvas();
         setObjects();
+        startCanvas();
+
+        
 
         firstTime = false;
     }
-    
+
 };
 
 function refreshXML() {
@@ -75,6 +81,17 @@ function refreshXML() {
 
 function startCanvas(){
     //var canvas = document.getElementById('floorCanvas');
+    ctx.fillStyle = 'black';
+    ctx.font = '24px Courier';
+    ctx.strokeStyle = 'black';
+
+    ctx.fillText('Welcome to', ((canvas.width / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
+    ctx.fillText('ATCS', ((canvas.width / 2) - (ctx.measureText('ATCS').width / 2)), 80);
+
+
+    ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
+    
+    ctx.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)
     
 }
 
@@ -89,11 +106,7 @@ function drawBoard(dataArr){
 function checkForStart(dataArr){
     // console.log(startBtn.text + ":" + startBtn.x)
     /*ctx.clearRect(0, 0, canvas.width, canvas.height);*/
-    ctx.fillStyle = 'black';
-    ctx.font = '24px sans-serif';
-    ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
-    ctx.strokeStyle = 'black';
-    ctx.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)
+    
 
 
     for(var i = 0; i < dataArr.length; i++){
@@ -113,15 +126,15 @@ function runMenuPage(){
 }
 function setObjects() {
     startBtn = {
-        x: 80,
-        y: 160,
-        w: 70,
-        h: 15,
-        bx: (canvas.width / 2) - 20,
-        by: 160 - 15,
-        bw: 40,
-        bh: 15 + 5,
-        text: 'Step to Begin'
+        x: canvas.width/3 - 6,
+        y: ( (canvas.height) - (canvas.height/3)) + 27,
+        w: canvas.width / 3- 10,
+        h: canvas.height/6 + 10,
+        bx: (canvas.width / 3) - 10,
+        by: (canvas.height) - (canvas.height/3) + 10,
+        bw: canvas.width / 3,
+        bh: canvas.height / 8,
+        text: 'Step'
     }
 }
 
