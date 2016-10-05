@@ -8,7 +8,7 @@ var menuPage = false;
 var refreshTime = 17;
 var startBtn;
 var firstTime = true;
-
+var sensorDiv = 8;
 window.onload = function() {
     
     /*var body = document.getElementsByTagName('body')[0];
@@ -107,15 +107,15 @@ function checkForStart(dataArr){
     // console.log(startBtn.text + ":" + startBtn.x)
     /*ctx.clearRect(0, 0, canvas.width, canvas.height);*/
     
-
-
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
-            if(dataArr[i][j] === "*"){
-                if(i > 16 && (j > 2 && j < 22)){
-                    console.log("selected");
-                    menuPage = true;
-                    window.location = "menu.html";
+            if(dataArr[i][j] === "*"){      
+                if(i > Math.floor(startBtn.bx/sensorDiv) && i < Math.floor( (startBtn.bx + startBtn.bw) / sensorDiv)){
+                    console.log("After: " + startBtn.bx);
+                    if(j > Math.floor(startBtn.by / sensorDiv) && j < Math.floor( ( startBtn.by + startBtn.bh) / sensorDiv ) ){
+                        menuPage = true;
+                        window.location = "menu.html";
+                    }
                 }
             }
         }
