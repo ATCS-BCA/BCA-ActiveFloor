@@ -9,6 +9,8 @@ var refreshTime = 17;
 var startBtn;
 var firstTime = true;
 var sensorDiv = 8;
+var text, parser, xmlDoc;
+
 window.onload = function() {
     
     /*var body = document.getElementsByTagName('body')[0];
@@ -32,6 +34,15 @@ window.onload = function() {
         
 
         firstTime = false;
+    }
+    if (menuPage) {
+        canvas.width = 192;
+        canvas.height = 192;
+        runMenuPage();
+        setObjects();
+
+        menuPage = false;
+
     }
 
 };
@@ -123,6 +134,13 @@ function checkForStart(dataArr){
 }
 
 function runMenuPage(){
+    var text, parser, xmlDoc;
+
+    text = new XMLSerializer().serializeToString("../../Release.blast");
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(txt, "text/xml");
+
+    console.log(xmlDoc.getElementsByTagName("AppModes"));
 }
 function setObjects() {
     startBtn = {
