@@ -16,18 +16,21 @@ window.onload = function() {
     /*var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
     */
-    canvas = document.getElementById('floorCanvas')
-    canvas.width = ledsX;
-    canvas.height = ledsY;
-    ctx = canvas.getContext('2d');
+    
 
 
     
     var framesPerSecond = 60;
 
     if (firstTime){
+        canvas = document.getElementById('floorCanvas')
+
+        // canvas.width = ledsX;
+        // canvas.height = ledsY;
         canvas.width = 192;
         canvas.height = 192;
+        ctx = canvas.getContext('2d');
+        
         setObjects();
         startCanvas();
 
@@ -35,6 +38,7 @@ window.onload = function() {
 
         firstTime = false;
     }
+    /*
     if (menuPage) {
         canvas.width = 192;
         canvas.height = 192;
@@ -44,6 +48,7 @@ window.onload = function() {
         menuPage = false;
 
     }
+    */
 
 };
 
