@@ -16,18 +16,21 @@ window.onload = function() {
     /*var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
     */
-    canvas = document.getElementById('floorCanvas')
-    canvas.width = ledsX;
-    canvas.height = ledsY;
-    ctx = canvas.getContext('2d');
+    
 
 
     
     var framesPerSecond = 60;
 
     if (firstTime){
+        canvas = document.getElementById('floorCanvas')
+
+        // canvas.width = ledsX;
+        // canvas.height = ledsY;
         canvas.width = 192;
         canvas.height = 192;
+        ctx = canvas.getContext('2d');
+        
         setObjects();
         startCanvas();
 
@@ -35,6 +38,7 @@ window.onload = function() {
 
         firstTime = false;
     }
+    /*
     if (menuPage) {
         canvas.width = 192;
         canvas.height = 192;
@@ -44,6 +48,7 @@ window.onload = function() {
         menuPage = false;
 
     }
+    */
 
 };
 
@@ -121,6 +126,11 @@ function checkForStart(dataArr){
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
             if(dataArr[i][j] === "*"){      
+                if(i > 16 && (j > 2 && j < 22)){
+
+                    window.location = "../BCA-ActiveFloor/DodgeballDev/dodgeball.html"
+                }
+                /*
                 if(i > Math.floor(startBtn.bx/sensorDiv) && i < Math.floor( (startBtn.bx + startBtn.bw) / sensorDiv)){
                     console.log("After: " + startBtn.bx);
                     if(j > Math.floor(startBtn.by / sensorDiv) && j < Math.floor( ( startBtn.by + startBtn.bh) / sensorDiv ) ){
@@ -128,6 +138,8 @@ function checkForStart(dataArr){
                         window.location = "menu.html";
                     }
                 }
+                */
+
             }
         }
     }

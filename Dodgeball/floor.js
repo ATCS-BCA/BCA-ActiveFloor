@@ -87,11 +87,11 @@ function setObjects(){
         fillColor: '#e67e22',
         strokeColor: '#2980b9',
         x: (canvas.width / 2) - (context2D.measureText('Survival').width / 2),
-        y: 160,
+        y: 135,
         w: context2D.measureText('Survival').width,
         h: 15,
         bx: (canvas.width / 2) - (context2D.measureText('Survival').width / 2) - 17,
-        by: 160 - 15,
+        by: 135 - 15,
         bw: context2D.measureText('Survival').width + 40,
         bh: 15 + 5
     };
@@ -102,11 +102,11 @@ function setObjects(){
         fillColor: '#e74c3c',
         strokeColor: '#3498db',
         x: (canvas.width / 2) - (context2D.measureText('Restart').width / 2),
-        y: survivalBtn.y - 25,
+        y: survivalBtn.y + 25,
         w: context2D.measureText('Restart').width, 
         h: survivalBtn.w,
         bx: (canvas.width / 2) - (context2D.measureText('Restart').width / 2) - 20,
-        by: survivalBtn.by - 25,
+        by: survivalBtn.by + 25,
         bw: context2D.measureText('Restart').width + 40,
         bh: survivalBtn.bh
     };
@@ -118,11 +118,11 @@ function setObjects(){
         strokeColor: '#2980b9',
         lineWidth: 1,
         x: (canvas.width / 2) - (context2D.measureText('Laser').width / 2),
-        y: 130,
+        y: survivalBtn.y - 25,
         w: context2D.measureText('Laser').width,
         h: 15,
         bx: (canvas.width / 2) - (context2D.measureText('Laser').width / 2) - 18,
-        by: 130 - 15,
+        by: survivalBtn.by - 25,
         bw: context2D.measureText('Laser').width + 40,
         bh: 15 + 5
     };
