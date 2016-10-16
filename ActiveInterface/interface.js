@@ -134,13 +134,33 @@ function checkForStart(dataArr){
 }
 
 function runMenuPage(){
-    var text, parser, xmlDoc;
 
-    text = new XMLSerializer().serializeToString("../../Release.blast");
-    parser = new DOMParser();
-    xmlDoc = parser.parseFromString(txt, "text/xml");
+    var client = nwe XMLHttpRequest();
+    client.open('GET', '../../Release.blast');
+    client.onreadystatechange = function() {
+        alert(client.responseText);
+    }
 
-    console.log(xmlDoc.getElementsByTagName("AppModes"));
+    client.send()
+    // var text, praser, xmlDoc
+
+    // text = new XMLSerializer().serializeToString("../../Release.blast");
+
+
+
+    // if (window.DOMParser)
+    // {
+    //     parser = new DOMParser();
+    //     xmlDoc = parser.parseFromString(txt, "text/xml");
+    // }
+    // else
+    // {
+    //     xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+    //     xmlDoc.async=false;
+    //     xmlDoc.loadXML(txt);
+    // }
+
+    // console.log(xmlDoc.getElementsByTagName("test"));
 }
 function setObjects() {
     startBtn = {
