@@ -28,7 +28,7 @@ window.onload = function() {
         // canvas.width = ledsX;
         // canvas.height = ledsY;
         canvas.width = 192;
-        canvas.height = 192;
+
         ctx = canvas.getContext('2d');
         
         setObjects();
@@ -97,7 +97,7 @@ function refreshXML() {
 
 function startCanvas(){
     //var canvas = document.getElementById('floorCanvas');
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'white';
     ctx.font = '24px Courier';
     ctx.strokeStyle = 'black';
 
@@ -145,18 +145,18 @@ function runMenuPage(){
     parser = new DOMParser();
     xmlDoc = parser.parseFromString(txt, "text/xml");
 
-    console.log(xmlDoc.getElementsByTagName("AppModes"));
+    console.log(xmlDoc.getElementsByTagName("test"));
 }
 function setObjects() {
     startBtn = {
         x: canvas.width/3 - 6,
-        y: ( (canvas.height) - (canvas.height/3)) + 27,
+        y: ((canvas.height) - (canvas.height/3)) + 27,
         w: canvas.width / 3- 10,
-        h: canvas.height/6 + 10,
+        h: canvas.height/6 + 15,
         bx: (canvas.width / 3) - 10,
         by: (canvas.height) - (canvas.height/3) + 10,
         bw: canvas.width / 3,
-        bh: canvas.height / 8,
+        bh: canvas.height / 8 + 5,
         text: 'Step'
     }
 }
