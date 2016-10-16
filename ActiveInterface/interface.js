@@ -126,6 +126,11 @@ function checkForStart(dataArr){
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
             if(dataArr[i][j] === "*"){      
+                if(i > 16 && (j > 2 && j < 22)){
+
+                    window.location = "../BCA-ActiveFloor/DodgeballDev/dodgeball.html"
+                }
+                /*
                 if(i > Math.floor(startBtn.bx/sensorDiv) && i < Math.floor( (startBtn.bx + startBtn.bw) / sensorDiv)){
                     console.log("After: " + startBtn.bx);
                     if(j > Math.floor(startBtn.by / sensorDiv) && j < Math.floor( ( startBtn.by + startBtn.bh) / sensorDiv ) ){
@@ -133,6 +138,8 @@ function checkForStart(dataArr){
                         window.location = "menu.html";
                     }
                 }
+                */
+
             }
         }
     }
