@@ -128,7 +128,7 @@ function checkForStart(dataArr){
             if(dataArr[i][j] === "*"){      
                 if(i > 16 && (j > 2 && j < 22)){
 
-                    window.location = "../BCA-ActiveFloor/DodgeballDev/dodgeball.html"
+                    window.location = "../toDelete/DodgeballDev/dodgeball.html"
                 }
                 /*
                 if(i > Math.floor(startBtn.bx/sensorDiv) && i < Math.floor( (startBtn.bx + startBtn.bw) / sensorDiv)){
