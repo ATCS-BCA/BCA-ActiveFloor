@@ -28,7 +28,7 @@ window.onload = function() {
         // canvas.width = ledsX;
         // canvas.height = ledsY;
         canvas.width = 192;
-
+        canvas.height = 192;
         ctx = canvas.getContext('2d');
         
         setObjects();
@@ -97,7 +97,7 @@ function refreshXML() {
 
 function startCanvas(){
     //var canvas = document.getElementById('floorCanvas');
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'black';
     ctx.font = '24px Courier';
     ctx.strokeStyle = 'black';
 
@@ -126,9 +126,9 @@ function checkForStart(dataArr){
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
             if(dataArr[i][j] === "*"){      
-                if((i > 16 && i < 19) && (j > 8 && j < 20)){
+                if(i > 16 && (j > 2 && j < 22)){
 
-                    window.location = "../tictactoe/tictactoe.html"
+                    window.location = "../BCA-ActiveFloor/DodgeballDev/dodgeball.html"
                 }
                 /*
                 if(i > Math.floor(startBtn.bx/sensorDiv) && i < Math.floor( (startBtn.bx + startBtn.bw) / sensorDiv)){
@@ -152,18 +152,18 @@ function runMenuPage(){
     parser = new DOMParser();
     xmlDoc = parser.parseFromString(txt, "text/xml");
 
-    console.log(xmlDoc.getElementsByTagName("test"));
+    console.log(xmlDoc.getElementsByTagName("AppModes"));
 }
 function setObjects() {
     startBtn = {
         x: canvas.width/3 - 6,
-        y: ((canvas.height) - (canvas.height/3)) + 27,
+        y: ( (canvas.height) - (canvas.height/3)) + 27,
         w: canvas.width / 3- 10,
-        h: canvas.height/6 + 15,
+        h: canvas.height/6 + 10,
         bx: (canvas.width / 3) - 10,
         by: (canvas.height) - (canvas.height/3) + 10,
         bw: canvas.width / 3,
-        bh: canvas.height / 8 + 5,
+        bh: canvas.height / 8,
         text: 'Step'
     }
 }
