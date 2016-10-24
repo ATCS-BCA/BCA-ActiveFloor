@@ -46,7 +46,7 @@ function drawCanvas(arr) {
 
 function refreshXML() {
     'use strict';
-    $.get('http://127.0.0.1:8080/', function (data) {
+    $.get('http://168.229.106.80:8080/', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {

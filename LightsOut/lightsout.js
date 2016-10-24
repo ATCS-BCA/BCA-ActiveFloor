@@ -117,6 +117,9 @@ function press(a,b){
     if (b>0) map[a][b-1] = 1-map[a][b-1];
     if (a<4) map[a+1][b] = 1-map[a+1][b];
     if (b<4) map[a][b+1] = 1-map[a][b+1];
+
+    clearInterval(myInterval);
+    setTimeout(startRefresh(),500);
 }
 
 function showGameOver()
