@@ -7,12 +7,12 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 80;
-done=false;
+// doneBool=false;
 canType=true;
 
-function Restart(){
-    done=true;
-}
+// function Restart(){
+//     doneBool=true;
+// }
 
 function refresh(){
     if(active == false){
@@ -24,7 +24,7 @@ function refresh(){
 
 
         document.getElementById('restart').click();
-        done=false;
+        // doneBool=false;
 
     }
 }
@@ -111,7 +111,7 @@ function initCanvas(arr) {
         }, 500);
     }
 
-    if (done && !highscore){
+    if (!active && !highscore){
         if (middle>2) refresh();
     }
 
