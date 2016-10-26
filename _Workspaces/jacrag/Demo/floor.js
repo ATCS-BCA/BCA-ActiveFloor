@@ -6,7 +6,7 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 17;
+var refreshTime = 17;       // Run the loop every 17 milliseconds
 
 function drawObj(type, xPos, yPos, size) {
     'use strict';
@@ -44,11 +44,12 @@ function drawCanvas(arr) {
     }
 }
 
-function refreshXML() {
+function loop() {
     'use strict';
-    $.get('http://hk-c214-14.bergen.org:8080/', function (data) {
+    $.get('http://127.0.0.1:8080/', function (data) {
         dataHolderArray = [];
-				
+
+        /* Assign the fields from the XML to Javascript variables. */
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -60,7 +61,8 @@ function refreshXML() {
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
         });
-				
+
+        /* Load the data from the XML file into the dataHolderArray */
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
@@ -70,7 +72,8 @@ function refreshXML() {
 				
             dataHolderArray.push(n);
         });
-			
+
+        /* Redraw the screen based upon the data in the array. */
         drawCanvas(dataHolderArray);
     });
 }
@@ -92,7 +95,7 @@ $(document).ready(function () {
 
 function startRefresh() {
     'use strict';
-    myInterval = setInterval(function () {refreshXML(); }, refreshTime);
+    myInterval = setInterval(function () {loop(); }, refreshTime);
 }
 
 function stopRefresh() {
