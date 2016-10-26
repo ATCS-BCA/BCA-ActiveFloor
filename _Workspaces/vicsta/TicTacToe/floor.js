@@ -41,22 +41,23 @@ window.onload = function()
         ctx.lineWidth = 1;
 
         ctx.beginPath();
-        for (var j = 0; j <=128; j+=64){
-            for (var i = (64 / 3); i <= (128 / 3); i += (64 / 3)) {
-                ctx.moveTo(j, i);
-                ctx.lineTo(j+64, i);
-                ctx.moveTo(j+i, 0);
-                ctx.lineTo(j+i, (64));
-                ctx.moveTo(j, i + 64);
-                ctx.lineTo(j+64, i + 64);
-                ctx.moveTo(j+i, 64);
-                ctx.lineTo(j+i, (128));
-                ctx.moveTo(j, 192 - i);
-                ctx.lineTo(j+64, 192 - i);
-                ctx.moveTo(j+i, 128);
-                ctx.lineTo(j+i, 192);
+        for (var j = 24; j <=120; j+=48){
+            for (var i = (48 / 3); i <= (120 / 3); i += (48 / 3)) {
+                ctx.moveTo(j, 24+i);
+                ctx.lineTo(j+48, 24+i);
+                ctx.moveTo(j+i, 24);
+                ctx.lineTo(j+i, 72);
+                ctx.moveTo(j, i + 72);
+                ctx.lineTo(j+48, i + 72);
+                ctx.moveTo(j+i, 72);
+                ctx.lineTo(j+i, 120);
+                ctx.moveTo(j, 168 - i);
+                ctx.lineTo(j+48, 168 - i);
+                ctx.moveTo(j+i, 120);
+                ctx.lineTo(j+i, 168);
             }
         }
+
         ctx.stroke();
 
         //Creates the main tic tac toe board
@@ -64,11 +65,11 @@ window.onload = function()
         ctx.lineWidth = 2;
 
         ctx.beginPath();
-        for (var i =64; i <=128; i+=64){
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i,192);
-            ctx.moveTo(0,i);
-            ctx.lineTo(192,i);
+        for (var i =72; i <=120; i+=48){
+            ctx.moveTo(i, 24);
+            ctx.lineTo(i,168);
+            ctx.moveTo(24,i);
+            ctx.lineTo(168,i);
         }
         ctx.stroke();
 
