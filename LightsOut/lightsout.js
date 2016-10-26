@@ -111,15 +111,26 @@ function drawMain() {
     if (allEmpty) win=true;
 }
 
+var delay=false;
+first=false;
 function press(a,b){
-    map[a][b] = 1-map[a][b];
-    if (a>0) map[a-1][b] = 1-map[a-1][b];
-    if (b>0) map[a][b-1] = 1-map[a][b-1];
-    if (a<4) map[a+1][b] = 1-map[a+1][b];
-    if (b<4) map[a][b+1] = 1-map[a][b+1];
+    if (!delay) {
+        map[a][b] = 1 - map[a][b];
+        if (a > 0) map[a - 1][b] = 1 - map[a - 1][b];
+        if (b > 0) map[a][b - 1] = 1 - map[a][b - 1];
+        if (a < 4) map[a + 1][b] = 1 - map[a + 1][b];
+        if (b < 4) map[a][b + 1] = 1 - map[a][b + 1];
+        delay=true;
+        first=true;
+    }else {
+        if (first) {
+            setTimeout(function () {
+                delay = false;
+            }, 1000);
+            first=false;
+        }
+    }
 
-    clearInterval(myInterval);
-    setTimeout(startRefresh(),500);
 }
 
 function showGameOver()
