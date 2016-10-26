@@ -100,9 +100,9 @@ $(document).ready(function () {
 
 function startRefresh() {
     'use strict';
+    console.log("startRefresh");
     myInterval = setInterval(function () {refreshXML(); }, refreshTime);
 }
-//
 
 $(document).ready(function () {
     'use strict';

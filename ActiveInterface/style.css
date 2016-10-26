@@ -5,9 +5,13 @@
 @-webkit-keyframes pulse {
     /*0% {background-color: #45CEEF;}*/
     0% {background-color: #242075;}
-    33% {background-color: #CF9A11;}
-    66% {background-color: #5394cf;}
-    90% {background-color: #ff8532;}
+    20% {background-color: #45CEEF;}
+    30% {background-color: #5394cf;}
+    40% {background-color: #242075;}
+    60% {background-color: #242075;}
+    70% {background-color: #45CEEF;}
+    90% {background-color: #5394cf;}
+    100% {background-color: #242075;}
    
     /*40% {background-color: #76B6C4;}
     50% {background-color: #1ABC9C;}
@@ -40,4 +44,12 @@ p{
 
 #gameList{
     list-style: none;
+}
+
+.app {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    width:100%;
+    height:100%
 }
