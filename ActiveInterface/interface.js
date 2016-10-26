@@ -16,10 +16,7 @@ window.onload = function() {
     /*var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
     */
-    
-
-
-    
+        
     var framesPerSecond = 60;
 
     if (firstTime){
@@ -34,8 +31,6 @@ window.onload = function() {
         setObjects();
         startCanvas();
 
-        
-
         firstTime = false;
     }
     /*
@@ -49,7 +44,6 @@ window.onload = function() {
 
     }
     */
-
 };
 
 function refreshXML() {
