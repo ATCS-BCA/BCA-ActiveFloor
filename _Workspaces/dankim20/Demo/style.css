@@ -1,0 +1,37 @@
+body {
+	background: #000000;
+	font-size: 10pt;
+	color: #484848;
+}
+
+body,input {
+	font-family: Verdana;
+}
+
+h1,h2,h3,h4 {
+	font-size: 12pt;
+	text-transform: uppercase;
+	font-weight: strong;
+}
+
+button {
+	width: 100pt;
+	height: 40pt;
+	padding: 5pt 5pt;
+	color:#666666;
+	text-decoration: none;
+}
+
+div {
+	padding:10px;
+}
+
+#floorCanvas {
+	border: 1px solid;
+}
+
+.app {
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+}

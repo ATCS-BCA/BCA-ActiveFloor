@@ -139,7 +139,7 @@ function drawCanvas(arr) {
 
 function refreshXML() {
     'use strict';
-    $.get('http://10.31.33.66:8080/', function (data) {
+    $.get('http://127.0.0.1:8080/', function (data) {
         dataHolderArray = [];
 
         $(data).find('BLFloor').each(function () {
@@ -193,7 +193,7 @@ function refreshXML() {
         // makes two selected squares have same timer
         if (numSelected == 2) {
             if (visibleTimer <= 0)
-                visibleTimer = 3000;
+                visibleTimer = 1500;
             else {
                 visibleTimer -= refreshTime;
                 if (visibleTimer <= 0) {

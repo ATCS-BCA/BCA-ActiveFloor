@@ -96,8 +96,20 @@ window.onload = function()
         ctx.lineTo(128,128);
         ctx.stroke();
 
-
-
+        /* 
+        lines for each 'pixel'
+        
+        ctx.strokeStyle = 'white';
+        for (var i=0;i<24;i++){
+            ctx.lineWidth = 1;
+            ctx.moveTo(0,i*8);
+            ctx.lineTo(192,i*8);
+            ctx.moveTo(i*8,0);
+            ctx.lineTo(i*8,192);
+        }
+        ctx.stroke();
+        
+        */
 
         ctx.drawImage(img[0], 128+16, 64+16);
         ctx.drawImage(img[1], 0+16, 64+16);
