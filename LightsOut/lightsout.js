@@ -1,12 +1,15 @@
-canvas = document.createElement('canvas');
-ctx = canvas.getContext('2d');
+// canvas = document.createElement('canvas')
+// canvas = document.getElementById('floorCanvas');
+// ctx = canvas.getContext('2d');
 active = true;
 player=0;
 win=false;
 
-window.onload = function()
-{
 
+//
+// window.onload = function()
+// {
+function startGame(){
     // Initialize the matrix.
     map = new Array(5);
     for (var i = 0; i < map.length; i++) {
@@ -25,69 +28,60 @@ window.onload = function()
     }
 
 
-
-
-
-    canvas.width=192;
-    canvas.height=192;
-
-    var body = document.getElementsByTagName('body')[0];
-    body.appendChild(canvas);
-
     drawGame();
+}
 
-    function drawGame() 
-    {
-        // Clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+function drawGame()
+{
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.strokeStyle = 'red';
-        ctx.lineWidth = 2;
-        
-        ctx.beginPath();
-        for (var i=2;i<23;i++){
-            if ((i-2)%4==0){
-                ctx.moveTo(8*i,192-16);
-                ctx.lineTo(8*i,16);
-            }
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    for (var i=2;i<23;i++){
+        if ((i-2)%4==0){
+            ctx.moveTo(8*i,192-16);
+            ctx.lineTo(8*i,16);
         }
-        for (var i=2;i<23;i++){
-            if ((i-2)%4==0){
-                ctx.moveTo(192-16,8*i);
-                ctx.lineTo(16,8*i);
-            }
-        }
-        ctx.stroke();
-
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = 'white';
-        ctx.beginPath();
-        
-        ctx.moveTo(0,0);
-        ctx.lineTo(0,192);
-        ctx.lineTo(192,192);
-        ctx.lineTo(192,0);
-        ctx.lineTo(0,0);
-
-        ctx.stroke();
-
-        drawMain();
-
-
-
-
-        if (win){
-            setTimeout(showGameOver,2000);
-            ctx.fillStyle = 'green';
-            ctx.font = '16px sans-serif';
-            
-            ctx.fillText('You Win!', ((canvas.width / 2) - (ctx.measureText('You Win!').width / 2)), 101);
-
-        }
-        if (!win) setTimeout(drawGame,1000/60);
     }
+    for (var i=2;i<23;i++){
+        if ((i-2)%4==0){
+            ctx.moveTo(192-16,8*i);
+            ctx.lineTo(16,8*i);
+        }
+    }
+    ctx.stroke();
+
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'white';
+    ctx.beginPath();
+
+    ctx.moveTo(0,0);
+    ctx.lineTo(0,192);
+    ctx.lineTo(192,192);
+    ctx.lineTo(192,0);
+    ctx.lineTo(0,0);
+
+    ctx.stroke();
+
+    drawMain();
+
+
+
+
+    if (win){
+        setTimeout(showGameOver,2000);
+        ctx.fillStyle = 'green';
+        ctx.font = '16px sans-serif';
+
+        ctx.fillText('You Win!', ((canvas.width / 2) - (ctx.measureText('You Win!').width / 2)), 101);
+
+    }
+    if (!win) setTimeout(drawGame,1000/60);
 }
 
 function drawMain() {

@@ -5,8 +5,9 @@ var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCent
 var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
-var canvas, context2D;
+var canvas, ctx;
 var refreshTime = 1000/60;
+var firstTime=true;
 
 function refresh(){
     if(active == false){
@@ -25,6 +26,11 @@ function refresh(){
 
 function initCanvas(arr) {
     'use strict';
+    if (firstTime){
+        startCanvas();
+        startGame();
+        firstTime=false;
+    }
     var middle=0;
 
     var presses = new Array(5);
@@ -93,6 +99,16 @@ function refreshXML() {
     });
 }
 
+
+
+function startCanvas(){
+    console.log("canvas");
+    canvas = document.getElementById('floorCanvas');
+    canvas.width = 192;
+    canvas.height = 192;
+    ctx = canvas.getContext('2d');
+}
+
 $(document).ready(function () {
     'use strict';
     startRefresh();
@@ -107,12 +123,17 @@ function startRefresh() {
 $(document).ready(function () {
     'use strict';
     startRefresh();
-    
-    sendSemaphore(function() {
-        // Clear spacing and borders.
-        $("body").addClass("app");
-        $("div").addClass("app");
-//        $("#floorCanvas").addClass("app");
-        
+
+    $(document).ready(function () {
+        'use strict';
+        startRefresh();
+
+        sendSemaphore(function() {
+            // Clear spacing and borders.
+            $("body").addClass("app");
+            $("div").addClass("app");
+            $("#floorCanvas").addClass("app");
+
+        });
     });
 });

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BLAppSwitcher>
+	<FloorScreen>
+		<Width>192</Width>
+		<Height>192</Height>
+	</FloorScreen>
+	<AppModes>
+		<AppMode appModeID="ActiveFloorVisualDiagnostic" name="ActiveFloor Diagnostic">
+			<Display displayPurpose="Floor" applicationType="WebApp">ActiveFloorVisualDiagnostic\floor.html</Display>
+		</AppMode>
+		
+		<AppMode appModeID="ActiveInterface" name="ActiveInterface">
+			<Display displayPurpose="Floor" applicationType="WebApp">ActiveInterface\interface.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Dodgeball" name="Dodgeball">
+			<Display displayPurpose="Floor" applicationType="WebApp">Dodgeball\dodgeball.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="LightsOut" name="LightsOut">
+			<Display displayPurpose="Floor" applicationType="WebApp">LightsOut\lightsout.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Memory" name="Memory">
+			<Display displayPurpose="Floor" applicationType="WebApp">Memory\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="MemoryMaze" name="MemoryMaze">
+			<Display displayPurpose="Floor" applicationType="WebApp">MemoryMaze\MainPage.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Pong" name="Pong">
+			<Display displayPurpose="Floor" applicationType="WebApp">Pong\pong.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Simon" name="Simon">
+			<Display displayPurpose="Floor" applicationType="WebApp">Simon\simon.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Slide Puzzle" name="SlidePuzzle">
+			<Display displayPurpose="Floor" applicationType="WebApp">SlidePuzzle\slidePuzzle.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Snake" name="Snake">
+			<Display displayPurpose="Floor" applicationType="WebApp">Snake\snake.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Tetris" name="Tetris">
+			<Display displayPurpose="Floor" applicationType="WebApp">Tetris\index.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="TicTacToe" name="TicTacToe">
+			<Display displayPurpose="Floor" applicationType="WebApp">TicTacToe\tictactoe.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="VictoriaTicTacToe" name="VictoriaTicTacToe">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\vicsta\TicTacToe\tictactoe.html</Display>
+		</AppMode>
+		
+		<AppMode appModeID="Wkspace-alekal20" name="Workspace-alekal20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\alekal20\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-alekat20" name="Workspace-alekat20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\alekat20\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-benise" name="Workspace-benise">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\benise\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-brashe20" name="Workspace-brashe20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\brashe20\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-bryres" name="Workspace-bryres">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\bryres\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-chrchi" name="Workspace-chrchi">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\chrchi\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-dankim20" name="Workspace-dankim20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\dankim20\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-davson" name="Workspace-davson">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\davson\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-hyelee20" name="Workspace-hyelee20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\hyelee20\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-jacrag" name="Workspace-jacrag">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\jacrag\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-madcha" name="Workspace-madcha">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\madcha\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-micdug" name="Workspace-micdug">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\micdug\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-molbak" name="Workspace-molbak">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\molbak\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-rodtai" name="Workspace-rodtai">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\rodtai\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-rosnew20" name="Workspace-rosnew20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\rosnew20\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-samron" name="Workspace-samron">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\samron\Demo\floor.html</Display>
+		</AppMode>
+		
+		<AppMode appModeID="Wkspace-vicsta" name="Workspace-alekal20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\alekal20\Demo\floor.html</Display>
+		</AppMode>
+
+ 		<AppMode appModeID="FloorBurst" name="FloorBurst">
+			<LoadingImage>..\FloorBurst\FloorBurst_Loading.wmv</LoadingImage>
+			<Display displayPurpose="FloorDisplay" args="-appName=floorburst">FloorDisplayScreen\FloorDisplayScreen.exe</Display>
+			<Display displayPurpose="FloorDisplayCenter" args="-draw3d">..\FloorBurst\FloorBurst.exe</Display>
+			<Display displayPurpose="Floor">..\FloorBurst\FloorBurst.exe</Display>
+		</AppMode>		
+
+	</AppModes>
+    <Schedule>
+        <ScheduleEvents>
+            <!-- Play FloorBurst for 2 minutes -->
+            <ScheduleEvent appModeId="floorburst" duration="00:02:00" />
+		</ScheduleEvents>
+    </Schedule>
+</BLAppSwitcher>
