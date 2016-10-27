@@ -6,11 +6,12 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
+
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 
 function drawObj(type, xPos, yPos, size) {
     'use strict';
-    context2D.fillStyle = 'red';
+    context2D.fillStyle = 'white';
 
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
@@ -46,7 +47,7 @@ function drawCanvas(arr) {
 
 function loop() {
     'use strict';
-    $.get('http://127.0.0.1:8080/', function (data) {
+    $.get('http://168.229.106.80:8080/', function (data) {
         dataHolderArray = [];
 
         /* Assign the fields from the XML to Javascript variables. */
