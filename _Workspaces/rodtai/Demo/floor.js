@@ -6,51 +6,175 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
+var refreshTime = 80;
+var firstTime=true;
+canType=true;
 
-var refreshTime = 17;       // Run the loop every 17 milliseconds
+// function Restart(){
+//     doneBool=true;
+// }
 
-function drawObj(type, xPos, yPos, size) {
-    'use strict';
-    context2D.fillStyle = 'white';
+function refresh(){
+    if(active == false){
+        console.log("refresh");
+        // var a = document.createElement('a');
+        // a.id="restart";
+        // a.title = "Restart";
+        // a.href = "snake.html";
+        // document.body.appendChild(a);
+        //
+        //
+        // document.getElementById('restart').click();firstTime=true;
+        canType=true;
 
-    if (type === 'square') {
-        context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
-    } else if (type === 'circle') {
-        context2D.beginPath();
-        context2D.arc((xPos + xCenter), (yPos + yCenter), size, 0, Math.PI * 2, true);
-        context2D.closePath();
-        context2D.fill();
+        score = 0,
+        level = 0,
+        direction = 0,
+        snake = new Array(3),
+        active = true,
+        speed = 400;
+        highscore=false;
+        started=false;
+        started=true;
+        active=true;
+        setTimeout(1000,startGame());
     }
 }
 
-function drawCanvas(arr) {
+function initCanvas(arr) {
     'use strict';
-    canvas = document.getElementById('floorCanvas');
-    canvas.width = ledsX;
-    canvas.height = ledsY;
-    context2D = canvas.getContext('2d');
-    
-    var i, tempRow, p, srchStr, tempX, tempY;
-    for (i = 0; i < arr.length; i += 1) {
-        tempRow = arr[i];
-        
-        for (p = 0; p < tempRow.length; p += 1) {
-            srchStr = tempRow.substring(p, p + 1);
-            if (srchStr === charSearch) {
-                tempX = p * ledPerSensorX;
-                tempY = i * ledPerSensorY;
-				drawObj('square', tempX, tempY, 5);
+
+    if (firstTime){
+        startCanvas();
+        startGame();
+        firstTime=false;
+    }
+
+    var up=0;
+    var down=0;
+    var left=0;
+    var right=0;
+    var middle=0;
+
+    var letterCounts=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var letter;
+
+    for (var i=0;i<arr.length;i++){
+        for (var j=0;j<arr[i].length;j++){
+
+            if (arr[i][j]==="*"){
+                var tmp=hit(j,i);
+                if(tmp!=-1){ //highscore
+                    letterCounts[tmp]++;
+                }
+
+
+
+
+
+                if (i>=8 && i<=15 && j>=8 && j<=15) middle++;
+
+                if (i>=0 && i<=7){
+                    if (j>=8 && j<=15) up++;
+
+                    if (j>=0 && j<=7 && j>i) up++;
+                    if (j>=0 && j<=7 && j<i) left++;
+
+                    if (j>=16 && j<=23 && i+j<23) up++;
+                    if (j>=16 && j<=23 && i+j>23) right++;
+                }
+                else if (i>=8 && i<=15){
+                    if (j>=0 && j<=7) left++;
+                    else if (j>=16 && j<=23) right++;
+                }
+
+                else if(i>=16 && i<=23){
+                    if (j>=8 && j<=15) down++;
+
+                    if (j>=0 && j<=7 && i+j<23) left++;
+                    if (j>=0 && j<=7 && i+j>23) down++;
+
+                    if (j>=16 && j<=23 && i>j) down++;
+                    if (j>=16 && j<=23 && i<j) right++;
+                }
+
+
             }
         }
     }
+
+    //console.log(letterCounts);
+    var max=0;
+    for (var i=1;i<letterCounts.length;i++){
+        if (letterCounts[i]>letterCounts[max]){
+            max=i;
+        }
+    }
+
+    if (canType && highscore){
+        switch(max){
+            case 26:
+                rem();
+                break;
+            case 27:
+                done();
+                break;
+            default:
+                if (letterCounts[max]>0){
+                    type(65+max);
+                }
+        }
+        canType=false;
+        setTimeout(function(){
+            canType=true;
+        }, 500);
+    }
+
+    if (!active && !highscore){
+        if (middle>2) refresh();
+    }
+
+    var winner=Math.max(up,down,left,right);
+    var key;
+    if (winner>1){
+        switch (winner){
+           case 0:
+               key=-1;
+               break;
+            case up:
+                key=38;
+                break;
+            case down:
+                key=40;
+                break;
+            case left:
+                key=37;
+                break;
+            case right:
+                key=39;
+                break;
+        }
+    }
+
+    if (key!=-1)
+        press(key);
+    //console.log(key);
 }
 
-function loop() {
+function startCanvas(){
+    console.log("canvas");
+    canvas = document.getElementById('floorCanvas');
+    canvas.width = 192;
+    canvas.height = 192;
+    ctx = canvas.getContext('2d');
+}
+
+function refreshXML() {
     'use strict';
-    $.get('http://168.229.106.80:8080/', function (data) {
+	// change IP address to match ActiveFloor server address
+    $.get('http://127.0.0.1:8080/', function (data) {
         dataHolderArray = [];
 
-        /* Assign the fields from the XML to Javascript variables. */
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -63,43 +187,34 @@ function loop() {
             yCenter = ledPerSensorY / 2;
         });
 
-        /* Load the data from the XML file into the dataHolderArray */
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
             rowNum = $row.attr('rownum');
             rowVal = $row.attr('values');
             n = rowVal.split(charDivide).join('');
-				
+
             dataHolderArray.push(n);
         });
 
-        /* Redraw the screen based upon the data in the array. */
-        drawCanvas(dataHolderArray);
+        initCanvas(dataHolderArray);
     });
+}
+
+function startRefresh() {
+    'use strict';
+    myInterval = setInterval(function () {refreshXML(); }, refreshTime);
 }
 
 $(document).ready(function () {
     'use strict';
-    
-    // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
-    
+
     sendSemaphore(function() {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
         $("#floorCanvas").addClass("app");
-        
+
     });
 });
-
-function startRefresh() {
-    'use strict';
-    myInterval = setInterval(function () {loop(); }, refreshTime);
-}
-
-function stopRefresh() {
-    'use strict';
-    clearInterval(myInterval);
-}
