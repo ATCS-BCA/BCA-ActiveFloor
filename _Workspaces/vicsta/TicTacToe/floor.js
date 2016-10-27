@@ -76,7 +76,7 @@ window.onload = function()
         drawMain();
 
 
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 1;
         ctx.strokeStyle = 'white';
         ctx.beginPath();
 
@@ -121,14 +121,14 @@ function drawMain() {
         for (var j=0;j<3;j++){
             if (map[i][j]==0){
                 ctx.beginPath();
-                ctx.moveTo(64*i+8,64*j+8);
-                ctx.lineTo(64*i+56,64*j+56);
-                ctx.moveTo(64*i+56,64*j+8);
-                ctx.lineTo(64*i+8,64*j+56);
+                ctx.moveTo(48*i+8+24,48*j+8+24);
+                ctx.lineTo(48*i+42+24,48*j+42+24);
+                ctx.moveTo(48*i+42+24,48*j+8+24);
+                ctx.lineTo(48*i+8+24,48*j+42+24);
                 ctx.stroke();
             }else if (map[i][j]==1){
                 ctx.beginPath();
-                ctx.arc(64*i+32,64*j+32, 24, 0, 2 * Math.PI);
+                ctx.arc(48*i+24+24,48*j+24+24, 18, 0, 2 * Math.PI);
                 ctx.stroke();
             }else{
                 map[i][j]=-1;
