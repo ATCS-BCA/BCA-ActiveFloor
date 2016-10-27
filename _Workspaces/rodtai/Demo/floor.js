@@ -28,6 +28,7 @@ function drawCanvas(arr) {
     canvas.width = ledsX;
     canvas.height = ledsY;
     context2D = canvas.getContext('2d');
+
     canvasContext.fillText("Sam Rong",,canvas.width/4,canvas.height/14);
 
     var i, tempRow, p, srchStr, tempX, tempY;
