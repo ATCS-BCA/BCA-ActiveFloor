@@ -1,4 +1,4 @@
-/*jslint browser: true*/
+/*jslinth browser: true*/
 /*global $, jQuery*/
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
