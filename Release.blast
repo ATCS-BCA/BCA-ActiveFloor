@@ -97,6 +97,10 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\jacrag\Demo\floor.html</Display>
 		</AppMode>
 
+		<AppMode appModeID="Wkspace-lenoku20" name="Workspace-lenoku20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\lenoku20\Demo\floor.html</Display>
+		</AppMode>
+
 		<AppMode appModeID="Wkspace-madcha" name="Workspace-madcha">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\madcha\Demo\floor.html</Display>
 		</AppMode>
