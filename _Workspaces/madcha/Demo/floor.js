@@ -6,11 +6,11 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 17;
+var refreshTime = 17;       // Run the loop every 17 milliseconds
 
 function drawObj(type, xPos, yPos, size) {
     'use strict';
-    context2D.fillStyle = 'red';
+    context2D.fillStyle = 'red'; //you can change this
 
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
@@ -38,17 +38,18 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-				drawObj('square', tempX, tempY, 5);
+				drawObj('square', tempX, tempY, 5); // if the sensor is on, draw a square
             }
         }
     }
 }
 
-function refreshXML() {
+function loop() {
     'use strict';
-    $.get('http://127.0.0.1:8080/', function (data) {
+    $.get('http://168.229.106.80:8080/', function (data) {
         dataHolderArray = [];
-				
+
+        /* Assign the fields from the XML to Javascript variables. */
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -60,8 +61,9 @@ function refreshXML() {
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
         });
-				
-        $(data).find('Row').each(function () {
+
+        /* Load the data from the XML file into the dataHolderArray */
+        $(data).find('Row').each(function () { //records if a sensor is on or off (looks for the *s)
             var $row, rowNum, rowVal, n;
             $row = $(this);
             rowNum = $row.attr('rownum');
@@ -70,7 +72,8 @@ function refreshXML() {
 				
             dataHolderArray.push(n);
         });
-			
+
+        /* Redraw the screen based upon the data in the array. */
         drawCanvas(dataHolderArray);
     });
 }
@@ -92,7 +95,7 @@ $(document).ready(function () {
 
 function startRefresh() {
     'use strict';
-    myInterval = setInterval(function () {refreshXML(); }, refreshTime);
+    myInterval = setInterval(function () {loop(); }, refreshTime);
 }
 
 function stopRefresh() {

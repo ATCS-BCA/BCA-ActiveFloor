@@ -1,8 +1,19 @@
 body {
-	background: #000000;
+	/*background-image: url("grid.png");
+	background-repeat: no-repeat;
+	background-position-x: 0px;
+	background-position-y: 22px;*/
 	font-size: 10pt;
-	color: #484848;
-	overflow: hidden;
+	color: pink;
+	margin: 0pt;
+    vertical-align: middle;
+    display: block;
+    position: relative;
+}
+
+html {
+	background: black;
+	overflow:hidden;
 }
 
 body,input {
@@ -16,12 +27,18 @@ h1,h2,h3,h4 {
 }
 
 button {
+	/*display: block;*/
 	width: 100pt;
 	height: 40pt;
 	padding: 5pt 5pt;
 	color:#666666;
 	text-decoration: none;
 }
+
+div {
+	padding:10px;
+}
+
 
 .app {
 	margin: 0 !important;

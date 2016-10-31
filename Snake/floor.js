@@ -7,7 +7,7 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 80;
-// doneBool=false;
+var firstTime=true;
 canType=true;
 
 // function Restart(){
@@ -16,21 +16,40 @@ canType=true;
 
 function refresh(){
     if(active == false){
-        var a = document.createElement('a');
-        a.id="restart";
-        a.title = "Restart";
-        a.href = "snake.html";
-        document.body.appendChild(a);
+        console.log("refresh");
+        // var a = document.createElement('a');
+        // a.id="restart";
+        // a.title = "Restart";
+        // a.href = "snake.html";
+        // document.body.appendChild(a);
+        //
+        //
+        // document.getElementById('restart').click();firstTime=true;
+        canType=true;
 
-
-        document.getElementById('restart').click();
-        // doneBool=false;
-
+        score = 0,
+        level = 0,
+        direction = 0,
+        snake = new Array(3),
+        active = true,
+        speed = 400;
+        highscore=false;
+        started=false;
+        started=true;
+        active=true;
+        setTimeout(1000,startGame());
     }
 }
 
 function initCanvas(arr) {
     'use strict';
+
+    if (firstTime){
+        startCanvas();
+        startGame();
+        firstTime=false;
+    }
+
     var up=0;
     var down=0;
     var left=0;
@@ -142,6 +161,14 @@ function initCanvas(arr) {
     //console.log(key);
 }
 
+function startCanvas(){
+    console.log("canvas");
+    canvas = document.getElementById('floorCanvas');
+    canvas.width = 192;
+    canvas.height = 192;
+    ctx = canvas.getContext('2d');
+}
+
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
@@ -187,7 +214,7 @@ $(document).ready(function () {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
-//        $("#floorCanvas").addClass("app");
+        $("#floorCanvas").addClass("app");
 
     });
 });
