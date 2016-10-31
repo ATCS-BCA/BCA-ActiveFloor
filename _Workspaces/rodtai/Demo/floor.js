@@ -7,38 +7,36 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
+var screen = 0;
+var active = true;
 
-function drawObj(type, xPos, yPos, size) {
-    'use strict';
-    context2D.fillStyle = 'red';
+function Menu(){
+    screen = 0;
+    active = true;
 
-    if (type === 'square') {
-        context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
-    } else if (type === 'circle') {
-        context2D.beginPath();
-        context2D.arc((xPos + xCenter), (yPos + yCenter), size, 0, Math.PI * 2, true);
-        context2D.closePath();
-        context2D.fill();
-    }
+    context2D.fillStyle = '#2ecc71';
+    context2D.font = '24px sans-serif';
+
+    context2D.fillText('sam rong', ((canvas.width / 2) -
+    (context2D.measureText('sam rong').width / 2)), 50);
 }
-
 function drawCanvas(arr) {
     'use strict';
     canvas = document.getElementById('floorCanvas');
     canvas.width = ledsX;
     canvas.height = ledsY;
     context2D = canvas.getContext('2d');
-    
+
     var i, tempRow, p, srchStr, tempX, tempY;
     for (i = 0; i < arr.length; i += 1) {
         tempRow = arr[i];
-        
+
         for (p = 0; p < tempRow.length; p += 1) {
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-				drawObj('square', tempX, tempY, 5);
+                drawObj('square', tempX, tempY, 5);
             }
         }
     }
@@ -69,7 +67,7 @@ function loop() {
             rowNum = $row.attr('rownum');
             rowVal = $row.attr('values');
             n = rowVal.split(charDivide).join('');
-				
+
             dataHolderArray.push(n);
         });
 
@@ -80,16 +78,16 @@ function loop() {
 
 $(document).ready(function () {
     'use strict';
-    
+    Menu();
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
-    
+
     sendSemaphore(function() {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
         $("#floorCanvas").addClass("app");
-        
+
     });
 });
 
