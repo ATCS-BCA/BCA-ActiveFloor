@@ -1,6 +1,5 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
-/*Test*/
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
