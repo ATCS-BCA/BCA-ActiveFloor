@@ -103,7 +103,7 @@ function gameOver(){
 	screen = 3;
 	clearIntervals();
 
-	context2D.fillStyle = 'blue';
+	context2D.fillStyle = 'red';
     context2D.font = '24px sans-serif';
     
     context2D.fillText('Game Over!', ((canvas.width / 2) - (context2D.measureText('Game Over!').width / 2)), 50);

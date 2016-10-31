@@ -227,7 +227,7 @@ function animate(){
 	}
 
 	//prepare for the next draw
-	context2D.fillStyle = '#000000';
+	context2D.fillStyle = '#ffffff';
 	clear();
 	survivalBoard();
 
