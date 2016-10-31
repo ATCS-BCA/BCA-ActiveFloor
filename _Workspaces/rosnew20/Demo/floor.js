@@ -46,7 +46,7 @@ function drawCanvas(arr) {
 
 function loop() {
     'use strict';
-    $.get('http://168.229.106.80:8080/', function (data) {
+    $.get('http://127.0.0.1:8080/', function (data) {
         dataHolderArray = [];
 
         /* Assign the fields from the XML to Javascript variables. */
