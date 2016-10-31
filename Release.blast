@@ -117,6 +117,10 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\rosnew20\Demo\floor.html</Display>
 		</AppMode>
 
+		<AppMode appModeID="Wkspace-rosnew20-Dodgeball" name="Workspace-rosnew20-Dodgeball">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\rosnew20\RossDodgeball\dodgeball.html</Display>
+		</AppMode>
+
 		<AppMode appModeID="Wkspace-samron" name="Workspace-samron">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\samron\Demo\floor.html</Display>
 		</AppMode>
