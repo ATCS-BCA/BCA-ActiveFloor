@@ -10,7 +10,7 @@ var refreshTime = 17;       // Run the loop every 17 milliseconds
 
 function drawObj(type, xPos, yPos, size) {
     'use strict';
-    context2D.fillStyle = 'blue';
+    context2D.fillStyle = 'red';
 
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
