@@ -12,38 +12,16 @@ var sensorDiv = 8;
 var text, parser, xmlDoc;
 var canvasWidth;
 var canvasHeight;
-//OBJECTS
 
 
-window.onload = function() {
-    
-    /*var body = document.getElementsByTagName('body')[0];
-    body.appendChild(canvas);
-    */
-       
-    var framesPerSecond = 60;
-
+function initCanvas(){
     canvas = document.getElementById('floorCanvas');
-    canvas.width = 192;
-    canvas.height = 192;
+    canvas.width = ledsX;
+    canvas.height = ledsY;
     ctx = canvas.getContext('2d');
-    setObjects();
-    startCanvas();
-    firstTime = false;
-    }
 
-    /*
-    if (menuPage) {
-        canvas.width = 192;
-        canvas.height = 192;
-        runMenuPage();
-        setObjects();
+}
 
-        menuPage = false;
-
-    }
-    */
-};
 
 function refreshXML() {
     'use strict';
@@ -72,16 +50,6 @@ function refreshXML() {
 
             dataHolderArray.push(n);
         });
-        canvasWidth = ledsX;
-        canvasHeight = ledsY;
-        setObjects();
-
-        if (menuPage){
-
-            runMenuPage(dataHolderArray);
-        }
-        else{
-            console.log("checking for start")
             checkForStart(dataHolderArray);
         }
         
@@ -89,11 +57,7 @@ function refreshXML() {
     });
 }
 
-
-    
-
-
-function startCanvas(){
+function initStartPage(){
     //var canvas = document.getElementById('floorCanvas');
     ctx.fillStyle = 'black';
     ctx.font = '24px Courier';
@@ -109,17 +73,23 @@ function startCanvas(){
     
 }
 
-function initBoard(){
-    console.log("initing")
-}
 
 function drawBoard(dataArr){
-    //
+    
+    if(firstTime){
+        setObjects();
+        initCanvas()
+
+        firstTime = false;
+        initStartPage();
+
+    }
+
+    checkForStart(dataArr);
+
 }
 
 function checkForStart(dataArr){
-    // console.log(startBtn.text + ":" + startBtn.x)
-    /*ctx.clearRect(0, 0, canvas.width, canvas.height);*/
     
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
@@ -129,6 +99,7 @@ function checkForStart(dataArr){
                     if(j > Math.floor(startBtn.bx / sensorDiv) && j < Math.floor( ( startBtn.bx + startBtn.bw) / sensorDiv ) ){
                         menuPage = true;
                         window.location = "menu.html";
+                        initMenu();
                     }
                 }
 
@@ -137,59 +108,9 @@ function checkForStart(dataArr){
     }
 }
 
-function readTextFile(file) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-         if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-                console.log(allText);
-            }
-        }
-    }
-    rawFile.send(null);
-}
-
-
-function runMenuPage(){
-    var text, parser, xmlDoc;
-
-    var reader = new FileReader();
-
-    readTextFile("file:///C:/ActiveFloorDeploy/Content/BCA-ActiveFloor/Release.blast");
-
-    // var text, praser, xmlDoc
-
-    var gameArr = ["Pong","Snake","Dodgeball", "Slide Puzzle", "Memory", "Tetris", "TicTacToe"];
-    ctx.fillStyle = 'black';
-    ctx.font = '24px Courier';
-    ctx.strokeStyle = 'black';
-    var maxItemsPerPage = 5;
-    var menuItemHeight = 38;
-
-
-    for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
-        console.log(i);
-        ctx.fillText(gameArr[i / menuItemHeight], ((canvasWidth / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
-    }
-
-    /*
-    text = new XMLSerializer().serializeToString("../../Release.blast");
-    parser = new DOMParser();
-    xmlDoc = parser.parseFromString(txt, "text/xml");
-
-    console.log(xmlDoc.getElementsByTagName("AppModes"));
-    */
 
 
 
-    // console.log(xmlDoc.getElementsByTagName("test    "));
-}
 
 function setObjects() {
     startBtn = {
@@ -212,12 +133,4 @@ function setObjects() {
     }
 
     */
-}
-
-function displayUrls(dataArr) {
-    for (var i = 0; i < dataArr.length; i++) {
-        for (var j = 0; j  < dataArr[i].length; j++) {
-              
-        }
-    }
 }
