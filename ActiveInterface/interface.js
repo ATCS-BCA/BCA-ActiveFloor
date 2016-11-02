@@ -147,13 +147,10 @@ function checkForStart(dataArr){
 
 function runMenuPage(){
 
-    var client = nwe XMLHttpRequest();
-    client.open('GET', '../../Release.blast');
-    client.onreadystatechange = function() {
-        alert(client.responseText);
-    }
+    jQuery.get('../../Release.blast', function(data) {
+        alert(data);
+    });
 
-    client.send()
     // var text, praser, xmlDoc
 
     // text = new XMLSerializer().serializeToString("../../Release.blast");
@@ -172,7 +169,7 @@ function runMenuPage(){
     //     xmlDoc.loadXML(txt);
     // }
 
-    // console.log(xmlDoc.getElementsByTagName("test"));
+    // console.log(xmlDoc.getElementsByTagName("test    "));
 }
 function setObjects() {
     startBtn = {
