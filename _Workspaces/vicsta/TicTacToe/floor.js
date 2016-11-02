@@ -195,17 +195,18 @@ function initCanvas(arr) {
     'use strict';
     var middle=0;
 
-    for (var i=0;i<arr.length;i++){
-        for (var j=0;j<arr[i].length;j++){
+    for (var i=3;i<arr.length-3;i++){
+        for (var j=3;j<arr[i].length-3;j++){
 
             if (arr[i][j]==="*"){
-                if (i>=9 && i<=15 && j>=9 && j<=15) middle++;
-                press(Math.floor(i/6),Math.floor(j/6));
+//                if (i>=2 && i<=22 && j>=9 && j<=15)
+//                    middle++;
+                press(Math.floor((i-3)/2),Math.floor((j-3)/2));
             }
         }
     }
 
-    if (middle>2) refresh();
+//    if (middle>2) refresh();
 
 }
 
