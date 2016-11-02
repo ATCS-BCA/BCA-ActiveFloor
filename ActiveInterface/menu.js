@@ -7,7 +7,6 @@ function initMenu(){
     // readTextFile("file:///C:/ActiveFloorDeploy/Content/BCA-ActiveFloor/Release.blast");
 
     // var text, praser, xmlDoc
-
     var gameArr = ["Pong","Snake","Dodgeball", "Slide Puzzle", "Memory", "Tetris", "TicTacToe"];
     ctx.fillStyle = 'black';
     ctx.font = '24px Courier';

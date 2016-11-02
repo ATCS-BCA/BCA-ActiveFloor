@@ -85,9 +85,10 @@ function drawBoard(dataArr){
         initStartPage();
 
     }
-
-    checkForStart(dataArr);
-
+    if(!menuPage){
+        checkForStart(dataArr);
+    }
+    
 }
 
 function checkForStart(dataArr){
