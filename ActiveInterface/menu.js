@@ -3,7 +3,7 @@ function initMenu(){
     var text, parser, xmlDoc;
 
     var reader = new FileReader();
-    loadDoc;
+    loadDoc();
     // readTextFile("file:///C:/ActiveFloorDeploy/Content/BCA-ActiveFloor/Release.blast");
 
     // var text, praser, xmlDoc

@@ -40,7 +40,7 @@ function refreshXML() {
     'use strict';
     $.get('http://127.0.0.1:8080/', function (data) {
         dataHolderArray = [];
-                
+
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -51,9 +51,8 @@ function refreshXML() {
             ledPerSensorY = (ledsY / sensorsY);
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
-
         });
-        
+
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
@@ -63,12 +62,11 @@ function refreshXML() {
 
             dataHolderArray.push(n);
         });
-            checkForStart(dataHolderArray);
-        }
-        
+
         drawBoard(dataHolderArray);
     });
 }
+
 
 
 function startRefresh() {
