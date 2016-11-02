@@ -2,6 +2,7 @@ body {
 	background: #000000;
 	font-size: 10pt;
 	color: #484848;
+	overflow: hidden;
 }
 
 body,input {
@@ -22,16 +23,10 @@ button {
 	text-decoration: none;
 }
 
-div {
-	padding:10px;
-}
-
-#floorCanvas {
-	border: 1px solid;
-}
-
 .app {
 	margin: 0 !important;
 	padding: 0 !important;
 	border: 0 !important;
+	width: 100%;
+	height: 100%;
 }

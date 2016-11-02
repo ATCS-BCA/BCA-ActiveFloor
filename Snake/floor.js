@@ -7,30 +7,49 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 80;
-done=false;
+var firstTime=true;
 canType=true;
 
-function Restart(){
-    done=true;
-}
+// function Restart(){
+//     doneBool=true;
+// }
 
 function refresh(){
     if(active == false){
-        var a = document.createElement('a');
-        a.id="restart";
-        a.title = "Restart";
-        a.href = "snake.html";
-        document.body.appendChild(a);
+        console.log("refresh");
+        // var a = document.createElement('a');
+        // a.id="restart";
+        // a.title = "Restart";
+        // a.href = "snake.html";
+        // document.body.appendChild(a);
+        //
+        //
+        // document.getElementById('restart').click();firstTime=true;
+        canType=true;
 
-
-        document.getElementById('restart').click();
-        done=false;
-
+        score = 0,
+        level = 0,
+        direction = 0,
+        snake = new Array(3),
+        active = true,
+        speed = 400;
+        highscore=false;
+        started=false;
+        started=true;
+        active=true;
+        setTimeout(1000,startGame());
     }
 }
 
 function initCanvas(arr) {
     'use strict';
+
+    if (firstTime){
+        startCanvas();
+        startGame();
+        firstTime=false;
+    }
+
     var up=0;
     var down=0;
     var left=0;
@@ -111,7 +130,7 @@ function initCanvas(arr) {
         }, 500);
     }
 
-    if (done && !highscore){
+    if (!active && !highscore){
         if (middle>2) refresh();
     }
 
@@ -140,6 +159,14 @@ function initCanvas(arr) {
     if (key!=-1)
         press(key);
     //console.log(key);
+}
+
+function startCanvas(){
+    console.log("canvas");
+    canvas = document.getElementById('floorCanvas');
+    canvas.width = 192;
+    canvas.height = 192;
+    ctx = canvas.getContext('2d');
 }
 
 function refreshXML() {
@@ -187,7 +214,7 @@ $(document).ready(function () {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
-//        $("#floorCanvas").addClass("app");
+        $("#floorCanvas").addClass("app");
 
     });
 });

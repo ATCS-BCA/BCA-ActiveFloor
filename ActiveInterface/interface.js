@@ -3,41 +3,35 @@ var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCent
 var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
-var canvas, ctx;
+var ctx;
 var menuPage = false;
 var refreshTime = 17;
 var startBtn;
 var firstTime = true;
 var sensorDiv = 8;
 var text, parser, xmlDoc;
+var canvasWidth;
+var canvasHeight;
+//OBJECTS
+
 
 window.onload = function() {
     
     /*var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
     */
-    
-
-
-    
+       
     var framesPerSecond = 60;
 
-    if (firstTime){
-        canvas = document.getElementById('floorCanvas')
-
-        // canvas.width = ledsX;
-        // canvas.height = ledsY;
-        canvas.width = 192;
-        canvas.height = 192;
-        ctx = canvas.getContext('2d');
-        
-        setObjects();
-        startCanvas();
-
-        
-
-        firstTime = false;
+    canvas = document.getElementById('floorCanvas');
+    canvas.width = 192;
+    canvas.height = 192;
+    ctx = canvas.getContext('2d');
+    setObjects();
+    startCanvas();
+    firstTime = false;
     }
+
     /*
     if (menuPage) {
         canvas.width = 192;
@@ -49,7 +43,6 @@ window.onload = function() {
 
     }
     */
-
 };
 
 function refreshXML() {
@@ -79,12 +72,17 @@ function refreshXML() {
 
             dataHolderArray.push(n);
         });
+        canvasWidth = ledsX;
+        canvasHeight = ledsY;
+        setObjects();
 
-        if (!menuPage){
-            checkForStart(dataHolderArray);
+        if (menuPage){
+
+            runMenuPage(dataHolderArray);
         }
         else{
-            runMenuPage(dataHolderArray);
+            console.log("checking for start")
+            checkForStart(dataHolderArray);
         }
         
         drawBoard(dataHolderArray);
@@ -100,9 +98,9 @@ function startCanvas(){
     ctx.fillStyle = 'black';
     ctx.font = '24px Courier';
     ctx.strokeStyle = 'black';
-
-    ctx.fillText('Welcome to', ((canvas.width / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
-    ctx.fillText('ATCS', ((canvas.width / 2) - (ctx.measureText('ATCS').width / 2)), 80);
+    console.log(startBtn.by);
+    ctx.fillText('Welcome to', ((canvasWidth / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
+    ctx.fillText('ATCS', ((canvasWidth / 2) - (ctx.measureText('ATCS').width / 2)), 80);
 
 
     ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
@@ -116,7 +114,7 @@ function initBoard(){
 }
 
 function drawBoard(dataArr){
-    console.log("drawing")
+    //
 }
 
 function checkForStart(dataArr){
@@ -125,64 +123,95 @@ function checkForStart(dataArr){
     
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
-            if(dataArr[i][j] === "*"){      
-                if(i > 16 && (j > 2 && j < 22)){
-
-                    window.location = "../BCA-ActiveFloor/DodgeballDev/dodgeball.html"
-                }
-                /*
-                if(i > Math.floor(startBtn.bx/sensorDiv) && i < Math.floor( (startBtn.bx + startBtn.bw) / sensorDiv)){
-                    console.log("After: " + startBtn.bx);
-                    if(j > Math.floor(startBtn.by / sensorDiv) && j < Math.floor( ( startBtn.by + startBtn.bh) / sensorDiv ) ){
+            if(dataArr[i][j] === "*"){
+                console.log(startBtn);
+                if(i > Math.floor(startBtn.by/sensorDiv) && i < Math.floor( (startBtn.by + startBtn.bh) / sensorDiv)){
+                    if(j > Math.floor(startBtn.bx / sensorDiv) && j < Math.floor( ( startBtn.bx + startBtn.bw) / sensorDiv ) ){
                         menuPage = true;
                         window.location = "menu.html";
                     }
                 }
-                */
 
             }
         }
     }
 }
 
-function runMenuPage(){
+function readTextFile(file) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+         if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+                console.log(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
 
-    jQuery.get('../../Release.blast', function(data) {
-        alert(data);
-    });
+
+function runMenuPage(){
+    var text, parser, xmlDoc;
+
+    var reader = new FileReader();
+
+    readTextFile("file:///C:/ActiveFloorDeploy/Content/BCA-ActiveFloor/Release.blast");
 
     // var text, praser, xmlDoc
 
-    // text = new XMLSerializer().serializeToString("../../Release.blast");
+    var gameArr = ["Pong","Snake","Dodgeball", "Slide Puzzle", "Memory", "Tetris", "TicTacToe"];
+    ctx.fillStyle = 'black';
+    ctx.font = '24px Courier';
+    ctx.strokeStyle = 'black';
+    var maxItemsPerPage = 5;
+    var menuItemHeight = 38;
 
 
+    for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
+        console.log(i);
+        ctx.fillText(gameArr[i / menuItemHeight], ((canvasWidth / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
+    }
 
-    // if (window.DOMParser)
-    // {
-    //     parser = new DOMParser();
-    //     xmlDoc = parser.parseFromString(txt, "text/xml");
-    // }
-    // else
-    // {
-    //     xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-    //     xmlDoc.async=false;
-    //     xmlDoc.loadXML(txt);
-    // }
+    /*
+    text = new XMLSerializer().serializeToString("../../Release.blast");
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(txt, "text/xml");
+
+    console.log(xmlDoc.getElementsByTagName("AppModes"));
+    */
+
+
 
     // console.log(xmlDoc.getElementsByTagName("test    "));
 }
+
 function setObjects() {
     startBtn = {
-        x: canvas.width/3 - 6,
-        y: ( (canvas.height) - (canvas.height/3)) + 27,
-        w: canvas.width / 3- 10,
-        h: canvas.height/6 + 10,
-        bx: (canvas.width / 3) - 10,
-        by: (canvas.height) - (canvas.height/3) + 10,
-        bw: canvas.width / 3,
-        bh: canvas.height / 8,
+        x: canvasWidth/3 - 6,
+        y: ( (canvasHeight) - (canvasHeight/3)) + 27,
+        w: canvasWidth / 3- 10,
+        h: canvasHeight/6 + 10,
+        bx: (canvasWidth / 3) - 10,
+        by: (canvasHeight) - (canvasHeight/3) + 10,
+        bw: canvasWidth / 3,
+        bh: canvasHeight / 8,
         text: 'Step'
+    };
+    /*
+    pong = {
+        location: "/..pong/pong.js",
+        x:0,
+        y:0
+
     }
+
+    */
 }
 
 function displayUrls(dataArr) {
