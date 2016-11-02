@@ -1,5 +1,7 @@
+
+
 function initMenu(){
-	    var text, parser, xmlDoc;
+    var text, parser, xmlDoc;
 
     var gameArr = ["Pong","Snake","Dodgeball", "Slide Puzzle", "Memory", "Tetris", "TicTacToe"];
     ctx.fillStyle = 'black';
