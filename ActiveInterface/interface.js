@@ -92,6 +92,7 @@ function refreshXML() {
 
 function startCanvas(){
     //var canvas = document.getElementById('floorCanvas');
+    readTextFile("file:///C:/ActiveFloorDeploy/Content/BCA-ActiveFloor/Release.blast");
     ctx.fillStyle = 'black';
     ctx.font = '24px Courier';
     ctx.strokeStyle = 'black';
@@ -132,6 +133,24 @@ function checkForStart(dataArr){
             }
         }
     }
+}
+
+function readTextFile(file) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.steadyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+                console.log(allText);
+            }
+        }
+    }
+
 }
 
 function runMenuPage(){
