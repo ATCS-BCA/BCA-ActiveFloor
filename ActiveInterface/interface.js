@@ -20,36 +20,16 @@ window.onload = function() {
     /*var body = document.getElementsByTagName('body')[0];
     body.appendChild(canvas);
     */
-<<<<<<< HEAD
-        
-=======
-
-
->>>>>>> f13fb689ae2d961e629e86169eaa84e8c563479c
     var framesPerSecond = 60;
 
     canvas = document.getElementById('floorCanvas');
     canvas.width = 192;
     canvas.height = 192;
     ctx = canvas.getContext('2d');
+    setObjects();
     startCanvas();
-
-<<<<<<< HEAD
-        // canvas.width = ledsX;
-        // canvas.height = ledsY;
-        canvas.width = 192;
-        canvas.height = 192;
-        ctx = canvas.getContext('2d');
-        
-        setObjects();
-        startCanvas();
-
-        firstTime = false;
-    }
-=======
-    
-
->>>>>>> f13fb689ae2d961e629e86169eaa84e8c563479c
+    firstTime = false;
+}
     /*
     if (menuPage) {
         canvas.width = 192;
@@ -61,7 +41,6 @@ window.onload = function() {
 
     }
     */
-};
 
 function refreshXML() {
     'use strict';
