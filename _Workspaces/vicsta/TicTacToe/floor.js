@@ -17,9 +17,9 @@ window.onload = function()
 {
 
     // Initialize the matrix.
-    map = new Array(3);
+    map = new Array(9);
     for (var i = 0; i < map.length; i++) {
-        map[i] = new Array(3);
+        map[i] = new Array(9);
     }
 
     canvas = document.getElementById('floorCanvas');
@@ -117,25 +117,25 @@ window.onload = function()
 
 function drawMain() {
     var allFull=true;
-    for (var i=0;i<3;i++){
-        for (var j=0;j<3;j++){
-            if (map[i][j]==0){
-                ctx.beginPath();
-                ctx.moveTo(48*i+8+24,48*j+8+24);
-                ctx.lineTo(48*i+42+24,48*j+42+24);
-                ctx.moveTo(48*i+42+24,48*j+8+24);
-                ctx.lineTo(48*i+8+24,48*j+42+24);
-                ctx.stroke();
-            }else if (map[i][j]==1){
-                ctx.beginPath();
-                ctx.arc(48*i+24+24,48*j+24+24, 18, 0, 2 * Math.PI);
-                ctx.stroke();
-            }else{
-                map[i][j]=-1;
-                allFull=false;
+        for (var i = 0; i < 9; i++) {
+            for (var j = 0; j < 9; j++) {
+                if (map[i][j] == 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(16 * i + 8 / 3 + 24, 16 * j + 8 / 3 + 24);
+                    ctx.lineTo(16 * i + 14 + 24, 16 * j + 14 + 24);
+                    ctx.moveTo(16 * i + 14 + 24, 16 * j + 8 / 3 + 24);
+                    ctx.lineTo(16 * i + 8 / 3 + 24, 16 * j + 14 + 24);
+                    ctx.stroke();
+                } else if (map[i][j] == 1) {
+                    ctx.beginPath();
+                    ctx.arc(16 * i + 8 + 24, 16 * j + 8 + 24, 6, 0, 2 * Math.PI);
+                    ctx.stroke();
+                } else {
+                    map[i][j] = -1;
+                    allFull = false;
+                }
             }
         }
-    }
     if (allFull) win=true;
 }
 
@@ -199,8 +199,8 @@ function initCanvas(arr) {
         for (var j=0;j<arr[i].length;j++){
 
             if (arr[i][j]==="*"){
-                if (i>=8 && i<=16 && j>=8 && j<=16) middle++;
-                press(Math.floor(i/8),Math.floor(j/8));
+                if (i>=9 && i<=15 && j>=9 && j<=15) middle++;
+                press(Math.floor(i/6),Math.floor(j/6));
             }
         }
     }
@@ -212,7 +212,7 @@ function initCanvas(arr) {
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
-    $.get('http://168.229.106.80:8080/', function (data) {
+    $.get('http://168.229.104.77:8080//', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {
