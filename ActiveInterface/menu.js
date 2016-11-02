@@ -33,6 +33,3 @@ function loadDoc() {
     xhttp.open("GET", "C:xampp/htdocs/Release.blast", true);
     xhttp.send();
 }
-
-
-
