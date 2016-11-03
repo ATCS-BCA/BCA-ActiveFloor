@@ -12,10 +12,10 @@ function drawObj(type, xPos, yPos, size) {
     'use strict';
     context2D.fillStyle = 'red';
     if (type == 'meme') {
-        context2D.fillRect((yPos + (yCenter / size)), (xPos + (xCenter / size)), size, size)
-        context2D.fillRect((xPos + (xCenter/ size)), (xPos + (xCenter / size)), size, size)
-        context2D.fillRect((yPos + (yCenter/ size)), (yPos (yCenter/ size)), size, size)
-        context2D.fillRect((xPos + (xCenter/ size)), (yPos (yCenter/ size)), size, size)
+        context2D.fillRect((yPos + (yCenter / size)), (xPos + (xCenter / size)), size, size);
+        context2D.fillRect((xPos + (xCenter/ size)), (xPos + (xCenter / size)), size, size);
+        context2D.fillRect((yPos + (yCenter/ size)), (yPos (yCenter/ size)), size, size);
+        context2D.fillRect((xPos + (xCenter/ size)), (yPos (yCenter/ size)), size, size);
     }
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
