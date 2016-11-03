@@ -6,7 +6,7 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 17;       // Run the loop every 17 milliseconds
+var refreshTime = 17;       // Run the loop  every 17 milliseconds
 
 function drawObj(type, xPos, yPos, size) {
     'use strict';
