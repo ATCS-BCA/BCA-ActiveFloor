@@ -40,7 +40,7 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-				drawObj('meme', tempY, tempX, 5);
+				drawObj('meme', tempX, tempY, 5);
             }
         }
     }
