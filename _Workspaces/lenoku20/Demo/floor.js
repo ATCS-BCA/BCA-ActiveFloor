@@ -11,7 +11,9 @@ var refreshTime = 17;       // Run the loop  every 17 milliseconds
 function drawObj(type, xPos, yPos, size) {
     'use strict';
     context2D.fillStyle = 'red';
-
+    if (type == 'meme') {
+        context2D.fillRect((yPos + (yCenter / size)), (xPos + (xCenter / size)), size, size)
+    }
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
     } else if (type === 'circle') {
@@ -38,7 +40,7 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-				drawObj('circle', tempX, tempY, 5);
+				drawObj('meme', tempY, tempX, 5);
             }
         }
     }
