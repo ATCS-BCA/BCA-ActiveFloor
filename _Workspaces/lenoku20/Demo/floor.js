@@ -14,6 +14,11 @@ function getRandomInt(min, max) {
 function drawObj(type, xPos, yPos, size) {
     'use strict';
     context2D.fillStyle = 'red';
+    if (type == 'random') {
+        xPos = getRandomInt(0, 192);
+        yPos = getRandomInt(0, 192);
+        context2D.fillRect(xPos, yPos, size, size);
+    }
     if (type == 'meme') {
         context2D.fillRect((yPos + (yCenter / size)), (xPos + (xCenter / size)), size, size);
         context2D.fillRect((xPos + (xCenter / size)), (xPos + (xCenter / size)), size, size);
@@ -29,11 +34,11 @@ function drawObj(type, xPos, yPos, size) {
         context2D.fill();
     }
 }
-function randomDraw() {
-    context2D.fillStyle = 'blue';
+function randomDraw(arr) {
+    context2D.fillStyle = 'red';
     var xPos = getRandomInt(0,ledsX);
-    var yPos = getRandomInt(0, ledsY);
-    context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
+    var yPos = getRandomInt(0, l-edsY);
+    drawCanvas(arr)
 }
 function drawCanvas(arr) {
     'use strict';
@@ -51,8 +56,7 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-				drawObj('meme', tempX, tempY, 5);
-                randomDraw();
+				drawObj('random', tempX, tempY, 5)
             }
         }
     }
@@ -89,6 +93,7 @@ function loop() {
 
         /* Redraw the screen based upon the data in the array. */
         drawCanvas(dataHolderArray);
+        randomDraw(dataHolderArray);
     });
 }
 
