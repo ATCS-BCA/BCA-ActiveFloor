@@ -8,6 +8,9 @@ var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;       // Run the loop  every 17 milliseconds
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 function drawObj(type, xPos, yPos, size) {
     'use strict';
     context2D.fillStyle = 'red';
@@ -26,7 +29,12 @@ function drawObj(type, xPos, yPos, size) {
         context2D.fill();
     }
 }
-
+function randomDraw() {
+    context2D.fillStyle = 'blue';
+    var xPos = getRandomInt(0,ledsX);
+    var yPos = getRandomInt(0, ledsY);
+    context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
+}
 function drawCanvas(arr) {
     'use strict';
     canvas = document.getElementById('floorCanvas');
@@ -44,6 +52,7 @@ function drawCanvas(arr) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
 				drawObj('meme', tempX, tempY, 5);
+                randomDraw();
             }
         }
     }
