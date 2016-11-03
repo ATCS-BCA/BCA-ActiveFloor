@@ -11,22 +11,9 @@ var refreshTime = 17;       // Run the loop  every 17 milliseconds
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function drawObj(type, xPos, yPos, size, color) {
+function drawObj(type, xPos, yPos, size) {
     'use strict';
-    if (color == 1) {
-        context2D.fillstyle = 'red';
-    }
-    if (color == 2) {
-        context2D.fillstyle = 'blue';
-    }
-    if (color == 3) {
-        context2D.fillstyle = 'yellow';
-    }
-    if (type == 'random') {
-        xPos = getRandomInt(0, 192);
-        yPos = getRandomInt(0, 192);
-        context2D.fillRect(xPos, yPos, size, size);
-    }
+    context2D.fillStyle = 'blue';
     if (type == 'meme') {
         context2D.fillRect((yPos + (yCenter / size)), (xPos + (xCenter / size)), size, size);
         context2D.fillRect((xPos + (xCenter / size)), (xPos + (xCenter / size)), size, size);
@@ -64,7 +51,6 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-                color = getRandomInt(1,3);
 				drawObj('random', tempX, tempY, 5)
             }
         }
