@@ -1,38 +1,54 @@
+var gameArr, maxItemsPerPage, menuItemHeight, text, parser, xmlDoc, reader;
 
 function initMenu(){
-    var text, parser, xmlDoc;
-
-    var reader = new FileReader();
+    console.log("In initMenu()");
+    
+    reader = new FileReader();
     loadDoc();
     // readTextFile("file:///C:/ActiveFloorDeploy/Content/BCA-ActiveFloor/Release.blast");
 
     // var text, praser, xmlDoc
-    var gameArr = ["Pong","Snake","Dodgeball", "Slide Puzzle", "Memory", "Tetris", "TicTacToe"];
+    gameArr = ["Pong","Snake","Dodgeball", "Slide Puzzle", "Memory", "Tetris", "TicTacToe"];
+    
     ctx.fillStyle = 'black';
     ctx.font = '24px Courier';
     ctx.strokeStyle = 'black';
-    var maxItemsPerPage = 5;
-    var menuItemHeight = 38;
+    
+    maxItemsPerPage = 5;
+    menuItemHeight = 38;
 
+}
+
+function drawMenu(){
+    
 
     for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
         console.log("menu index" + i);
-        ctx.fillText(gameArr[i / menuItemHeight], ((canvasWidth / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
+        ctx.fillText(gameArr[i / menuItemHeight], ((canvas.width / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
     }
 
 }
 
 function loadDoc() {
     console.log("loadDoc() is being called!")
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
+    var xhr = new XMLHttpRequest();
+
+
+    xhr.open("GET", "http://cors.io/?http://127.0.0.1/release.blast", true);
+    xhr.onload = function (e) {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            } else {
+                console.error(xhr.statusText);
+            }
         }
     };
-    xhttp.open("GET", "C:xampp/htdocs/Release.blast", true);
-    xhttp.send();
-}
+    xhr.onerror = function (e) {
+        console.error(xhr.statusText);
+    }
+    xhr.send(null);
+}  
 
 
 

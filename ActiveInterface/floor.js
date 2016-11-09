@@ -4,14 +4,13 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var ctx;
+var canvas;
 var menuPage = false;
 var refreshTime = 17;
 var startBtn;
 var firstTime = true;
 var sensorDiv = 8;
 var text, parser, xmlDoc;
-var canvasWidth;
-var canvasHeight;
 var framesPerSecond = 60;
 
 $(document).ready(function () {
