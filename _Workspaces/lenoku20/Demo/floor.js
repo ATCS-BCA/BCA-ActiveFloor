@@ -1,17 +1,25 @@
 /*jslint browser: true*/
-/*global $, jQuery*/
+/*global $,  jQuery */
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 17;       // Run the loop every 17 milliseconds
+var refreshTime = 17;       // Run the loop  every 17 milliseconds
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 function drawObj(type, xPos, yPos, size) {
     'use strict';
-    context2D.fillStyle = 'red';
-
+    context2D.fillStyle = 'blue';
+    if (type == 'meme') {
+        context2D.fillRect((yPos + (yCenter / size)), (xPos + (xCenter / size)), size, size);
+        context2D.fillRect((xPos + (xCenter / size)), (xPos + (xCenter / size)), size, size);
+        context2D.fillRect((yPos + (yCenter / size)), (yPos + (yCenter / size)), size, size);
+        context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
+    }
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
     } else if (type === 'circle') {
@@ -21,7 +29,12 @@ function drawObj(type, xPos, yPos, size) {
         context2D.fill();
     }
 }
-
+function randomDraw(arr) {
+    context2D.fillStyle = 'red';
+    var xPos = getRandomInt(0,ledsX);
+    var yPos = getRandomInt(0, l-edsY);
+    drawCanvas(arr)
+}
 function drawCanvas(arr) {
     'use strict';
     canvas = document.getElementById('floorCanvas');
@@ -38,7 +51,7 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-				drawObj('square', tempX, tempY, 5);
+				drawObj('random', tempX, tempY, 5)
             }
         }
     }
@@ -46,7 +59,7 @@ function drawCanvas(arr) {
 
 function loop() {
     'use strict';
-    $.get('http://127.0.0.1:8080/', function (data) {
+    $.get('http://168.229.104.77:8080/', function (data) {
         dataHolderArray = [];
 
         /* Assign the fields from the XML to Javascript variables. */
@@ -75,6 +88,7 @@ function loop() {
 
         /* Redraw the screen based upon the data in the array. */
         drawCanvas(dataHolderArray);
+        randomDraw(dataHolderArray);
     });
 }
 

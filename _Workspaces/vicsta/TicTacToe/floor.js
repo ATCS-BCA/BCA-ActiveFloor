@@ -80,29 +80,32 @@ window.onload = function()
         ctx.strokeStyle = 'white';
         ctx.beginPath();
 
-        for (var i=0;i<3 && !win;i++){
-            if (!win && map[i][0]!=-1 && map[i][0]==map[i][1] && map[i][1]==map[i][2]){
-                ctx.moveTo(i*64+32,16);
-                ctx.lineTo(i*64+32,176);
-                win=true;
+        for (var h=0; h<9 && !win; h+=3) {
+            for (var i = 0; i < 9 && !win; i++) {
+                if (!win && map[i][h] != -1 && map[i][h] == map[i][h + 1] && map[i][h + 1] == map[i][h + 2]) {
+                    ctx.moveTo(i * 16 + 8 + 24, h * 48 + 4 + 24);
+                    ctx.lineTo(i * 16 + 8 + 24, h * 48 + 44 + 24);
+                    win = true;
+                }
+                if (!win && map[h][i] != -1 && map[h][i] == map[h + 1][i] && map[h + 1][i] == map[h + 2][i]) {
+                    ctx.moveTo(h * 48 + 4 + 24, i * 16 + 8 + 24);
+                    ctx.lineTo(h * 48 + 44 + 24, i * 16 + 8 + 24);
+                    win = true;
+                }
             }
-            if (!win && map[0][i]!=-1 && map[0][i]==map[1][i] && map[1][i]==map[2][i]){
-                ctx.moveTo(16,i*64+32);
-                ctx.lineTo(176,i*64+32);
-                win=true;
+            for (var j = 0; j < 9 && !win; j+=3) {
+                if (!win && map[h][j] != -1 && map[h][j] == map[h+1][j+1] && map[h+1][j+1] == map[h+2][j+2]) {
+                    ctx.moveTo(h * 48 + 4 + 24, j * 48 + 4 + 24);
+                    ctx.lineTo(h * 48 + 44 + 24, j * 48 + 44 + 24);
+                    win = true;
+                }
+                if (!win && map[h][j+2] != -1 && map[h][j+2] == map[h+1][j+1] && map[h+1][j+1] == map[h+2][j]) {
+                    ctx.moveTo(h * 48 + 44 + 24, j * 48 + 4 + 24);
+                    ctx.lineTo(h * 48 + 4 + 24, j * 48 + 44 + 24);
+                    win = true;
+                }
             }
         }
-        if (!win && map[0][0]!=-1 && map[0][0]==map[1][1] && map[1][1]==map[2][2]){
-            ctx.moveTo(16,16);
-            ctx.lineTo(176,176);
-            win=true;
-        }
-        if (!win && map[0][2]!=-1 && map[0][2]==map[1][1] && map[1][1]==map[2][0]){
-            ctx.moveTo(176,16);
-            ctx.lineTo(16,176);
-            win=true;
-        }
-
         ctx.stroke();
 
 
@@ -195,17 +198,18 @@ function initCanvas(arr) {
     'use strict';
     var middle=0;
 
-    for (var i=0;i<arr.length;i++){
-        for (var j=0;j<arr[i].length;j++){
+    for (var i=3;i<arr.length-3;i++){
+        for (var j=3;j<arr[i].length-3;j++){
 
             if (arr[i][j]==="*"){
-                if (i>=9 && i<=15 && j>=9 && j<=15) middle++;
-                press(Math.floor(i/6),Math.floor(j/6));
+//                if (i>=2 && i<=22 && j>=9 && j<=15)
+//                    middle++;
+                press(Math.floor((i-3)/2),Math.floor((j-3)/2));
             }
         }
     }
 
-    if (middle>2) refresh();
+//    if (middle>2) refresh();
 
 }
 
