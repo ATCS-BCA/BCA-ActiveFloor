@@ -16,13 +16,14 @@ function initMenu(){
 
 
     for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
-        console.log(i);
+        console.log("menu index" + i);
         ctx.fillText(gameArr[i / menuItemHeight], ((canvasWidth / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
     }
 
 }
 
 function loadDoc() {
+    console.log("loadDoc() is being called!")
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
