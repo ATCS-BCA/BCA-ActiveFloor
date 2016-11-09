@@ -78,35 +78,43 @@ window.onload = function()
 
         ctx.lineWidth = 1;
         ctx.strokeStyle = 'white';
-        ctx.beginPath();
+        //ctx.beginPath();
 
         for (var h=0; h<9 && !win; h+=3) {
             for (var i = 0; i < 9 && !win; i++) {
                 if (!win && map[i][h] != -1 && map[i][h] == map[i][h + 1] && map[i][h + 1] == map[i][h + 2]) {
-                    ctx.moveTo(i * 16 + 8 + 24, h * 48 + 4 + 24);
-                    ctx.lineTo(i * 16 + 8 + 24, h * 48 + 44 + 24);
-                    win = true;
+                    ctx.beginPath();
+                    ctx.moveTo(i * 16 + 8 + 24, h * 16 + 4 + 24);
+                    ctx.lineTo(i * 16 + 8 + 24, h * 16 + 44 + 24);
+                    //win = true;
+                    ctx.stroke();
                 }
                 if (!win && map[h][i] != -1 && map[h][i] == map[h + 1][i] && map[h + 1][i] == map[h + 2][i]) {
-                    ctx.moveTo(h * 48 + 4 + 24, i * 16 + 8 + 24);
-                    ctx.lineTo(h * 48 + 44 + 24, i * 16 + 8 + 24);
-                    win = true;
+                    ctx.beginPath();
+                    ctx.moveTo(h * 16 + 4 + 24, i * 16 + 8 + 24);
+                    ctx.lineTo(h * 16 + 44 + 24, i * 16 + 8 + 24);
+                    //win = true;
+                    ctx.stroke();
                 }
             }
             for (var j = 0; j < 9 && !win; j+=3) {
                 if (!win && map[h][j] != -1 && map[h][j] == map[h+1][j+1] && map[h+1][j+1] == map[h+2][j+2]) {
-                    ctx.moveTo(h * 48 + 4 + 24, j * 48 + 4 + 24);
-                    ctx.lineTo(h * 48 + 44 + 24, j * 48 + 44 + 24);
-                    win = true;
+                    ctx.beginPath();
+                    ctx.moveTo(h * 16 + 4 + 24, j * 16 + 4 + 24);
+                    ctx.lineTo(h * 16 + 44 + 24, j * 16 + 44 + 24);
+                    //win = true;
+                    ctx.stroke();
                 }
                 if (!win && map[h][j+2] != -1 && map[h][j+2] == map[h+1][j+1] && map[h+1][j+1] == map[h+2][j]) {
-                    ctx.moveTo(h * 48 + 44 + 24, j * 48 + 4 + 24);
-                    ctx.lineTo(h * 48 + 4 + 24, j * 48 + 44 + 24);
-                    win = true;
+                    ctx.beginPath();
+                    ctx.moveTo(h * 16 + 44 + 24, j * 16 + 4 + 24);
+                    ctx.lineTo(h * 16 + 4 + 24, j * 16 + 44 + 24);
+                    //win = true;
+                    ctx.stroke();
                 }
             }
         }
-        ctx.stroke();
+        //ctx.stroke();
 
 
         if (first){
@@ -150,7 +158,7 @@ function press(a,b){
     }
 }
 
-function showGameOver()
+/* function showGameOver()
 {
 
     ctx.lineWidth = 2;
@@ -171,7 +179,7 @@ function showGameOver()
 
 
     if (win) setTimeout(showGameOver,1000/60);
-}
+}*/
 
 String.prototype.replaceAll = function(str1, str2, ignore)
 {
