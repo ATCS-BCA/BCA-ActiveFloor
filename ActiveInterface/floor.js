@@ -58,7 +58,7 @@ function refreshXML() {
 
             dataHolderArray.push(n);
         });
-        console.log(menuPage);
+        
         drawBoard(dataHolderArray);
     });
 }

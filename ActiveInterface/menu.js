@@ -22,7 +22,7 @@ function initMenu(){
 function drawMenu(){
     
     for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
-        console.log("menu index" + i);
+        
         ctx.fillText(gameArr[i / menuItemHeight], ((canvas.width / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
     }
 
@@ -33,7 +33,7 @@ function loadDoc() {
     var xhr = new XMLHttpRequest();
 
 
-    xhr.open("GET", "https://crossorigin.me/http://127.0.0.1/release.blast", true);
+    xhr.open("GET", "http://127.0.0.1/release.blast", true);
     xhr.onload = function (e) {
         if (xhr.readyState === 4) {
             console.log("buddy");
