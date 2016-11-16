@@ -34,9 +34,10 @@ function loadDoc() {
     var xhr = new XMLHttpRequest();
 
 
-    xhr.open("GET", "http://cors.io/?http://127.0.0.1/release.blast", true);
+    xhr.open("GET", "https://crossorigin.me/http://127.0.0.1/release.blast", true);
     xhr.onload = function (e) {
         if (xhr.readyState === 4) {
+            console.log("buddy");
             if (xhr.status === 200) {
                 console.log(xhr.responseText);
             } else {

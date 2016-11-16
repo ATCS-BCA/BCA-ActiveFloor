@@ -224,7 +224,7 @@ function initCanvas(arr) {
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
-    $.get('http://168.229.104.77:8080//', function (data) {
+    $.get('http://168.229.106.5:8080//', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {
