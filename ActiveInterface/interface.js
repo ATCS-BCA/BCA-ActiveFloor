@@ -27,21 +27,26 @@ function setObjects() {
         bh: canvas.height / 8,
         text: 'Step'
     };
-
-    /*pong = {
-    location: "/..pong/pong.js",
-    x:0,
-    y:0
-
-    }*/
-
 }
 
-
+function drawBoard(dataArr){
+  
+    if(firstTime){
+        initCanvas();
+        setObjects();
+        firstTime = false;
+        drawStartPage();
+        console.log("first time")
+    }
+    if(!menuPage){
+        checkForStart(dataArr);
+    }
+    else{
+        drawMenu();
+    } 
+}
 
 function drawStartPage(){
-    //var canvas = document.getElementById('floorCanvas');
-
 
     ctx.fillStyle = 'black';
     ctx.font = '24px Courier';
@@ -56,24 +61,6 @@ function drawStartPage(){
     
 }
 
-function drawBoard(dataArr){
-    
-    if(firstTime){
-        initCanvas();
-        setObjects();
-        firstTime = false;
-        drawStartPage();
-        console.log("first time")
-    }
-    if(!menuPage){
-        checkForStart(dataArr);
-    }
-    else{
-        drawMenu();
-    }
-    
-}
-
 function checkForStart(dataArr){
     
     for(var i = 0; i < dataArr.length; i++){
@@ -81,10 +68,8 @@ function checkForStart(dataArr){
             if(dataArr[i][j] === "*"){
                 if(i > Math.floor(startBtn.by/sensorDiv) && i < Math.floor( (startBtn.by + startBtn.bh) / sensorDiv)){
                     if(j > Math.floor(startBtn.bx / sensorDiv) && j < Math.floor( ( startBtn.bx + startBtn.bw) / sensorDiv ) ){
-                        ctx.clearRect(0,0,canvas.width,canvas.height);
-                        console.log("sensor detected!")
                         menuPage = true;
-                        window.location = "menu.html";
+                        ctx.clearRect(0,0,canvas.width,canvas.height);
                         initMenu();
                     }
                 }

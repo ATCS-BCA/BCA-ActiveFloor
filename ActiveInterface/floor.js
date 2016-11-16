@@ -5,9 +5,6 @@ var charSearch = '*';
 var charDivide = ',';
 var ctx;
 var canvas;
-var menuPage = false;
-var refreshTime = 17;
-var startBtn;
 var firstTime = true;
 var sensorDiv = 8;
 var text, parser, xmlDoc;
@@ -61,12 +58,10 @@ function refreshXML() {
 
             dataHolderArray.push(n);
         });
-
+        console.log(menuPage);
         drawBoard(dataHolderArray);
     });
 }
-
-
 
 function startRefresh() {
     'use strict';
