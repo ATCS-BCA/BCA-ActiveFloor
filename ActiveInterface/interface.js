@@ -26,6 +26,17 @@ function setObjects() {
         bw: canvas.width / 3,
         bh: canvas.height / 8,
         text: 'Step'
+    },
+    playBtn = {
+        x: canvas.width/3 - 6,
+        y: ( (canvas.height) - (canvas.height/3)) + 27,
+        w: canvas.width / 3- 10,
+        h: canvas.height/6 + 10,
+        bx: (canvas.width / 3) - 10,
+        by: (canvas.height) - (canvas.height/3) + 10,
+        bw: canvas.width / 3,
+        bh: canvas.height / 8,
+        text: 'Play Game'
     };
 }
 
@@ -56,7 +67,6 @@ function drawStartPage(){
 
 
     ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
-    
     ctx.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)
     
 }
