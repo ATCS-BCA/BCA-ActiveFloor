@@ -21,7 +21,6 @@ function initMenu(){
 
 function drawMenu(){
     
-
     for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
         console.log("menu index" + i);
         ctx.fillText(gameArr[i / menuItemHeight], ((canvas.width / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
