@@ -14,7 +14,7 @@ var text, parser, xmlDoc;
 
 
 function setObjects() {
-
+    console.log(canvas.width - ctx.measureText("Play").width);
     startBtn = {
         x: canvas.width/3 - 6,
         y: ( (canvas.height) - (canvas.height/3)) + 27,
@@ -27,15 +27,15 @@ function setObjects() {
         text: 'Step'
     },
     playBtn = {
-        x: canvas.width/3 - 6,
-        y: ( (canvas.height) - (canvas.height/3)) + 27,
-        w: ctx.measureText("Pay Game").width,
-        h: ctx.measureText("Play Game").height,
-        bx: (canvas.width / 3) - 10,
-        by: (canvas.height) - (canvas.height/3) + 10,
-        bw: ctx.measureText("Pay Game").width + 10,
-        bh: ctx.measureText("Play Game").height + 20,
-        text: 'Play Game'
+        x: canvas.width - ctx.measureText("Play").width,
+        y: canvas.height - startBtn.h,
+        w: ctx.measureText("Play").width,
+        h: startBtn.h,
+        bx: canvas.width - ctx.measureText("Play").width - 10,
+        by: canvas.height - startBtn.h - 20,
+        bw: ctx.measureText("Play").width + 10,
+        bh: startBtn.bh,
+        text: 'Play'
     };
 }
 
@@ -63,7 +63,6 @@ function drawStartPage(){
     ctx.strokeStyle = 'black';
     ctx.fillText('Welcome to', ((canvas.width / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
     ctx.fillText('ATCS', ((canvas.width / 2) - (ctx.measureText('ATCS').width / 2)), 80);
-
 
     ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
     ctx.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)

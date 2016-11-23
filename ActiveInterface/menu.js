@@ -23,7 +23,7 @@ function drawMenu(){
     
     $("#floorCanvas").addClass("menu");
     ctx.fillText(playBtn.text,playBtn.x,playBtn.y);
-    ctx.strokeRect(playBtn.bx, playBtn.by, playBtn.bw, playBtn.bh)
+    ctx.strokeRect(playBtn.bx, playBtn.by, playBtn.bw, playBtn.bh);
     /*for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
         ctx.fillText(gameArr[i / menuItemHeight], ((canvas.width / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
     }*/
