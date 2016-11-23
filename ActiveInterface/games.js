@@ -1,5 +1,5 @@
-function setObjects(){
-	links = {
+function setLinks(){
+	var links = {
 		'Dodgeball': '..\\Dodgeball\\dodgeball.html',
 		'Lights Out': '..\\LightsOut\\lightsout.html',
 		'Memory': '..\\Memory\\floor.html',

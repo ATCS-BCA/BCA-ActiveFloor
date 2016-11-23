@@ -27,13 +27,13 @@ function setObjects() {
         text: 'Step'
     },
     playBtn = {
-        x: canvas.width - ctx.measureText("Play").width,
-        y: canvas.height - startBtn.h,
+        x: canvas.width - ctx.measureText("Play").width - 50,
+        y: canvas.height - 12,
         w: ctx.measureText("Play").width,
         h: startBtn.h,
-        bx: canvas.width - ctx.measureText("Play").width - 10,
-        by: canvas.height - startBtn.h - 20,
-        bw: ctx.measureText("Play").width + 10,
+        bx: canvas.width - ctx.measureText("Play").width - 55,
+        by: canvas.height - 30,
+        bw: ctx.measureText("Play").width + 50,
         bh: startBtn.bh,
         text: 'Play'
     };
@@ -44,6 +44,7 @@ function drawBoard(dataArr){
     if(firstTime){
         initCanvas();
         setObjects();
+        setLinks();
         firstTime = false;
         drawStartPage();
         console.log("first time")

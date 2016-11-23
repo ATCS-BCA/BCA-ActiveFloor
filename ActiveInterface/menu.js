@@ -17,18 +17,29 @@ function initMenu(){
     maxItemsPerPage = 5;
     menuItemHeight = 38;
 
+    setLinks();
+/*
+    for (var key in links) {
+        if (links.hasOwnProperty in key) {
+            console.log(key + ' ' + links[key]);
+        }
+    }
+*/
 }
 
 function drawMenu(){
-    
+    //console.log(links["Dodgeball"]);
     $("#floorCanvas").addClass("menu");
     ctx.fillText(playBtn.text,playBtn.x,playBtn.y);
     ctx.strokeRect(playBtn.bx, playBtn.by, playBtn.bw, playBtn.bh);
-    /*for(var i = 0; i / menuItemHeight < maxItemsPerPage; i += menuItemHeight){
-        ctx.fillText(gameArr[i / menuItemHeight], ((canvas.width / 2) - (ctx.measureText(gameArr[i / menuItemHeight]).width / 2)), i);
-    }*/
-
-    //$("#floorCanvas").removeClass("menu");
+    for(var i = 0; i < dataArr.length; i++){
+        for(var j = 0; j < dataArr[i].length;j++){
+            if(dataArr[i][j] === "*"){
+                //if()        
+            }
+        }
+    }
+    $("#floorCanvas").removeClass("menu");
 }
 
 
