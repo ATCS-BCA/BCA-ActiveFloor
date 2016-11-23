@@ -10,18 +10,44 @@ var startBtn;
 var firstTime = true;
 var sensorDiv = 8;
 var text, parser, xmlDoc;
-var canvasWidth;
-var canvasHeight;
 
-function initStartPage(){
+
+
+function setObjects() {
+
+
+    startBtn = {
+        x: canvas.width/3 - 6,
+        y: ( (canvas.height) - (canvas.height/3)) + 27,
+        w: canvas.width / 3- 10,
+        h: canvas.height/6 + 10,
+        bx: (canvas.width / 3) - 10,
+        by: (canvas.height) - (canvas.height/3) + 10,
+        bw: canvas.width / 3,
+        bh: canvas.height / 8,
+        text: 'Step'
+    };
+
+    /*pong = {
+    location: "/..pong/pong.js",
+    x:0,
+    y:0
+
+    }*/
+
+}
+
+
+
+function drawStartPage(){
     //var canvas = document.getElementById('floorCanvas');
+
 
     ctx.fillStyle = 'black';
     ctx.font = '24px Courier';
     ctx.strokeStyle = 'black';
-    console.log(startBtn.by);
-    ctx.fillText('Welcome to', ((canvasWidth / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
-    ctx.fillText('ATCS', ((canvasWidth / 2) - (ctx.measureText('ATCS').width / 2)), 80);
+    ctx.fillText('Welcome to', ((canvas.width / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
+    ctx.fillText('ATCS', ((canvas.width / 2) - (ctx.measureText('ATCS').width / 2)), 80);
 
 
     ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
@@ -33,15 +59,17 @@ function initStartPage(){
 function drawBoard(dataArr){
     
     if(firstTime){
+        initCanvas();
         setObjects();
-        initCanvas()
-
         firstTime = false;
-        initStartPage();
-
+        drawStartPage();
+        console.log("first time")
     }
     if(!menuPage){
         checkForStart(dataArr);
+    }
+    else{
+        drawMenu();
     }
     
 }
@@ -51,9 +79,10 @@ function checkForStart(dataArr){
     for(var i = 0; i < dataArr.length; i++){
         for(var j = 0; j < dataArr[i].length;j++){
             if(dataArr[i][j] === "*"){
-                console.log(startBtn);
                 if(i > Math.floor(startBtn.by/sensorDiv) && i < Math.floor( (startBtn.by + startBtn.bh) / sensorDiv)){
                     if(j > Math.floor(startBtn.bx / sensorDiv) && j < Math.floor( ( startBtn.bx + startBtn.bw) / sensorDiv ) ){
+                        ctx.clearRect(0,0,canvas.width,canvas.height);
+                        console.log("sensor detected!")
                         menuPage = true;
                         window.location = "menu.html";
                         initMenu();
@@ -70,25 +99,3 @@ function checkForStart(dataArr){
 
 
 
-function setObjects() {
-    startBtn = {
-        x: canvasWidth/3 - 6,
-        y: ( (canvasHeight) - (canvasHeight/3)) + 27,
-        w: canvasWidth / 3- 10,
-        h: canvasHeight/6 + 10,
-        bx: (canvasWidth / 3) - 10,
-        by: (canvasHeight) - (canvasHeight/3) + 10,
-        bw: canvasWidth / 3,
-        bh: canvasHeight / 8,
-        text: 'Step'
-    };
-    /*
-    pong = {
-        location: "/..pong/pong.js",
-        x:0,
-        y:0
-
-    }
-
-    */
-}
