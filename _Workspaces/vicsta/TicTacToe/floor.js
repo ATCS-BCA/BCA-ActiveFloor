@@ -7,7 +7,8 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 1000/60;
-
+var lasti=1;
+var lastj=1;
 active = true;
 player=0;
 win=false;
@@ -128,8 +129,8 @@ window.onload = function()
 
 function drawMain() {
     var allFull=true;
-        for (var i = 0; i < 9; i++) {
-            for (var j = 0; j < 9; j++) {
+        for (var i = 0; i < 9 ; i++) {
+            for (var j = 0; j < 9 ; j++) {
                 if (map[i][j] == 0) {
                     ctx.beginPath();
                     ctx.moveTo(16 * i + 8 / 3 + 24, 16 * j + 8 / 3 + 24);
@@ -137,6 +138,7 @@ function drawMain() {
                     ctx.moveTo(16 * i + 14 + 24, 16 * j + 8 / 3 + 24);
                     ctx.lineTo(16 * i + 8 / 3 + 24, 16 * j + 14 + 24);
                     ctx.stroke();
+                   
                 } else if (map[i][j] == 1) {
                     ctx.beginPath();
                     ctx.arc(16 * i + 8 + 24, 16 * j + 8 + 24, 6, 0, 2 * Math.PI);
@@ -212,7 +214,20 @@ function initCanvas(arr) {
             if (arr[i][j]==="*"){
 //                if (i>=2 && i<=22 && j>=9 && j<=15)
 //                    middle++;
-                press(Math.floor((i-3)/2),Math.floor((j-3)/2));
+//                press(Math.floor((i-3)/2),Math.floor((j-3)/2));
+                console.log ("i=" + i + "; j=" + j);
+                var pos_i = Math.floor((i - 3) / 2);
+                var pos_j = Math.floor((j - 3) / 2);
+                console.log ("pos_i=" + pos_i);
+                console.log ("pos_j=" + pos_j);
+                console.log ("lasti=" + lasti);
+                console.log ("lastj=" + lastj);
+
+              if((Math.floor(pos_i/3) == lasti) && (Math.floor(pos_j/3) == lastj)){
+                    press(pos_i, pos_j);
+                    lasti = pos_i%3;
+                    lastj = pos_j%3;
+                }
             }
         }
     }
@@ -224,7 +239,7 @@ function initCanvas(arr) {
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
-    $.get('http://168.229.106.5:8080//', function (data) {
+    $.get('http://168.229.105.251:8080//', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {
