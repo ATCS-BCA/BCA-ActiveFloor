@@ -15,7 +15,6 @@ var text, parser, xmlDoc;
 
 function setObjects() {
 
-
     startBtn = {
         x: canvas.width/3 - 6,
         y: ( (canvas.height) - (canvas.height/3)) + 27,
@@ -30,12 +29,12 @@ function setObjects() {
     playBtn = {
         x: canvas.width/3 - 6,
         y: ( (canvas.height) - (canvas.height/3)) + 27,
-        w: canvas.width / 3- 10,
-        h: canvas.height/6 + 10,
+        w: ctx.measureText("Pay Game").width,
+        h: ctx.measureText("Play Game").height,
         bx: (canvas.width / 3) - 10,
         by: (canvas.height) - (canvas.height/3) + 10,
-        bw: canvas.width / 3,
-        bh: canvas.height / 8,
+        bw: ctx.measureText("Pay Game").width + 10,
+        bh: ctx.measureText("Play Game").height + 20,
         text: 'Play Game'
     };
 }
