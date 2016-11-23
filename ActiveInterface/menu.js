@@ -31,9 +31,11 @@ function drawMenu(){
     //$("#floorCanvas").removeClass("menu");
 }
 
+
 function loadDoc() {
     console.log("loadDoc() is being called!")
     var xhr = new XMLHttpRequest();
+
 
 
     xhr.open("GET", "http://127.0.0.1/release.blast", true);
@@ -53,5 +55,4 @@ function loadDoc() {
     xhr.send(null);
 }  
 
-
-
+ 
