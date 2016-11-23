@@ -5,22 +5,22 @@
 @-webkit-keyframes pulse {
     /*0% {background-color: #45CEEF;}*/
     0% {background-color: #242075;}
-    20% {background-color: #45CEEF;}
+    /*20% {background-color: #45CEEF;}
     30% {background-color: #5394cf;}
     40% {background-color: #242075;}
     60% {background-color: #242075;}
     70% {background-color: #45CEEF;}
     90% {background-color: #5394cf;}
-    100% {background-color: #242075;}
+    100% {background-color: #242075;}*/
    
-    /*40% {background-color: #76B6C4;}
+    40% {background-color: #76B6C4;}
     50% {background-color: #1ABC9C;}
     60% {background-color: #45CEEF;}
     70% {background-color: #EC407A;}
     80% {background-color: #52BE80;}
     90% {background-color: #E67E22;}
     100% {background-color: #8E44AD;}
-*/
+
 }
 
 body {
@@ -52,4 +52,10 @@ p{
     border: 0 !important;
     width:100%;
     height:100%
+}
+
+.menu{
+    
+    background-image:url("menu_background.png");
+    
 }

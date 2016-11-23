@@ -15,7 +15,6 @@ var text, parser, xmlDoc;
 
 function setObjects() {
 
-
     startBtn = {
         x: canvas.width/3 - 6,
         y: ( (canvas.height) - (canvas.height/3)) + 27,
@@ -26,38 +25,22 @@ function setObjects() {
         bw: canvas.width / 3,
         bh: canvas.height / 8,
         text: 'Step'
+    },
+    playBtn = {
+        x: canvas.width/3 - 6,
+        y: ( (canvas.height) - (canvas.height/3)) + 27,
+        w: ctx.measureText("Pay Game").width,
+        h: ctx.measureText("Play Game").height,
+        bx: (canvas.width / 3) - 10,
+        by: (canvas.height) - (canvas.height/3) + 10,
+        bw: ctx.measureText("Pay Game").width + 10,
+        bh: ctx.measureText("Play Game").height + 20,
+        text: 'Play Game'
     };
-
-    /*pong = {
-    location: "/..pong/pong.js",
-    x:0,
-    y:0
-
-    }*/
-
-}
-
-
-
-function drawStartPage(){
-    //var canvas = document.getElementById('floorCanvas');
-
-
-    ctx.fillStyle = 'black';
-    ctx.font = '24px Courier';
-    ctx.strokeStyle = 'black';
-    ctx.fillText('Welcome to', ((canvas.width / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
-    ctx.fillText('ATCS', ((canvas.width / 2) - (ctx.measureText('ATCS').width / 2)), 80);
-
-
-    ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
-    
-    ctx.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)
-    
 }
 
 function drawBoard(dataArr){
-    
+  
     if(firstTime){
         initCanvas();
         setObjects();
@@ -70,7 +53,20 @@ function drawBoard(dataArr){
     }
     else{
         drawMenu();
-    }
+    } 
+}
+
+function drawStartPage(){
+
+    ctx.fillStyle = 'black';
+    ctx.font = '24px Courier';
+    ctx.strokeStyle = 'black';
+    ctx.fillText('Welcome to', ((canvas.width / 2) - (ctx.measureText('Welcome to').width / 2)), 50);
+    ctx.fillText('ATCS', ((canvas.width / 2) - (ctx.measureText('ATCS').width / 2)), 80);
+
+
+    ctx.fillText(startBtn.text,startBtn.x,startBtn.y);
+    ctx.strokeRect(startBtn.bx, startBtn.by, startBtn.bw, startBtn.bh)
     
 }
 
@@ -81,10 +77,8 @@ function checkForStart(dataArr){
             if(dataArr[i][j] === "*"){
                 if(i > Math.floor(startBtn.by/sensorDiv) && i < Math.floor( (startBtn.by + startBtn.bh) / sensorDiv)){
                     if(j > Math.floor(startBtn.bx / sensorDiv) && j < Math.floor( ( startBtn.bx + startBtn.bw) / sensorDiv ) ){
-                        ctx.clearRect(0,0,canvas.width,canvas.height);
-                        console.log("sensor detected!")
                         menuPage = true;
-                        window.location = "menu.html";
+                        ctx.clearRect(0,0,canvas.width,canvas.height);
                         initMenu();
                     }
                 }
