@@ -14,7 +14,6 @@ var text, parser, xmlDoc;
 
 
 function setObjects() {
-    console.log(canvas.width - ctx.measureText("Play").width);
     startBtn = {
         x: canvas.width/3 - 6,
         y: ( (canvas.height) - (canvas.height/3)) + 27,
@@ -36,6 +35,18 @@ function setObjects() {
         bw: ctx.measureText("Play").width + 50,
         bh: startBtn.bh,
         text: 'Play'
+    },
+    rightArrow = {
+        x: 0,
+        y: canvas.height / 4,
+        w: canvas.width / 4,
+        h: startBtn.h     
+    },
+    leftArrow = {
+        x: canvas.width - (canvas.width / 4),
+        y: canvas.height / 4,
+        w: canvas.width / 4,
+        h: canvas.height / 4
     };
 }
 
@@ -44,7 +55,7 @@ function drawBoard(dataArr){
     if(firstTime){
         initCanvas();
         setObjects();
-        setLinks();
+        //setLinks();
         firstTime = false;
         drawStartPage();
         console.log("first time")
@@ -53,7 +64,7 @@ function drawBoard(dataArr){
         checkForStart(dataArr);
     }
     else{
-        drawMenu();
+        drawMenu(dataArr);
     } 
 }
 
