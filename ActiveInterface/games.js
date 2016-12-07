@@ -11,6 +11,6 @@ function setLinks(){
 		'Tetris': '..\\Tetris\\index.html',
 		'Tic-Tac-Toe': '..\\TicTacToe\\tictactoe.html'
     };
-
+    return links;
 
 }

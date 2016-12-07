@@ -13,6 +13,13 @@ var startBtn;
 var firstTime = true;
 var sensorDiv = 8;
 var text, parser, xmlDoc;
+var dataArr;
+var btnClicked = false;
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}
 
 function initMenu(){
     console.log("In initMenu()");
@@ -31,55 +38,70 @@ function initMenu(){
     
     maxItemsPerPage = 5;
     menuItemHeight = 38;
-    /*
-    setLinks();
+    
+    var links = setLinks();
 
     console.log("#22333");
+    console.log(links);
     for (var key in links) {
-        console.log("hm");
-        if (links.hasOwnProperty in key) {
+        // if (links.hasOwnProperty in key) {
             console.log(key + ' ' + links[key]);
-        }
+        // }
     }
-    */
+    
 }
 
 function drawMenu(dataArr){
-     
+    //console.log(links["Dodgeball"]);
     $("#floorCanvas").addClass("menu");
-    ctx.strokeRect(playBtn.bx, playBtn.by, playBtn.bw, playBtn.bh);
     ctx.fillText(playBtn.text,playBtn.x,playBtn.y);
+    ctx.strokeRect(playBtn.bx, playBtn.by, playBtn.bw, playBtn.bh);
+    console.log(gameNum);
     currGame = gameArr[gameNum];
     ctx.fillText(currGame, canvas.width / 3, canvas.height / 4 );
-    //ctx.fillText("Select Game", canvas.width - ctx.measureText("Select Game").width - 20, canvas.height / 2)
-    //ctx.fillText("Using Arrows!", canvas.width - ctx.measureText("Select Game").width - 20, canvas.height / 2 + 30)
-    console.log("after drawing")
-    while(!gameSelected){
-        for(var i = 0; i < dataArr.length; i++){
-            for(var j = 0; j < dataArr[i].length;j++){
+    
+    for(var i = 0; i < dataArr.length; i++){
+        for(var j = 0; j < dataArr[i].length;j++){
+            if(!btnClicked){
                 if(dataArr[i][j] === "*"){
-                    if(i > Math.floor(leftArrow.y/sensorDiv) && i < Math.floor( (leftArrow.y + leftArrow.h) / sensorDiv)){
-                        if(j > Math.floor(leftArrow.x / sensorDiv) && j < Math.floor( ( leftArrow.x + leftArrow.w) / sensorDiv ) ){
+                    
+                    //if(i > Math.floor(leftArrow.y/sensorDiv) && i < Math.floor( (leftArrow.y + leftArrow.h) / sensorDiv)){
+                    if(i > 1 && i < 5){
+                        //if(j > Math.floor(leftArrow.x / sensorDiv) && j < Math.floor( ( leftArrow.x + leftArrow.w) / sensorDiv ) ){
+                        if(j > 1 && j < 5 ){
                             if(gameNum > 0){
                                 gameNum--;
-                                console.log("left arrow clicked");
+                                btnClicked = true;
+                                ctx.clearRect(0,0,canvas.width,canvas.height/2);
                             }
+                             
                         }
                     }
-                    else if(i > Math.floor(rightArrow.y/sensorDiv) && i < Math.floor( (rightArrow.y + rightArrow.h) / sensorDiv)){
-                        if(j > Math.floor(leftArrow.x / sensorDiv) && j < Math.floor( ( rightArrow.x + rightArrow.w) / sensorDiv ) ){
-                            if(gameNum < gameArr.length)
+                    //else if(i > Math.floor(rightArrow.y/sensorDiv) && i < Math.floor( (rightArrow.y + rightArrow.h) / sensorDiv)){
+                    if(i > 1 && i < 5){
+                        //if(j > Math.floor(leftArrow.x / sensorDiv) && j < Math.floor( ( rightArrow.x + rightArrow.w) / sensorDiv ) ){
+                        if(j > 19 && j < 23 ){
+                            if(gameNum < gameArr.length){
                                 gameNum++;
+                                btnClicked = true;
+                                ctx.clearRect(0,0,canvas.width,canvas.height/2);
+                            }  
+                            //drawMenu(dataArr)
                         }
-                    }
-
+                    }     
                 }
             }
         }
     }
+    sleep(500);
+    if(btnClicked){
+        btnClicked = false;
+    }
     
-    
+    //$("#floorCanvas").removeClass("menu");
 }
+    
+
 
 
 

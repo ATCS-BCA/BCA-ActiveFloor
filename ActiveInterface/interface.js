@@ -55,7 +55,7 @@ function drawBoard(dataArr){
     if(firstTime){
         initCanvas();
         setObjects();
-        //setLinks();
+        setLinks();
         firstTime = false;
         drawStartPage();
         console.log("first time")
