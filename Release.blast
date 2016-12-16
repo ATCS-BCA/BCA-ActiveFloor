@@ -53,8 +53,8 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">TicTacToe\tictactoe.html</Display>
 		</AppMode>
 
-		<AppMode appModeID="VictoriaTicTacToe" name="VictoriaTicTacToe">
-			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\vicsta\TicTacToe\tictactoe.html</Display>
+		<AppMode appModeID="UltimateTicTacToe" name="UltimateTicTacToe">
+			<Display displayPurpose="Floor" applicationType="WebApp">UltimateTicTacToe\tictactoe.html</Display>
 		</AppMode>
 		
 		<AppMode appModeID="Wkspace-alekal20" name="Workspace-alekal20">
@@ -111,6 +111,10 @@
 
 		<AppMode appModeID="Wkspace-molbak" name="Workspace-molbak">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\molbak\Demo\floor.html</Display>
+		</AppMode>
+
+		<AppMode appModeID="Wkspace-niclev20" name="Workspace-niclev20">
+			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\niclev20\Demo\floor.html</Display>
 		</AppMode>
 
 		<AppMode appModeID="Wkspace-rodtai" name="Workspace-rodtai">
