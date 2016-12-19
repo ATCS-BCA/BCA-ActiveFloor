@@ -44,7 +44,7 @@ function initCanvas(arr) {
 function refreshXML() {
     'use strict';
 	// change IP address to match ActiveFloor server address
-    $.get('http://localhost:8080/', function (data) {
+    $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {

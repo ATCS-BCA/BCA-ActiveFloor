@@ -53,7 +53,7 @@ window.onload = function(){
 
 function refreshXML() {
     'use strict';
-    $.get('http://127.0.0.1:8080/', function (data) {
+    $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {
