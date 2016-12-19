@@ -59,7 +59,7 @@ function drawCanvas(arr) {
 
 function loop() {
     'use strict';
-    $.get('http://168.229.104.77:8080/', function (data) {
+    $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
         dataHolderArray = [];
 
         /* Assign the fields from the XML to Javascript variables. */
