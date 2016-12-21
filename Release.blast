@@ -56,7 +56,15 @@
 		<AppMode appModeID="UltimateTicTacToe" name="UltimateTicTacToe">
 			<Display displayPurpose="Floor" applicationType="WebApp">UltimateTicTacToe\tictactoe.html</Display>
 		</AppMode>
-		
+
+        <AppMode appModeID="Wkspace-aidgli20" name="Workspace-aidgli20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\aidgli20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-alehuh20" name="Workspace-alehuh20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\alehuh20\Demo\floor.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Wkspace-alekal20" name="Workspace-alekal20">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\alekal20\Demo\floor.html</Display>
 		</AppMode>
@@ -64,6 +72,22 @@
 		<AppMode appModeID="Wkspace-alekat20" name="Workspace-alekat20">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\alekat20\Demo\floor.html</Display>
 		</AppMode>
+
+        <AppMode appModeID="Wkspace-amaman20" name="Workspace-amaman20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\amaman20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-andkum20" name="Workspace-andkum20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\andkum20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-andtar20" name="Workspace-andtar20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\andtar20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-antalb20" name="Workspace-antalb20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\antalb20\Demo\floor.html</Display>
+        </AppMode>
 
 		<AppMode appModeID="Wkspace-benise" name="Workspace-benise">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\benise\Demo\floor.html</Display>
@@ -73,6 +97,10 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\brashe20\Demo\floor.html</Display>
 		</AppMode>
 
+        <AppMode appModeID="Wkspace-breshe20" name="Workspace-breshe20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\breshe20\Demo\floor.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Wkspace-bryres" name="Workspace-bryres">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\bryres\Demo\floor.html</Display>
 		</AppMode>
@@ -81,13 +109,45 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\chrchi\Demo\floor.html</Display>
 		</AppMode>
 
+        <AppMode appModeID="Wkspace-colkni20" name="Workspace-colkni20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\colkni20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-dancal20" name="Workspace-dancal20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\dancal20\Demo\floor.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Wkspace-dankim20" name="Workspace-dankim20">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\dankim20\Demo\floor.html</Display>
 		</AppMode>
 
+        <AppMode appModeID="Wkspace-daulee20" name="Workspace-daulee20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\daulee20\Demo\floor.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Wkspace-davson" name="Workspace-davson">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\davson\Demo\floor.html</Display>
 		</AppMode>
+
+        <AppMode appModeID="Wkspace-elepar20" name="Workspace-elepar20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\elepar20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-erjyu20" name="Workspace-erjyu20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\erjyu20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-ethher20" name="Workspace-ethher20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\ethher20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-grelat20" name="Workspace-grelat20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\grelat20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-hanahn20" name="Workspace-hanahn20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\hanahn20\Demo\floor.html</Display>
+        </AppMode>
 
 		<AppMode appModeID="Wkspace-hyelee20" name="Workspace-hyelee20">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\hyelee20\Demo\floor.html</Display>
@@ -97,6 +157,22 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\jacrag\Demo\floor.html</Display>
 		</AppMode>
 
+        <AppMode appModeID="Wkspace-jaecho20" name="Workspace-jaecho20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\jaecho20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-jaszha20" name="Workspace-jaszha20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\jaszha20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-juncho20" name="Workspace-juncho20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\juncho20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-kripur20" name="Workspace-kripur20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\kripur20\Demo\floor.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Wkspace-lenoku20" name="Workspace-lenoku20">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\lenoku20\Demo\floor.html</Display>
 		</AppMode>
@@ -104,6 +180,10 @@
 		<AppMode appModeID="Wkspace-madcha" name="Workspace-madcha">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\madcha\Demo\floor.html</Display>
 		</AppMode>
+
+        <AppMode appModeID="Wkspace-miabur20" name="Workspace-miabur20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\miabur20\Demo\floor.html</Display>
+        </AppMode>
 
 		<AppMode appModeID="Wkspace-micdug" name="Workspace-micdug">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\micdug\Demo\floor.html</Display>
@@ -113,9 +193,21 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\molbak\Demo\floor.html</Display>
 		</AppMode>
 
+        <AppMode appModeID="Wkspace-nahkim20" name="Workspace-nahkim20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\nahkim20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-natjef20" name="Workspace-natjef20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\natjef20\Demo\floor.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Wkspace-niclev20" name="Workspace-niclev20">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\niclev20\Demo\floor.html</Display>
 		</AppMode>
+
+        <AppMode appModeID="Wkspace-rebxu20" name="Workspace-rebxu20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\rebxu20\Demo\floor.html</Display>
+        </AppMode>
 
 		<AppMode appModeID="Wkspace-rodtai" name="Workspace-rodtai">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\rodtai\Demo\floor.html</Display>
@@ -132,7 +224,19 @@
 		<AppMode appModeID="Wkspace-samron" name="Workspace-samron">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\samron\Demo\floor.html</Display>
 		</AppMode>
-		
+
+        <AppMode appModeID="Wkspace-sanfre20" name="Workspace-sanfre20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\sanfre20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-sebwit20" name="Workspace-sebwit20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\sebwit20\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-spemul20" name="Workspace-spemul20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\spemul20\Demo\floor.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Wkspace-vicsta" name="Workspace-alekal20">
 			<Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\alekal20\Demo\floor.html</Display>
 		</AppMode>
