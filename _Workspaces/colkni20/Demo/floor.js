@@ -3,6 +3,7 @@
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
+var newarray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
@@ -23,7 +24,9 @@ function drawObj(type, xPos, yPos, size) {
 }
 
 function drawCanvas(arr) {
-    'use strict';
+    // update this method to go through the board array to redraw the screen.
+
+    /*'use strict';
     canvas = document.getElementById('floorCanvas');
     canvas.width = ledsX;
     canvas.height = ledsY;
@@ -41,14 +44,37 @@ function drawCanvas(arr) {
 				drawObj('square', tempX, tempY, 5);
             }
         }
-    }
+    }*/
+}
+
+function updateBoard(arr, arr2) {
+    //
+    /*'use strict';
+    canvas = document.getElementById('floorCanvas');
+    canvas.width = ledsX;
+    canvas.height = ledsY;
+    context2D = canvas.getContext('2d');
+
+    var i, tempRow, p, srchStr, tempX, tempY;
+    for (i = 0; i < arr.length; i += 1) {
+        tempRow = arr[i];
+        temparow = arr2[i]
+        for (p = 0; p < tempRow.length; p += 1) {
+            srchStr = tempRow.substring(p, p + 1);
+            if (srchStr === charSearch) {
+                tempX = p * ledPerSensorX;
+                tempY = i * ledPerSensorY;
+                drawObj('square', tempX, tempY, 5);//
+                // update the board array
+                //
+            }
+        }
+    }*/
 }
 
 function loop() {
     'use strict';
     $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
-        dataHolderArray = [];
-
         /* Assign the fields from the XML to Javascript variables. */
         $(data).find('BLFloor').each(function () {
             $item = $(this);
