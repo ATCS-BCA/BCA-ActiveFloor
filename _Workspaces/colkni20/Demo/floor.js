@@ -57,7 +57,9 @@ function drawScreenArray() {
                     colordict[(tempX,tempY)] = brushcolor;
 
                 }
-                drawObj('square', tempX, tempY, 5, colordict[(tempX,tempY)]);
+                if (a > 2 && b > 2) {
+                    drawObj('square', tempX, tempY, 5, colordict[(tempX, tempY)]);
+                }
                 if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
                     brushcolor ='red';
                 }
