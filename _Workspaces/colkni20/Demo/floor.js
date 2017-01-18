@@ -9,11 +9,9 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
-
-
-function drawObj(type, xPos, yPos, size) {
+function drawObj(type, xPos, yPos, size, brushcolor) {
     'use strict';
-    context2D.fillStyle = 'purple'
+    context2D.fillStyle = brushcolor
 
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
@@ -54,8 +52,8 @@ function drawScreenArray() {
             if (screenArray[i][p]) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-                drawObj('square', tempX, tempY, 5);
-
+                drawObj('square', tempX, tempY, 5, "purple");
+                drawObj('square', 0, 0, 5, "red")
              }
         }
     }
