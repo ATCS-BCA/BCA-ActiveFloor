@@ -55,6 +55,7 @@ function drawScreenArray() {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
                 drawObj('square', tempX, tempY, 5);
+
              }
         }
     }
