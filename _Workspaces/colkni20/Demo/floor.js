@@ -9,9 +9,10 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
-function drawObj(type, xPos, yPos, size, brushcolor) {
+brushcolor = 'purple'
+function drawObj(type, xPos, yPos, size, colorchoice) {
     'use strict';
-    context2D.fillStyle = brushcolor
+    context2D.fillStyle = colorchoice
 
     if (type === 'square') {
         context2D.fillRect((xPos + (xCenter / size)), (yPos + (yCenter / size)), size, size);
@@ -52,11 +53,18 @@ function drawScreenArray() {
             if (screenArray[i][p]) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-                drawObj('square', tempX, tempY, 5, "purple");
-                drawObj('square', 0, 0, 5, "red")
-                drawObj('square', 1, 1, 5, "red")
-                drawObj('square', 0, 1, 5, "red")
-                drawObj('square', 1, 0, 5, "red")
+                drawObj('square', tempX, tempY, 5, brushcolor);
+                if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
+                    brushcolor ='red'
+                }
+                drawObj('square', 0, 0, 5, 'red');
+                drawObj('square', 1, 1, 5, 'red');
+                drawObj('square', 0, 1, 5, 'red');
+                drawObj('square', 1, 0, 5, 'red');
+                drawObj('square', 0, 2, 5, 'red');
+                drawObj('square', 1, 2, 5, 'red');
+                drawObj('square', 2, 2, 5, 'red');
+                drawObj('square', 2, 0, 5, 'red');
              }
         }
     }
