@@ -31,11 +31,12 @@ function updateScreenArray(arr) {
      canvas.height = ledsY;
      context2D = canvas.getContext('2d');
 
-     var i, tempRow, p, srchStr, tempX, tempY;
+     var i, tempRow, p, srchStr;
      for (i = 0; i < arr.length; i += 1) {
          tempRow = arr[i];
 
          for (p = 0; p < tempRow.length; p += 1) {
+             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 screenArray[i][p] = true;
@@ -46,13 +47,13 @@ function updateScreenArray(arr) {
 
 function drawScreenArray() {
 
-    for (i = 0; i < screenArray.length; i += 1) {
-        tempRow = screenArray[i];
+    for (var i = 0; i < screenArray.length; i += 1) {
+        var tempRow = screenArray[i];
 
-        for (p = 0; p < tempRow.length; p += 1) {
+        for (var p = 0; p < tempRow.length; p += 1) {
             if (screenArray[i][p]) {
-                tempX = p * ledPerSensorX;
-                tempY = i * ledPerSensorY;
+                var tempX = p * ledPerSensorX;
+                var tempY = i * ledPerSensorY;
                 drawObj('square', tempX, tempY, 5);
              }
         }
@@ -63,6 +64,7 @@ function drawScreenArray() {
 function loop() {
     'use strict';
     $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
+        dataHolderArray = [];
         /* Assign the fields from the XML to Javascript variables. */
         $(data).find('BLFloor').each(function () {
             $item = $(this);
@@ -109,6 +111,8 @@ $(document).ready(function () {
             screenArray[a][b] = false;
         }
     }
+
+
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
 
