@@ -53,17 +53,17 @@ function drawScreenArray() {
             if (screenArray[i][p]) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-                if (colordict[tempX,tempY] == 'none'){
-                    colordict[tempX,tempY] = brushcolor
+                if (colordict[String(tempX)+"-"+String(tempY)] == 'none'){
+                    colordict[String(tempX)+"-"+String(tempY)] = brushcolor
 
                 }
-                drawObj('square', tempX, tempY, 5, colordict[tempX,tempY]);
+                drawObj('square', tempX, tempY, 5, colordict[String(tempX)+"-"+String(tempY)]);
                 }
                 if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
                     brushcolor = 'red';
 
                 }
-            /*
+
                 drawObj('square', 0, 0, 5, 'red');
                 drawObj('square', 1, 1, 5, 'red');
                 drawObj('square', 0, 1, 5, 'red');
@@ -72,7 +72,7 @@ function drawScreenArray() {
                 drawObj('square', 1, 2, 5, 'red');
                 drawObj('square', 2, 2, 5, 'red');
                 drawObj('square', 2, 0, 5, 'red');
-*/
+
              }
         }
     }
@@ -126,7 +126,7 @@ $(document).ready(function () {
     for (var a = 0; a < 24; a++){
         for (var b = 0; b < 24; b++){
             screenArray[a][b] = false;
-            colordict[a,b] = 'none';
+            colordict[String(a)+"-"+String(b)] = 'none';
         }
     }
 
