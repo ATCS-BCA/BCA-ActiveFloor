@@ -10,6 +10,7 @@ var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 brushcolor = 'purple'
+colordict = {}
 function drawObj(type, xPos, yPos, size, colorchoice) {
     'use strict';
     context2D.fillStyle = colorchoice
@@ -53,7 +54,11 @@ function drawScreenArray() {
             if (screenArray[i][p]) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-                drawObj('square', tempX, tempY, 5, brushcolor);
+                if (colordict[(tempX,tempY)] === "none"){
+                    colordict[(tempX,tempY)] = brushcolor;
+
+                }
+                drawObj('square', tempX, tempY, 5, colordict[(tempX,tempY)]);
                 if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
                     brushcolor ='red'
                 }
@@ -119,6 +124,7 @@ $(document).ready(function () {
     for (var a = 0; a < 24; a++){
         for (var b = 0; b < 24; b++){
             screenArray[a][b] = false;
+            colordict[(a, b)] = "none"
         }
     }
 
