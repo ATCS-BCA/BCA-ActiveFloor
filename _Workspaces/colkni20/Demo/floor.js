@@ -58,7 +58,7 @@ function drawScreenArray() {
 
                 }
                 drawObj('square', tempX, tempY, 5, colordict[(tempX,tempY)]);
-                /*if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
+                if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
                     brushcolor ='red';
                 }
                 drawObj('square', 0, 0, 5, 'red');
@@ -69,7 +69,7 @@ function drawScreenArray() {
                 drawObj('square', 1, 2, 5, 'red');
                 drawObj('square', 2, 2, 5, 'red');
                 drawObj('square', 2, 0, 5, 'red');
-*/
+
              }
         }
     }
@@ -125,6 +125,9 @@ $(document).ready(function () {
         for (var b = 0; b < 24; b++){
             screenArray[a][b] = false;
             colordict[(a,b)] = 'none';
+            if (a <= 2 && b <= 2){
+                colordict[(a,b)] = 'red';
+            }
         }
     }
 
