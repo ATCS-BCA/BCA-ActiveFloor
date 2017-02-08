@@ -9,7 +9,6 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
-colordict = {};
 function drawObj(type, xPos, yPos, size, colorchoice) {
     'use strict';
     context2D.fillStyle = colorchoice;
@@ -35,10 +34,10 @@ function updateScreenArray(arr) {
          tempRow = arr[i];
 
          for (p = 0; p < tempRow.length; p += 1) {
-             console.log("i=" + i, ";p=" + p);
+//             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                screenArray[i][p] = true;
+                (screenArray[i][p]).value = true;
             }
          }
      }
@@ -50,14 +49,14 @@ function drawScreenArray() {
         var tempRow = screenArray[i];
 
         for (var p = 0; p < tempRow.length; p += 1) {
-            if (screenArray[i][p]) {
+            if ((screenArray[i][p]).value) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-                if (colordict[String(tempX)+"-"+String(tempY)] == 'none'){
-                    colordict[String(tempX)+"-"+String(tempY)] = brushcolor
+                if (((screenArray[i][p]).color) == "none"){
+                    (screenArray[i][p]).color = brushcolor;
 
                 }
-                drawObj('square', tempX, tempY, 5, colordict[String(tempX)+"-"+String(tempY)]);
+                drawObj('square', tempX, tempY, 5, (screenArray[i][p]).color);
                 }
                 if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
                     brushcolor = 'red';
@@ -71,11 +70,12 @@ function drawScreenArray() {
                 drawObj('square', 0, 2, 5, 'red');
                 drawObj('square', 1, 2, 5, 'red');
                 drawObj('square', 2, 2, 5, 'red');
-                drawObj('square', 2, 0, 5, 'red');
+                drawObj('square', 2, 0, 5, 'red')
+
 
              }
         }
-    }
+}
 
 
 function loop() {
@@ -125,8 +125,9 @@ $(document).ready(function () {
 
     for (var a = 0; a < 24; a++){
         for (var b = 0; b < 24; b++){
-            screenArray[a][b] = false;
-            colordict[String(a)+"-"+String(b)] = 'none';
+            screenArray[a][b] = {};
+            (screenArray[a][b]).value = false;
+            (screenArray[a][b]).color = "none";
         }
     }
 
@@ -135,7 +136,7 @@ $(document).ready(function () {
     startRefresh();
 
     sendSemaphore(function() {
-        // Clear spacing and borders.
+        // ClearF spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
         $("#floorCanvas").addClass("app");
