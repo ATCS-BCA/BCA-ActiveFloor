@@ -3,6 +3,7 @@
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
+var cn = 0;
 var screenArray = [];
 var newarray = [];
 var charSearch = '*';
@@ -62,15 +63,26 @@ function drawScreenArray() {
                     brushcolor = 'red';
 
                 }
-
-                drawObj('square', 0, 0, 5, 'red');
-                drawObj('square', 1, 1, 5, 'red');
-                drawObj('square', 0, 1, 5, 'red');
-                drawObj('square', 1, 0, 5, 'red');
-                drawObj('square', 0, 2, 5, 'red');
-                drawObj('square', 1, 2, 5, 'red');
-                drawObj('square', 2, 2, 5, 'red');
-                drawObj('square', 2, 0, 5, 'red')
+                cn = 0;
+                drawObj('square', 0, cn, 5, 'red');
+                drawObj('square', 2, cn+1, 5, 'red');
+                drawObj('square', 1, cn+1, 5, 'red');
+                drawObj('square', 0, cn+1, 5, 'red');
+                drawObj('square', 1, cn, 5, 'red');
+                drawObj('square', 0, cn+2, 5, 'red');
+                drawObj('square', 1, cn+2, 5, 'red');
+                drawObj('square', 2, cn+2, 5, 'red');
+                drawObj('square', 2, cn, 5, 'red');
+                cn = 184;
+                drawObj('square', 0, cn, 5, 'pink');
+                drawObj('square', 2, cn+1, 5, 'pink');
+                drawObj('square', 1, cn+1, 5, 'pink');
+                drawObj('square', 0, cn+1, 5, 'pink');
+                drawObj('square', 1, cn, 5, 'pink');
+                drawObj('square', 0, cn+2, 5, 'pink');
+                drawObj('square', 1, cn+2, 5, 'pink');
+                drawObj('square', 2, cn+2, 5, 'pink');
+                drawObj('square', 2, cn, 5, 'pink');
 
 
              }
