@@ -1,3 +1,4 @@
+//Cole Knie
 /*jslint browser: true*/
 /*global $, jQuery*/
 var myInterval;
