@@ -39,6 +39,10 @@ function updateScreenArray(arr) {
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 (screenArray[i][p]).value = true;
+                if (brushcolor == "eraser"){
+                    screenArray[i][p].value = false;
+                    screenArray[i][p].color = "none";
+                }
             }
          }
      }
@@ -62,6 +66,9 @@ function drawScreenArray() {
                 if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
                     brushcolor = 'red';
 
+                }
+                if (tempX >= 0 && tempX <= 2 && tempY >= 184 && tempY <= 186) {
+                    brushcolor = "eraser";
                 }
                 cn = 0;
                 drawObj('square', 0, cn, 5, 'red');
