@@ -44,6 +44,12 @@ function updateScreenArray(arr) {
                     screenArray[i][p].value = false;
                     screenArray[i][p].color = "none";
                 }
+                if(i == 0 && p == 0){
+                    brushcolor = "red";
+                }
+                if(i == 23 && p == 23){
+                    brushcolor = "blue";
+                }
             }
          }
      }
@@ -66,21 +72,28 @@ function drawScreenArray() {
                 }
                 if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
                     brushcolor = 'red';
+                    screenArray[i][p].value = false;
 
                 }
                 if (tempX >= 0 && tempX <= 2 && tempY >= 184 && tempY <= 186) {
                     brushcolor = "eraser";
+                    screenArray[i][p].value = false;
+                }
+                if (tempX >= 184 && tempX <= 186 && tempY >= 184 && tempY <= 186) {
+                    brushcolor = "blue";
+                    screenArray[i][p].value = false;
                 }
                 cn = 0;
-                drawObj('square', 0, cn, 5, 'red');
-                drawObj('square', 2, cn+1, 5, 'red');
-                drawObj('square', 1, cn+1, 5, 'red');
-                drawObj('square', 0, cn+1, 5, 'red');
-                drawObj('square', 1, cn, 5, 'red');
-                drawObj('square', 0, cn+2, 5, 'red');
-                drawObj('square', 1, cn+2, 5, 'red');
-                drawObj('square', 2, cn+2, 5, 'red');
-                drawObj('square', 2, cn, 5, 'red');
+                fox = 0;
+                drawObj('square', fox, cn, 5, 'red');
+                drawObj('square', fox+2, cn+1, 5, 'red');
+                drawObj('square', fox+1, cn+1, 5, 'red');
+                drawObj('square', fox, cn+1, 5, 'red');
+                drawObj('square', fox+1, cn, 5, 'red');
+                drawObj('square', fox, cn+2, 5, 'red');
+                drawObj('square', fox+1, cn+2, 5, 'red');
+                drawObj('square', fox+2, cn+2, 5, 'red');
+                drawObj('square', fox+2, cn, 5, 'red');
                 cn = 184;
                 drawObj('square', 0, cn, 5, 'pink');
                 drawObj('square', 2, cn+1, 5, 'pink');
@@ -91,6 +104,16 @@ function drawScreenArray() {
                 drawObj('square', 1, cn+2, 5, 'pink');
                 drawObj('square', 2, cn+2, 5, 'pink');
                 drawObj('square', 2, cn, 5, 'pink');
+                fox=184;
+                drawObj('square', fox, cn, 5, 'blue');
+                drawObj('square', fox+2, cn+1, 5, 'blue');
+                drawObj('square', fox+1, cn+1, 5, 'blue');
+                drawObj('square', fox, cn+1, 5, 'blue');
+                drawObj('square', fox+1, cn, 5, 'blue');
+                drawObj('square', fox, cn+2, 5, 'blue');
+                drawObj('square', fox+1, cn+2, 5, 'blue');
+                drawObj('square', fox+2, cn+2, 5, 'blue');
+                drawObj('square', fox+2, cn, 5, 'blue');
 
 
              }
