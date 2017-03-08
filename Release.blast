@@ -5,6 +5,13 @@
 		<Height>192</Height>
 	</FloorScreen>
 	<AppModes>
+        <AppMode appModeID="PythonTest" name="PythonDemo">
+            <Display displayPurpose="FloorDisplay" args="-appName=floorburst">python.exe</Display>
+            <Display displayPurpose="FloorDisplayCenter" args="-draw3d">..\FloorBurst\FloorBurst.exe</Display>
+            <Display displayPurpose="Floor">..\FloorBurst\FloorBurst.exe</Display>
+        </AppMode>
+
+
 		<AppMode appModeID="ActiveFloorVisualDiagnostic" name="ActiveFloor Diagnostic">
 			<Display displayPurpose="Floor" applicationType="WebApp">ActiveFloorVisualDiagnostic\floor.html</Display>
 		</AppMode>
