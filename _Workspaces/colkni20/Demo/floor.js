@@ -54,7 +54,7 @@ function updateScreenArray(arr) {
          }
      }
 }
-brushcolor = 'purple';
+brushcolor = 'red';
 function drawScreenArray() {
 
     for (var i = 0; i < screenArray.length; i += 1) {
@@ -83,6 +83,10 @@ function drawScreenArray() {
                     brushcolor = "blue";
                     screenArray[i][p].value = false;
                 }
+            if (tempX >= 184 && tempX <= 186 && tempY >= 0 && tempY <= 2) {
+                brushcolor = "green";
+                screenArray[i][p].value = false;
+            }
                 cn = 0;
                 fox = 0;
                 drawObj('square', fox, cn, 5, 'red');
@@ -94,6 +98,16 @@ function drawScreenArray() {
                 drawObj('square', fox+1, cn+2, 5, 'red');
                 drawObj('square', fox+2, cn+2, 5, 'red');
                 drawObj('square', fox+2, cn, 5, 'red');
+                fox = 0;
+                drawObj('square', 184, cn, 5, 'green');
+                drawObj('square', 184+2, cn+1, 5, 'green');
+                drawObj('square', 184+1, cn+1, 5, 'green');
+                drawObj('square', 184, cn+1, 5, 'green');
+                drawObj('square', 184+1, cn, 5, 'green');
+                drawObj('square', 184, cn+2, 5, 'green');
+                drawObj('square', 184+1, cn+2, 5, 'green');
+                drawObj('square', 184+2, cn+2, 5, 'green');
+                drawObj('square', 184+2, cn, 5, 'green');
                 cn = 184;
                 drawObj('square', 0, cn, 5, 'pink');
                 drawObj('square', 2, cn+1, 5, 'pink');

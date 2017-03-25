@@ -6,16 +6,15 @@
 	</FloorScreen>
 	<AppModes>
         <AppMode appModeID="PythonTest" name="PythonDemo">
-            <Display displayPurpose="FloorDisplay" args="-appName=floorburst">python.exe</Display>
-            <Display displayPurpose="FloorDisplayCenter" args="-draw3d">..\FloorBurst\FloorBurst.exe</Display>
-            <Display displayPurpose="Floor">..\FloorBurst\FloorBurst.exe</Display>
+			<Display displayPurpose="FloorDisplay" args="-appName=python">C:\ActiveFloorDeploy\Content\BCA-ActiveFloor\Ross\dist\rossTkinter.exe</Display>
+			<Display displayPurpose="FloorDisplayCenter" args="-draw3d">C:\ActiveFloorDeploy\Content\BCA-ActiveFloor\Ross\dist\rossTkinter.exe</Display>
+			<Display displayPurpose="Floor">C:\ActiveFloorDeploy\Content\BCA-ActiveFloor\Ross\dist\rossTkinter.exe</Display>
         </AppMode>
-
 
 		<AppMode appModeID="ActiveFloorVisualDiagnostic" name="ActiveFloor Diagnostic">
 			<Display displayPurpose="Floor" applicationType="WebApp">ActiveFloorVisualDiagnostic\floor.html</Display>
 		</AppMode>
-		
+
 		<AppMode appModeID="ActiveInterface" name="ActiveInterface">
 			<Display displayPurpose="Floor" applicationType="WebApp">ActiveInterface\interface.html</Display>
 		</AppMode>
