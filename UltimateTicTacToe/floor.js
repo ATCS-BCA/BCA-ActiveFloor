@@ -1,5 +1,12 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
+
+/*
+problems:
+- first move should be in any square
+- when one tic-tac-toe board is won it should let the player choose any open square on the board
+- game does not end when a player wins 3 boards across
+ */
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
@@ -160,8 +167,7 @@ function press(a,b){
     }
 }
 
-/* function showGameOver()
-{
+function showGameOver() {
 
     ctx.lineWidth = 2;
     active = false;
@@ -174,14 +180,14 @@ function press(a,b){
     ctx.font = '12px sans-serif';
 
 
-    ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width)/2-1, 86, ctx.measureText('Stand here to restart').width+3, 10+3);
+    ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width) / 2 - 1, 86, ctx.measureText('Stand here to restart').width + 3, 10 + 3);
 
     ctx.fillStyle = 'black';
-    ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width)/2, 192/2);
+    ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width) / 2, 192 / 2);
 
 
-    if (win) setTimeout(showGameOver,1000/60);
-}*/
+    if (win) setTimeout(showGameOver, 1000 / 60);
+}
 
 String.prototype.replaceAll = function(str1, str2, ignore)
 {

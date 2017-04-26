@@ -27,7 +27,7 @@ var restartBtn = false;
 function drawObj(xPos, yPos, size, numShape, canSee, solved) {
     'use strict';
 
-    context2D.fillStyle = '#E8ECED';
+    context2D.fillStyle = 'grey';
     context2D.fillRect(xPos, yPos, size, size);
 
     if (canSee || solved) {
@@ -305,7 +305,7 @@ function allTrue(solved) {
 
 function endScreen() {
     // game over sign
-    context2D.fillStyle = 'white';
+    context2D.fillStyle = 'grey';
     context2D.fillRect(canvas.width / 4, canvas.height / 5, 95, 95);
     context2D.fillStyle = 'black';
     context2D.font = '16px serif';
@@ -330,9 +330,6 @@ function endScreen() {
     context2D.rect(canvas.width / 2 - (context2D.measureText('Restart').width / 2), canvas.height / 4 + 50, context2D.measureText("Restart").width, 20);
     context2D.stroke();
     context2D.fillText("Restart", (canvas.width / 2 - (context2D.measureText('Restart').width / 2)), canvas.height / 4 + 63);
-   
-
-
 }
 
 function startGame() {
