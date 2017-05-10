@@ -19,11 +19,52 @@ var lastj=1;
 active = true;
 player=0;
 win=false;
-first=true;
+var activeBoards = [
+    true, true, true,
+    true, true, true,
+    true, true, true
+];
+var wonBoards = [
+    "", "", "",
+    "", "", "",
+    "", "", ""
+];
+
+
+function checkForWins() {
+    // this code does not currently do anything
+
+    // checking for horizontal wins
+    if (wonBoards[0] != "" && wonBoards[0]==wonBoards[1] && wonBoards[1]==wonBoards[2]){
+        showGameOver(wonBoards[0]);
+    }
+    else if (wonBoards[3]!="" && wonBoards[4]==wonBoards[3]&&wonBoards[5]==wonBoards[4]){
+        showGameOver(wonBoards[3]);
+    }
+    else if (wonBoards[6]!="" && wonBoards[6]==wonBoards[7] && wonBoards[7]==wonBoards[8]){
+        showGameOver(wonBoards[6]);
+    }
+    // checking for vertical wins
+    else if (wonBoards[0] != "" && wonBoards[0] == wonBoards[3] && wonBoards[3] == wonBoards[6]){
+        showGameOver(wonBoards[0]);
+    }
+    else if(wonBoards[1] != "" && wonBoards[1]==wonBoards[4] && wonBoards[4] == wonBoards[7]){
+        showGameOver(wonBoards[1]);
+    }
+    else if (wonBoards[2] != "" && wonBoards[2]==wonBoards[5] && wonBoards[5]==wonBoards[8]){
+        showGameOver(wonBoards[2]);
+    }
+    // checking for diagonal wins
+    else if (wonBoards[0] != "" && wonBoards[0]==wonBoards[4] && wonBoards[4]==wonBoards[8]){
+        showGameOver(wonBoards[0]);
+    }
+    else if (wonBoards[2] != "" && wonBoards[2]==wonBoards[4] && wonBoards[4]==wonBoards[6]){
+        showGameOver(wonBoards[2]);
+    }
+}
 
 window.onload = function()
 {
-
     // Initialize the matrix.
     map = new Array(9);
     for (var i = 0; i < map.length; i++) {
@@ -125,10 +166,6 @@ window.onload = function()
         //ctx.stroke();
 
 
-        if (first){
-            setTimeout(function(){ first=false; }, 3000);
-        }
-
         if (win) setTimeout(showGameOver,1000);
         if (!win) setTimeout(drawGame,1000/60);
     }
@@ -161,28 +198,28 @@ function drawMain() {
 
 
 function press(a,b){
-    if (!first && map[b][a]==-1){
+    if (map[b][a]==-1){
         map[b][a]=player;
         player=1-player;
     }
 }
 
-function showGameOver() {
+function showGameOver(winner) {
 
     ctx.lineWidth = 2;
     active = false;
 
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'green';
     ctx.font = '16px sans-serif';
 
-    ctx.fillText('Game Over!', ((canvas.width / 2) - (ctx.measureText('Game Over!').width / 2)), 50);
+    ctx.fillText(winner + 'Wins. Game Over!', ((canvas.width / 2) - (ctx.measureText('Game Over!').width / 2)), 50);
 
     ctx.font = '12px sans-serif';
 
 
     ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width) / 2 - 1, 86, ctx.measureText('Stand here to restart').width + 3, 10 + 3);
 
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'white';
     ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width) / 2, 192 / 2);
 
 
@@ -294,6 +331,5 @@ $(document).ready(function () {
         $("body").addClass("app");
         $("div").addClass("app");
         $("#floorCanvas").addClass("app");
-        
     });
 });
