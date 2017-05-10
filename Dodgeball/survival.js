@@ -85,7 +85,6 @@ Ball.prototype.render = function(){
 	context2D.beginPath();
 	context2D.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
 	context2D.closePath();
-
 	context2D.fillStyle = '#e74c3c';
 	context2D.fill();
 
@@ -246,7 +245,7 @@ function start(){
 	screen = 1;
 	score = 0;
 	active = true;
-	speed = 2;
+	speed = 5;
 	level = 0;
 	size = 7;
 	balls = [];
@@ -259,6 +258,7 @@ function start(){
 
 	clear();
 	survivalBoard();
+	checkPlayerContact();
 
 	//after every spawner.maxTime seconds, spawn it and update the timer
 	intervals.push(setInterval(function(){

@@ -6,7 +6,7 @@ var charDivide = ',';
 var canvas, context2D;
 var firstTime = true;
 var refreshTime = 60;
-var noTouch = true;
+var contact = false;
 
 function initCanvas(arr) {
     'use strict';
@@ -40,19 +40,18 @@ function initCanvas(arr) {
     } else if (screen == 1){//in game screen
         for (i = 0; i < arr.length; i += 1) {
             tempRow = arr[i];
-            
+            contact = false;
             for (p = 0; p < tempRow.length; p += 1) {
                 srchStr = tempRow.substring(p, p + 1);
                 if (srchStr === charSearch) {
                     tempX = p * ledPerSensorX;
                     tempY = i * ledPerSensorY;
                     checkPlayerHit(tempX, tempY);
-                    noTouch = false;
+                    contact = true;
                 }
             }
         }
-        if (noTouch)
-            active = false;
+
     } else if (screen == 3){//game over
          for (i = 0; i < arr.length; i += 1) {
             tempRow = arr[i];

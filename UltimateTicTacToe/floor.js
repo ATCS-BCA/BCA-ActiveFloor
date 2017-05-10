@@ -5,8 +5,9 @@
 problems:
 - first move should be in any square
 - when one tic-tac-toe board is won it should let the player choose any open square on the board
-- game does not end when a player wins 3 boards across
+- game does not end when player wins 3 boards in a row
  */
+
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
@@ -17,51 +18,18 @@ var refreshTime = 1000/60;
 var lasti=1;
 var lastj=1;
 active = true;
-player=0;
-win=false;
+var wonBoards = [
+    "","","",
+    "","","",
+    "","",""
+];
 var activeBoards = [
     true, true, true,
     true, true, true,
     true, true, true
 ];
-var wonBoards = [
-    "", "", "",
-    "", "", "",
-    "", "", ""
-];
-
-
-function checkForWins() {
-    // this code does not currently do anything
-
-    // checking for horizontal wins
-    if (wonBoards[0] != "" && wonBoards[0]==wonBoards[1] && wonBoards[1]==wonBoards[2]){
-        showGameOver(wonBoards[0]);
-    }
-    else if (wonBoards[3]!="" && wonBoards[4]==wonBoards[3]&&wonBoards[5]==wonBoards[4]){
-        showGameOver(wonBoards[3]);
-    }
-    else if (wonBoards[6]!="" && wonBoards[6]==wonBoards[7] && wonBoards[7]==wonBoards[8]){
-        showGameOver(wonBoards[6]);
-    }
-    // checking for vertical wins
-    else if (wonBoards[0] != "" && wonBoards[0] == wonBoards[3] && wonBoards[3] == wonBoards[6]){
-        showGameOver(wonBoards[0]);
-    }
-    else if(wonBoards[1] != "" && wonBoards[1]==wonBoards[4] && wonBoards[4] == wonBoards[7]){
-        showGameOver(wonBoards[1]);
-    }
-    else if (wonBoards[2] != "" && wonBoards[2]==wonBoards[5] && wonBoards[5]==wonBoards[8]){
-        showGameOver(wonBoards[2]);
-    }
-    // checking for diagonal wins
-    else if (wonBoards[0] != "" && wonBoards[0]==wonBoards[4] && wonBoards[4]==wonBoards[8]){
-        showGameOver(wonBoards[0]);
-    }
-    else if (wonBoards[2] != "" && wonBoards[2]==wonBoards[4] && wonBoards[4]==wonBoards[6]){
-        showGameOver(wonBoards[2]);
-    }
-}
+player=0;
+win=false;
 
 window.onload = function()
 {
@@ -135,9 +103,10 @@ window.onload = function()
                     ctx.beginPath();
                     ctx.moveTo(i * 16 + 8 + 24, h * 16 + 4 + 24);
                     ctx.lineTo(i * 16 + 8 + 24, h * 16 + 44 + 24);
-                    //win = true;
+                    win = true;
                     ctx.stroke();
                 }
+
                 if (!win && map[h][i] != -1 && map[h][i] == map[h + 1][i] && map[h + 1][i] == map[h + 2][i]) {
                     ctx.beginPath();
                     ctx.moveTo(h * 16 + 4 + 24, i * 16 + 8 + 24);
@@ -151,7 +120,7 @@ window.onload = function()
                     ctx.beginPath();
                     ctx.moveTo(h * 16 + 4 + 24, j * 16 + 4 + 24);
                     ctx.lineTo(h * 16 + 44 + 24, j * 16 + 44 + 24);
-                    //win = true;
+                    win = true;
                     ctx.stroke();
                 }
                 if (!win && map[h][j+2] != -1 && map[h][j+2] == map[h+1][j+1] && map[h+1][j+1] == map[h+2][j]) {
@@ -164,6 +133,8 @@ window.onload = function()
             }
         }
         //ctx.stroke();
+
+
 
 
         if (win) setTimeout(showGameOver,1000);
@@ -182,7 +153,7 @@ function drawMain() {
                     ctx.moveTo(16 * i + 14 + 24, 16 * j + 8 / 3 + 24);
                     ctx.lineTo(16 * i + 8 / 3 + 24, 16 * j + 14 + 24);
                     ctx.stroke();
-                   
+
                 } else if (map[i][j] == 1) {
                     ctx.beginPath();
                     ctx.arc(16 * i + 8 + 24, 16 * j + 8 + 24, 6, 0, 2 * Math.PI);
@@ -204,7 +175,7 @@ function press(a,b){
     }
 }
 
-function showGameOver(winner) {
+function showGameOver() {
 
     ctx.lineWidth = 2;
     active = false;
@@ -212,7 +183,7 @@ function showGameOver(winner) {
     ctx.fillStyle = 'green';
     ctx.font = '16px sans-serif';
 
-    ctx.fillText(winner + 'Wins. Game Over!', ((canvas.width / 2) - (ctx.measureText('Game Over!').width / 2)), 50);
+    ctx.fillText('Game Over!', ((canvas.width / 2) - (ctx.measureText('Game Over!').width / 2)), 50);
 
     ctx.font = '12px sans-serif';
 

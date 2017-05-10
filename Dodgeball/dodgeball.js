@@ -20,6 +20,7 @@ function menu(){
 	clear();
 	active = true;
 	balls = [];
+	contact = false;
 
 	context2D.fillStyle = '#2ecc71';
     context2D.font = '24px sans-serif';
@@ -136,4 +137,24 @@ function getRandomIntInclusive(min, max) {
 //
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+//
+// When u get off the
+//
+function checkPlayerContact() {
+	var seconds = 0;
+
+	intervals.push(setInterval(function(){
+		if (contact){
+			seconds = 0;
+		}else{
+			seconds += .01;
+		}
+		if (seconds == 10){
+			active = false;
+			game = -1;
+		}
+	}, 10));
+
 }

@@ -258,6 +258,7 @@ function start(){
 	spawner.timer = 3;
 	spawner.maxTime = 3;
 	num = 0;
+	checkPlayerContact();
 
 	clearIntervals();
 
