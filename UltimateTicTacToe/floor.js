@@ -6,6 +6,7 @@ problems:
 - first move should be in any square
 - when one tic-tac-toe board is won it should let the player choose any open square on the board
 - game does not end when player wins 3 boards in a row
+- restart button isn't functional
  */
 
 var myInterval;
@@ -111,7 +112,7 @@ window.onload = function()
                     ctx.beginPath();
                     ctx.moveTo(h * 16 + 4 + 24, i * 16 + 8 + 24);
                     ctx.lineTo(h * 16 + 44 + 24, i * 16 + 8 + 24);
-                    //win = true;
+                    win = true;
                     ctx.stroke();
                 }
             }
@@ -127,7 +128,7 @@ window.onload = function()
                     ctx.beginPath();
                     ctx.moveTo(h * 16 + 44 + 24, j * 16 + 4 + 24);
                     ctx.lineTo(h * 16 + 4 + 24, j * 16 + 44 + 24);
-                    //win = true;
+                    win = true;
                     ctx.stroke();
                 }
             }
