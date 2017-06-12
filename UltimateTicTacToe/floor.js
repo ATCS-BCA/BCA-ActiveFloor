@@ -98,6 +98,8 @@ window.onload = function()
         ctx.strokeStyle = 'white';
         //ctx.beginPath();
 
+
+        // shows end screen and paints line where someone won
         for (var h=0; h<9 && !win; h+=3) {
             for (var i = 0; i < 9 && !win; i++) {
                 if (!win && map[i][h] != -1 && map[i][h] == map[i][h + 1] && map[i][h + 1] == map[i][h + 2]) {

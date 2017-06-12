@@ -8,8 +8,7 @@
 	 	<AppMode appModeID="HangMan" name="HangMan">
 			<Display displayPurpose="FloorDisplayCenter" args="-cp Hangman.jar HangmanFloor.DisplayOutput">java.exe</Display>
 			<Display displayPurpose="Floor">java.exe</Display>
-		</AppMode>	
-	
+		</AppMode>
 	
         <AppMode appModeID="PythonTest" name="PythonDemo">
 			<Display displayPurpose="FloorDisplay" args="-appName=python">C:\ActiveFloorDeploy\Content\BCA-ActiveFloor\Ross\dist\rossTkinter.exe</Display>

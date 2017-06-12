@@ -15,7 +15,7 @@ function survivalBoard(){
 
 	context2D.fillStyle = '#2ecc71';
 	context2D.font = '10px Arial';
-	context2D.fillText('Score: ' + score, 
+	context2D.fillText('Score: ' + score,
 		canvas.width - context2D.measureText('Score:' + score).width - 5, 10);
 }
 
@@ -24,7 +24,7 @@ function survivalBoard(){
 //
 function spawnTime(){
 	context2D.fillStyle = spawner.fillColor;
-	context2D.fillText(spawner.timer, 
+	context2D.fillText(spawner.timer,
 		spawner.x - context2D.measureText(spawner.timer).width / 2, spawner.y  + 3);
 }
 
@@ -42,12 +42,12 @@ function Ball(speed, size){
 
 	this.radius = size;
 	this.mass = Math.pow(this.radius, 2);
-	
+
 	this.x = canvas.width/2;
 	this.nextX = this.x;
 	this.y = canvas.height/2;
 	this.nextY = this.y;
-	
+
 	this.speed = Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy,2));
 	this.direction = Math.atan2(this.dy, this.dx);
 
@@ -58,7 +58,6 @@ function Ball(speed, size){
 // Check the wall collision and update
 //
 Ball.prototype.checkWallCollision = function(){
-
 	//move the ball
 	if (this.nextX + this.radius > canvas.width){
 		this.dx *= -1;
@@ -85,7 +84,7 @@ Ball.prototype.render = function(){
 	context2D.beginPath();
 	context2D.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
 	context2D.closePath();
-	context2D.fillStyle = '#e74c3c';
+	context2D.fillStyle = 'blue';
 	context2D.fill();
 
 };
@@ -121,7 +120,7 @@ function checkBallCollision(b1, b2){
 // Check if ball collides with the spawner
 //
 function checkSpawnCollision(b){
-	if (Math.sqrt(Math.pow(b.nextX - spawner.x, 2) + Math.pow(b.nextY - spawner.y, 2)) 
+	if (Math.sqrt(Math.pow(b.nextX - spawner.x, 2) + Math.pow(b.nextY - spawner.y, 2))
 		<= b.radius + spawner.radius)
 		return true;
 	else
@@ -148,13 +147,13 @@ function updateCol(b1, b2){
 	var final_dx2 = ((b2.mass - b1.mass) * dx2 + 2 * b1.mass * dx1)/(b1.mass + b2.mass);
 	var final_dy1 = dy1;
 	var final_dy2 = dy2;
-	b1.dx = Math.cos(collisionAngle) * final_dx1 + 
+	b1.dx = Math.cos(collisionAngle) * final_dx1 +
 		Math.cos(collisionAngle + Math.PI/2) * final_dy1;
-	b2.dx = Math.cos(collisionAngle) * final_dx2 + 
+	b2.dx = Math.cos(collisionAngle) * final_dx2 +
 		Math.cos(collisionAngle + Math.PI/2) * final_dy2;
-	b1.dy = Math.sin(collisionAngle) * final_dx1 + 
+	b1.dy = Math.sin(collisionAngle) * final_dx1 +
 		Math.sin(collisionAngle + Math.PI/2) * final_dy1;
-	b2.dy = Math.sin(collisionAngle) * final_dx2 + 
+	b2.dy = Math.sin(collisionAngle) * final_dx2 +
 		Math.sin(collisionAngle + Math.PI/2) * final_dy2;
 }
 
@@ -173,9 +172,9 @@ function updateSpawnCollision(b1, b2){
 		/(b1.mass + b2.mass);
 	var final_dy1 = dy1;
 
-	b1.dx = Math.cos(collisionAngle) * final_dx1 + 
+	b1.dx = Math.cos(collisionAngle) * final_dx1 +
 		Math.cos(collisionAngle + Math.PI/2) * final_dy1;
-	b1.dy = Math.sin(collisionAngle) * final_dx1 + 
+	b1.dy = Math.sin(collisionAngle) * final_dx1 +
 		Math.sin(collisionAngle + Math.PI/2) * final_dy1;
 }
 
@@ -210,14 +209,14 @@ function animate(){
 		if (balls[i].spawn){
 			if (checkSpawnCollision(balls[i]))
 				updateSpawnCollision(balls[i], spawner);
-			
+
 		} else{
 			//only if didn't leave spawner after spawn to avoid getting stuck
 			if (!checkSpawnCollision(balls[i]))
 				balls[i].spawn = true;
 		}
-		
-		//ball to ball Collision
+
+		// ball to ball Collision
 		for (var j = i + 1; j < balls.length; j++){
 			if (checkBallCollision(balls[i], balls[j])){
 				updateCol(balls[i], balls[j]);
@@ -245,7 +244,7 @@ function start(){
 	screen = 1;
 	score = 0;
 	active = true;
-	speed = 5;
+	speed = 3;
 	level = 0;
 	size = 7;
 	balls = [];
