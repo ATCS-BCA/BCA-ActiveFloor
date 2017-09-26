@@ -152,7 +152,7 @@ Paddle.prototype.move=function(x, y){
 }
 
 function Player1(){
-     this.paddle=new Paddle(88, 184, 16, 4);
+     this.paddle=new Paddle(80, 184, 33, 4);
      this.score=0;
 }
 
@@ -189,7 +189,7 @@ function press(a,b){
 }
 
 function Player2(){
-    this.paddle=new Paddle(88, 4, 16, 4);
+    this.paddle=new Paddle(80, 4, 33, 4);
     this.score=0;
 }
 

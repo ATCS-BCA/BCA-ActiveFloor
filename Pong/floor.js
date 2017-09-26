@@ -98,10 +98,7 @@ function refreshXML() {
     });
 }
 
-$(document).ready(function () {
-    'use strict';
-    startRefresh();
-});
+
 
 function startRefresh() {
     'use strict';
