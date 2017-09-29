@@ -251,6 +251,10 @@ Ball.prototype.update=function(paddle1, paddle2){
         this.y_speed=1;
         this.x=96;
         this.y=96;
+        player1.paddle.x = 80;
+        player1.paddle.y = 184;
+        player2.paddle.x = 80;
+        player2.paddle.y = 4;
     }
     if(this.y > 192){ // a point was scored
         player2.score++;
@@ -258,6 +262,10 @@ Ball.prototype.update=function(paddle1, paddle2){
         this.y_speed=-1;
         this.x=96;
         this.y=96;
+        player1.paddle.x = 80;
+        player1.paddle.y = 184;
+        player2.paddle.x = 80;
+        player2.paddle.y = 4;
     }
 
     if(top_y > 96){
