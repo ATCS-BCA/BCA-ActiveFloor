@@ -8,7 +8,7 @@ function drawBlock( x, y ) {
 }
 function render() {
     ctx.clearRect( 0, 0, W, H );
-    ctx.strokeStyle = 'lightgrey';
+    ctx.strokeStyle = 'white';
     for ( var x = 0; x < COLS; ++x ) {
         for ( var y = 0; y < ROWS; ++y ) {
             if ( board[ y ][ x ] ) {
@@ -18,7 +18,7 @@ function render() {
         }
     }
     ctx.fillStyle = 'red';
-    ctx.strokeStyle = 'lightgrey';
+    ctx.strokeStyle = 'white';
     for ( var y = 0; y < 4; ++y ) {
         for ( var x = 0; x < 4; ++x ) {
             if ( current[ y ][ x ] ) {

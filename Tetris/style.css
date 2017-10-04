@@ -1,5 +1,6 @@
 canvas {
     display: block;
-    background-image: url("Tetris.png");
+    background-image: url("Tetris_Gray.jpg");
+
     position:relative;right:8px;bottom:8px;
 }

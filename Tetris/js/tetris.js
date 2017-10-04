@@ -128,6 +128,7 @@ function keyPress( key ) {
             break;
         case 'rotate':
             var rotated = rotate( current );
+            
             if ( valid( 0, 0, rotated ) ) {
                 current = rotated;
             }
@@ -167,7 +168,7 @@ function newGame() {
     init();
     newShape();
     lose = false;
-    interval = setInterval( tick, 750 );
+    interval = setInterval( tick, 2000 );
     
 }
 

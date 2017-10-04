@@ -38,7 +38,7 @@ function drawGame()
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.strokeStyle = 'red';
+    ctx.strokeStyle = '#316d01';
     ctx.lineWidth = 2;
 
     ctx.beginPath();
@@ -93,7 +93,7 @@ function drawMain() {
                 ctx.fillStyle = 'black';
             }else{
                 allEmpty=false;
-                ctx.fillStyle = 'blue';
+                ctx.fillStyle = '#6d0047';
             }
             ctx.rect(16+i*32+1,16+j*32+1,30,30);
             ctx.fill();

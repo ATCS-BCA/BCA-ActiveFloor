@@ -6,7 +6,7 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 80;
+var refreshTime = 500;
 var highscore = 0;
 done=false;
 canType=true;
@@ -29,11 +29,11 @@ function refresh(){
 
     }
 }
-var timer = 0;
-function initCanvas(arr) {
-    if (timer <= 0) {
-        timer = 0;
-        window.setTimeout(initCanvas, 5000);
+//var timer = 0;
+function processInput(arr) {
+//    if (timer <= 0) {
+//        timer = 0;
+ //       window.setTimeout(initCanvas, 5000);
         'use strict';
         var up = 0;
         var down = 0;
@@ -48,7 +48,7 @@ function initCanvas(arr) {
             for (var j = 12; j < 14; j++) {
 
                 if (arr[i][j] === "*") {
-                    timer = 250;
+//                    timer = 250;
                     keyPress('left');
                 }
             }
@@ -58,7 +58,7 @@ function initCanvas(arr) {
             for (var j = 21; j < 23; j++) {
 
                 if (arr[i][j] === "*") {
-                    timer = 250;
+  //                  timer = 250;
                     keyPress('right');
                 }
             }
@@ -68,7 +68,7 @@ function initCanvas(arr) {
             for (var j = 16; j < 21; j++) {
 
                 if (arr[i][j] === "*") {
-                    timer = 3500;
+    //                timer = 3500;
                     keyPress('rotate');
 
                 }
@@ -79,7 +79,7 @@ function initCanvas(arr) {
             for (var j = 16; j < 21; j++) {
 
                 if (arr[i][j] === "*") {
-                    timer = 50;
+ //                   timer = 50;
                     keyPress('down');
                 }
             }
@@ -106,10 +106,10 @@ function initCanvas(arr) {
                         type(65 + max);
                     }
             }
-            canType = false;
+/*            canType = false;
             setTimeout(function () {
                 canType = true;
-            }, 500);
+            }, 500);*/
         }
 
         if (done && !highscore) {
@@ -141,11 +141,11 @@ function initCanvas(arr) {
         // if (key!=-1)
         //     press(key);
         //console.log(key);
-    }
-    timer =- 1;
+//    }
+//    timer =- 1;
 }
 
-function refreshXML() {
+function mainLoop() {
     'use strict';
 	// change IP address to match ActiveFloor server address
     $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
@@ -172,17 +172,17 @@ function refreshXML() {
 				
             dataHolderArray.push(n);
         });
-			
-        initCanvas(dataHolderArray);
     });
+
+    processInput(dataHolderArray);
+    render();
 }
 
 function startRefresh() {
     'use strict';
-    myInterval = setInterval(function () {refreshXML(); }, refreshTime);
+    myInterval = setInterval(function () {mainLoop(); }, refreshTime);
 
-    setInterval( render, 30 );
-
+//    setInterval( , 30 );
 }
 
 $(document).ready(function () {
