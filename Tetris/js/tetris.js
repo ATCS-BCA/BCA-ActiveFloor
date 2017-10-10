@@ -17,7 +17,8 @@ var shapes = [
     [ 0, 1, 1, 0,
       1, 1 ],
     [ 0, 1, 0, 0,
-      1, 1, 1 ]
+      1, 1, 1 ],
+
 ];
 var colors = [
     'orange', 'blue', 'green', 'purple', 'yellow', 'red', 'cyan'
@@ -47,7 +48,7 @@ function init() {
     for ( var y = 0; y < ROWS; ++y ) {
         board[ y ] = [];
         for ( var x = 0; x < COLS; ++x ) {
-            board[ y ][ x ] = 0;
+            board[ y ][ x ] = 0;` `
         }
     }
 }
@@ -128,7 +129,7 @@ function keyPress( key ) {
             break;
         case 'rotate':
             var rotated = rotate( current );
-            
+
             if ( valid( 0, 0, rotated ) ) {
                 current = rotated;
             }
@@ -169,6 +170,6 @@ function newGame() {
     newShape();
     lose = false;
     interval = setInterval( tick, 2000 );
-    
+
 }
 

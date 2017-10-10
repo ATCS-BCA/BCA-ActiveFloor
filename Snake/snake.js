@@ -20,9 +20,6 @@ speed = 400;
 highscore=false;
 started=false;
 
-
-
-
 img=new Array(4);
 
 imgcanvas=new Array(4);
@@ -30,7 +27,7 @@ imgctx=new Array(4);
 imgdata=new Array(4);
 
 for (var i=0;i<4;i++){
-    img[i] = document.createElement('img')
+    img[i] = document.createElement('img');
     img[i].src='arrow'+(i+1)+'.png';
 }
 

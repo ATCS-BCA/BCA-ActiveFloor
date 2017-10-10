@@ -44,6 +44,10 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">Pong\pong.html</Display>
 		</AppMode>
 
+		<AppMode appModeID="Rhythm" name="Rhythm">
+			<Display displayPurpose="Floor" applicationType="WebApp">Rhythm\rhythm.html</Display>
+		</AppMode>
+
 		<AppMode appModeID="Simon" name="Simon">
 			<Display displayPurpose="Floor" applicationType="WebApp">Simon\simon.html</Display>
 		</AppMode>

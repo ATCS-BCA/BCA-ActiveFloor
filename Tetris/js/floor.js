@@ -8,24 +8,24 @@ var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 500;
 var highscore = 0;
-done=false;
-canType=true;
+done = false;
+canType = true;
 
-function Restart(){
-    done=true;
+function Restart() {
+    done = true;
 }
 
-function refresh(){
-    if(active == false){
+function refresh() {
+    if (active == false) {
         var a = document.createElement('a');
-        a.id="restart";
+        a.id = "restart";
         a.title = "Restart";
         a.href = "index.html";
         document.body.appendChild(a);
-        
+
 
         document.getElementById('restart').click();
-        done=false;
+        done = false;
 
     }
 }
@@ -33,124 +33,124 @@ function refresh(){
 function processInput(arr) {
 //    if (timer <= 0) {
 //        timer = 0;
- //       window.setTimeout(initCanvas, 5000);
-        'use strict';
-        var up = 0;
-        var down = 0;
-        var left = 0;
-        var right = 0;
-        var middle = 0;
+    //       window.setTimeout(initCanvas, 5000);
+    'use strict';
+    var up = 0;
+    var down = 0;
+    var left = 0;
+    var right = 0;
+    var middle = 0;
 
-        var letterCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        var letter;
+    var letterCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var letter;
 
-        for (var i = 14; i <= 18; i++) {
-            for (var j = 12; j < 14; j++) {
+    for (var i = 14; i <= 18; i++) {
+        for (var j = 12; j < 14; j++) {
 
-                if (arr[i][j] === "*") {
+            if (arr[i][j] === "*") {
 //                    timer = 250;
-                    keyPress('left');
+                keyPress('left');
+            }
+        }
+    }
+
+    for (var i = 14; i <= 18; i++) {
+        for (var j = 21; j < 23; j++) {
+
+            if (arr[i][j] === "*") {
+                //                  timer = 250;
+                keyPress('right');
+            }
+        }
+    }
+
+    for (var i = 9; i <= 13; i++) {
+        for (var j = 16; j < 21; j++) {
+
+            if (arr[i][j] === "*") {
+                //                timer = 3500;
+                keyPress('rotate');
+
+            }
+        }
+    }
+
+    for (var i = 20; i <= 23; i++) {
+        for (var j = 16; j < 21; j++) {
+
+            if (arr[i][j] === "*") {
+                //                   timer = 50;
+                keyPress('down');
+            }
+        }
+    }
+
+    //console.log(letterCounts);
+    var max = 0;
+    for (var i = 1; i < letterCounts.length; i++) {
+        if (letterCounts[i] > letterCounts[max]) {
+            max = i;
+        }
+    }
+
+    if (canType && highscore) {
+        switch (max) {
+            case 26:
+                rem();
+                break;
+            case 27:
+                done();
+                break;
+            default:
+                if (letterCounts[max] > 0) {
+                    type(65 + max);
                 }
-            }
         }
+        /*            canType = false;
+         setTimeout(function () {
+         canType = true;
+         }, 500);*/
+    }
 
-        for (var i = 14; i <= 18; i++) {
-            for (var j = 21; j < 23; j++) {
+    if (done && !highscore) {
+        if (middle > 2) refresh();
+    }
 
-                if (arr[i][j] === "*") {
-  //                  timer = 250;
-                    keyPress('right');
-                }
-            }
+    var winner = Math.max(up, down, left, right);
+    var key;
+    if (winner > 1) {
+        switch (winner) {
+            case 0:
+                key = -1;
+                break;
+            case up:
+                key = 38;
+                break;
+            case down:
+                key = 40;
+                break;
+            case left:
+                key = 37;
+                break;
+            case right:
+                key = 39;
+                break;
         }
+    }
 
-        for (var i = 9; i <= 13; i++) {
-            for (var j = 16; j < 21; j++) {
-
-                if (arr[i][j] === "*") {
-    //                timer = 3500;
-                    keyPress('rotate');
-
-                }
-            }
-        }
-
-        for (var i = 20; i <= 23; i++) {
-            for (var j = 16; j < 21; j++) {
-
-                if (arr[i][j] === "*") {
- //                   timer = 50;
-                    keyPress('down');
-                }
-            }
-        }
-
-        //console.log(letterCounts);
-        var max = 0;
-        for (var i = 1; i < letterCounts.length; i++) {
-            if (letterCounts[i] > letterCounts[max]) {
-                max = i;
-            }
-        }
-
-        if (canType && highscore) {
-            switch (max) {
-                case 26:
-                    rem();
-                    break;
-                case 27:
-                    done();
-                    break;
-                default:
-                    if (letterCounts[max] > 0) {
-                        type(65 + max);
-                    }
-            }
-/*            canType = false;
-            setTimeout(function () {
-                canType = true;
-            }, 500);*/
-        }
-
-        if (done && !highscore) {
-            if (middle > 2) refresh();
-        }
-
-        var winner = Math.max(up, down, left, right);
-        var key;
-        if (winner > 1) {
-            switch (winner) {
-                case 0:
-                    key = -1;
-                    break;
-                case up:
-                    key = 38;
-                    break;
-                case down:
-                    key = 40;
-                    break;
-                case left:
-                    key = 37;
-                    break;
-                case right:
-                    key = 39;
-                    break;
-            }
-        }
-
-        // if (key!=-1)
-        //     press(key);
-        //console.log(key);
+    // if (key!=-1)
+    //     press(key);
+    //console.log(key);
 //    }
 //    timer =- 1;
 }
 
 function mainLoop() {
     'use strict';
-	// change IP address to match ActiveFloor server address
+    // change IP address to match ActiveFloor server address
     $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
         dataHolderArray = [];
-				
+
         $(data).find('BLFloor').each(function () {
             $item = $(this);
             ledsX = $item.attr('ledsX');
@@ -162,14 +162,14 @@ function mainLoop() {
             xCenter = ledPerSensorX / 2;
             yCenter = ledPerSensorY / 2;
         });
-				
+
         $(data).find('Row').each(function () {
             var $row, rowNum, rowVal, n;
             $row = $(this);
             rowNum = $row.attr('rownum');
             rowVal = $row.attr('values');
             n = rowVal.split(charDivide).join('');
-				
+
             dataHolderArray.push(n);
         });
     });
@@ -180,20 +180,22 @@ function mainLoop() {
 
 function startRefresh() {
     'use strict';
-    myInterval = setInterval(function () {mainLoop(); }, refreshTime);
+    myInterval = setInterval(function () {
+        mainLoop();
+    }, refreshTime);
 
 //    setInterval( , 30 );
 }
 
 $(document).ready(function () {
     'use strict';
-    canvas = document.getElementsByTagName( 'canvas' )[ 0 ];
-    ctx = canvas.getContext( '2d' );
+    canvas = document.getElementsByTagName('canvas')[0];
+    ctx = canvas.getContext('2d');
     newGame();
 
     startRefresh();
-    
-    sendSemaphore(function() {
+
+    sendSemaphore(function () {
         // Clear spacing and borders.
         $("body").addClass("app");
         $("div").addClass("app");
