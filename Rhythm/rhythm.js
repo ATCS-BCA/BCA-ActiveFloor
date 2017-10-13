@@ -1,38 +1,40 @@
-var canvas=document.createElement('canvas');
-var width=192;
-var height=192;
-canvas.width=width;
-canvas.height=height;
-var context=canvas.getContext('2d');
-context.font='12px sans-serif';
+var balls = [];
+var score;
+var lose;
+var timer;
 
-window.onload=function(){
-    document.body.appendChild(canvas);
-};
+function Ball(){
+    //x, y, radius, countdown
+    this.radius = 14;
+    this.countdown = 3; //change eventually
+    
+}
 
-var step=function(){
-    update();
-    render();
-};
+Ball.prototype.checkCountdown = function() {
+    //keep track of countdown - check if countdown < 0 or need to change #? 
+    
+}
 
-var update=function(){
+Ball.prototype.drawCircle = function() {
+    context2D.beginPath();
+    context2D.drawArc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+}
 
-};
-
-var render=function(){
+Ball.prototype.addCircle = function() {
 
 }
 
-function Ball(x, y){
-    //x, y, radius
+function start() {
+    var balls = [];
+    score = 0;
+    lose = false;
+
+    setInterval(function(){
+        timer--;
+        if(timer < 0) {
+            addCircle();
+            timer = 5;
+        }
+    }, 1000)
 }
 
-var keysDown={};
-
-window.addEventListener("keydown", function(event){
-    keysDown[event.keyCode]=true;
-});
-
-window.addEventListener("keyup", function(event){
-    delete keysDown[event.keyCode];
-});
