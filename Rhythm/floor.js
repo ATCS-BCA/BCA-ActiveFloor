@@ -1,5 +1,6 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
+/*
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
@@ -116,4 +117,4 @@ $(document).ready(function () {
 //        $("#floorCanvas").addClass("app");
         
     });
-});
+});*/
