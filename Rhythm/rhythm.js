@@ -2,16 +2,23 @@ var balls = [];
 var score;
 var lose;
 var timer = 5;
+var canvas, context2D;
+
+function createCanvas() {
+    canvas = document.getElementById('floorCanvas');
+    context2D = canvas.getContext('2d');
+    //define here? where is document
+}
 
 function Ball() {
     //x, y, radius, countdown
     this.radius = 14;
-    this.x = Math.floor(Math.random()*canvas.width);
-    this.y = Math.floor(Math.random()*canvas.height);
+    this.x = Math.floor(Math.random()*192);
+    this.y = Math.floor(Math.random()*192);
 }
 
 Ball.prototype.drawCircle = function() {
-    context2D.fillStyle = "#FF0000";
+    context2D.fillColor = "#FF0000";
     context2D.beginPath();
     context2D.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     context2D.closePath();

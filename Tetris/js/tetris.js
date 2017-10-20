@@ -3,7 +3,8 @@ var board = [];
 var lose;
 var interval;
 var current;
-var currentX, currentY;
+var currentX;
+var currentY;
 var shapes = [
     [ 1, 1, 1, 1 ],
     [ 1, 1, 1, 0,
