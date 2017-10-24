@@ -7,7 +7,6 @@ var canvas, context2D;
 function createCanvas() {
     canvas = document.getElementById('floorCanvas');
     context2D = canvas.getContext('2d');
-    //define here? where is document
 }
 
 function Ball() {
@@ -18,7 +17,7 @@ function Ball() {
 }
 
 Ball.prototype.drawCircle = function() {
-    context2D.fillColor = "#FF0000";
+    //context2D.fillColor = "#FF0000";
     context2D.beginPath();
     context2D.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     context2D.closePath();
@@ -41,6 +40,8 @@ function start() {
     var balls = [];
     score = 0;
     lose = false;
+
+    createCanvas();
 
     setInterval(function(){
         timer--;
