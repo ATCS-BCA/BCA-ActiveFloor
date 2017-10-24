@@ -184,14 +184,14 @@ function showGameOver() {
     active = false;
 
     ctx.fillStyle = 'green';
-    ctx.font = '16px sans-serif';
+    ctx.font = '16px Comic Sans MS';
 
     ctx.fillText('Game Over!', ((canvas.width / 2) - (ctx.measureText('Game Over!').width / 2)), 50);
 
-    ctx.font = '12px sans-serif';
+    ctx.font = '16px sans-serif';
 
 
-    ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width) / 2 - 1, 86, ctx.measureText('Stand here to restart').width + 3, 10 + 3);
+    ctx.fillRect((canvas.width - ctx.measureText('Stand here to restart').width) / 2 - 1, 86, ctx.measureText('Stand here to restart').width + 3, 10 + 3 + 5);
 
     ctx.fillStyle = 'white';
     ctx.fillText('Stand here to restart', (canvas.width - ctx.measureText('Stand here to restart').width) / 2, 192 / 2);
@@ -205,7 +205,6 @@ String.prototype.replaceAll = function(str1, str2, ignore)
     return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
 }
 
-
 function refresh(){
     if(active == false){
         var a = document.createElement('a');
@@ -213,7 +212,7 @@ function refresh(){
         a.title = "Restart";
         a.href = "tictactoe.html";
         document.body.appendChild(a);
-        
+
 
         document.getElementById('restart').click();
         done=false;
@@ -240,11 +239,11 @@ function initCanvas(arr) {
                 console.log ("lasti=" + lasti);
                 console.log ("lastj=" + lastj);
 
-              if((Math.floor(pos_i/3) == lasti) && (Math.floor(pos_j/3) == lastj)){
-                    press(pos_i, pos_j);
-                    lasti = pos_i%3;
-                    lastj = pos_j%3;
-                }
+            if((Math.floor(pos_i/3) == lasti) && (Math.floor(pos_j/3) == lastj)){
+                press(pos_i, pos_j);
+                lasti = pos_i%3;
+                lastj = pos_j%3;
+            }
             }
         }
     }
