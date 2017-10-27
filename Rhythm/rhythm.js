@@ -1,7 +1,7 @@
 var balls = [];
 var score;
 var lose;
-var timer = 5;
+var timer = 3;
 var canvas, context2D;
 
 function createCanvas() {
@@ -49,7 +49,7 @@ function start() {
         timer--;
         if(timer < 0) {
             addCircle();
-            timer = 5;
+            timer = 3;
         }
         //also need to check if individual countdowns are done
     }, 1000)
