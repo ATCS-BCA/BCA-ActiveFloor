@@ -85,7 +85,7 @@
         </AppMode>
 
         <AppMode appModeID="Wkspace-elicho21" name="Workspace-elicho21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\elicho21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\elicho21\Demo\floor.html</Display>
         </AppMode>
 
         <AppMode appModeID="Wkspace-tyluhl21" name="Workspace-tyluhl21">
