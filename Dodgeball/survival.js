@@ -244,7 +244,7 @@ function start(){
 	screen = 1;
 	score = 0;
 	active = true;
-	speed = 3;
+	speed = 5;
 	level = 0;
 	size = 7;
 	balls = [];
@@ -264,7 +264,10 @@ function start(){
 		spawner.timer--;
 		if (spawner.timer < 0){
 			spawner.timer = spawner.maxTime;
-			addBall(speed, Math.floor(Math.random() * (5)) + size - 2);
+			addBall(speed, Math.floor(Math.random() * (5)) + size - 4);
+			setTimeout(function() {
+				addBall(speed, Math.floor(Math.random() * (5)) + size - 4);
+			}, 500);
 		}
 	}, 1000));
 

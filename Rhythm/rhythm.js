@@ -14,15 +14,15 @@ function createCanvas() {
 function Ball() {
     //x, y, radius, countdown
     this.radius = 14;
-    this.x = Math.floor(Math.random()*192);
-    this.y = Math.floor(Math.random()*192);
+    this.x = Math.floor(Math.random()*canvas.width);
+    this.y = Math.floor(Math.random()*canvas.height);
 }
 
 Ball.prototype.drawCircle = function() {
+    context2D.fillColor = "#FF0000";
     context2D.beginPath();
     context2D.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     context2D.closePath();
-    context2D.fillColor = "#FF0000";
     context2D.fill();
 }
 
@@ -35,7 +35,6 @@ function draw() {
     for(var i = 0; i < balls.length; i++) {
         balls[i].drawCircle();
     }
-    
 }
 
 function start() {

@@ -1,6 +1,6 @@
 var score = 0;
 var active = true;
-var speed = 3;
+var speed = 5;
 var level = 0;
 var size = 10;
 var script;

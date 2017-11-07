@@ -19,6 +19,13 @@ var refreshTime = 1000/60;
 var lasti=1;
 var lastj=1;
 active = true;
+
+var initialSpacing = 24;
+var mainTileWidth = 144; // width of main grid
+var individualGridWidth = 48; // width of the smaller tic tac toe grids contained within the tiles of the main grid
+var smallTileWidth = 48 / 3;  // width of the individual tiles that make up the smaller tic tac toe grds
+var floorWidth = 192;
+
 var wonBoards = [
     "","","",
     "","","",
@@ -57,31 +64,37 @@ window.onload = function()
         //Creates the tic tac toe boards in each of the spots in the main one
         ctx.strokeStyle = 'blue';
         ctx.lineWidth = 1;
-
         ctx.beginPath();
-        for (var j = 24; j <=120; j+=48){
-            for (var i = (48 / 3); i <= (120 / 3); i += (48 / 3)) {
-                ctx.moveTo(j, 24+i);
-                ctx.lineTo(j+48, 24+i);
-                ctx.moveTo(j+i, 24);
-                ctx.lineTo(j+i, 72);
-                ctx.moveTo(j, i + 72);
-                ctx.lineTo(j+48, i + 72);
-                ctx.moveTo(j+i, 72);
-                ctx.lineTo(j+i, 120);
-                ctx.moveTo(j, 168 - i);
-                ctx.lineTo(j+48, 168 - i);
-                ctx.moveTo(j+i, 120);
-                ctx.lineTo(j+i, 168);
+               for (var individualTile = initialSpacing; individualTile <=120; individualTile+=individualGridWidth){
+                   for (var i = (smallTileWidth); i <= (120 / 3); i += (smallTileWidth)) {
+                        ctx.moveTo(individualTile, 24+i);
+                        ctx.lineTo(individualTile+48, 24+i);
+                        ctx.moveTo(individualTile+i, 24);
+                        ctx.lineTo(individualTile+i, 72);
+                        ctx.moveTo(individualTile, i + 72);
+                        ctx.lineTo(individualTile+48, i + 72);
+                        ctx.moveTo(individualTile+i, 72);
+                        ctx.lineTo(individualTile+i, 120);
+                        ctx.moveTo(individualTile, 168 - i);
+                        ctx.lineTo(individualTile+48, 168 - i);
+                        ctx.moveTo(individualTile+i, 120);
+                        ctx.lineTo(individualTile+i, 168);
+
             }
         }
-
         ctx.stroke();
-
+        // // draw current active board
+        // ctx.strokeStyle = 'green';
+        // ctx.lineWidth = 1;
+        // ctx.beginPath();
+        //
+        // ctx.moveTo(lasti, lastf);
+        // ctx.lineTo(lasti+48, lastf);
+        //
+        // ctx.stroke();
         //Creates the main tic tac toe board
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 2;
-
         ctx.beginPath();
         for (var i =72; i <=120; i+=48){
             ctx.moveTo(i, 24);
@@ -146,6 +159,7 @@ window.onload = function()
 }
 
 function drawMain() {
+    // make sure to do the highlighting here
     var allFull=true;
         for (var i = 0; i < 9 ; i++) {
             for (var j = 0; j < 9 ; j++) {
@@ -239,11 +253,13 @@ function initCanvas(arr) {
                 console.log ("lasti=" + lasti);
                 console.log ("lastj=" + lastj);
 
-            if((Math.floor(pos_i/3) == lasti) && (Math.floor(pos_j/3) == lastj)){
-                press(pos_i, pos_j);
-                lasti = pos_i%3;
-                lastj = pos_j%3;
-            }
+                // determines the values of the position of the cells
+                // lasti and lastj are the position of the big cell that they should go to
+                if((Math.floor(pos_i/3) == lasti) && (Math.floor(pos_j/3) == lastj)){
+                    press(pos_i, pos_j);
+                    lasti = pos_i%3;
+                    lastj = pos_j%3;
+                }
             }
         }
     }
