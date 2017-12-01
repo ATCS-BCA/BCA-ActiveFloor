@@ -82,17 +82,19 @@ window.onload = function()
 
             }
         }
+
         ctx.stroke();
-        // // draw current active board
-        // ctx.strokeStyle = 'green';
-        // ctx.lineWidth = 1;
-        // ctx.beginPath();
-        //
-        // ctx.moveTo(lasti, lastf);
-        // ctx.lineTo(lasti+48, lastf);
-        //
-        // ctx.stroke();
-        //Creates the main tic tac toe board
+        // draw current active board
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        // i = x
+        // j = y
+        ctx.moveTo(24 + 48 * lasti, 24 + 48 * lastj);
+        ctx.lineTo(24 + lasti * 48 + 48, 24 + 48 * lastj + 48);
+
+        ctx.stroke();
+        // Creates the main tic tac toe board
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -160,6 +162,7 @@ window.onload = function()
 
 function drawMain() {
     // make sure to do the highlighting here
+    // option of highlighting funcion: ctx.rect(x of upper left corner, y of upper left corner, width, height);
     var allFull=true;
         for (var i = 0; i < 9 ; i++) {
             for (var j = 0; j < 9 ; j++) {

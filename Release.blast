@@ -28,6 +28,11 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">Dodgeball\dodgeball.html</Display>
 		</AppMode>
 
+		<AppMode appModeID="Basketball" name="Basketball">
+            <Display displayPurpose="Floor" appilcationType="WebApp">Basketball\basketball.html</Display>
+        </AppMode>
+
+
 		<AppMode appModeID="LightsOut" name="LightsOut">
 			<Display displayPurpose="Floor" applicationType="WebApp">LightsOut\lightsout.html</Display>
 		</AppMode>
