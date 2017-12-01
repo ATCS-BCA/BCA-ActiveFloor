@@ -84,14 +84,29 @@ window.onload = function()
         }
 
         ctx.stroke();
+
         // draw current active board
-        ctx.strokeStyle = 'green';
+        
+        ctx.strokeStyle = 'yellow';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        // i = x
-        // j = y
-        ctx.moveTo(24 + 48 * lasti, 24 + 48 * lastj);
-        ctx.lineTo(24 + lasti * 48 + 48, 24 + 48 * lastj + 48);
+        // i = y
+        // j = x
+
+        // 24 = spacing between edge of floor and edge of tic tac toe board
+        // 48 = width of one board
+        // 16 = space of one space in the small tic tac toe grids (like where the x or o goes)
+        ctx.moveTo(24 + 48 * lastj, 24 + 48 * lasti + 16);
+        ctx.lineTo(24 + 48 * lastj + 16 * 3, 24 + 48 * lasti + 16);
+
+        ctx.moveTo(24 + 48 * lastj, 24 + 48 * lasti + 16 * 2);
+        ctx.lineTo(24 + 48 * lastj + 16 * 3, 24 + 48 * lasti + 16 * 2);
+
+        ctx.moveTo(24 + 48 * lastj + 16, 24 + 48 * lasti);
+        ctx.lineTo(24 + 48 * lastj + 16, 24 + 48 * lasti + 16 * 3);
+
+        ctx.moveTo(24 + 48 * lastj + 16 * 2, 24 + 48 * lasti);
+        ctx.lineTo(24 + 48 * lastj + 16 * 2, 24 + 48 * lasti + 16 * 3);
 
         ctx.stroke();
         // Creates the main tic tac toe board

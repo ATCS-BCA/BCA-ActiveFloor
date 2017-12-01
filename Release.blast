@@ -78,26 +78,26 @@
 		</AppMode>
 
         <AppMode appModeID="Wkspace-alevig21" name="Workspace-alevig21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\alevig21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\alevig21\floor.html</Display>
         </AppMode>
 
         <AppMode appModeID="Wkspace-antlek21" name="Workspace-antlek21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\antlek21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\antlek21\floor.html</Display>
         </AppMode>
 
         <AppMode appModeID="Wkspace-davdu21" name="Workspace-davdu21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\davdu21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\davdu21\floor.html</Display>
         </AppMode>
 
         <AppMode appModeID="Wkspace-elicho21" name="Workspace-elicho21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\elicho21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\elicho21\floor.html</Display>
         </AppMode>
 
         <AppMode appModeID="Wkspace-jacklee21" name="Workspace-jacklee21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\jacklee21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\jacklee21\floor.html</Display>
         </AppMode>
         <AppMode appModeID="Wkspace-tyluhl21" name="Workspace-tyluhl21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\tyluhl21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\tyluhl21\floor.html</Display>
         </AppMode>
 
  		<AppMode appModeID="FloorBurst" name="FloorBurst">
