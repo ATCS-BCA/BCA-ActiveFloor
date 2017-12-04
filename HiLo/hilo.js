@@ -1,7 +1,6 @@
 $(document).ready(function() {
     sendSemaphore(function() {
         // Clear spacing and borders.
-        $("body").addClass("app")
         $("#canvas").addClass("app")
 
     })
