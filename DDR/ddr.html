@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dance Dance Revolution</title>
+	</head>
+<body>
+	<canvas id='canvas' width="192" height="192"></canvas>
+	<div id='mouseX'></div>
+	<div id='mouseY'></div>
+
+	<script src="jquery.js"></script>
+	<script src="ddr.js"></script>
+	<script src="events.js"></script>
+	<script src="draw.js"></script>
+	<script src="render.js"></script>
+	<script src="game.js"></script>
+
+	<script src="songs/alone.js"></script>
+
+	<style>
+		@font-face {
+			font-family: 'Serpentine';
+			src: url('font/serpentine.woff') format('woff'),
+				 url('font/serpentine.ttf') format('truetype');
+		}
+		#mouseX, #mouseY {
+			font-size: 12px;
+		}
+	</style>
+</body>
+</html>
