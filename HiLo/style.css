@@ -1,7 +1,4 @@
-.app, #canvas {
-	margin: 0 !important;
-	padding: 0 !important;
-	border: 0 !important;
-	width: 100%;
-	height: 100%;
+body {
+	margin: 0;
+	padding: 0;
 }
