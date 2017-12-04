@@ -32,6 +32,9 @@
             <Display displayPurpose="Floor" appilcationType="WebApp">Basketball\basketball.html</Display>
         </AppMode>
 
+		<AppMode appModeID="HiLo" name="HiLo">
+			<Display displayPurpose="Floor" applicationType="WebApp">HiLo\hilo.html</Display>
+		</AppMode>
 
 		<AppMode appModeID="LightsOut" name="LightsOut">
 			<Display displayPurpose="Floor" applicationType="WebApp">LightsOut\lightsout.html</Display>
@@ -83,6 +86,10 @@
 
         <AppMode appModeID="Wkspace-antlek21" name="Workspace-antlek21">
             <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\antlek21\Demo\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-bryres" name="Workspace-bryres">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\bryres\Demo\floor.html</Display>
         </AppMode>
 
         <AppMode appModeID="Wkspace-davdu21" name="Workspace-davdu21">
