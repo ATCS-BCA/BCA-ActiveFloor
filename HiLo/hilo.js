@@ -38,7 +38,7 @@ $(document).ready(function() {
     clickRegion: (x1, y1, x2, y2) => {
         for (let i=x1; i<x2; i++) {
             for (let j=y1; j<y2; j++) {
-                if (Floor.tileDown(i,j)) return true
+                if (Floor.tilePos(i,j)) return true
             }
         }
         return false
