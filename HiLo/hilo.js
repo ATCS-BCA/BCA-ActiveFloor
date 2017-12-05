@@ -39,7 +39,7 @@ $(document).ready(function() {
     clickRegion: (x1, y1, x2, y2) => {
         for (let i=x1; i<x2; i++) {
             for (let j=y1; j<y2; j++) {
-                if (Floor.tilePos(i,j)) return true
+                if (Floor.tileDown(i,j)) return true
             }
         }
         return false
@@ -95,7 +95,7 @@ $(document).ready(function() {
         clearInterval(Game.clock)
         let hi = Game.numArray[Game.index + 1] > Game.numArray[Game.index]
         let lo = !hi
-        if (Floor.clickRegion(4,9,16,19)) {
+        if (Floor.clickRegion(4,16,9,19)) {
             if (lo) {
                 if (Game.numArray[Game.index + 2]) {
                     clearInterval(Game.answerClock)
@@ -114,7 +114,7 @@ $(document).ready(function() {
             }
         }
         else {
-            if (Floor.clickRegion(14,19,16,19)) {
+            if (Floor.clickRegion(14,16,19,19)) {
                 if (hi) {
                     if (Game.numArray[Game.index + 2]) {
                         clearInterval(Game.answerClock)
@@ -136,7 +136,7 @@ $(document).ready(function() {
         //canvas.removeEventListener('mousedown', answerCheck)
     }
     function backCheck() {
-        if (Floor.clickRegion(8,15,13,16)) {
+        if (Floor.clickRegion(8,13,15,16)) {
             clearInterval(Game.clock)
             clearInterval(Game.answerClock)
             Game.init()
@@ -144,7 +144,7 @@ $(document).ready(function() {
         //canvas.removeEventListener('mousedown', backCheck)
     }
     function startCheck() {
-        if (Floor.clickRegion(8,15,16,19)) {
+        if (Floor.clickRegion(8,16,15,19)) {
             Render.clear()
             clearInterval(Game.clock)
             Game.stage = 'nums'
