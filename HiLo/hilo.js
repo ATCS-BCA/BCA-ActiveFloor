@@ -8,24 +8,25 @@ $(document).ready(function() {
         tiles: [],
         lastTiles: [],
         getTiles: () => {
-			let floorTiles = []
-			$.get('http://activefloor.bca.bergen.org:8080', data => {
-				$(data).find('Row').each(function () {
-					var $row, $vals, n
-					$row = $(this);
-					$vals = $row.attr('values')
-					valArray = $vals.split(',')
-					numArray = []
-					for (let i in valArray) {
-						numArray[i] = valArray[i] == '.' ? 0 : 1
-					}
-					floorTiles.push(numArray)
-				})
-		tiles = floorTiles
-		if (lastTiles == []) { lastTiles = floorTiles }
-		else { lastTiles == tiles }
-		})
-	},
+        let floorTiles = []
+        $.get('http://activefloor.bca.bergen.org:8080', data => {
+        $(data).find('Row').each(function () {
+        var $row, $vals, n
+        $row = $(this);
+        $vals = $row.attr('values')
+        valArray = $vals.split(',')
+        numArray = []
+        for (let i in valArray) {
+            numArray[i] = valArray[i] == '.' ? 0 : 1
+        }
+        floorTiles.push(numArray)
+    })
+    tiles = floorTiles
+    if (lastTiles == []) { lastTiles = floorTiles }
+    else { lastTiles == tiles }
+    console.log(tiles)
+})
+},
     tileDown: (x, y) => {
         return Floor.lastTiles[x][y] == 0 && tiles[x][y] == 1
     },
@@ -44,6 +45,7 @@ $(document).ready(function() {
         return false
     }
 }
+    Floor.getTiles()
 
     /* Canvas constants */
     const canvas = document.getElementById('canvas')
