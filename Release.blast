@@ -56,6 +56,10 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">Rhythm\rhythm.html</Display>
 		</AppMode>
 
+		<AppMode appModeID="Sample" name="Sample">
+        	<Display displayPurpose="Floor" applicationType="WebApp">Sample\sample.html</Display>
+        </AppMode>
+
 		<AppMode appModeID="Simon" name="Simon">
 			<Display displayPurpose="Floor" applicationType="WebApp">Simon\simon.html</Display>
 		</AppMode>
