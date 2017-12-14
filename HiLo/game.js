@@ -29,11 +29,11 @@ var Floor = {
 	            $row = $(this);
 	            $vals = $row.attr('values')
 	            valArray = $vals.split(',')
+				console.log(valArray)
 	            numArray = []
 	            for (let i in valArray) {
 	            	numArray[i] = valArray[i] == '.' ? 0 : 1
 	            }
-				console.log(numArray)
 	            floorTiles.push(numArray)
 	        })
 	        if (Floor.lastTiles == []) { 
