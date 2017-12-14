@@ -38,8 +38,9 @@ var Floor = {
 	        if (Floor.lastTiles == []) { 
 	        	Floor.lastTiles = floorTiles
 	        	Floor.tiles = floorTiles
+				console.log(Floor.tiles)
 	        }
-	        for (let row in floorTiles) {
+	        /*for (let row in floorTiles) {
 	        	for (let col in floorTiles[row]) {
 	        		let last = Floor.lastTiles[row][col]
 	        		let cur = floorTiles[row][col]
@@ -56,7 +57,7 @@ var Floor = {
 	        			Floor.tiles[row][col] = 3
 	        		}
 	        	}
-	        }
+	        }*/
 	       	Floor.lastTiles = Floor.tiles
     	})
 	}
