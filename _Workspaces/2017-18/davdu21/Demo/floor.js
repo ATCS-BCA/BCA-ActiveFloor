@@ -38,7 +38,7 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-				drawObj('circle', tempX, tempY, 5);
+				drawObj('square', tempX, tempY, 5);
             }
         }
     }

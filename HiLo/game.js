@@ -33,6 +33,7 @@ var Floor = {
 	            for (let i in valArray) {
 	            	numArray[i] = valArray[i] == '.' ? 0 : 1
 	            }
+				console.log(numArray)
 	            floorTiles.push(numArray)
 	        })
 	        if (Floor.lastTiles == []) { 
