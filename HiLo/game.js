@@ -25,11 +25,10 @@ var Floor = {
 		let floorTiles = []
     	$.get('http://activefloor.bca.bergen.org:8080', data => {
     		$(data).find('Row').each(function () {
-	            var $row, $vals, n
+	            var $row, $vals
 	            $row = $(this);
 	            $vals = $row.attr('values')
 	            valArray = $vals.split(',')
-				console.log(valArray)
 	            numArray = []
 	            for (let i in valArray) {
 	            	numArray[i] = valArray[i] == '.' ? 0 : 1
@@ -40,26 +39,25 @@ var Floor = {
 	        	Floor.lastTiles = floorTiles
 	        	Floor.tiles = floorTiles
 	        }
-	        for (let y in floorTiles) {
-	        	for (let x in floorTiles[y]) {
-	        		let last = Floor.lastTiles[y][x]
-	        		let cur = floorTiles[y][x]
+	        for (let row in floorTiles) {
+	        	for (let col in floorTiles[row]) {
+	        		let last = Floor.lastTiles[row][col]
+	        		let cur = floorTiles[row][col]
 	        		if (last == 0 && cur == 0) {
-	        			Floor.tiles[y][x] = 0
+	        			Floor.tiles[row][col] = 0
 	        		}
 	        		else if (last == 0 && cur == 1) {
-	        			Floor.tiles[y][x] = 1
+	        			Floor.tiles[row][col] = 1
 	        		}
 	        		else  if (last == 1 && cur == 1) {
-	        			Floor.tiles[y][x] = 2
+	        			Floor.tiles[row][col] = 2
 	        		}
 	        		else if (last == 1 && cur == 0) {
-	        			Floor.tiles[y][x] = 3
+	        			Floor.tiles[row][col] = 3
 	        		}
 	        	}
 	        }
 	       	Floor.lastTiles = Floor.tiles
-	       	console.log(Floor.tiles)
     	})
 	}
 }
