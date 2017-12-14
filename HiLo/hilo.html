@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Hi-Lo: A Memory Game</title>
+	<head>
+		<title>Sample ActiveFloor Project</title>
+	</head>
+<body style="overflow: hidden">
+	<!-- Active Floor is 192x192 units, which is our canvas size -->
+	<canvas id='canvas' width="192" height="192"></canvas>
+	
+	<div id='mouseX'></div>
+	<div id='mouseY'></div> <!-- Use these if you want to test your program on a computer -->
+	
+	<!-- Important: load these scripts in order of dependency.
+	Your actual game/app is typically the last script. -->
 	<script src="BLSemaphore.js"></script>
 	<script src="jquery.js"></script>
-	<script src="hilo.js"></script>
+	<script src="sampleconfig.js"></script>
+	<script src="music.js"></script>
+	<script src="draw.js"></script>
+	<script src="render.js"></script>
+	<script src="events.js"></script>
+	<script src="game.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="overflow: hidden">
-<canvas id='canvas' width="192" height="192"></canvas>
-<!--<div id='mouseX'></div>
-<div id='mouseY'></div>-->
 </body>
+<style>
+	#mouseX, #mouseY {
+		font-size: 12px;
+	}
+</style>
 </html>
