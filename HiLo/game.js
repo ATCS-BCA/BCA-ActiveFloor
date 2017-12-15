@@ -33,6 +33,9 @@ var Floor = {
     floorTiles.push(numArray)
 })
 Floor.tiles = floorTiles
+if (Floor.lastTiles null) {
+	Floor.lastTiles = Floor.tiles
+}
 })
 for (let row in Floor.tiles) {
     for (let col in Floor.tiles[row]) {
