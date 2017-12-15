@@ -27,85 +27,85 @@
 */
 
 var Render = {
-	clear: () => {
-		//Alternative: Draw.rectClear()
-		Draw.rectFill(0,0,cw,ch,'black')
-	},
-	floorStatus: () => {
-		for (let y in Floor.tiles) {
-			for (let x in Floor.tiles[y]) {
-				switch(Floor.tiles[x][y]) {
-					case 0:
-						Draw.rectFill(8*x, 8*y, 8, 8, 'blue')
-						break
-					case 1:
-						Draw.rectFill(8*x, 8*y, 8, 8, 'orange')
-						break
-					case 2:
-						Draw.rectFill(8*x, 8*y, 8, 8, 'green')
-						break
-					case 3:
-						Draw.rectFill(8*x, 8*y, 8, 8, 'yellow')
-						break
-				}
-			}
-		}
-	},
-	mouseTiles: () => {
-		/* Cursor for testing on PC */
-		Draw.colorStroke('gray')
-		Draw.rectStroke(tx*8, ty*8, 8, 8)
-		$('#mouseX').text(`MouseX: ${Math.round(mx*100)/100} Tile: ${tx}`)
-		$('#mouseY').text(`MouseY: ${Math.round(my*100)/100} Tile: ${ty}`)
-	},
-	rainbowCircles: () => {
-		if (!Game.rainbow) {
-			Game.rainbow = []
-			for (let a = 0; a < 360; a += 3) {
-				Game.rainbow.push(a)
-			}
-		}
-		else {
-			for (a in Game.rainbow) {
-				let ang = Game.rainbow[a]
-				let c = rainbowColor(ang/360 * 100)
-				let x = (off) => {
-					return Math.sin(Game.toRad((off - a) * (360/Game.rainbow.length)))
-				}
-				let y = (off) => {
-					return Math.cos(Game.toRad((off - a) * (360/Game.rainbow.length)))
-				}
-				for (let z=0; z<29; z++) {
-					Draw.circleFill(cw/2 + (88 - 3*z) * x(z), ch/2 + (88 - 3*z) * y(z), 2, c)
-				}
-			}
-			let b = Game.rainbow.pop()
-			Game.rainbow.splice(0,0,b)
-		}
-	},
-	update: () => {
-		Render.clear()
-		Floor.getTiles() // see game.js
-		switch(Game.stage) {
-			case 'main':
-				//Render.main()
-				Render.floorStatus()
-				//Render.rainbowCircles() // I know the rainbows are a bit extra. Feel free to uncomment Render.main() and comment this instead.
-				break
-			case 'play':
-				//e.g. Render.ball(), Render.score(), etc.
-				break
-		}
-		Render.mouseTiles()
-		/* This keeps the game loop running at a smooth framerate */
-		requestAnimationFrame(() => {
-			Render.update()
-		})
-	},
-	main: () => {
-		/* Elements drawn for the 'main' stage */
-		Draw.rectFill(cw/2 - 4, ch/2 - 4, 8, 8, Game.color)
-	}
+    clear: () => {
+    //Alternative: Draw.rectClear()
+    Draw.rectFill(0,0,cw,ch,'black')
+},
+floorStatus: () => {
+    for (let row in Floor.tiles) {
+        for (let col in Floor.tiles[row]) {
+            switch(Floor.tiles[row][col]) {
+                case 0:
+                    Draw.rectFill(8*row, 8*col, 8, 8, 'blue')
+                    break
+                case 1:
+                    Draw.rectFill(8*row, 8*col, 8, 8, 'orange')
+                    break
+                case 2:
+                    Draw.rectFill(8*x, 8*y, 8, 8, 'green')
+                    break
+                case 3:
+                    Draw.rectFill(8*x, 8*y, 8, 8, 'yellow')
+                    break
+            }
+        }
+    }
+},
+mouseTiles: () => {
+    /* Cursor for testing on PC */
+    Draw.colorStroke('gray')
+    Draw.rectStroke(tx*8, ty*8, 8, 8)
+    $('#mouseX').text(`MouseX: ${Math.round(mx*100)/100} Tile: ${tx}`)
+    $('#mouseY').text(`MouseY: ${Math.round(my*100)/100} Tile: ${ty}`)
+},
+rainbowCircles: () => {
+    if (!Game.rainbow) {
+        Game.rainbow = []
+        for (let a = 0; a < 360; a += 3) {
+            Game.rainbow.push(a)
+        }
+    }
+    else {
+        for (a in Game.rainbow) {
+            let ang = Game.rainbow[a]
+            let c = rainbowColor(ang/360 * 100)
+            let x = (off) => {
+                return Math.sin(Game.toRad((off - a) * (360/Game.rainbow.length)))
+            }
+            let y = (off) => {
+                return Math.cos(Game.toRad((off - a) * (360/Game.rainbow.length)))
+            }
+            for (let z=0; z<29; z++) {
+                Draw.circleFill(cw/2 + (88 - 3*z) * x(z), ch/2 + (88 - 3*z) * y(z), 2, c)
+            }
+        }
+        let b = Game.rainbow.pop()
+        Game.rainbow.splice(0,0,b)
+    }
+},
+update: () => {
+    Render.clear()
+    Floor.getTiles() // see game.js
+    switch(Game.stage) {
+        case 'main':
+            //Render.main()
+            Render.floorStatus()
+            //Render.rainbowCircles() // I know the rainbows are a bit extra. Feel free to uncomment Render.main() and comment this instead.
+            break
+        case 'play':
+            //e.g. Render.ball(), Render.score(), etc.
+            break
+    }
+    Render.mouseTiles()
+    /* This keeps the game loop running at a smooth framerate */
+    requestAnimationFrame(() => {
+        Render.update()
+})
+},
+main: () => {
+    /* Elements drawn for the 'main' stage */
+    Draw.rectFill(cw/2 - 4, ch/2 - 4, 8, 8, Game.color)
+}
 }
 
 // Color algorithms
@@ -134,6 +134,6 @@ function HSVtoRGB (h, s, v) {
     }
 }
 function rainbowColor (p) {
-	var rgb = HSVtoRGB(p/100.0*0.85, 1.0, 1.0)
-	return 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')'
+    var rgb = HSVtoRGB(p/100.0*0.85, 1.0, 1.0)
+    return 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')'
 }
