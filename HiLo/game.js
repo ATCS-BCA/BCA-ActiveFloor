@@ -73,11 +73,11 @@ var Game = {
     init: () => {
     Floor.getTiles()
 // Music.init() (see music.js)
-//Game.stage = 'main' // Set the starting stage of the game
+Game.stage = 'main' // Set the starting stage of the game
 Game.score = 0 // Example of a default variable value
 Game.timestamp = 0
 Game.color = 'white'
-requestAnimationFrame(Render.update) // Make sure to start your render loop here!
+//requestAnimationFrame(Render.update) // Make sure to start your render loop here!
 },
 toRad: (deg) => { return deg * Math.PI / 180 },
 reset: () => {
