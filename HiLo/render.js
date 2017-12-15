@@ -36,16 +36,16 @@ floorStatus: () => {
         for (let col in Floor.tiles[row]) {
             switch(Floor.tiles[row][col]) {
                 case 0:
-                    Draw.rectFill(8*row, 8*col, 8, 8, 'lightblue')
+                    Draw.rectFill(8*row, 8*col, 8, 8, '#222')
                     break
                 case 1:
-                    Draw.rectFill(8*row, 8*col, 8, 8, 'red')
+                    Draw.rectFill(8*row, 8*col, 8, 8, '#555')
                     break
                 case 2:
-                    Draw.rectFill(8*x, 8*y, 8, 8, 'lightgreen')
+                    Draw.rectFill(8*row, 8*col, 8, 8, '#888')
                     break
                 case 3:
-                    Draw.rectFill(8*x, 8*y, 8, 8, 'yellow')
+                    Draw.rectFill(8*row, 8*col, 8, 8, '#AAA')
                     break
             }
         }

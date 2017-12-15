@@ -33,13 +33,10 @@ var Floor = {
     floorTiles.push(numArray)
 })
 Floor.tiles = floorTiles
-if (Floor.lastTiles null) {
-	Floor.lastTiles = Floor.tiles
-}
 })
 for (let row in Floor.tiles) {
     for (let col in Floor.tiles[row]) {
-        let last = Floor.lastTiles[row][col]
+        let last = Floor.lastTiles == null ? 0 : Floor.lastTiles[row][col]
         let cur = Floor.tiles[row][col]
         if (last == 0 && cur == 0) {
             Floor.tiles[row][col] = 0
