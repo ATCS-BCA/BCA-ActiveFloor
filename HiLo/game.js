@@ -32,15 +32,12 @@ var Floor = {
     }
     floorTiles.push(numArray)
 })
-console.table(floorTiles)
+Floor.tiles = floorTiles
 })
-if (Floor.lastTiles == null) {
-    Floor.tiles = floorTiles
-}
-for (let row in floorTiles) {
-    for (let col in floorTiles[row]) {
+for (let row in Floor.tiles) {
+    for (let col in Floor.tiles[row]) {
         let last = Floor.lastTiles[row][col]
-        let cur = floorTiles[row][col]
+        let cur = Floor.tiles[row][col]
         if (last == 0 && cur == 0) {
             Floor.tiles[row][col] = 0
         }
@@ -77,7 +74,7 @@ Game.stage = 'main' // Set the starting stage of the game
 Game.score = 0 // Example of a default variable value
 Game.timestamp = 0
 Game.color = 'white'
-//requestAnimationFrame(Render.update) // Make sure to start your render loop here!
+requestAnimationFrame(Render.update) // Make sure to start your render loop here!
 },
 toRad: (deg) => { return deg * Math.PI / 180 },
 reset: () => {
