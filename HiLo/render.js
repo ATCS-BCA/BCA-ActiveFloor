@@ -32,6 +32,7 @@ var Render = {
     Draw.rectFill(0,0,cw,ch,'black')
 },
 floorStatus: () => {
+    	console.log(Floor.tiles)
     for (let row in Floor.tiles) {
         for (let col in Floor.tiles[row]) {
             switch(Floor.tiles[row][col]) {
