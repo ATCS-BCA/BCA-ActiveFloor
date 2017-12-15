@@ -81,9 +81,9 @@ rainbowCircles: () => {
     }
 },
 update: () => {
-    Render.clear()
     Floor.getTiles() // see game.js
-    switch(Game.stage) {
+	Render.clear()
+	switch(Game.stage) {
         case 'main':
             //Render.main()
             Render.floorStatus()
@@ -93,7 +93,7 @@ update: () => {
             //e.g. Render.ball(), Render.score(), etc.
             break
     }
-    Render.mouseTiles()
+    //Render.mouseTiles()
     /* This keeps the game loop running at a smooth framerate */
     requestAnimationFrame(() => {
         Render.update()
