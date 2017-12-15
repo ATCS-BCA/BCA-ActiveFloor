@@ -8,13 +8,10 @@ sendSemaphore(function() {
 /* This is a floor object to retrieve and parse the active floor input.
 [Methods]
 .getTiles()
-.tilePos(x, y)
 ==============
 .getTiles():
 	Iterates through the floor and stores the values in an array.
 	Ideally, this method is called in your render loop.
-.tilePos(x, y):
-	Returns a boolean of whether or not that tile is active
 
 */
 
@@ -35,6 +32,7 @@ var Floor = {
     }
     floorTiles.push(numArray)
 })
+console.log(floorTiles)
 if (Floor.lastTiles == null) {
     Floor.lastTiles = floorTiles
     Floor.tiles = floorTiles
@@ -61,7 +59,6 @@ Floor.lastTiles = Floor.tiles
 })
 }
 }
-Floor.getTiles()
 
 /* The Game object is probably the most important of all. Here is where all of the logic of your game is handled.
 Recommended:
@@ -75,8 +72,9 @@ A clock can be useful if you want to implement a timer or animation. An example 
 
 var Game = {
     init: () => {
-    // Music.init() (see music.js)
-    Game.stage = 'main' // Set the starting stage of the game
+    Floor.getTiles()
+// Music.init() (see music.js)
+Game.stage = 'main' // Set the starting stage of the game
 Game.score = 0 // Example of a default variable value
 Game.timestamp = 0
 Game.color = 'white'
