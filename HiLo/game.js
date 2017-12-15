@@ -32,6 +32,7 @@ var Floor = {
     }
     floorTiles.push(numArray)
 })
+})
 console.log(floorTiles)
 if (Floor.lastTiles == null) {
     Floor.lastTiles = floorTiles
@@ -56,7 +57,6 @@ for (let row in floorTiles) {
     }
 }
 Floor.lastTiles = Floor.tiles
-})
 }
 }
 
