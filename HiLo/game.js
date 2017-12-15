@@ -34,7 +34,6 @@ var Floor = {
 })
 })
 if (Floor.lastTiles == null) {
-    Floor.lastTiles = floorTiles
     Floor.tiles = floorTiles
 }
 for (let row in floorTiles) {
