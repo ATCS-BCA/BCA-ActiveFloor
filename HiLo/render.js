@@ -39,13 +39,13 @@ floorStatus: () => {
                     Draw.rectFill(8*col, 8*row, 8, 8, '#000')
                     break
                 case 1:
-                    Draw.rectFill(8*col, 8*row, 8, 8, 'lightblue')
+                    Draw.rectFill(8*col, 8*row, 8, 8, 'blue')
                     break
                 case 2:
                     Draw.rectFill(8*col, 8*row, 8, 8, '#AAA')
                     break
                 case 3:
-                    Draw.rectFill(8*col, 8*row, 8, 8, 'lightgreen')
+                    Draw.rectFill(8*col, 8*row, 8, 8, 'green')
                     break
             }
         }
