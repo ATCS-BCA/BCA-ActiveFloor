@@ -32,8 +32,8 @@ var Floor = {
     }
     floorTiles.push(numArray)
 })
-})
 console.table(floorTiles)
+})
 if (Floor.lastTiles == null) {
     Floor.tiles = floorTiles
 }
@@ -73,7 +73,7 @@ var Game = {
     init: () => {
     Floor.getTiles()
 // Music.init() (see music.js)
-Game.stage = 'main' // Set the starting stage of the game
+//Game.stage = 'main' // Set the starting stage of the game
 Game.score = 0 // Example of a default variable value
 Game.timestamp = 0
 Game.color = 'white'
