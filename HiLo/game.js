@@ -33,6 +33,7 @@ var Floor = {
     floorTiles.push(numArray)
 })
 })
+console.table(floorTiles)
 if (Floor.lastTiles == null) {
     Floor.tiles = floorTiles
 }
