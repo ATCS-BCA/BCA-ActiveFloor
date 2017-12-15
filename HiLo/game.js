@@ -52,7 +52,7 @@ for (let row in Floor.tiles) {
         }
     }
 }
-Floor.lastTiles = Floor.tiles
+Floor.lastTiles = floorTiles
 }
 }
 
