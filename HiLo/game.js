@@ -33,6 +33,7 @@ var Floor = {
     floorTiles.push(numArray)
 })
 Floor.tiles = floorTiles
+Floor.temp = floorTiles
 })
 for (let row in Floor.tiles) {
     for (let col in Floor.tiles[row]) {
@@ -52,7 +53,7 @@ for (let row in Floor.tiles) {
         }
     }
 }
-Floor.lastTiles = floorTiles
+Floor.lastTiles = Floor.temp
 }
 }
 
