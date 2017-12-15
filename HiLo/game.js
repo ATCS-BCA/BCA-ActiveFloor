@@ -28,12 +28,11 @@ var Floor = {
     valArray = $vals.split(',')
     numArray = []
     for (let i in valArray) {
-        numArray[i] = valArray[i] == '.' ? 0 : 1
+        numArray.push(valArray[i] == '.' ? 0 : 1)
     }
     floorTiles.push(numArray)
 })
 })
-console.log(floorTiles)
 if (Floor.lastTiles == null) {
     Floor.lastTiles = floorTiles
     Floor.tiles = floorTiles
