@@ -15,13 +15,12 @@ var refreshTime = 17;       // Run the loop every 17 milliseconds
 
 
 function drawCanvas(arr) {
-    'use strict';
     canvas = document.getElementById('floorCanvas');
     canvas.width = ledsX;
     canvas.height = ledsY;
     context2D = canvas.getContext('2d');
 
-    context2D.fillStyle = 'white';
+    context2D.fillStyle = 'black';
     context2D.fillRect(0, 0, canvas.width, canvas.height);
 
     renderScreen(screen);
