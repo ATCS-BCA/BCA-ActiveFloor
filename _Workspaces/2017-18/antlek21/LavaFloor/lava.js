@@ -12,13 +12,16 @@ const safeColor = '#eadab5';
 var isFire;
 
 const lavaTiles = [];
+var maxSafeTiles;
+var counter;
 
-function LavaTile(x, y, boxSize, fillStyle) {
+function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
     this.x = x;
     this.y = y;
     this.boxSize = boxSize;
     this.fillStyle = fillStyle;
-    if(fillStyle == safeColor) {
+    this.globalAlpha = globalAlpha;
+    if(fillStyle === safeColor) {
         this.isLava = false;
     } else {
         this.isLava = true;
@@ -35,11 +38,14 @@ function start() {
     screen = 1;
     score = 0;
     buttons = [];
-    lavaBoxSize = 32;
-    isFire = true;
+    lavaBoxSize = 8;
+    maxSafeTiles = 2;
+    isFire = false;
+    counter = 5;
+    seconds = 0;
 
+    startTimer();
     initButtons();
-    renderScreen(screen);
 }
 
 var button = function() {
@@ -55,46 +61,76 @@ function renderScreen(screen) {
         
     } else if(screen == 1) {
         drawLava();
-    } else {
-
+        drawTimer();
+    } else if(screen == 2) {
+        context2D.fillStyle = 'red';
+        context2D.rect(0, 0, canvas.width, canvas.height);
     }
 }
 
 function drawLava() {
-    if(screen == 1) {
-        if (lavaTiles.length == 0) {
-            for (var x = 0; x < 192; x += lavaBoxSize) {
-                for (var y = 0; y < 192; y += lavaBoxSize) {
-                    context2D.globalAlpha = 0.5;
-                    context2D.fillStyle = lavaColors.random();
-                    context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
-                    lavaTiles.push(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle));
+    var safeTiles = 0;
+    if (lavaTiles.length == 0) {
+        for (var x = 0; x < 192; x += lavaBoxSize) {
+            for (var y = 0; y < 192; y += lavaBoxSize) {
+                if(x == 0 && y == 0) {
+                    continue;
                 }
+                context2D.globalAlpha = 0.5;
+                context2D.fillStyle = lavaColors.random();
+                if(context2D.fillStyle == safeColor) {
+                    if(maxSafeTiles > safeTiles) {
+                        safeTiles += 1;
+                    } else {
+                        while(context2D.fillStyle == safeColor) {
+                            context2D.fillStyle = lavaColors.random();
+                        }
+                    }
+                }
+                context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
+                lavaTiles.push(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
             }
-        } else {
-            lavaTiles.forEach(function (tile) {
-                context2D.globalAlpha = 0.4;
-                context2D.fillStyle = tile.fillStyle;
-                context2D.fillRect(tile.x, tile.y, tile.boxSize, tile.boxSize);
-            });
         }
+    } else {
+        lavaTiles.forEach(function (tile) {
+            context2D.globalAlpha = tile.globalAlpha;
+            context2D.fillStyle = tile.fillStyle;
+            context2D.fillRect(tile.x, tile.y, tile.boxSize, tile.boxSize);
+        });
     }
 }
 
-function acceptInput(x, y) {
+function startTimer() {
+    setInterval(function() {
+        if(screen == 1) {
+            seconds += 0.5;
+            if(seconds == 5) {
+                isFire = true;
+            }
+        }
+    }, 500);
+}
 
+function drawTimer() {
+    context2D.strokeStyle = 'orange';
+    context2D.strokeRect(0, 0, 32, 32);
+    context2D.strokeStyle = 'yellow';
+    context2D.strokeText(parseInt(seconds).toString(), 0, 16, 32);
+}
+
+function acceptInput(x, y) {
     if(screen == 0) {
         
     } else if(screen == 1) {
         if(isFire) {
             lavaTiles.forEach(function(tile) {
-               if(tile.isLava()) {
-                   if(tile.x == x || (tile.x < x && tile.x + tile.boxSize >= x)) {
-                       if(tile.y == y || (tile.y < y && tile.y + tile.boxSize >= y)) {
-                           gameOver();
-                       }
-                   }
-               } 
+                if(tile.isLava) {
+                    if (x < tile.x + lavaBoxSize && x >= tile.x) {
+                        if (y < tile.y + lavaBoxSize && y >= tile.y) {
+                            gameOver();
+                        }
+                    }
+                }
             });
         }
     } else {
@@ -103,8 +139,5 @@ function acceptInput(x, y) {
 }
 
 function gameOver() {
-    context2D.globalAlpha = 0.5;
-    context2D.fillStyle = 'red';
-    context2D.fillRect(0, 0, canvas.width, canvas.height);
     screen = 2;
 }

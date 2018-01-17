@@ -92,6 +92,10 @@
             <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\antlek21\Demo\floor.html</Display>
         </AppMode>
 
+        <AppMode appModeID="LavaFloor" name="LavaFloor">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\antlek21\LavaFloor\floor.html</Display>
+        </AppMode>
+
         <AppMode appModeID="Wkspace-bryres" name="Workspace-bryres">
             <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\bryres\Demo\floor.html</Display>
         </AppMode>
