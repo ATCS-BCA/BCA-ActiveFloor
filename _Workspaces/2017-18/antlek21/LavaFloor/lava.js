@@ -11,7 +11,8 @@ const safeColor = '#eadab5';
 // Whether the lava boxes are active
 var isFire;
 
-const lavaTiles = [];
+const floorTiles = [];
+var safeFloorTiles = [];
 var maxSafeTiles;
 var counter;
 
@@ -38,7 +39,7 @@ function start() {
     screen = 1;
     score = 0;
     buttons = [];
-    lavaBoxSize = 8;
+    lavaBoxSize = 32;
     maxSafeTiles = 2;
     isFire = false;
     counter = 5;
@@ -70,7 +71,7 @@ function renderScreen(screen) {
 
 function drawLava() {
     var safeTiles = 0;
-    if (lavaTiles.length == 0) {
+    if (floorTiles.length == 0) {
         for (var x = 0; x < 192; x += lavaBoxSize) {
             for (var y = 0; y < 192; y += lavaBoxSize) {
                 if(x == 0 && y == 0) {
@@ -81,6 +82,7 @@ function drawLava() {
                 if(context2D.fillStyle == safeColor) {
                     if(maxSafeTiles > safeTiles) {
                         safeTiles += 1;
+                        // safeFloorTiles.append(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
                     } else {
                         while(context2D.fillStyle == safeColor) {
                             context2D.fillStyle = lavaColors.random();
@@ -88,11 +90,11 @@ function drawLava() {
                     }
                 }
                 context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
-                lavaTiles.push(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
+                floorTiles.push(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
             }
         }
     } else {
-        lavaTiles.forEach(function (tile) {
+        floorTiles.forEach(function (tile) {
             context2D.globalAlpha = tile.globalAlpha;
             context2D.fillStyle = tile.fillStyle;
             context2D.fillRect(tile.x, tile.y, tile.boxSize, tile.boxSize);
@@ -123,15 +125,19 @@ function acceptInput(x, y) {
         
     } else if(screen == 1) {
         if(isFire) {
-            lavaTiles.forEach(function(tile) {
+            var safe = false;
+            safeFloorTiles.forEach(function(tile) {
                 if(tile.isLava) {
                     if (x < tile.x + lavaBoxSize && x >= tile.x) {
                         if (y < tile.y + lavaBoxSize && y >= tile.y) {
-                            gameOver();
+                            safe = true;
                         }
                     }
                 }
             });
+            if(!safe) {
+                gameOver();
+            }
         }
     } else {
         
