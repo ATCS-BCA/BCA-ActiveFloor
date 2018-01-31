@@ -8,6 +8,8 @@ var lavaBoxSize;
 const lavaColors = ['#ffff44', '#ff6600', '#cc4422', '#553333', '#eadab5'];
 const safeColor = '#eadab5';
 
+const marginOfError = 5;
+
 // Whether the lava boxes are active
 var isFire;
 
@@ -26,6 +28,14 @@ function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
         this.isLava = false;
     } else {
         this.isLava = true;
+    }
+    this.isOnTile = function(x, y) {
+        if(x <= this.x+boxSize+marginOfError && x >= this.x) {
+            if(y <= this.y+boxSize+marginOfError && y >= this.y) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
@@ -128,19 +138,15 @@ function acceptInput(x, y) {
             var safe = false;
             safeFloorTiles.forEach(function(tile) {
                 if(tile.isLava) {
-                    if (x < tile.x + lavaBoxSize && x >= tile.x) {
-                        if (y < tile.y + lavaBoxSize && y >= tile.y) {
-                            safe = true;
-                        }
+                    if(tile.isOnTile(x, y)) {
+                        gameOver();
                     }
+
                 }
             });
-            if(!safe) {
-                gameOver();
-            }
         }
     } else {
-        
+
     }
 }
 
