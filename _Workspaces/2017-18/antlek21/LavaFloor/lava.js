@@ -72,11 +72,18 @@ function initButtons() {
 
 }
 
+function drawButton() {
+    
+}
+
 function renderScreen(screen) {
     if(screen == 0) {
         var img = new Img();
-        img.src = '/rsz_12logo';
-        context2D.drawImage(img, 0, 0);
+        img.src = 'rsz_12logo';
+        var img_ = document.createElement('img');
+        img_.setAttribute('src', '/rsz_12logo');
+        img_.setIdAttribute('#image');
+        context2D.drawImage(img_, 10, 10);
     } else if(screen == 1) {
         drawLava();
         drawTimer();
