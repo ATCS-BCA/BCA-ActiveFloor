@@ -74,7 +74,9 @@ function initButtons() {
 
 function renderScreen(screen) {
     if(screen == 0) {
-        
+        var img = new Img();
+        img.src = '/rsz_12logo';
+        context2D.drawImage(img, 0, 0);
     } else if(screen == 1) {
         drawLava();
         drawTimer();
