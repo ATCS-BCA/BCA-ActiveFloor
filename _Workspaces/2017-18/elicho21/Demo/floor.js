@@ -69,9 +69,6 @@ function loop() {
 
             dataHolderArray.push(n);
         });
-
-        /* Redraw the screen based upon the data in the array. */
-        drawCanvas(dataHolderArray);
     });
     drawCanvas(dataHolderArray);
     managePositions();
@@ -240,10 +237,10 @@ function checkTap (xPos, yPos) {
 }
 
 function manageDifficulty () {
-    spawnRate = 10 * Math.pow(0.95, Math.floor(score / 5));
-    transTime = Math.pow(0.95, Math.floor(score / 5));
-    radius = 24 * Math.pow(0.99, Math.floor(score / 5));
-    lifespan = 5 * Math.pow(0.99, Math.floor(score / 5));
+    spawnRate = 10 * Math.pow(0.9, Math.floor(score / 5));
+    transTime = Math.pow(0.9, Math.floor(score / 5));
+    radius = 24 * Math.pow(0.9, Math.floor(score / 5));
+    lifespan = 5 * Math.pow(0.9, Math.floor(score / 5));
 }
 
 function drawScore () {
