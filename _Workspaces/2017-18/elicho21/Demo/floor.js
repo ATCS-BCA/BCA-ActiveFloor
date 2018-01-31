@@ -145,7 +145,7 @@ function drawCircle(id, xPos, yPos) {
     context2D.fillStyle = "white";
     context2D.textAlign = "center";
     context2D.textBaseline = "middle";
-    context2D.fillText((lifespan - Math.floor(time - existing[id].timeSpawned)).toString(), xPos, yPos);
+    context2D.fillText((Math.ceil(lifespan - (time - existing[id].timeSpawned))).toString(), xPos, yPos);
 }
 
 function drawCircles () {
