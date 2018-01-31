@@ -11,16 +11,10 @@ const safeColor = '#eadab5';
 // Whether the lava boxes are active
 var isFire;
 
-var floorTiles = [];
+const floorTiles = [];
+var safeFloorTiles = [];
 var maxSafeTiles;
 var counter;
-var timer;
-var round;
-
-const marginOfError = 6;
-var safeTime;
-
-const BREAK_EXCEPTION = {}
 
 function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
     this.x = x;
@@ -32,9 +26,6 @@ function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
         this.isLava = false;
     } else {
         this.isLava = true;
-    }
-    this.isTile = function(x, y) {
-        return ((x >= this.x && x <= this.x + this.boxSize-marginOfError)  && (y >= this.y && y <= this.y+this.boxSize-marginOfError))
     }
 }
 
@@ -53,10 +44,6 @@ function start() {
     isFire = false;
     counter = 5;
     seconds = 0;
-    safeTime = 5;
-    // Account for 1 second delay
-    seconds -= 1;
-    round = 1;
 
     startTimer();
     initButtons();
@@ -66,12 +53,10 @@ var button = function() {
 
 };
 
-// TODO Make button objects
 function initButtons() {
 
 }
 
-// TODO Make menu screen
 function renderScreen(screen) {
     if(screen == 0) {
         
@@ -84,7 +69,6 @@ function renderScreen(screen) {
     }
 }
 
-// TODO Make a 1+ lava round system
 function drawLava() {
     var safeTiles = 0;
     if (floorTiles.length == 0) {
@@ -96,7 +80,7 @@ function drawLava() {
                 context2D.globalAlpha = 0.5;
                 context2D.fillStyle = lavaColors.random();
                 if(context2D.fillStyle == safeColor) {
-                    if(maxSafeTiles > safeTiles && Math.floor(Math.random() * lavaBoxSize) <= lavaBoxSize/2) {
+                    if(maxSafeTiles > safeTiles) {
                         safeTiles += 1;
                         // safeFloorTiles.append(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
                     } else {
@@ -118,19 +102,12 @@ function drawLava() {
     }
 }
 
-// TODO !IMPORTANT! - integrate timer with main loop rather then having separate threads
 function startTimer() {
-    timer = setInterval(function() {
+    setInterval(function() {
         if(screen == 1) {
             seconds += 0.5;
-            if(safeTime - seconds == 0) {
+            if(seconds == 5) {
                 isFire = true;
-                seconds = 1;
-            } else if(safeTime - seconds <= -1) {
-                isFire = false;
-                floorTiles = [];
-                round += 1;
-                seconds = 0;
             }
         }
     }, 500);
@@ -138,11 +115,9 @@ function startTimer() {
 
 function drawTimer() {
     context2D.strokeStyle = 'orange';
-    context2D.strokeRect(0, 0, lavaBoxSize, lavaBoxSize);
+    context2D.strokeRect(0, 0, 32, 32);
     context2D.strokeStyle = 'yellow';
-    context2D.font = '20px Comic Sans Serif';
-    var textHeight = context2D.measureText('W').width;
-    context2D.strokeText(parseInt(safeTime-seconds).toString(), (lavaBoxSize/2)-(textHeight/2), (lavaBoxSize/2)+(textHeight/2)-5, lavaBoxSize);
+    context2D.strokeText(parseInt(seconds).toString(), 0, 16, 32);
 }
 
 function acceptInput(x, y) {
@@ -150,30 +125,25 @@ function acceptInput(x, y) {
         
     } else if(screen == 1) {
         if(isFire) {
-            floorTiles.forEach(function(tile) {
+            var safe = false;
+            safeFloorTiles.forEach(function(tile) {
                 if(tile.isLava) {
-                    if(tile.isTile(x, y)) {
-                        tile.fillStyle = 'green';
-                        gameOver();
-                        throw BREAK_EXCEPTION;
+                    if (x < tile.x + lavaBoxSize && x >= tile.x) {
+                        if (y < tile.y + lavaBoxSize && y >= tile.y) {
+                            safe = true;
+                        }
                     }
-
                 }
             });
-        } else {
-            context2D.fillStyle = 'purple';
-            context2D.fillRect(x, y, 5, 5);
+            if(!safe) {
+                gameOver();
+            }
         }
+    } else {
+        
     }
 }
 
-// TODO Draws Scorebox and tracks score
-function drawScore() {
-
-}
-
-// TODO Draw Game Over Button
 function gameOver() {
-    isFire = false;
-    window.clearInterval(timer);
+    screen = 2;
 }
