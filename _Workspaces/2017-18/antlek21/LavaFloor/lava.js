@@ -1,7 +1,7 @@
 /* Created By Anthony Lekan 01/10/18 */
 
 var screen;
-var score;
+var timer;
 
 var buttons;
 var lavaBoxSize;
@@ -13,10 +13,15 @@ const marginOfError = 5;
 // Whether the lava boxes are active
 var isFire;
 
-const floorTiles = [];
-var safeFloorTiles = [];
+var floorTiles = [];
 var maxSafeTiles;
 var counter;
+var level = 0;
+
+// 1 = TIMER
+// 5 = LEVEL COUNT
+// Switch between rendering the timer or level
+var switchCount = 1;
 
 function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
     this.x = x;
@@ -30,8 +35,8 @@ function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
         this.isLava = true;
     }
     this.isOnTile = function(x, y) {
-        if(x <= this.x+boxSize+marginOfError && x >= this.x) {
-            if(y <= this.y+boxSize+marginOfError && y >= this.y) {
+        if(x <= this.x+boxSize-marginOfError && x >= this.x) {
+            if(y <= this.y+boxSize-marginOfError && y >= this.y) {
                 return true;
             }
         }
@@ -46,7 +51,7 @@ Array.prototype.random = function() {
 // Create All buttons
 // Inits canvas screen
 function start() {
-    screen = 1;
+    screen = 0;
     score = 0;
     buttons = [];
     lavaBoxSize = 32;
@@ -59,36 +64,26 @@ function start() {
     initButtons();
 }
 
-var Button = function(text, x, y, bx, by, color, borderColor) {
-    this.text = text;
-    this.x = x;
-    this.y = y;
-    this.width = context2D.measureText(text).width;
-    this.height = context2D.measureText('M').width;
-    this.bx = bx;
-    this.by = by;
-    this.color = color;
-    this.borderColor = borderColor;
+var button = function() {
+
 };
 
 function initButtons() {
 
-    this.startGame = new Button("Start", 50, 50, 5, 5, 'orange', 'red');
 }
 
-function drawButton(button) {
-    context2D.strokeStyle = button.borderColor;
-    context2D.strokeRect(button.x-button.bx, button.y-button.by, button.width, button.height);
-
-    context2D.fillStyle = button.color;
-    context2D.strokeText(text, x, y);
-
+function drawButton() {
+    
 }
 
 function renderScreen(screen) {
     if(screen == 0) {
-        drawButton(this.startGame)
-
+        var img = new Img();
+        img.src = 'rsz_12logo';
+        var img_ = document.createElement('img');
+        img_.setAttribute('src', '/rsz_12logo');
+        img_.setIdAttribute('#image');
+        context2D.drawImage(img_, 10, 10);
     } else if(screen == 1) {
         drawLava();
         drawTimer();
@@ -131,8 +126,15 @@ function drawLava() {
     }
 }
 
+function nextLevel() {
+    isFire = false;
+    level += 1;
+    seconds = 0;
+    floorTiles = [];
+}
+
 function startTimer() {
-    setInterval(function() {
+    timer = setInterval(function() {
         if(screen == 1) {
             seconds += 0.5;
             if(seconds == 5) {
@@ -143,10 +145,15 @@ function startTimer() {
 }
 
 function drawTimer() {
-    context2D.strokeStyle = 'orange';
-    context2D.strokeRect(0, 0, 32, 32);
-    context2D.strokeStyle = 'yellow';
-    context2D.strokeText(parseInt(seconds).toString(), 0, 16, 32);
+    if(switchCount == 1) {
+        context2D.strokeStyle = 'orange';
+        context2D.strokeRect(0, 0, 32, 32);
+    }
+    if(seconds <= 5) {
+        context2D.strokeStyle = 'yellow';
+        context2D.fontStyle = 'Comic Sans Serif 20px';
+        context2D.strokeText(parseInt(seconds).toString(), 0, 16, 32);
+    }
 }
 
 function acceptInput(x, y) {
@@ -154,10 +161,10 @@ function acceptInput(x, y) {
         
     } else if(screen == 1) {
         if(isFire) {
-            var safe = false;
-            safeFloorTiles.forEach(function(tile) {
+            floorTiles.forEach(function(tile) {
                 if(tile.isLava) {
                     if(tile.isOnTile(x, y)) {
+                        tile.fillStyle = 'green';
                         gameOver();
                     }
 
@@ -170,5 +177,6 @@ function acceptInput(x, y) {
 }
 
 function gameOver() {
-    screen = 2;
+    clearInterval(timer);
+    isFire = false;
 }

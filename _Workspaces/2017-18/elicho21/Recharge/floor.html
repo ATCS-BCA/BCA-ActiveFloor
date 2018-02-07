@@ -1,16 +1,18 @@
 <html>
 
 <head>
-    <title>Brightlogic Floor Test</title>
+    <title>Recharge</title>
 	<script src="jquery.js"></script>
 	<script src="BLSemaphore.js"></script>
 	<script src="floor.js"></script>
+	<script src="render.js"></script>
+	<script src="game_manager.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
 	<div>
-		<canvas id="floorCanvas" resize></canvas>
+		<canvas id="floorCanvas" onclick = "onMouseClick(event)" resize></canvas>
 	</div>
 </body>
 
