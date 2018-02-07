@@ -64,26 +64,34 @@ function start() {
     initButtons();
 }
 
-var button = function() {
-
+var Button = function(x, y, text, bx, by, color, borderColor) {
+    this.x = x;
+    this.y = y;
+    this.text = text;
+    this.width = context2D.measureText(text).width;
+    this.height = context2D.measureText('M').width;
+    this.bx = bx;
+    this.by = by;
+    this.color = color;
+    this.borderColor = borderColor;
 };
 
 function initButtons() {
-
+    this.startGameButton = new Button(50, 50, "Hello", 5, 5, 'orange', 'black');
 }
 
-function drawButton() {
-    
+function drawButton(button) {
+    context2D.strokeStyle = button.borderColor;
+    context2D.strokeRect(button.x-button.bx, button.y-button.by, button.x + button.width, button.y + button.height);
+
+    context2D.strokeStyle = button.color;
+    context2D.strokeText(button.text, button.x, button.y);
+
 }
 
 function renderScreen(screen) {
     if(screen == 0) {
-        var img = new Img();
-        img.src = 'rsz_12logo';
-        var img_ = document.createElement('img');
-        img_.setAttribute('src', '/rsz_12logo');
-        img_.setIdAttribute('#image');
-        context2D.drawImage(img_, 10, 10);
+        drawButton(this.startGameButton);
     } else if(screen == 1) {
         drawLava();
         drawTimer();
