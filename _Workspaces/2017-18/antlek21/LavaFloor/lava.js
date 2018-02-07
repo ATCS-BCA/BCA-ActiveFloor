@@ -59,19 +59,36 @@ function start() {
     initButtons();
 }
 
-var button = function() {
-
+var Button = function(text, x, y, bx, by, color, borderColor) {
+    this.text = text;
+    this.x = x;
+    this.y = y;
+    this.width = context2D.measureText(text).width;
+    this.height = context2D.measureText('M').width;
+    this.bx = bx;
+    this.by = by;
+    this.color = color;
+    this.borderColor = borderColor;
 };
 
 function initButtons() {
+
+    this.startGame = new Button("Start", 50, 50, 5, 5, 'orange', 'red');
+}
+
+function drawButton(button) {
+    context2D.strokeStyle = button.borderColor;
+    context2D.strokeRect(button.x-button.bx, button.y-button.by, button.width, button.height);
+
+    context2D.fillStyle = button.color;
+    context2D.strokeText(text, x, y);
 
 }
 
 function renderScreen(screen) {
     if(screen == 0) {
-        var img = new Img();
-        img.src = '/rsz_12logo';
-        context2D.drawImage(img, 0, 0);
+        drawButton(this.startGame)
+
     } else if(screen == 1) {
         drawLava();
         drawTimer();
