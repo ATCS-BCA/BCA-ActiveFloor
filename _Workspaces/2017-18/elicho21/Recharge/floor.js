@@ -238,13 +238,13 @@ function checkTap (xPos, yPos) {
 
 function manageDifficulty () {
     spawnRate = 10 * Math.pow(0.9, Math.floor(score / 5));
-    transTime = Math.pow(0.9, Math.floor(score / 5));
-    radius = 24 * Math.pow(0.9, Math.floor(score / 5));
-    lifespan = 5 * Math.pow(0.9, Math.floor(score / 5));
+    transTime = Math.pow(0.95, Math.floor(score / 5));
+    radius = 24 * Math.pow(0.98, Math.floor(score / 5));
+    lifespan = 5 * Math.pow(0.97, Math.floor(score / 5));
 }
 
 function drawScore () {
-    context2D.font = "10px Arial";
+    context2D.font = "12px Arial";
     context2D.fillStyle = "white";
     context2D.textAlign = "left";
     context2D.textBaseline = "top";
