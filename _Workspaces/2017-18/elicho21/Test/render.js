@@ -1,5 +1,6 @@
 function drawCircle(id, xPos, yPos) {
     'use strict';
+    // Choose circle color
     context2D.save();
 
     context2D.globalAlpha = 0.8;
@@ -11,6 +12,7 @@ function drawCircle(id, xPos, yPos) {
         context2D.fillStyle = 'red';
     }
 
+    // Fill circle color
     context2D.beginPath();
     context2D.arc(xPos, yPos, radius, 0, Math.PI * 2, true);
     context2D.closePath();
@@ -18,10 +20,12 @@ function drawCircle(id, xPos, yPos) {
 
     context2D.restore();
 
+    // Create outline of circle
     context2D.strokeStyle = "white";
     context2D.lineWidth = 3;
     context2D.stroke();
 
+    // Make line
     context2D.save();
     context2D.translate(xPos, yPos);
     context2D.beginPath();
@@ -31,6 +35,7 @@ function drawCircle(id, xPos, yPos) {
     context2D.stroke();
     context2D.restore();
 
+    // Make timer
     context2D.font = radius + "px Arial";
     context2D.fillStyle = "white";
     context2D.textAlign = "center";
@@ -40,6 +45,8 @@ function drawCircle(id, xPos, yPos) {
 
 function drawCircles () {
     "use strict";
+
+    // Draw fixed
     for (var i = 0; i < existing.length; i++) {
         var x = 0;
         var y = 0;
@@ -47,6 +54,8 @@ function drawCircles () {
         y = existing[i].yPos;
         drawCircle(i, x, y);
     }
+
+    // Draw transitioning
     for (i = 0; i < trans.length; i++) {
         var xStart = trans[i].xStart;
         var yStart = trans[i].yStart;
@@ -63,7 +72,6 @@ function drawCircles () {
 }
 
 function drawTransition(xStart, yStart, xEnd, yEnd, startTime) {
-
     xPos = lerp(xStart, xEnd, (time - startTime) / transTime);
     yPos = lerp(yStart, yEnd, (time - startTime) / transTime);
 
@@ -78,4 +86,58 @@ function drawTransition(xStart, yStart, xEnd, yEnd, startTime) {
 
 function lerp(a, b, n) {
     return n * (b - a) + a;
+}
+
+function startMenu() {
+    context2D.font = "32px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText("Recharge", canvas.width / 2, canvas.height / 3);
+
+    createButton("start", "Start", "24px Arial", "white", "white",
+        canvas.width / 2, 2 * canvas.height / 3,  canvas.width / 2, canvas.height / 6);
+}
+
+function overMenu() {
+    context2D.font = "32px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText("Game Over!", canvas.width / 2, canvas.height / 3);
+
+    context2D.font = "18px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText("Score: " + score, canvas.width / 2, canvas.height / 2);
+
+    createButton("menu", "Menu", "24px Arial", "white", "white",
+        canvas.width / 2, 2 * canvas.height / 3,  canvas.width / 2, canvas.height / 6);
+}
+
+function createButton(name, text, font, textColor, borderColor, xPos, yPos, width, height) {
+    buttons[name] = {
+        text: text,
+        font: font,
+        textColor: textColor,
+        borderColor: borderColor,
+        xPos: xPos,
+        yPos: yPos,
+        width: width,
+        height: height
+    };
+
+    // Form Rectangle
+    context2D.beginPath();
+    context2D.lineWidth = "4";
+    context2D.strokeStyle = borderColor;
+    context2D.rect(xPos - width / 2, yPos - height / 2, width, height);
+    context2D.stroke();
+
+    context2D.font = font;
+    context2D.fillStyle = textColor;
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText(text, xPos, yPos);
 }

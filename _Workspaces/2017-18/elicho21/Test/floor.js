@@ -7,7 +7,6 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
-var interval;
 var existing = [];
 var time = 0;
 var lastSpawn = 0;
@@ -18,8 +17,10 @@ var trans = [];
 var transTime  = 1;
 var score = 0;
 var level = 0;
+var screen = "start";
+var buttons = {};
 
-function drawCanvas(arr) {
+function initCanvas(arr) {
     'use strict';
     canvas = document.getElementById('floorCanvas');
     canvas.width = 192;
@@ -35,7 +36,7 @@ function drawCanvas(arr) {
             if (srchStr === charSearch) {
                 tempX = p * ledPerSensorX;
                 tempY = i * ledPerSensorY;
-                checkTap(tempX, tempY);
+                manageTap(tempX, tempY);
             }
         }
     }
@@ -70,11 +71,8 @@ function loop() {
             dataHolderArray.push(n);
         });
     });
-    drawCanvas(dataHolderArray);
-    managePositions();
-    drawScore();
-    manageDifficulty();
-    drawCircles();
+    initCanvas(dataHolderArray);
+    drawScreen();
     time += 0.017;
 }
 
@@ -94,10 +92,7 @@ $(document).ready(function () {
 
 function startRefresh() {
     'use strict';
-    addPosition();
     myInterval = setInterval(function () {loop();}, refreshTime);
-    // interval = setTimeout(addPosition, 2000);
-    // interval = setInterval(function () {addPosition();}, 1000);
 }
 
 function stopRefresh() {
@@ -111,25 +106,11 @@ function onMouseClick(event) {
     mouseX -= canvas.offsetLeft;
     mouseY -= canvas.offsetTop;
 
-    checkTap(mouseX, mouseY);
+    manageTap(mouseX, mouseY);
 
     // console.log("X: " + mouseX + " Y: " + mouseY);
 }
 
-function checkTap (xPos, yPos) {
-    for (var i = 0; i < existing.length; i++) {
-        if (xPos < existing[i].xPos + radius && xPos > existing[i].xPos - radius &&
-            yPos < existing[i].yPos + radius && yPos > existing[i].yPos - radius) {
-            addResult = addPosition();
-            trans.push({
-                xStart: existing[i].xPos,
-                yStart: existing[i].yPos,
-                xEnd: addResult[0],
-                yEnd: addResult[1],
-                startTime: time
-            });
-            score += 1;
-            existing.splice(i, 1);
-        }
-    }
+function inRange (xPos, yPos, xMin, xMax, yMin, yMax) {
+    return (xPos > xMin && xPos < xMax && yPos > yMin && yPos < yMax)
 }
