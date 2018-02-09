@@ -62,18 +62,20 @@ function drawCircles () {
         var xEnd = trans[i].xEnd;
         var yEnd = trans[i].yEnd;
         var startTime = trans[i].startTime;
+        var transitionX = trans[i].transitionX;
+        var transitionY = trans[i].transitionY
         if (time >= startTime + transTime) {
             trans.splice(i, 1);
             continue;
         }
-        drawTransition(xStart, yStart, xEnd, yEnd, startTime);
+        drawTransition(xStart, yStart, xEnd, yEnd, startTime, transitionX, transitionY);
     }
     // console.log(existing);
 }
 
-function drawTransition(xStart, yStart, xEnd, yEnd, startTime) {
-    xPos = lerp(xStart, xEnd, (time - startTime) / transTime);
-    yPos = lerp(yStart, yEnd, (time - startTime) / transTime);
+function drawTransition(xStart, yStart, xEnd, yEnd, startTime, transitionX, transitionY) {
+    xPos = manageInterpolation(xStart, xEnd, (time - startTime) / transTime, transitionX);
+    yPos = manageInterpolation(yStart, yEnd, (time - startTime) / transTime, transitionY);
 
     context2D.beginPath();
     context2D.arc(xPos, yPos, radius, 0, Math.PI * 2, true);
@@ -82,10 +84,6 @@ function drawTransition(xStart, yStart, xEnd, yEnd, startTime) {
     context2D.strokeStyle = "white";
     context2D.lineWidth = 3;
     context2D.stroke();
-}
-
-function lerp(a, b, n) {
-    return n * (b - a) + a;
 }
 
 function startMenu() {
