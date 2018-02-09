@@ -113,7 +113,7 @@ function overMenu() {
     context2D.fillText("Score: " + score, canvas.width / 2, canvas.height / 2);
 
     createButton("menu", "Menu", "24px Arial", "white", "white",
-        canvas.width / 2, 2 * canvas.height / 3,  canvas.width / 2, canvas.height / 6);
+        canvas.width / 2, 5 * canvas.height / 6,  canvas.width / 2, canvas.height / 6);
 }
 
 function createButton(name, text, font, textColor, borderColor, xPos, yPos, width, height) {
