@@ -1,7 +1,12 @@
-/* Created By Anthony Lekan 01/10/18 */
+/* Created By Anthony Lekan 01/10/18
+TODO:
+- Fix Time!
+- Implement Buttons
+- Finish Gamestate & gameover screen
+*/
 
 var screen;
-var timer;
+var globalTime = 0;
 
 var buttons;
 var lavaBoxSize;
@@ -15,13 +20,11 @@ var isFire;
 
 var floorTiles = [];
 var maxSafeTiles;
-var counter;
+var secondCount;
 var level = 0;
 
-// 1 = TIMER
-// 5 = LEVEL COUNT
-// Switch between rendering the timer or level
-var switchCount = 1;
+var maxSecondCount;
+
 
 function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
     this.x = x;
@@ -51,16 +54,16 @@ Array.prototype.random = function() {
 // Create All buttons
 // Inits canvas screen
 function start() {
-    screen = 0;
+    screen = 1;
     score = 0;
     buttons = [];
     lavaBoxSize = 32;
     maxSafeTiles = 2;
     isFire = false;
-    counter = 5;
-    seconds = 0;
+    secondCount = 0;
+    maxSecondCount = 5;
+    level = 1;
 
-    startTimer();
     initButtons();
 }
 
@@ -68,8 +71,8 @@ var Button = function(x, y, text, bx, by, color, borderColor) {
     this.x = x;
     this.y = y;
     this.text = text;
-    this.width = context2D.measureText(text).width;
-    this.height = context2D.measureText('M').width;
+    // this.width = context2D.measureText(text).width;
+    // this.height = context2D.measureText('M').width;
     this.bx = bx;
     this.by = by;
     this.color = color;
@@ -77,12 +80,12 @@ var Button = function(x, y, text, bx, by, color, borderColor) {
 };
 
 function initButtons() {
-    this.startGameButton = new Button(50, 50, "Hello", 5, 5, 'orange', 'black');
+    this.startGameButton = new Button(50, 50, "Hello", 5, 5, 'orange', 'red');
 }
 
 function drawButton(button) {
     context2D.strokeStyle = button.borderColor;
-    context2D.strokeRect(button.x-button.bx, button.y-button.by, button.x + button.width, button.y + button.height);
+    context2D.strokeRect(button.x, button.y, 50, 50);
 
     context2D.strokeStyle = button.color;
     context2D.strokeText(button.text, button.x, button.y);
@@ -90,11 +93,13 @@ function drawButton(button) {
 }
 
 function renderScreen(screen) {
+    updateTime();
     if(screen == 0) {
-        drawButton(this.startGameButton);
+        // Draw "The Floor is Lava" Logo/Text
+        // draw "Play" Button
     } else if(screen == 1) {
         drawLava();
-        drawTimer();
+        drawScore();
     } else if(screen == 2) {
         context2D.fillStyle = 'red';
         context2D.rect(0, 0, canvas.width, canvas.height);
@@ -137,30 +142,35 @@ function drawLava() {
 function nextLevel() {
     isFire = false;
     level += 1;
-    seconds = 0;
+    secondCount = 0;
     floorTiles = [];
+    recalculateDifficulty();
 }
 
-function startTimer() {
-    timer = setInterval(function() {
-        if(screen == 1) {
-            seconds += 0.5;
-            if(seconds == 5) {
-                isFire = true;
-            }
+function recalculateDifficulty() {
+    maxSecondCount = 5*Math.pow(Math.E, -0.01*level);
+}
+
+function updateTime() {
+    // Convert millseconds to seconds
+    globalTime += refreshTime/1000;
+    if(screen == 1) {
+        secondCount += 0.5;
+        if(maxSecondCount-secondCount <= 0) {
+            isFire = true;
+            nextLevel();
         }
-    }, 500);
+    }
 }
 
-function drawTimer() {
-    if(switchCount == 1) {
-        context2D.strokeStyle = 'orange';
-        context2D.strokeRect(0, 0, 32, 32);
-    }
-    if(seconds <= 5) {
+function drawScore() {
+    if(maxSecondCount-secondCount > 0) {
         context2D.strokeStyle = 'yellow';
         context2D.fontStyle = 'Comic Sans Serif 20px';
-        context2D.strokeText(parseInt(seconds).toString(), 0, 16, 32);
+        context2D.strokeText("Time: " + parseInt(maxSecondCount-secondCount).toString(), 0, 16, 32);
+        context2D.strokeStyle = 'yellow';
+        context2D.fontStyle = 'Comic Sans Serif 20px';
+        context2D.strokeText("Level: " + parseInt(level).toString(), 0, 16-10, 32);
     }
 }
 
@@ -185,6 +195,5 @@ function acceptInput(x, y) {
 }
 
 function gameOver() {
-    clearInterval(timer);
     isFire = false;
 }

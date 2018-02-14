@@ -24,11 +24,6 @@ function drawCanvas(arr) {
     context2D.fillRect(0, 0, canvas.width, canvas.height);
 
     renderScreen(screen);
-    // var img = new Image();
-    // img.src = "/logo.png";
-    // img.onload(function() {
-    //     context2D.drawImage(img, 0, 0);
-    // });
 
     var i, tempRow, p, srchStr, tempX, tempY;
     for (i = 0; i < arr.length; i += 1) {
