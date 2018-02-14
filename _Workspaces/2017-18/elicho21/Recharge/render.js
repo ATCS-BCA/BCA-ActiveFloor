@@ -10,6 +10,7 @@ function drawCircle(id, xPos, yPos) {
         context2D.fillStyle = "yellow";
     } else {
         context2D.fillStyle = 'red';
+        warning();
     }
 
     // Fill circle color
@@ -138,4 +139,16 @@ function createButton(name, text, font, textColor, borderColor, xPos, yPos, widt
     context2D.textAlign = "center";
     context2D.textBaseline = "middle";
     context2D.fillText(text, xPos, yPos);
+}
+
+function warning() {
+    context2D.save();
+
+    context2D.strokeStyle = "red";
+    context2D.lineWidth = 24;
+
+    context2D.globalAlpha = Math.abs(Math.sin(time * Math.PI)) * 0.7;
+    context2D.strokeRect(0, 0, 192, 192);
+
+    context2D.restore();
 }

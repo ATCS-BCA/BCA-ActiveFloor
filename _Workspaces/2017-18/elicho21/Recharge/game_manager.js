@@ -139,8 +139,7 @@ function manageInterpolation (a, b, n, t) {
     else if (t === 4)
         return cosineInterpolation(a, b, n);
     else if (t === 5)
-        console.log("circ");
-    return circInterpolation(a, b, n);
+        return circInterpolation(a, b, n);
 }
 
 function lerp(a, b, n) {
