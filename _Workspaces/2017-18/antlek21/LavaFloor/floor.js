@@ -10,7 +10,7 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 20;       // Run the loop every 17 milliseconds
+var refreshTime = 20;       // Run the loop every 20 milliseconds
 
 var globalTime = 0;
 

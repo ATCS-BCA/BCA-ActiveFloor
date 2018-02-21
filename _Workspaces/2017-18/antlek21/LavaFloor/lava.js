@@ -89,10 +89,10 @@ function drawHomeScreen() {
     setBackground('white');
     drawButton(this.startGameButton);
 
-    context2D.fillStyle = 'orange';
-    context2D.fillText("The Floor Is ", (context2D.width - context2D.measureText("The floor Is ").width)/2, 15);
-    context2D.fillStyle = 'red';
-    context2D.fillText("LAVA", (context2D.width-context2D.measureText("LAVA").width)/2, 15+context2D.measureText("LAVA").width);
+    context2D.strokeStyle = 'orange';
+    context2D.strokeText("The Floor Is ", (context2D.width - context2D.measureText("The floor Is ").width)/2, 15);
+    context2D.strokeStyle = 'red';
+    context2D.strokeText("LAVA", (context2D.width-context2D.measureText("LAVA").width)/2, 15+context2D.measureText("LAVA").width);
 }
 
 function renderScreen(screen) {
@@ -160,6 +160,9 @@ function recalculateDifficulty() {
 
 function drawTimer() {
     if(globalTime % 1000 == 0) {
+        context2D.strokeStyle = 'yellow';
+        context2D.strokeRect(0, 32, 32, 32);
+
         context2D.strokeStyle = 'yellow';
         context2D.fontStyle = 'Comic Sans Serif 20px';
         context2D.strokeText((secondWait-(lastLevelStartTime/1000)).toString(), 0, 16, 32);
