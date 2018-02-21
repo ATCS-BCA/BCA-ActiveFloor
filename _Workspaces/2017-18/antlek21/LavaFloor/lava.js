@@ -1,30 +1,22 @@
-/* Created By Anthony Lekan 01/10/18
-TODO:
-- Fix Time!
-- Implement Buttons
-- Finish Gamestate & gameover screen
-*/
-
-var screen;
-var globalTime = 0;
-
-var buttons;
-var lavaBoxSize;
+/* Created By Anthony Lekan 01/10/18 */
 const lavaColors = ['#ffff44', '#ff6600', '#cc4422', '#553333', '#eadab5'];
 const safeColor = '#eadab5';
 
 const marginOfError = 5;
 
 // Whether the lava boxes are active
+var screen;
+var buttons;
 var isFire;
+var floorTiles;
+var level;
 
-var floorTiles = [];
+var lavaBoxSize;
+var secondWait;
 var maxSafeTiles;
-var secondCount;
-var level = 0;
 
-var maxSecondCount;
-
+// What the globalTime was set to when the level started
+var lastLevelStartTime;
 
 function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
     this.x = x;
@@ -46,7 +38,6 @@ function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
         return false;
     }
 }
-
 Array.prototype.random = function() {
   return this[Math.floor(Math.random() * this.length)];
 };
@@ -54,56 +45,69 @@ Array.prototype.random = function() {
 // Create All buttons
 // Inits canvas screen
 function start() {
-    screen = 1;
+    screen = 0;
     score = 0;
+    level = 0;
     buttons = [];
     lavaBoxSize = 32;
     maxSafeTiles = 2;
+    secondWait = 5;
+    floorTiles = [];
     isFire = false;
-    secondCount = 0;
-    maxSecondCount = 5;
-    level = 1;
 
     initButtons();
 }
 
-var Button = function(x, y, text, bx, by, color, borderColor) {
+var Button = function(x, y, text, color, borderColor) {
     this.x = x;
     this.y = y;
     this.text = text;
-    // this.width = context2D.measureText(text).width;
-    // this.height = context2D.measureText('M').width;
-    this.bx = bx;
-    this.by = by;
+    this.width = (canvas.width / 2) - (context2D.measureText(text).width / 2);
+    this.height = (canvas.width / 2) - (context2D.measureText(text).width / 2);
+    this.bx = (canvas.width / 2) - (context2D.measureText(text).width / 2) - 15;
+    this.by = context2D.measureText(text).width + 40;
     this.color = color;
     this.borderColor = borderColor;
 };
 
 function initButtons() {
     this.startGameButton = new Button(50, 50, "Hello", 5, 5, 'orange', 'red');
+    this.restartButton = new Button(50, 50, "Gameover! Tap anywhere to restart!", 5, 5, 'orange', 'red');
 }
 
 function drawButton(button) {
-    context2D.strokeStyle = button.borderColor;
-    context2D.strokeRect(button.x, button.y, 50, 50);
+    context2D.fillStyle = button.borderColor;
+    context2D.fillRect(button.x, button.y, 50, 50);
 
     context2D.strokeStyle = button.color;
     context2D.strokeText(button.text, button.x, button.y);
+}
 
+function drawHomeScreen() {
+    setBackground('white');
+    drawButton(this.startGameButton);
+
+    context2D.fillStyle = 'orange';
+    context2D.fillText("The Floor Is ", (context2D.width - context2D.measureText("The floor Is ").width)/2, 15);
+    context2D.fillStyle = 'red';
+    context2D.fillText("LAVA", (context2D.width-context2D.measureText("LAVA").width)/2, 15+context2D.measureText("LAVA").width);
 }
 
 function renderScreen(screen) {
-    updateTime();
     if(screen == 0) {
-        // Draw "The Floor is Lava" Logo/Text
-        // draw "Play" Button
+        drawHomeScreen();
     } else if(screen == 1) {
         drawLava();
-        drawScore();
+        updateTimer();
+        drawTimer();
     } else if(screen == 2) {
-        context2D.fillStyle = 'red';
-        context2D.rect(0, 0, canvas.width, canvas.height);
+        drawButton(this.newGameButton);
     }
+}
+
+function setBackground(color) {
+    context2D.fillStyle = color;
+    context2D.rect(0, 0, canvas.width, canvas.height);
 }
 
 function drawLava() {
@@ -140,43 +144,39 @@ function drawLava() {
 }
 
 function nextLevel() {
+    lastLevelStartTime = globalTime;
     isFire = false;
     level += 1;
-    secondCount = 0;
+    secondWait = 0;
     floorTiles = [];
     recalculateDifficulty();
 }
 
 function recalculateDifficulty() {
-    maxSecondCount = 5*Math.pow(Math.E, -0.01*level);
+    secondWait = 5*Math.pow(Math.E, -0.01*level);
 }
 
-function updateTime() {
-    // Convert millseconds to seconds
-    globalTime += refreshTime/1000;
-    if(screen == 1) {
-        secondCount += 0.5;
-        if(maxSecondCount-secondCount <= 0) {
-            isFire = true;
-            nextLevel();
-        }
+function drawTimer() {
+    if(globalTime % 1000 == 0) {
+        context2D.strokeStyle = 'yellow';
+        context2D.fontStyle = 'Comic Sans Serif 20px';
+        context2D.strokeText((secondWait-(lastLevelStartTime/1000)).toString(), 0, 16, 32);
     }
 }
 
-function drawScore() {
-    if(maxSecondCount-secondCount > 0) {
-        context2D.strokeStyle = 'yellow';
-        context2D.fontStyle = 'Comic Sans Serif 20px';
-        context2D.strokeText("Time: " + parseInt(maxSecondCount-secondCount).toString(), 0, 16, 32);
-        context2D.strokeStyle = 'yellow';
-        context2D.fontStyle = 'Comic Sans Serif 20px';
-        context2D.strokeText("Level: " + parseInt(level).toString(), 0, 16-10, 32);
+function updateTimer() {
+    if((globalTime-lastLevelStartTime)/1000 == secondWait) {
+        isFire = true;
+    } else if((globalTime-lastLevelStartTime)/1000 == secondWait+2) {
+        isFire = false;
+        nextLevel();
     }
 }
 
 function acceptInput(x, y) {
     if(screen == 0) {
-        
+        screen = 1;
+        nextLevel();
     } else if(screen == 1) {
         if(isFire) {
             floorTiles.forEach(function(tile) {
@@ -190,10 +190,12 @@ function acceptInput(x, y) {
             });
         }
     } else {
-
+        start();
+        screen = 1;
     }
 }
 
 function gameOver() {
     isFire = false;
+    drawButton(this.restartButton);
 }

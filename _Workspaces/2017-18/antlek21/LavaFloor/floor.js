@@ -10,9 +10,9 @@ var dataHolderArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 17;       // Run the loop every 17 milliseconds
+var refreshTime = 20;       // Run the loop every 17 milliseconds
 
-
+var globalTime = 0;
 
 function drawCanvas(arr) {
     canvas = document.getElementById('floorCanvas');
@@ -23,6 +23,7 @@ function drawCanvas(arr) {
     context2D.fillStyle = 'black';
     context2D.fillRect(0, 0, canvas.width, canvas.height);
 
+    globalTime += refreshTime;
     renderScreen(screen);
 
     var i, tempRow, p, srchStr, tempX, tempY;
