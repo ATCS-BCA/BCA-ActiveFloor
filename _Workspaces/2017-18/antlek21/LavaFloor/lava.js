@@ -15,6 +15,9 @@ var lavaBoxSize;
 var secondWait;
 var maxSafeTiles;
 
+var startGameButton;
+var restartButton;
+
 // What the globalTime was set to when the level started
 var lastLevelStartTime;
 
@@ -54,8 +57,6 @@ function start() {
     secondWait = 5;
     floorTiles = [];
     isFire = false;
-
-    initButtons();
 }
 
 var Button = function(x, y, text, color, borderColor) {
@@ -84,6 +85,7 @@ function drawButton(button) {
 }
 
 function drawHomeScreen() {
+    initButtons();
     setBackground('white');
     drawButton(this.startGameButton);
 
