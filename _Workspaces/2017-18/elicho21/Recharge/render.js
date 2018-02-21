@@ -64,7 +64,7 @@ function drawCircles () {
         var yEnd = trans[i].yEnd;
         var startTime = trans[i].startTime;
         var transitionX = trans[i].transitionX;
-        var transitionY = trans[i].transitionY
+        var transitionY = trans[i].transitionY;
         if (time >= startTime + transTime) {
             trans.splice(i, 1);
             continue;
