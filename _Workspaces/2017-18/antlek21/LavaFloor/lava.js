@@ -1,5 +1,5 @@
 /* Created By Anthony Lekan 01/10/18 */
-const lavaColors = ['#ffff44', '#ff6600', '#cc4422', '#553333', '#eadab5'];
+const lavaColors = ['#ffff44', '#ff6600', '#cc4422', '#553333'];
 const safeColor = '#eadab5';
 
 const marginOfError = 5;
@@ -17,6 +17,8 @@ var maxSafeTiles;
 
 var startGameButton;
 var restartButton;
+
+var currentSecondsPast;
 
 // What the globalTime was set to when the level started
 var lastLevelStartTime;
@@ -54,7 +56,7 @@ function start() {
     buttons = [];
     lavaBoxSize = 32;
     maxSafeTiles = 2;
-    secondWait = 5;
+    currentSecondsPast = 0;
     floorTiles = [];
     isFire = false;
 }
@@ -85,9 +87,7 @@ function drawButton(button) {
 }
 
 function drawHomeScreen() {
-    initButtons();
     setBackground('white');
-    drawButton(this.startGameButton);
 
     context2D.strokeStyle = 'orange';
     context2D.strokeText("The Floor Is ", (context2D.width - context2D.measureText("The floor Is ").width)/2, 15);
@@ -103,7 +103,7 @@ function renderScreen(screen) {
         updateTimer();
         drawTimer();
     } else if(screen == 2) {
-        drawButton(this.newGameButton);
+
     }
 }
 
@@ -112,26 +112,35 @@ function setBackground(color) {
     context2D.rect(0, 0, canvas.width, canvas.height);
 }
 
+function genSafeTiles(amount) {
+    safeTileLocs = [];
+    for(var i = 0; i < amount; i++) {
+        var tileX = Math.floor(Math.random() * canvas.width/lavaBoxSize) * lavaBoxSize;
+        var tileY = Math.floor(Math.random() * canvas.height/lavaBoxSize) * lavaBoxSize;
+        safeTileLocs.append([tileX, tileY]);
+        context2D.globalAlpha = 0.5;
+        context2D.fillstyle = safeColor;
+        context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
+        floorTiles.push(new LavaTile(tileX, tileY, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
+    }
+}
+
 function drawLava() {
     var safeTiles = 0;
     if (floorTiles.length == 0) {
+        var safeTiles = genSafeTiles(Math.floor(Math.random() * maxSafeTiles) + 1);
         for (var x = 0; x < 192; x += lavaBoxSize) {
             for (var y = 0; y < 192; y += lavaBoxSize) {
                 if(x == 0 && y == 0) {
                     continue;
                 }
-                context2D.globalAlpha = 0.5;
-                context2D.fillStyle = lavaColors.random();
-                if(context2D.fillStyle == safeColor) {
-                    if(maxSafeTiles > safeTiles) {
-                        safeTiles += 1;
-                        // safeFloorTiles.append(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
-                    } else {
-                        while(context2D.fillStyle == safeColor) {
-                            context2D.fillStyle = lavaColors.random();
-                        }
+                for(i in safeTiles) {
+                    if(i.x == x || i.y == y) {
+                        continue;
                     }
                 }
+                context2D.globalAlpha = 0.5;
+                context2D.fillStyle = lavaColors.random();
                 context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
                 floorTiles.push(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
             }
@@ -147,34 +156,40 @@ function drawLava() {
 
 function nextLevel() {
     lastLevelStartTime = globalTime;
+    currentSecondsPast = 0;
     isFire = false;
     level += 1;
-    secondWait = 0;
     floorTiles = [];
     recalculateDifficulty();
 }
 
 function recalculateDifficulty() {
-    secondWait = 5*Math.pow(Math.E, -0.01*level);
+    secondWait = Math.round(5*Math.pow(Math.E, -0.000001*level));
 }
 
 function drawTimer() {
-    if(globalTime % 1000 == 0) {
-        context2D.strokeStyle = 'yellow';
-        context2D.strokeRect(0, 32, 32, 32);
+    context2D.strokeStyle = 'yellow';
+    context2D.strokeRect(0, 0, 32, 32);
 
-        context2D.strokeStyle = 'yellow';
-        context2D.fontStyle = 'Comic Sans Serif 20px';
-        context2D.strokeText((secondWait-(lastLevelStartTime/1000)).toString(), 0, 16, 32);
-    }
+    context2D.strokeStyle = 'yellow';
+    context2D.fontStyle = '12px Comic Sans Serif';
+    if(secondWait - currentSecondsPast <= 0)
+        context2D.strokeText("0", 0, 16, 32);
+    else
+        context2D.strokeText(secondWait - currentSecondsPast, 0, 16, 32);
 }
 
 function updateTimer() {
-    if((globalTime-lastLevelStartTime)/1000 == secondWait) {
-        isFire = true;
-    } else if((globalTime-lastLevelStartTime)/1000 == secondWait+2) {
-        isFire = false;
-        nextLevel();
+    if((globalTime-lastLevelStartTime) % 1000 == 0) {
+        currentSecondsPast = ((globalTime - lastLevelStartTime)/1000);
+    }
+    if(screen == 1) {
+        if (secondWait - currentSecondsPast == 0) {
+            isFire = true;
+        } else if (secondWait - currentSecondsPast == -1) {
+            isFire = false;
+            nextLevel();
+        }
     }
 }
 
@@ -201,6 +216,6 @@ function acceptInput(x, y) {
 }
 
 function gameOver() {
+    screen = 2;
     isFire = false;
-    drawButton(this.restartButton);
 }

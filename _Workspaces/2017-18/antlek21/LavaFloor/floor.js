@@ -77,7 +77,7 @@ function loop()  {
 
 $(document).ready(function () {
     'use strict';
-    
+    start();
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
     
@@ -87,7 +87,6 @@ $(document).ready(function () {
         $("div").addClass("app");
         $("#floorCanvas").addClass("app");
     });
-    start();
 });
 
 function startRefresh() {
