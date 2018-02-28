@@ -14,11 +14,21 @@ function drawZones() {
     }
 }
 
+function transition(id) {
+    for (var i = 0; i < zones[id].current.length; i++) {
+        for (var j = 0; j < 2; j++) {
+            zones[id].current[i][j] = lerp(zones[id].original[i][j],
+                zones[id].destination[i][j],
+                (time - zones[id].transStart) / transTime)
+        }
+  }
+}
+
 function drawLine(id) {
-    var x1 = zones[id].points[0][0];
-    var y1 = zones[id].points[0][1];
-    var x2 = zones[id].points[1][0];
-    var y2 = zones[id].points[1][1];
+    var x1 = zones[id].current[0][0];
+    var y1 = zones[id].current[0][1];
+    var x2 = zones[id].current[1][0];
+    var y2 = zones[id].current[1][1];
     drawPoint(x1, y1);
     drawPoint(x2, y2);
 
