@@ -1,6 +1,13 @@
 /* Created By Anthony Lekan 01/10/18 */
 const lavaColors = ['#ffff44', '#ff6600', '#cc4422', '#553333'];
-const safeColor = '#eadab5';
+// const safeColor = '#eadab5';
+const safeColor = 'white';
+
+// enum GAME_STATES = {
+//     HOME: 0,
+//     IN_GAME: 1,
+//     GAME_OVER: 2
+// };
 
 const marginOfError = 5;
 
@@ -18,7 +25,7 @@ var maxSafeTiles;
 var startGameButton;
 var restartButton;
 
-var currentSecondsPast;
+var displayNumber;
 
 // What the globalTime was set to when the level started
 var lastLevelStartTime;
@@ -29,12 +36,13 @@ function LavaTile(x, y, boxSize, fillStyle, globalAlpha) {
     this.boxSize = boxSize;
     this.fillStyle = fillStyle;
     this.globalAlpha = globalAlpha;
-    if(fillStyle === safeColor) {
+    if(fillStyle == safeColor) {
         this.isLava = false;
     } else {
         this.isLava = true;
     }
     this.isOnTile = function(x, y) {
+        console.log("X Y TILE CHECK!");
         if(x <= this.x+boxSize-marginOfError && x >= this.x) {
             if(y <= this.y+boxSize-marginOfError && y >= this.y) {
                 return true;
@@ -55,8 +63,8 @@ function start() {
     level = 0;
     buttons = [];
     lavaBoxSize = 32;
-    maxSafeTiles = 2;
-    currentSecondsPast = 0;
+    maxSafeTiles = 5;
+    secondWait = 5;
     floorTiles = [];
     isFire = false;
 }
@@ -103,46 +111,61 @@ function renderScreen(screen) {
         updateTimer();
         drawTimer();
     } else if(screen == 2) {
-
+        // setBackground('orange');
+        drawLava();
+        drawTimer();
     }
 }
 
 function setBackground(color) {
+    context2D.globalAlpha = 0.5;
     context2D.fillStyle = color;
-    context2D.rect(0, 0, canvas.width, canvas.height);
+    context2D.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function genSafeTiles(amount) {
     safeTileLocs = [];
     for(var i = 0; i < amount; i++) {
-        var tileX = Math.floor(Math.random() * canvas.width/lavaBoxSize) * lavaBoxSize;
-        var tileY = Math.floor(Math.random() * canvas.height/lavaBoxSize) * lavaBoxSize;
-        safeTileLocs.append([tileX, tileY]);
-        context2D.globalAlpha = 0.5;
-        context2D.fillstyle = safeColor;
-        context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
-        floorTiles.push(new LavaTile(tileX, tileY, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
+        var tileX = Math.floor(Math.random() * canvas.width/lavaBoxSize) * lavaBoxSize + lavaBoxSize;
+        var tileY = Math.floor(Math.random() * canvas.height/lavaBoxSize) * lavaBoxSize + lavaBoxSize;
+
+        safeTileLocs.push([tileX, tileY]);
+
+        context2D.globalAlpha = 1;
+        context2D.fillStyle = safeColor;
+
+        context2D.fillRect(tileX, tileY, lavaBoxSize, lavaBoxSize);
+        floorTiles.push(new LavaTile(tileX, tileY, lavaBoxSize, safeColor, context2D.globalAlpha));
     }
+    return safeTileLocs;
 }
 
 function drawLava() {
-    var safeTiles = 0;
     if (floorTiles.length == 0) {
+        lastLevelStartTime = globalTime;
         var safeTiles = genSafeTiles(Math.floor(Math.random() * maxSafeTiles) + 1);
         for (var x = 0; x < 192; x += lavaBoxSize) {
             for (var y = 0; y < 192; y += lavaBoxSize) {
                 if(x == 0 && y == 0) {
                     continue;
                 }
-                for(i in safeTiles) {
-                    if(i.x == x || i.y == y) {
-                        continue;
+                var canDraw = true;
+                for(var i = 0; i < safeTiles.length; i++) {
+                    if(safeTiles[i][0] == x) {
+                        if(safeTiles[i][1] == y) {
+                            console.log("IN SAFE TILES!");
+                            canDraw = false;
+                            break;
+                        }
                     }
                 }
-                context2D.globalAlpha = 0.5;
-                context2D.fillStyle = lavaColors.random();
-                context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
-                floorTiles.push(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
+
+                if(canDraw) {
+                    context2D.globalAlpha = 0.5;
+                    context2D.fillStyle = lavaColors.random();
+                    context2D.fillRect(x, y, lavaBoxSize, lavaBoxSize);
+                    floorTiles.push(new LavaTile(x, y, lavaBoxSize, context2D.fillStyle, context2D.globalAlpha));
+                }
             }
         }
     } else {
@@ -155,16 +178,18 @@ function drawLava() {
 }
 
 function nextLevel() {
-    lastLevelStartTime = globalTime;
-    currentSecondsPast = 0;
-    isFire = false;
-    level += 1;
-    floorTiles = [];
-    recalculateDifficulty();
+    if(screen == 1) {
+        isFire = false;
+        level += 1;
+        floorTiles = [];
+        recalculateDifficulty();
+    }
 }
 
 function recalculateDifficulty() {
     secondWait = Math.round(5*Math.pow(Math.E, -0.000001*level));
+    maxSafeTiles = Math.round(5*Math.pow(Math.E, -0.000001*level));
+    lavaBoxSize = lavaBoxSize/2;
 }
 
 function drawTimer() {
@@ -173,24 +198,35 @@ function drawTimer() {
 
     context2D.strokeStyle = 'yellow';
     context2D.fontStyle = '12px Comic Sans Serif';
-    if(secondWait - currentSecondsPast <= 0)
-        context2D.strokeText("0", 0, 16, 32);
-    else
-        context2D.strokeText(secondWait - currentSecondsPast, 0, 16, 32);
+    context2D.strokeText(displayNumber, 0, 16, 32);
 }
 
 function updateTimer() {
-    if((globalTime-lastLevelStartTime) % 1000 == 0) {
-        currentSecondsPast = ((globalTime - lastLevelStartTime)/1000);
-    }
+    // Only use timer in game
     if(screen == 1) {
-        if (secondWait - currentSecondsPast == 0) {
+        var difference = globalTime-lastLevelStartTime;
+        if(difference % 1000 == 0) {
+            if(secondWait-(difference/1000) > -1) {
+                displayNumber = secondWait-(difference/1000);
+            }
+        }
+
+        // Convert difference to seconds
+        difference /= 1000;
+
+        if(screen == 2) {
+            console.log(screen);
+        }
+
+        // Check if difference = secondWait
+        if(difference == secondWait) {
             isFire = true;
-        } else if (secondWait - currentSecondsPast == -1) {
-            isFire = false;
+        } else if(difference > secondWait) {
             nextLevel();
         }
+
     }
+
 }
 
 function acceptInput(x, y) {
@@ -199,9 +235,9 @@ function acceptInput(x, y) {
         nextLevel();
     } else if(screen == 1) {
         if(isFire) {
-            floorTiles.forEach(function(tile) {
-                if(tile.isLava) {
-                    if(tile.isOnTile(x, y)) {
+            floorTiles.forEach(function (tile) {
+                if (tile.isLava) {
+                    if (tile.isOnTile(x, y)) {
                         tile.fillStyle = 'green';
                         gameOver();
                     }
@@ -210,12 +246,11 @@ function acceptInput(x, y) {
             });
         }
     } else {
-        start();
-        screen = 1;
+        // start();
+        // screen = 1;
     }
 }
 
 function gameOver() {
     screen = 2;
-    isFire = false;
 }
