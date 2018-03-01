@@ -112,6 +112,10 @@
             <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\elicho21\Recharge\floor.html</Display>
         </AppMode>
 
+        <AppMode appModeID="DangerZone" name="DangerZone">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\elicho21\DangerZone\floor.html</Display>
+        </AppMode>
+
         <AppMode appModeID="Wkspace-jacklee21" name="Workspace-jacklee21">
             <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2017-18\jacklee21\Demo\floor.html</Display>
         </AppMode>
