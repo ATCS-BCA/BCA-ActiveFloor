@@ -81,7 +81,8 @@ $(document).ready(function () {
 function startRefresh() {
     'use strict';
     myInterval = setInterval(function () {loop();}, refreshTime);
-    myInterval = setInterval(function () {createLine()}, 1000);
+    setTimeout(function () {createLine();}, 1000);
+    // myInterval = setInterval(function () {createLine()}, 1000);
 }
 
 function stopRefresh() {
@@ -98,8 +99,4 @@ function onMouseClick(event) {
     manageTap(mouseX, mouseY);
 
     // console.log("X: " + mouseX + " Y: " + mouseY);
-}
-
-function inRange (xPos, yPos, xMin, xMax, yMin, yMax) {
-    return (xPos > xMin && xPos < xMax && yPos > yMin && yPos < yMax)
 }
