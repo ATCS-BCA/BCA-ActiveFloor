@@ -3,11 +3,11 @@ const lavaColors = ['#ffff44', '#ff6600', '#cc4422', '#553333'];
 // const safeColor = '#eadab5';
 const safeColor = 'white';
 
-// enum GAME_STATES = {
-//     HOME: 0,
-//     IN_GAME: 1,
-//     GAME_OVER: 2
-// };
+var GAME_STATES = {
+    HOME: 0,
+    IN_GAME: 1,
+    GAME_OVER: 2
+};
 
 const marginOfError = 5;
 
@@ -85,7 +85,6 @@ function initButtons() {
     this.startGameButton = new Button(50, 50, "Hello", 5, 5, 'orange', 'red');
     this.restartButton = new Button(50, 50, "Gameover! Tap anywhere to restart!", 5, 5, 'orange', 'red');
 }
-
 function drawButton(button) {
     context2D.fillStyle = button.borderColor;
     context2D.fillRect(button.x, button.y, 50, 50);
@@ -104,13 +103,13 @@ function drawHomeScreen() {
 }
 
 function renderScreen(screen) {
-    if(screen == 0) {
+    if(screen == GAME_STATES.HOME) {
         drawHomeScreen();
-    } else if(screen == 1) {
+    } else if(screen == GAME_STATES.IN_GAME) {
         drawLava();
         updateTimer();
         drawTimer();
-    } else if(screen == 2) {
+    } else if(screen == GAME_STATES.GAME_OVER) {
         // setBackground('orange');
         drawLava();
         drawTimer();
@@ -178,7 +177,7 @@ function drawLava() {
 }
 
 function nextLevel() {
-    if(screen == 1) {
+    if(screen == GAME_STATES.IN_GAME) {
         isFire = false;
         level += 1;
         floorTiles = [];
@@ -203,7 +202,7 @@ function drawTimer() {
 
 function updateTimer() {
     // Only use timer in game
-    if(screen == 1) {
+    if(screen == GAME_STATES.IN_GAME) {
         var difference = globalTime-lastLevelStartTime;
         if(difference % 1000 == 0) {
             if(secondWait-(difference/1000) > -1) {
@@ -213,10 +212,6 @@ function updateTimer() {
 
         // Convert difference to seconds
         difference /= 1000;
-
-        if(screen == 2) {
-            console.log(screen);
-        }
 
         // Check if difference = secondWait
         if(difference == secondWait) {
@@ -230,13 +225,13 @@ function updateTimer() {
 }
 
 function acceptInput(x, y) {
-    if(screen == 0) {
-        screen = 1;
+    if(screen == GAME_STATES.HOME) {
+        screen = GAME_STATES.HOME;
         nextLevel();
-    } else if(screen == 1) {
+    } else if(screen == GAME_STATES.IN_GAME) {
         if(isFire) {
             floorTiles.forEach(function (tile) {
-                if (tile.isLava) {
+                    if (tile.isLava) {
                     if (tile.isOnTile(x, y)) {
                         tile.fillStyle = 'green';
                         gameOver();
@@ -252,5 +247,5 @@ function acceptInput(x, y) {
 }
 
 function gameOver() {
-    screen = 2;
+    screen = GAME_STATES.HOME;
 }
