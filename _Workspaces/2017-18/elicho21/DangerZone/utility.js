@@ -1,5 +1,5 @@
 function copy(o) {
-    var output, v, key;
+    let output, v, key;
     output = Array.isArray(o) ? [] : {};
     for (key in o) {
         v = o[key];

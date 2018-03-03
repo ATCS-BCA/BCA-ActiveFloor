@@ -1,12 +1,12 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
-var myInterval;
-var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
-var dataHolderArray = [];
-var charSearch = '*';
-var charDivide = ',';
-var canvas, context2D;
-var refreshTime = 17;       // Run the loop every 17 milliseconds
+let myInterval;
+let $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
+let dataHolderArray = [];
+let charSearch = '*';
+let charDivide = ',';
+let canvas, context2D;
+let refreshTime = 17;       // Run the loop every 17 milliseconds
 
 function initCanvas(arr) {
     'use strict';
@@ -15,7 +15,7 @@ function initCanvas(arr) {
     canvas.height = 192;
     context2D = canvas.getContext('2d');
 
-    var i, tempRow, p, srchStr, tempX, tempY;
+    let i, tempRow, p, srchStr, tempX, tempY;
     for (i = 0; i < arr.length; i += 1) {
         tempRow = arr[i];
 
@@ -50,7 +50,7 @@ function loop() {
 
         /* Load the data from the XML file into the dataHolderArray */
         $(data).find('Row').each(function () {
-            var $row, rowNum, rowVal, n;
+            let $row, rowNum, rowVal, n;
             $row = $(this);
             rowNum = $row.attr('rownum');
             rowVal = $row.attr('values');
@@ -81,7 +81,8 @@ $(document).ready(function () {
 function startRefresh() {
     'use strict';
     myInterval = setInterval(function () {loop();}, refreshTime);
-    setTimeout(function () {createLine();}, 1000);
+    setTimeout(function () {createLine()}, 1000);
+    setTimeout(function () {createTri()}, 2000);
     // myInterval = setInterval(function () {createLine()}, 1000);
 }
 
@@ -91,8 +92,8 @@ function stopRefresh() {
 }
 
 function onMouseClick(event) {
-    var mouseX = event.clientX;
-    var mouseY = event.clientY;
+    let mouseX = event.clientX;
+    let mouseY = event.clientY;
     mouseX -= canvas.offsetLeft;
     mouseY -= canvas.offsetTop;
 
