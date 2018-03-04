@@ -29,13 +29,10 @@ function manageZones() {
                 zones[i].transStart = time;
 
                 zones[i].original = copy(zones[i].destination);
-                const point1 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
-                const point2 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
                 if (zones[i].type === "line")
-                    zones[i].destination = [point1, point2];
+                    zones[i].destination = generatePoints("line");
                 else if (zones[i].type === "tri") {
-                    const point3 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
-                    zones[i].destination = [point1, point2, point3];
+                    zones[i].destination = generatePoints("tri");
                 }
             }
 
@@ -56,33 +53,30 @@ function manageZones() {
 }
 
 function createLine() {
-    const point1 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
-    const point2 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
+    points = generatePoints("line");
     zones.push({
         "type": "line",
-        "current": [point1, point2],
-        "original": [point1, point2],
-        "destination": [point1, point2],
+        "current": [...points],
+        "original": [...points],
+        "destination": [...points],
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
-        "function": getLineFunction(point1, point2)
+        "function": getLineFunction(...points)
     });
 }
 
 function createTri() {
-    const point1 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
-    const point2 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
-    const point3 = [Math.floor(Math.random() * 192), Math.floor(Math.random() * 192)];
+    let points = generatePoints("tri");
     zones.push({
         "type": "tri",
-        "current": [point1, point2, point3],
-        "original": [point1, point2, point3],
-        "destination": [point1, point2, point3],
+        "current": [...points],
+        "original": [...points],
+        "destination": [...points],
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
-        "function": getPolyFunction(point1, point2)
+        "function": getPolyFunction(...points)
     });
 }
 
@@ -122,4 +116,26 @@ function manageTap(posX, posY) {
             console.log("Game Over!");
         }
     }
+}
+
+function generatePoints(type) {
+    if (type === "line") {
+        return [[Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)]]
+    }
+    else if (type === "tri") {
+        let point1 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
+        let point2 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
+        let point3 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
+        while (!inRange(triArea(point1, point2, point3), 0, 1152, 9216, 0, 0)) {
+            point1 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
+            point2 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
+            point3 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
+        }
+        return [point1, point2, point3];
+    }
+}
+
+function triArea(p1, p2, p3) {
+    return Math.abs(p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1]));
 }
