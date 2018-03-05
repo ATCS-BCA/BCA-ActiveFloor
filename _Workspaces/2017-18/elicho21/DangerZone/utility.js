@@ -1,5 +1,5 @@
 function copy(o) {
-    var output, v, key;
+    let output, v, key;
     output = Array.isArray(o) ? [] : {};
     for (key in o) {
         v = o[key];
@@ -9,7 +9,7 @@ function copy(o) {
 }
 
 function inRange (xPos, yPos, xMin, xMax, yMin, yMax) {
-    return (xPos > xMin && xPos < xMax && yPos > yMin && yPos < yMax)
+    return (xPos >= xMin && xPos <= xMax && yPos >= yMin && yPos <= yMax)
 }
 
 function lerp(a, b, n) {
