@@ -34,6 +34,9 @@ function manageZones() {
                 else if (zones[i].type === "tri") {
                     zones[i].destination = generatePoints("tri");
                 }
+                else if (zones[i].type === "quad") {
+                    zones[i].destination = generatePoints("quad");
+                }
             }
 
             transition(i);
@@ -70,6 +73,20 @@ function createTri() {
     let points = generatePoints("tri");
     zones.push({
         "type": "tri",
+        "current": [...points],
+        "original": [...points],
+        "destination": [...points],
+        "lastSpawned": time,
+        "activated": false,
+        "transStart": 0,
+        "function": getPolyFunction(...points)
+    });
+}
+
+function createQuad() {
+    let points = generatePoints("quad");
+    zones.push({
+        "type": "quad",
         "current": [...points],
         "original": [...points],
         "destination": [...points],
@@ -124,15 +141,36 @@ function generatePoints(type) {
             [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)]]
     }
     else if (type === "tri") {
-        let point1 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
-        let point2 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
-        let point3 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
-        while (!inRange(triArea(point1, point2, point3), 0, 1152, 9216, 0, 0)) {
-            point1 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
-            point2 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
-            point3 = [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)];
+        let points = [
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)]
+        ];
+        while (!inRange(triArea(points[0], points[1], points[2]), 0, 1152, 9216, 0, 0)) {
+            points = [
+                [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+                [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+                [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)]
+            ];
         }
-        return [point1, point2, point3];
+        return points;
+    }
+    else if (type === "quad") {
+        let points = [
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+            [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)]
+        ];
+        while (!inRange(triArea(points[0], points[1], points[2]), 0, 1152, 9216, 0, 0)) {
+            points = [
+                [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+                [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+                [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)],
+                [Math.floor(Math.random() * 193), Math.floor(Math.random() * 193)]
+            ];
+        }
+        return points;
     }
 }
 
