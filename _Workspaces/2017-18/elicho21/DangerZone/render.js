@@ -1,5 +1,5 @@
-function drawPoint (xPos, yPos) {
-    context2D.fillStyle = "white";
+function drawPoint (id, xPos, yPos) {
+    context2D.fillStyle = zones[id].color;
     context2D.beginPath();
     context2D.arc(xPos, yPos, 8, 0, Math.PI * 2);
     context2D.closePath();
@@ -31,23 +31,23 @@ function transition(id) {
 }
 
 function drawLine(id) {
-    drawPoint(...zones[id].current[0]);
-    drawPoint(...zones[id].current[1]);
+    drawPoint(id, ...zones[id].current[0]);
+    drawPoint(id, ...zones[id].current[1]);
 
     context2D.beginPath();
     context2D.moveTo(...zones[id].current[0]);
     context2D.lineTo(...zones[id].current[1]);
     context2D.closePath();
-    context2D.strokeStyle = "white";
+    context2D.strokeStyle = zones[id].color;
     context2D.lineCap = "round";
     context2D.lineWidth = (zones[id].activated) ? 16 : 2;
     context2D.stroke();
 }
 
 function drawTri(id) {
-    drawPoint(...zones[id].current[0]);
-    drawPoint(...zones[id].current[1]);
-    drawPoint(...zones[id].current[2]);
+    drawPoint(id, ...zones[id].current[0]);
+    drawPoint(id, ...zones[id].current[1]);
+    drawPoint(id, ...zones[id].current[2]);
 
     context2D.beginPath();
     context2D.moveTo(...zones[id].current[0]);
@@ -55,7 +55,7 @@ function drawTri(id) {
     context2D.lineTo(...zones[id].current[2]);
     context2D.lineTo(...zones[id].current[0]);
     context2D.closePath();
-    context2D.strokeStyle = "white";
+    context2D.strokeStyle = zones[id].color;
     context2D.lineJoin = "round";
     context2D.lineWidth = (zones[id].activated) ? 16 : 2;
     context2D.stroke();
@@ -64,10 +64,10 @@ function drawTri(id) {
 }
 
 function drawQuad(id) {
-    drawPoint(...zones[id].current[0]);
-    drawPoint(...zones[id].current[1]);
-    drawPoint(...zones[id].current[2]);
-    drawPoint(...zones[id].current[3]);
+    drawPoint(id, ...zones[id].current[0]);
+    drawPoint(id, ...zones[id].current[1]);
+    drawPoint(id, ...zones[id].current[2]);
+    drawPoint(id, ...zones[id].current[3]);
 
     context2D.beginPath();
     context2D.moveTo(...zones[id].current[0]);
@@ -76,7 +76,7 @@ function drawQuad(id) {
     context2D.lineTo(...zones[id].current[3]);
     context2D.lineTo(...zones[id].current[0]);
     context2D.closePath();
-    context2D.strokeStyle = "white";
+    context2D.strokeStyle = zones[id].color;
     context2D.lineJoin = "round";
     context2D.lineWidth = (zones[id].activated) ? 16 : 2;
     context2D.stroke();

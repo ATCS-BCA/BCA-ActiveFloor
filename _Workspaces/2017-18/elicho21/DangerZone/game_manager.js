@@ -1,7 +1,7 @@
 let time = 0;
-let lifespan = 2;
+let lifespan = 1.5;
 let zones = [];
-let transTime = 1;
+let transTime = 0.5;
 
 /* Zone Object
 {
@@ -12,7 +12,8 @@ let transTime = 1;
     "lastSpawned" = 0;
     "activated" = false;
     "transStart" = 0;
-    "function" = function () {check if tap in line or polygon}
+    "function" = function () {check if tap in line or polygon};
+    "color" = #FFFFFF;
 }
 */
 
@@ -65,7 +66,8 @@ function createLine() {
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
-        "function": getLineFunction(...points)
+        "function": getLineFunction(...points),
+        "color": "#"+((1<<24)*Math.random()|0).toString(16)
     });
 }
 
@@ -79,7 +81,8 @@ function createTri() {
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
-        "function": getPolyFunction(...points)
+        "function": getPolyFunction(...points),
+        "color": "#"+((1<<24)*Math.random()|0).toString(16)
     });
 }
 
@@ -93,7 +96,8 @@ function createQuad() {
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
-        "function": getPolyFunction(...points)
+        "function": getPolyFunction(...points),
+        "color": "#"+((1<<24)*Math.random()|0).toString(16)
     });
 }
 
