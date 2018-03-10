@@ -23,9 +23,10 @@ function drawZones() {
 function transition(id) {
     for (let i = 0; i < zones[id].current.length; i++) {
         for (let j = 0; j < 2; j++) {
-            zones[id].current[i][j] = lerp(zones[id].original[i][j],
+            zones[id].current[i][j] = interpolationArray[zones[id].transition](
+                zones[id].original[i][j],
                 zones[id].destination[i][j],
-                (time - zones[id].transStart) / transTime)
+                (time - zones[id].transStart) / transTime);
         }
   }
 }

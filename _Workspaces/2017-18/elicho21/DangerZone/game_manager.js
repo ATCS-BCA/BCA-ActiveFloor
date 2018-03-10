@@ -2,6 +2,15 @@ let time = 0;
 let lifespan = 1.5;
 let zones = [];
 let transTime = 0.5;
+const interpolationArray = [
+    function (a, b, n) {return lerp(a, b, n)},
+    function (a, b, n) {return easeIn(a, b, n)},
+    function (a, b, n) {return easeOut(a, b, n)},
+    function (a, b, n) {return easeInOut(a, b, n)},
+    function (a, b, n) {return cosineInterpolation(a, b, n)},
+    function (a, b, n) {return circInterpolation(a, b, n)},
+    function (a, b, n) {return polynomialInterpolation(a, b, n)}
+];
 
 /* Zone Object
 {
@@ -12,8 +21,9 @@ let transTime = 0.5;
     "lastSpawned" = 0;
     "activated" = false;
     "transStart" = 0;
-    "function" = function () {check if tap in line or polygon};
+    "function" = function () {check if tap in zone};
     "color" = #FFFFFF;
+    "transition" = 0;
 }
 */
 
@@ -38,6 +48,8 @@ function manageZones() {
                 else if (zones[i].type === "quad") {
                     zones[i].destination = generatePoints("quad");
                 }
+
+                zones[i].transition = Math.floor(Math.random() * 7);
             }
 
             transition(i);
