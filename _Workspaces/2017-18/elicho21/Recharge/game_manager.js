@@ -76,8 +76,8 @@ function recharge(id) {
         xEnd: addResult[0],
         yEnd: addResult[1],
         startTime: time,
-        transitionX: Math.floor(Math.random() * 6),
-        transitionY: Math.floor(Math.random() * 6)
+        transitionX: Math.floor(Math.random() * 7),
+        transitionY: Math.floor(Math.random() * 7)
     });
 
     score += 1;
@@ -140,6 +140,8 @@ function manageInterpolation (a, b, n, t) {
         return cosineInterpolation(a, b, n);
     else if (t === 5)
         return circInterpolation(a, b, n);
+    else if (t === 6)
+        return polynomialInterpolation(a, b, n);
 }
 
 function lerp(a, b, n) {
@@ -167,4 +169,9 @@ function cosineInterpolation(a, b, n) {
 
 function circInterpolation(a, b, n) {
     return Math.sqrt(1 - (n - 1) * (n - 1)) * (b - a) + a;
+}
+
+// Cubic
+function polynomialInterpolation(a, b, n) {
+    return ((8 * n * n * n) - (12 * n * n) + (5 * n)) * (b - a) + a;
 }
