@@ -18,6 +18,7 @@ function drawZones() {
             drawQuad(i);
         }
     }
+    drawApproach();
 }
 
 function transition(id) {
@@ -83,4 +84,21 @@ function drawQuad(id) {
     context2D.stroke();
     if (zones[id].activated)
         context2D.fill();
+}
+
+function drawApproach() {
+    for (let i = 0; i < zones.length; i++) {
+        if (!zones[i].activated) {
+            context2D.strokeStyle = zones[i].color;
+            for (let j = 0; j < zones[i].current.length; j++) {
+                context2D.beginPath();
+                context2D.arc(zones[i].current[j][0], zones[i].current[j][1],
+                    lerp(32, 8, Math.min((time - zones[i].lastSpawned) / (lifespan -  1), 1)),
+                    0, Math.PI * 2);
+                context2D.closePath();
+                context2D.lineWidth = 4;
+                context2D.stroke();
+            }
+        }
+    }
 }

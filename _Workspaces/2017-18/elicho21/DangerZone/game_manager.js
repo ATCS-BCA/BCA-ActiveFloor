@@ -1,5 +1,5 @@
 let time = 0;
-let lifespan = 1.5;
+let lifespan = 2;
 let zones = [];
 let transTime = 0.5;
 const interpolationArray = [
@@ -28,8 +28,8 @@ const interpolationArray = [
 */
 
 function drawScreen() {
-    manageZones();
     drawZones();
+    manageZones();
 }
 
 function manageZones() {
@@ -40,14 +40,7 @@ function manageZones() {
                 zones[i].transStart = time;
 
                 zones[i].original = copy(zones[i].destination);
-                if (zones[i].type === "line")
-                    zones[i].destination = generatePoints("line");
-                else if (zones[i].type === "tri") {
-                    zones[i].destination = generatePoints("tri");
-                }
-                else if (zones[i].type === "quad") {
-                    zones[i].destination = generatePoints("quad");
-                }
+                zones[i].destination = generatePoints(zones[i].type);
 
                 zones[i].transition = Math.floor(Math.random() * 7);
             }
@@ -58,7 +51,7 @@ function manageZones() {
                 zones[i].lastSpawned = time;
                 zones[i].current = copy(zones[i].destination);
                 if (zones[i].type === "line")
-                    zones[i].function = getLineFunction(zones[i].current[0], zones[i].current[1]);
+                    zones[i].function = getLineFunction(...zones[i].current);
                 else
                     zones[i].function = getPolyFunction(zones[i].current);
             }
