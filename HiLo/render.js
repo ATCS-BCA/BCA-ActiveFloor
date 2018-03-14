@@ -86,8 +86,8 @@ update: () => {
 	switch(Game.stage) {
         case 'main':
             //Render.main()
-            Render.floorStatus()
-            //Render.rainbowCircles() // I know the rainbows are a bit extra. Feel free to uncomment Render.main() and comment this instead.
+            //Render.floorStatus()
+            Render.rainbowCircles() // I know the rainbows are a bit extra. Feel free to uncomment Render.main() and comment this instead.
             break
         case 'play':
             //e.g. Render.ball(), Render.score(), etc.
