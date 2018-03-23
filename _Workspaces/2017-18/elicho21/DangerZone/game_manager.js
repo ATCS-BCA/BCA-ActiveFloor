@@ -1,7 +1,9 @@
 let time = 0;
-let lifespan = 2;
+let lifespan = 3;
 let zones = [];
-let transTime = 0.5;
+let transTime = 3;
+let score = 0;
+let zoneCount = 1;
 const interpolationArray = [
     function (a, b, n) {return lerp(a, b, n)},
     function (a, b, n) {return easeIn(a, b, n)},
@@ -30,6 +32,7 @@ const interpolationArray = [
 function drawScreen() {
     drawZones();
     manageZones();
+    manageDifficulty();
 }
 
 function manageZones() {
@@ -43,6 +46,7 @@ function manageZones() {
                 zones[i].destination = generatePoints(zones[i].type);
 
                 zones[i].transition = Math.floor(Math.random() * 7);
+                score++;
             }
 
             transition(i);
@@ -61,6 +65,26 @@ function manageZones() {
     }
 }
 
+function manageDifficulty() {
+    lifespan = 1.9 * Math.pow(0.9, Math.floor(score / 5)) + 1.1;
+    transTime = 2.8 * Math.pow(0.9, Math.floor(score / 5)) + 0.2;
+    console.log("score: " + score + "; lifespan: " + lifespan + "; transTime: " + transTime);
+
+    let delay = Math.random() * 3000;
+    if (score >= 15 && zoneCount < 4) {
+        zoneCount++;
+        setTimeout(function () {createQuad()}, delay);
+    }
+    else if (score >= 10 && zoneCount < 3) {
+        zoneCount++;
+        setTimeout(function () {createTri()}, delay);
+    }
+    else if (score >= 5 && zoneCount < 2) {
+        zoneCount++;
+        setTimeout(function () {createLine()}, delay);
+    }
+}
+
 function createLine() {
     points = generatePoints("line");
     zones.push({
@@ -72,10 +96,10 @@ function createLine() {
         "activated": false,
         "transStart": 0,
         "function": getLineFunction(...points),
-        "color": "#"+((1<<24)*Math.random()|0).toString(16)
+        "color": randomColor()
     });
 }
-
+// "#"+((1<<24)*Math.random()|0).toString(16)
 function createTri() {
     let points = generatePoints("tri");
     zones.push({
@@ -87,7 +111,7 @@ function createTri() {
         "activated": false,
         "transStart": 0,
         "function": getPolyFunction(...points),
-        "color": "#"+((1<<24)*Math.random()|0).toString(16)
+        "color": randomColor()
     });
 }
 
@@ -102,7 +126,7 @@ function createQuad() {
         "activated": false,
         "transStart": 0,
         "function": getPolyFunction(...points),
-        "color": "#"+((1<<24)*Math.random()|0).toString(16)
+        "color": randomColor()
     });
 }
 

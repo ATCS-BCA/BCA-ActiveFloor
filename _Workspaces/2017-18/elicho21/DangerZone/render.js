@@ -89,7 +89,6 @@ function drawQuad(id) {
 function drawApproach() {
     for (let i = 0; i < zones.length; i++) {
         if (!zones[i].activated) {
-            context2D.strokeStyle = zones[i].color;
             for (let j = 0; j < zones[i].current.length; j++) {
                 context2D.beginPath();
                 context2D.arc(zones[i].current[j][0], zones[i].current[j][1],
@@ -97,6 +96,7 @@ function drawApproach() {
                     0, Math.PI * 2);
                 context2D.closePath();
                 context2D.lineWidth = 4;
+                context2D.strokeStyle = zones[i].color;
                 context2D.stroke();
             }
         }

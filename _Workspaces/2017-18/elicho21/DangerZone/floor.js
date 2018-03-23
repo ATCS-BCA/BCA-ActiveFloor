@@ -81,9 +81,9 @@ $(document).ready(function () {
 function startRefresh() {
     'use strict';
     myInterval = setInterval(function () {loop();}, refreshTime);
-    setTimeout(function () {createLine()}, 1000);
-    setTimeout(function () {createTri()}, 1600);
-    setTimeout(function () {createQuad()}, 2200);
+    setTimeout(function () {
+        createLine();
+        }, 2000);
 }
 
 function stopRefresh() {
