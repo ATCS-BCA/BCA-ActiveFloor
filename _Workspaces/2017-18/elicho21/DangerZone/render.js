@@ -102,3 +102,11 @@ function drawApproach() {
         }
     }
 }
+
+function drawScore () {
+    context2D.font = "12px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "left";
+    context2D.textBaseline = "top";
+    context2D.fillText("Score: " + score, 5, 5);
+}

@@ -32,6 +32,7 @@ const interpolationArray = [
 function drawScreen() {
     drawZones();
     manageZones();
+    drawScore();
     manageDifficulty();
 }
 
@@ -71,9 +72,17 @@ function manageDifficulty() {
     console.log("score: " + score + "; lifespan: " + lifespan + "; transTime: " + transTime);
 
     let delay = Math.random() * 3000;
-    if (score >= 15 && zoneCount < 4) {
+    if (score >= 50 && zoneCount < 6) {
         zoneCount++;
         setTimeout(function () {createQuad()}, delay);
+    }
+    if (score >= 30 && zoneCount < 5) {
+        zoneCount++;
+        setTimeout(function () {createQuad()}, delay);
+    }
+    if (score >= 20 && zoneCount < 4) {
+        zoneCount++;
+        setTimeout(function () {createTri()}, delay);
     }
     else if (score >= 10 && zoneCount < 3) {
         zoneCount++;
@@ -96,7 +105,7 @@ function createLine() {
         "activated": false,
         "transStart": 0,
         "function": getLineFunction(...points),
-        "color": randomColor()
+        "color": randomColor({luminosity: "dark"})
     });
 }
 // "#"+((1<<24)*Math.random()|0).toString(16)
@@ -111,7 +120,7 @@ function createTri() {
         "activated": false,
         "transStart": 0,
         "function": getPolyFunction(...points),
-        "color": randomColor()
+        "color": randomColor({luminosity: "dark"})
     });
 }
 
@@ -126,7 +135,7 @@ function createQuad() {
         "activated": false,
         "transStart": 0,
         "function": getPolyFunction(...points),
-        "color": randomColor()
+        "color": randomColor({luminosity: "dark"})
     });
 }
 
