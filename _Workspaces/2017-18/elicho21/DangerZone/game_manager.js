@@ -4,6 +4,8 @@ let zones = [];
 let transTime = 3;
 let score = 0;
 let zoneCount = 1;
+let screen = "main";
+let buttons = [];
 const interpolationArray = [
     function (a, b, n) {return lerp(a, b, n)},
     function (a, b, n) {return easeIn(a, b, n)},
@@ -30,10 +32,18 @@ const interpolationArray = [
 */
 
 function drawScreen() {
-    drawZones();
-    manageZones();
-    drawScore();
-    manageDifficulty();
+    if (screen === "main") {
+        drawMainMenu();
+    }
+    else if (screen === "game") {
+        drawZones();
+        manageZones();
+        drawScore();
+        manageDifficulty();
+    }
+    else if (screen === "over") {
+        drawOverMenu();
+    }
 }
 
 function manageZones() {
@@ -170,9 +180,30 @@ function getPolyFunction(points) {
 }
 
 function manageTap(posX, posY) {
-    for (let i = 0; i < zones.length; i++) {
-        if (zones[i].function(posX, posY) && zones[i].activated) {
-            console.log("Game Over!");
+    if (screen === "main") {
+        if (inRange(posX, posY,
+                buttons["start"].xPos - buttons["start"].width / 2,
+                buttons["start"].xPos + buttons["start"].width / 2,
+                buttons["start"].yPos - buttons["start"].height / 2,
+                buttons["start"].yPos + buttons["start"].height / 2)) {
+            screen = "game";
+            initGame();
+        }
+    }
+    else if (screen === "game") {
+        for (let i = 0; i < zones.length; i++) {
+            if (zones[i].function(posX, posY) && zones[i].activated) {
+                screen = "over";
+            }
+        }
+    }
+    else if (screen === "over") {
+        if (inRange(posX, posY,
+                buttons["main"].xPos - buttons["main"].width / 2,
+                buttons["main"].xPos + buttons["main"].width / 2,
+                buttons["main"].yPos - buttons["main"].height / 2,
+                buttons["main"].yPos + buttons["main"].height / 2)) {
+            screen = "main";
         }
     }
 }
@@ -218,4 +249,16 @@ function generatePoints(type) {
 
 function triArea(p1, p2, p3) {
     return Math.abs(p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1]));
+}
+
+function initGame () {
+    time = 0;
+    lifespan = 3;
+    zones = [];
+    transTime = 3;
+    score = 0;
+    zoneCount = 1;
+    setTimeout(function () {
+        createLine();
+    }, 2000);
 }

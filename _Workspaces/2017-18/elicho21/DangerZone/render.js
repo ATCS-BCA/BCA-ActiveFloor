@@ -110,3 +110,57 @@ function drawScore () {
     context2D.textBaseline = "top";
     context2D.fillText("Score: " + score, 5, 5);
 }
+
+function createButton(name, text, font, textColor, borderColor, xPos, yPos, width, height) {
+    buttons[name] = {
+        text: text,
+        font: font,
+        textColor: textColor,
+        borderColor: borderColor,
+        xPos: xPos,
+        yPos: yPos,
+        width: width,
+        height: height
+    };
+
+    // Form Rectangle
+    context2D.beginPath();
+    context2D.lineWidth = "4";
+    context2D.strokeStyle = borderColor;
+    context2D.rect(xPos - width / 2, yPos - height / 2, width, height);
+    context2D.stroke();
+
+    context2D.font = font;
+    context2D.fillStyle = textColor;
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText(text, xPos, yPos);
+}
+
+function drawMainMenu () {
+    context2D.font = "32px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText("DangerZone", canvas.width / 2, canvas.height / 3);
+
+    createButton("start", "Start", "24px Arial", "white", "white",
+        canvas.width / 2, 2 * canvas.height / 3,  canvas.width / 2, canvas.height / 6);
+}
+
+function drawOverMenu() {
+    context2D.font = "32px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText("Game Over!", canvas.width / 2, canvas.height / 3);
+
+    context2D.font = "18px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "center";
+    context2D.textBaseline = "middle";
+    context2D.fillText("Score: " + score, canvas.width / 2, canvas.height / 2);
+
+    createButton("main", "Menu", "24px Arial", "white", "white",
+        canvas.width / 2, 5 * canvas.height / 6,  canvas.width / 2, canvas.height / 6);
+}
