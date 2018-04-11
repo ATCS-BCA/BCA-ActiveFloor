@@ -5,7 +5,8 @@ let transTime = 3;
 let score = 0;
 let zoneCount = 1;
 let screen = "main";
-let buttons = [];
+let buttons = {};
+let mode = "Line";
 const interpolationArray = [
     function (a, b, n) {return lerp(a, b, n)},
     function (a, b, n) {return easeIn(a, b, n)},
@@ -15,6 +16,12 @@ const interpolationArray = [
     function (a, b, n) {return circInterpolation(a, b, n)},
     function (a, b, n) {return polynomialInterpolation(a, b, n)}
 ];
+const create = [
+    createLine,
+    createTri,
+    createQuad
+];
+let diffVar = 0;
 
 /* Zone Object
 {
@@ -39,6 +46,7 @@ function drawScreen() {
         drawZones();
         manageZones();
         drawScore();
+        drawMode();
         manageDifficulty();
     }
     else if (screen === "over") {
@@ -58,6 +66,7 @@ function manageZones() {
 
                 zones[i].transition = Math.floor(Math.random() * 7);
                 score++;
+                diffVar++;
             }
 
             transition(i);
@@ -79,28 +88,21 @@ function manageZones() {
 function manageDifficulty() {
     lifespan = 1.9 * Math.pow(0.9, Math.floor(score / 5)) + 1.1;
     transTime = 2.8 * Math.pow(0.9, Math.floor(score / 5)) + 0.2;
-    console.log("score: " + score + "; lifespan: " + lifespan + "; transTime: " + transTime);
+    // console.log("score: " + score + "; lifespan: " + lifespan + "; transTime: " + transTime);
 
     let delay = Math.random() * 3000;
-    if (score >= 50 && zoneCount < 6) {
+    if (diffVar % Math.floor(5 + 0.01 * score * 2) === 0 && zoneCount < Math.floor(diffVar / Math.floor(5 + 0.01 * score * 2)) + 1) {
         zoneCount++;
-        setTimeout(function () {createQuad()}, delay);
-    }
-    if (score >= 30 && zoneCount < 5) {
-        zoneCount++;
-        setTimeout(function () {createQuad()}, delay);
-    }
-    if (score >= 20 && zoneCount < 4) {
-        zoneCount++;
-        setTimeout(function () {createTri()}, delay);
-    }
-    else if (score >= 10 && zoneCount < 3) {
-        zoneCount++;
-        setTimeout(function () {createTri()}, delay);
-    }
-    else if (score >= 5 && zoneCount < 2) {
-        zoneCount++;
-        setTimeout(function () {createLine()}, delay);
+        diffVar = 0;
+        if (mode === "Line") createLine();
+        else if (mode === "Tri") createTri();
+        else if (mode === "Quad") createQuad();
+        else {
+            setTimeout(function () {
+                create[Math.floor(Math.random() * 3)]();
+            }, delay);
+        }
+
     }
 }
 
@@ -181,19 +183,23 @@ function getPolyFunction(points) {
 
 function manageTap(posX, posY) {
     if (screen === "main") {
-        if (inRange(posX, posY,
-                buttons["start"].xPos - buttons["start"].width / 2,
-                buttons["start"].xPos + buttons["start"].width / 2,
-                buttons["start"].yPos - buttons["start"].height / 2,
-                buttons["start"].yPos + buttons["start"].height / 2)) {
-            screen = "game";
-            initGame();
+        let keys = Object.keys(buttons);
+        for (let i = 0; i < 4; i++) {
+            if (inRange(posX, posY,
+                    buttons[keys[i]].xPos - buttons[keys[i]].width / 2,
+                    buttons[keys[i]].xPos + buttons[keys[i]].width / 2,
+                    buttons[keys[i]].yPos - buttons[keys[i]].height / 2,
+                    buttons[keys[i]].yPos + buttons[keys[i]].height / 2)) {
+                mode = keys[i].charAt(0).toUpperCase() + keys[i].slice(1);
+                initGame();
+            }
         }
     }
     else if (screen === "game") {
         for (let i = 0; i < zones.length; i++) {
             if (zones[i].function(posX, posY) && zones[i].activated) {
                 screen = "over";
+                drawOverMenu();
             }
         }
     }
@@ -252,6 +258,7 @@ function triArea(p1, p2, p3) {
 }
 
 function initGame () {
+    screen = "game";
     time = 0;
     lifespan = 3;
     zones = [];
@@ -259,6 +266,13 @@ function initGame () {
     score = 0;
     zoneCount = 1;
     setTimeout(function () {
-        createLine();
+        if (mode === "Line")
+            createLine();
+        else if (mode === "Tri")
+            createTri();
+        else if (mode === "Quad")
+            createQuad();
+        else if (mode === "Random")
+            create[Math.floor(Math.random() * 3)]();
     }, 2000);
 }

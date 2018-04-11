@@ -111,6 +111,14 @@ function drawScore () {
     context2D.fillText("Score: " + score, 5, 5);
 }
 
+function drawMode () {
+    context2D.font = "12px Arial";
+    context2D.fillStyle = "white";
+    context2D.textAlign = "right";
+    context2D.textBaseline = "top";
+    context2D.fillText("Mode: " + mode, 192 - 5, 5);
+}
+
 function createButton(name, text, font, textColor, borderColor, xPos, yPos, width, height) {
     buttons[name] = {
         text: text,
@@ -142,10 +150,16 @@ function drawMainMenu () {
     context2D.fillStyle = "white";
     context2D.textAlign = "center";
     context2D.textBaseline = "middle";
-    context2D.fillText("DangerZone", canvas.width / 2, canvas.height / 3);
+    context2D.fillText("DangerZone", canvas.width / 2, canvas.height / 2);
 
-    createButton("start", "Start", "24px Arial", "white", "white",
-        canvas.width / 2, 2 * canvas.height / 3,  canvas.width / 2, canvas.height / 6);
+    createButton("line", "Line", "18px Arial", "white", "white",
+        canvas.width / 6, canvas.height / 6, canvas.width / 3, canvas.height / 3);
+    createButton("tri", "Tri", "18px Arial", "white", "white",
+        5 * canvas.width / 6, canvas.height / 6, canvas.width / 3, canvas.height / 3);
+    createButton("quad", "Quad", "18px Arial", "white", "white",
+        canvas.width / 6, 5 * canvas.height / 6, canvas.width / 3, canvas.height / 3);
+    createButton("random", "Random", "14px Arial", "white", "white",
+        5 * canvas.width / 6, 5 * canvas.height / 6, canvas.width / 3, canvas.height / 3);
 }
 
 function drawOverMenu() {
