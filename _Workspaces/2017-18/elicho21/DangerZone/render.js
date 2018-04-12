@@ -167,14 +167,14 @@ function drawOverMenu() {
     context2D.fillStyle = "white";
     context2D.textAlign = "center";
     context2D.textBaseline = "middle";
-    context2D.fillText("Game Over!", canvas.width / 2, canvas.height / 3);
+    context2D.fillText("Game Over!", canvas.width / 2, canvas.height / 6 + 20);
 
     context2D.font = "18px Arial";
     context2D.fillStyle = "white";
     context2D.textAlign = "center";
     context2D.textBaseline = "middle";
-    context2D.fillText("Score: " + score, canvas.width / 2, canvas.height / 2);
+    context2D.fillText("Score: " + score, canvas.width / 2, 5 * canvas.height / 6 - 20);
 
     createButton("main", "Menu", "24px Arial", "white", "white",
-        canvas.width / 2, 5 * canvas.height / 6,  canvas.width / 2, canvas.height / 6);
+        canvas.width / 2, canvas.height / 2,  canvas.width / 2, canvas.height / 6);
 }

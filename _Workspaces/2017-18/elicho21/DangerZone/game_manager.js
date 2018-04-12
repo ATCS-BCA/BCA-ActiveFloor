@@ -22,6 +22,7 @@ const create = [
     createQuad
 ];
 let diffVar = 0;
+let limit = 4;
 
 /* Zone Object
 {
@@ -86,14 +87,16 @@ function manageZones() {
 }
 
 function manageDifficulty() {
-    lifespan = 1.9 * Math.pow(0.9, Math.floor(score / 5)) + 1.1;
-    transTime = 2.8 * Math.pow(0.9, Math.floor(score / 5)) + 0.2;
-    // console.log("score: " + score + "; lifespan: " + lifespan + "; transTime: " + transTime);
+    lifespan = 1.9 * Math.pow(0.95, Math.floor(score / 5)) + 1.1;
+    transTime = 2.8 * Math.pow(0.95, Math.floor(score / 5)) + 0.2;
+/*    console.log("score: " + score + "; lifespan: " + lifespan + "; transTime: " + transTime);*/
+/*    console.log(diffVar + " " +  Math.floor(4 + 0.02 * score * score));*/
 
     let delay = Math.random() * 3000;
-    if (diffVar % Math.floor(5 + 0.01 * score * 2) === 0 && zoneCount < Math.floor(diffVar / Math.floor(5 + 0.01 * score * 2)) + 1) {
+    if (diffVar >= limit) {
         zoneCount++;
         diffVar = 0;
+        limit = Math.floor(0.02 * score * score + 4);
         if (mode === "Line") createLine();
         else if (mode === "Tri") createTri();
         else if (mode === "Quad") createQuad();
