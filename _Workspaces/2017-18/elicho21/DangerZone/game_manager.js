@@ -81,8 +81,10 @@ function manageZones() {
                     zones[i].function = getPolyFunction(zones[i].current);
             }
         }
-        else if (time >= zones[i].lastSpawned + lifespan - 1)
+        else if (time >= zones[i].lastSpawned + lifespan - 1) {
             zones[i].activated = true;
+        }
+
     }
 }
 
@@ -113,9 +115,9 @@ function createLine() {
     points = generatePoints("line");
     zones.push({
         "type": "line",
-        "current": [...points],
-        "original": [...points],
-        "destination": [...points],
+        "current": points,
+        "original": points,
+        "destination": points,
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
@@ -128,13 +130,13 @@ function createTri() {
     let points = generatePoints("tri");
     zones.push({
         "type": "tri",
-        "current": [...points],
-        "original": [...points],
-        "destination": [...points],
+        "current": points,
+        "original": points,
+        "destination": points,
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
-        "function": getPolyFunction(...points),
+        "function": getPolyFunction(points),
         "color": randomColor({luminosity: "dark"})
     });
 }
@@ -143,13 +145,13 @@ function createQuad() {
     let points = generatePoints("quad");
     zones.push({
         "type": "quad",
-        "current": [...points],
-        "original": [...points],
-        "destination": [...points],
+        "current": points,
+        "original": points,
+        "destination": points,
         "lastSpawned": time,
         "activated": false,
         "transStart": 0,
-        "function": getPolyFunction(...points),
+        "function": getPolyFunction(points),
         "color": randomColor({luminosity: "dark"})
     });
 }
