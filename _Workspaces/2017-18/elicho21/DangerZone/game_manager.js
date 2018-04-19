@@ -270,6 +270,8 @@ function initGame () {
     transTime = 3;
     score = 0;
     zoneCount = 1;
+    diffVar = 0;
+    limit = 4;
     setTimeout(function () {
         if (mode === "Line")
             createLine();
