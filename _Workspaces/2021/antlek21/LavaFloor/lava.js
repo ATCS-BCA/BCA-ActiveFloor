@@ -194,7 +194,7 @@ function nextLevel() {
 function recalculateDifficulty() {
     // TODO
     // Fix decaying function for seconds left
-    // secondWait = 3*Math.pow(Math.E, -0.01*level) + 2;
+    secondWait = 3*Math.floor(Math.pow(Math.E, -0.01*level)) + 2;
     maxSafeTiles = Math.floor(maxSafeTiles/2) + 1;
     lavaBoxSize = lavaBoxSizes.random();
 }
