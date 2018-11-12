@@ -85,27 +85,11 @@
 		</AppMode>
 
         <AppMode appModeID="Wkspace-alevig21" name="Workspace-alevig21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\alevig21\Demo\floor.html</Display>
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\alevig21\floor.html</Display>
         </AppMode>
 
-        <AppMode appModeID="Wkspace-antlek21" name="Workspace-antlek21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\antlek21\Demo\floor.html</Display>
-        </AppMode>
-
-        <AppMode appModeID="LavaFloor" name="LavaFloor">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\antlek21\LavaFloor\floor.html</Display>
-        </AppMode>
-
-        <AppMode appModeID="Wkspace-bryres" name="Workspace-bryres">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\bryres\Demo\floor.html</Display>
-        </AppMode>
-
-        <AppMode appModeID="Wkspace-davdu21" name="Workspace-davdu21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\davdu21\Demo\floor.html</Display>
-        </AppMode>
-
-        <AppMode appModeID="Wkspace-elicho21" name="Workspace-elicho21">
-            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\elicho21\Demo\floor.html</Display>
+        <AppMode appModeID="Wkspace-colkni20" name="Workspace-colkni20">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2020\colkni20\floor.html</Display>
         </AppMode>
 
         <AppMode appModeID="Recharge" name="Recharge">
