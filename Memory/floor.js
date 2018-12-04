@@ -139,7 +139,7 @@ function drawCanvas(arr) {
 
 function refreshXML() {
     'use strict';
-    $.get('http://activefloor.bca.bergen.org:8080/', function (data) {
+    $.get('http://10.100.114.30:8080/', function (data) {
         dataHolderArray = [];
 
         $(data).find('BLFloor').each(function () {

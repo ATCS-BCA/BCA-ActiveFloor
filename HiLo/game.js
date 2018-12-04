@@ -20,7 +20,7 @@ var Floor = {
     lastTiles: null,
     getTiles: () => {
     let floorTiles = []
-    $.get('http://activefloor.bca.bergen.org:8080', data => {
+    $.get('http://10.100.114.30:8080', data => {
     $(data).find('Row').each(function () {
     var $row, $vals
     $row = $(this);
