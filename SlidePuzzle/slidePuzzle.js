@@ -53,7 +53,7 @@ window.onload = function(){
 
 function refreshXML() {
     'use strict';
-    $.get('http://10.100.114.30:8080/', function (data) {
+    $.get('http://HK-138-01.bergen.org:8080/', function (data) {
         dataHolderArray = [];
 				
         $(data).find('BLFloor').each(function () {
