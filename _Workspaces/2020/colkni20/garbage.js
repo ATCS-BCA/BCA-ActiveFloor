@@ -13,6 +13,21 @@ var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
+function calculatedRainbowResult(seconds) {
+    if(seconds>=0 && seconds < 0.5){
+        return "blue";
+    }
+    else if(seconds>=.5 && seconds < 1){
+        return "green";
+    }
+    else if(seconds>= 1 && seconds < 1.5){
+        return "orange";
+    }
+    else if(seconds>=1.5 && seconds < 2){
+        return "purple";
+    }
+    return "yellow";
+}
 function drawObj(type, xPos, yPos, size, colorchoice) {
     'use strict';
     context2D.fillStyle = colorchoice;
@@ -28,16 +43,16 @@ function drawObj(type, xPos, yPos, size, colorchoice) {
 }
 function updateScreenArray(arr) {
     'use strict';
-     canvas = document.getElementById('floorCanvas');
-     canvas.width = ledsX;
-     canvas.height = ledsY;
-     context2D = canvas.getContext('2d');
+    canvas = document.getElementById('floorCanvas');
+    canvas.width = ledsX;
+    canvas.height = ledsY;
+    context2D = canvas.getContext('2d');
 
-     var i, tempRow, p, srchStr;
-     for (i = 0; i < arr.length; i += 1) {
-         tempRow = arr[i];
+    var i, tempRow, p, srchStr;
+    for (i = 0; i < arr.length; i += 1) {
+        tempRow = arr[i];
 
-         for (p = 0; p < tempRow.length; p += 1) {
+        for (p = 0; p < tempRow.length; p += 1) {
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
@@ -52,15 +67,15 @@ function updateScreenArray(arr) {
                 if(i == 23 && p == 23){
                     brushcolor = "blue";
                 }
-                /*if(i == 12 && p == 12){
-                    brushcolor = "blue";
-                }*/
+                if(i == 12 && p == 12){
+                    brushcolor = "rainbow";
+                }
                 if(i == 0 && p == 23){
                     brushcolor = "green";
                 }
             }
-         }
-     }
+        }
+    }
 }
 brushcolor = 'red';
 function drawScreenArray() {
@@ -80,93 +95,96 @@ function drawScreenArray() {
                     drawObj('square', tempX, tempY, 5, (screenArray[i][p]).color);
                 }
 
+                else{
+                    drawObj('square', tempX, tempY, 5, calculatedRainbowResult(secondCounter/5));
+                }
 
                 msCounter += 17;
                 secondCounter = msCounter/1000;
-                if (secondCounter >= 2.017){
+                if (secondCounter >= 10.017){
                     msCounter=0;
                     secondCounter=0;
                 }
 
-                }
-                /*if (tempX >= 90 && tempX <= 96 && tempY >= 0 && tempY <= 2){
+            }
+            /*if (tempX >= 90 && tempX <= 96 && tempY >= 0 && tempY <= 2){
 
-                    for (var apple = 0; apple < 24; apple++){
-                        for (var ban = 0; b < 24; ban++){
-                            (screenArray[apple][ban]).value = false;
-                            (screenArray[apple][ban]).color = "none";
-                        }
+                for (var apple = 0; apple < 24; apple++){
+                    for (var ban = 0; b < 24; ban++){
+                        (screenArray[apple][ban]).value = false;
+                        (screenArray[apple][ban]).color = "none";
                     }
-                }*/
-
-                if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
-                    brushcolor = 'red';
-                    screenArray[i][p].value = false;
-
                 }
-                else if (tempX >= 0 && tempX <= 2 && tempY >= 184 && tempY <= 186) {
-                    brushcolor = "eraser";
-                    screenArray[i][p].value = false;
-                }
-                else if (tempX >= 184 && tempX <= 186 && tempY >= 184 && tempY <= 186) {
-                    brushcolor = "blue";
-                    screenArray[i][p].value = false;
-                }
-                else if (tempX >= 184 && tempX <= 186 && tempY >= 0 && tempY <= 2) {
-                    brushcolor = "green";
-                    screenArray[i][p].value = false;
-                }
-                cn = 0;
-                fox = 0;
-                drawObj('square', fox, cn, 5, 'red');
-                drawObj('square', fox+2, cn+1, 5, 'red');
-                drawObj('square', fox+1, cn+1, 5, 'red');
-                drawObj('square', fox, cn+1, 5, 'red');
-                drawObj('square', fox+1, cn, 5, 'red');
-                drawObj('square', fox, cn+2, 5, 'red');
-                drawObj('square', fox+1, cn+2, 5, 'red');
-                drawObj('square', fox+2, cn+2, 5, 'red');
-                drawObj('square', fox+2, cn, 5, 'red');
-                fox = 0;
-                drawObj('square', 184, cn, 5, 'green');
-                drawObj('square', 184+2, cn+1, 5, 'green');
-                drawObj('square', 184+1, cn+1, 5, 'green');
-                drawObj('square', 184, cn+1, 5, 'green');
-                drawObj('square', 184+1, cn, 5, 'green');
-                drawObj('square', 184, cn+2, 5, 'green');
-                drawObj('square', 184+1, cn+2, 5, 'green');
-                drawObj('square', 184+2, cn+2, 5, 'green');
-                drawObj('square', 184+2, cn, 5, 'green');
-                cn = 184;
-                drawObj('square', 0, cn, 5, 'pink');
-                drawObj('square', 2, cn+1, 5, 'pink');
-                drawObj('square', 1, cn+1, 5, 'pink');
-                drawObj('square', 0, cn+1, 5, 'pink');
-                drawObj('square', 1, cn, 5, 'pink');
-                drawObj('square', 0, cn+2, 5, 'pink');
-                drawObj('square', 1, cn+2, 5, 'pink');
-                drawObj('square', 2, cn+2, 5, 'pink');
-                drawObj('square', 2, cn, 5, 'pink');
-                fox=184;
-                drawObj('square', fox, cn, 5, 'blue');
-                drawObj('square', fox+2, cn+1, 5, 'blue');
-                drawObj('square', fox+1, cn+1, 5, 'blue');
-                drawObj('square', fox, cn+1, 5, 'blue');
-                drawObj('square', fox+1, cn, 5, 'blue');
-                drawObj('square', fox, cn+2, 5, 'blue');
-                drawObj('square', fox+1, cn+2, 5, 'blue');
-                drawObj('square', fox+2, cn+2, 5, 'blue');
-                drawObj('square', fox+2, cn, 5, 'blue');
-                fox  = 90;
-                cn = 90;
+            }*/
 
-                cn-= 7;
+            if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
+                brushcolor = 'red';
+                screenArray[i][p].value = false;
 
-                cn += 7;
-                fox -= 7;
+            }
+            else if (tempX >= 0 && tempX <= 2 && tempY >= 184 && tempY <= 186) {
+                brushcolor = "eraser";
+                screenArray[i][p].value = false;
+            }
+            else if (tempX >= 184 && tempX <= 186 && tempY >= 184 && tempY <= 186) {
+                brushcolor = "blue";
+                screenArray[i][p].value = false;
+            }
+            else if (tempX >= 184 && tempX <= 186 && tempY >= 0 && tempY <= 2) {
+                brushcolor = "green";
+                screenArray[i][p].value = false;
+            }
+            cn = 0;
+            fox = 0;
+            drawObj('square', fox, cn, 5, 'red');
+            drawObj('square', fox+2, cn+1, 5, 'red');
+            drawObj('square', fox+1, cn+1, 5, 'red');
+            drawObj('square', fox, cn+1, 5, 'red');
+            drawObj('square', fox+1, cn, 5, 'red');
+            drawObj('square', fox, cn+2, 5, 'red');
+            drawObj('square', fox+1, cn+2, 5, 'red');
+            drawObj('square', fox+2, cn+2, 5, 'red');
+            drawObj('square', fox+2, cn, 5, 'red');
+            fox = 0;
+            drawObj('square', 184, cn, 5, 'green');
+            drawObj('square', 184+2, cn+1, 5, 'green');
+            drawObj('square', 184+1, cn+1, 5, 'green');
+            drawObj('square', 184, cn+1, 5, 'green');
+            drawObj('square', 184+1, cn, 5, 'green');
+            drawObj('square', 184, cn+2, 5, 'green');
+            drawObj('square', 184+1, cn+2, 5, 'green');
+            drawObj('square', 184+2, cn+2, 5, 'green');
+            drawObj('square', 184+2, cn, 5, 'green');
+            cn = 184;
+            drawObj('square', 0, cn, 5, 'pink');
+            drawObj('square', 2, cn+1, 5, 'pink');
+            drawObj('square', 1, cn+1, 5, 'pink');
+            drawObj('square', 0, cn+1, 5, 'pink');
+            drawObj('square', 1, cn, 5, 'pink');
+            drawObj('square', 0, cn+2, 5, 'pink');
+            drawObj('square', 1, cn+2, 5, 'pink');
+            drawObj('square', 2, cn+2, 5, 'pink');
+            drawObj('square', 2, cn, 5, 'pink');
+            fox=184;
+            drawObj('square', fox, cn, 5, 'blue');
+            drawObj('square', fox+2, cn+1, 5, 'blue');
+            drawObj('square', fox+1, cn+1, 5, 'blue');
+            drawObj('square', fox, cn+1, 5, 'blue');
+            drawObj('square', fox+1, cn, 5, 'blue');
+            drawObj('square', fox, cn+2, 5, 'blue');
+            drawObj('square', fox+1, cn+2, 5, 'blue');
+            drawObj('square', fox+2, cn+2, 5, 'blue');
+            drawObj('square', fox+2, cn, 5, 'blue');
+            fox  = 90;
+            cn = 90;
 
-             }
+            cn-= 7;
+
+            cn += 7;
+            fox -= 7;
+
         }
+    }
 }
 
 
@@ -245,3 +263,4 @@ function stopRefresh() {
     'use strict';
     clearInterval(myInterval);
 }
+
