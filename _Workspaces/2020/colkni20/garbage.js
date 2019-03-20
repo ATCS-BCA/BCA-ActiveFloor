@@ -96,12 +96,12 @@ function drawScreenArray() {
                 }
 
                 else{
-                    drawObj('square', tempX, tempY, 5, calculatedRainbowResult(secondCounter/5));
+                    drawObj('square', tempX, tempY, 5, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
                 }
 
                 msCounter += 17;
                 secondCounter = msCounter/1000;
-                if (secondCounter >= 10.017){
+                if (secondCounter >= 30.017){
                     msCounter=0;
                     secondCounter=0;
                 }
@@ -238,6 +238,8 @@ $(document).ready(function () {
             screenArray[a][b] = {};
             (screenArray[a][b]).value = false;
             (screenArray[a][b]).color = "none";
+            (screenArray[a][b]).seed = (Math.random())*1.5;
+
         }
     }
 
