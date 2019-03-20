@@ -88,6 +88,18 @@
             <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\alevig21\floor.html</Display>
         </AppMode>
 
+        <AppMode appModeID="Wkspace-wang" name="Workspace-wang">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\wang\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-isecke" name="Workspace-isecke">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\isecke\floor.html</Display>
+        </AppMode>
+
+        <AppMode appModeID="Wkspace-maxbus21" name="Workspace-maxbus21">
+            <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2021\maxbus21\floor.html</Display>
+        </AppMode>
+
         <AppMode appModeID="Wkspace-colkni20" name="Workspace-colkni20">
             <Display displayPurpose="Floor" applicationType="WebApp">_Workspaces\2020\colkni20\floor.html</Display>
         </AppMode>
