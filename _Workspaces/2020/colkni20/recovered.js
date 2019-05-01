@@ -13,6 +13,35 @@ var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
+function paintBucket (node, color){
+    console.log(node.row);
+    console.log(node.column);
+    node.selected = true;
+    var left = false;
+    var right = false;
+    var up = false;
+    var down = false;
+    if(!color!==(node.color)){
+        if(node.left!=null && node.left.color===(node.color) && !node.left.selected){
+            left = true;
+        }
+        if(node.right!=null && node.right.color===(node.color) && !node.right.selected){
+            right = true;
+        }
+        if(node.up!=null && node.up.color===(node.color) && !node.up.selected){
+            up = true;
+        }
+        if(node.down!=null && node.down.color===(node.color) && !node.down.selected){
+            down = true;
+        }
+        node.value = true;
+        node.color = color;
+        if(left){paintBucket(node.left, color);}
+        if(right){paintBucket(node.right, color);}
+        if(up){paintBucket(node.up, color);}
+        if(down){paintBucket(node.down, color);}
+    }
+}
 function calculatedRainbowResult(seconds) {
     if(seconds>=0 && seconds < 0.5){
         return "blue";
@@ -237,11 +266,32 @@ $(document).ready(function () {
         for (var b = 0; b < 24; b++){
             screenArray[a][b] = {};
             (screenArray[a][b]).value = false;
+            (screenArray[a][b]).row = a;
+            (screenArray[a][b]).column = b;
             (screenArray[a][b]).color = "none";
+            (screenArray[a][b]).left = null;
+            (screenArray[a][b]).right = null;
+            (screenArray[a][b]).up = null;
+            (screenArray[a][b]).down = null;
             (screenArray[a][b]).seed = (Math.random())*1.5;
+            (screenArray[a][b]).selected = false;
+
+        }
+
+    }
+
+    for (var a = 0; a < 24; a++) {
+        for (var b = 0; b < 24; b++) {
+            if(b>0){(screenArray[a][b]).left=(screenArray[a][b-1]);}
+            if(b<23){(screenArray[a][b]).right=(screenArray[a][b+1]);}
+            if(a<23){(screenArray[a][b]).down=(screenArray[a+1][b]);}
+            if(a>0){(screenArray[a][b]).up=(screenArray[a-1][b]);}
 
         }
     }
+    paintBucket(screenArray[5][6], "red");
+
+
 
 
     // Start getting floor data automatically (assuming Floor Server is running).

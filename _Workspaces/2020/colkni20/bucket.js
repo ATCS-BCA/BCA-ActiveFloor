@@ -1,13 +1,11 @@
 //Cole Knie
 /*jslint browser: true*/
 /*global $, jQuery*/
-
 var myInterval;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
 var cn = 0;
 var screenArray = [];
-var layerArrayList = [];
 var newarray = [];
 var charSearch = '*';
 var charDivide = ',';
@@ -15,28 +13,21 @@ var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
-var currentLayer = 1;
-function getScreenArray() {
-
-    for (var a = 0; a < 24; a++) {
-        for (var b = 0; b < 24; b++) {
-            screenArray[a][b] = {};
-            (screenArray[a][b]).value = false;
-            (screenArray[a][b]).color = "none";
-            (screenArray[a][b]).seed = (Math.random()) * 1.5;
-
+function paintBucket (node, color){
+    if(!color.eq(node.color)){
+        if(node.left!=null && node.left.color.eq(node.color)){
+            paintBucket(node.left, color);
         }
-    }
-    for (var d = 0; d < layerArrayList.length; d++) {
-        for (var e = 0; e < layerArrayList[0].length; e++) {
-            for (var f = 0; f < layerArrayList[0][0].length; f++) {
-                if (!layerArrayList[d][e][f].value && (!layerArrayList[d][e][f].eq("none"))) {
-                    screenArray[e][f].color = layerArrayList[d][e][f].color;
-                    screenArray[e][f].value = layerArrayList[d][e][f].value;
-                    screenArray[e][f].seed = layerArrayList[d][e][f].seed;
-                }
-            }
+        if(node.right!=null && node.right.color.eq(node.color)){
+            paintBucket(node.right, color);
         }
+        if(node.up!=null && node.up.color.eq(node.color)){
+            paintBucket(node.up, color);
+        }
+        if(node.down!=null && node.down.color.eq(node.color)){
+            paintBucket(node.down, color);
+        }
+        node.color = color;
     }
 }
 function calculatedRainbowResult(seconds) {
@@ -79,14 +70,13 @@ function updateScreenArray(arr) {
         tempRow = arr[i];
 
         for (p = 0; p < tempRow.length; p += 1) {
-            console.log(layerArrayList.length);
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                (layerArrayList[currentLayer][i][p]).value = true;
+                (screenArray[i][p]).value = true;
                 if (brushcolor == "eraser"){
-                    layerArrayList[currentLayer][i][p].value = false;
-                    layerArrayList[currentLayer][i][p].color = "none";
+                    screenArray[i][p].value = false;
+                    screenArray[i][p].color = "none";
                 }
                 if(i == 0 && p == 0){
                     brushcolor = "red";
@@ -94,9 +84,9 @@ function updateScreenArray(arr) {
                 if(i == 23 && p == 23){
                     brushcolor = "blue";
                 }
-                /*if(i == 12 && p == 12){
+                if(i == 12 && p == 12){
                     brushcolor = "rainbow";
-                }*/
+                }
                 if(i == 0 && p == 23){
                     brushcolor = "green";
                 }
@@ -106,18 +96,16 @@ function updateScreenArray(arr) {
 }
 brushcolor = 'red';
 function drawScreenArray() {
-    getScreenArray();
 
     for (var i = 0; i < screenArray.length; i += 1) {
         var tempRow = screenArray[i];
 
         for (var p = 0; p < tempRow.length; p += 1) {
-            if ((layerArrayList[currentLayer][i][p]).value) {
+
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-                if (((layerArrayList[currentLayer][i][p]).color) == "none") {
-                    (layerArrayList[currentLayer][i][p]).color = brushcolor;
-                    getScreenArray();
+                if (((screenArray[i][p]).color) == "none") {
+                    (screenArray[i][p]).color = brushcolor;
 
                 }
                 if ((screenArray[i][p]).color != "rainbow") {
@@ -257,37 +245,36 @@ $(document).ready(function () {
     // Default screen array to 24x24 and set to false
 //    for (i = 0; i < 24; i++)
 //        screenArray.push([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
-
     screenArray = new Array(24);
     for (var i = 0; i < 24; i++) {
         screenArray[i] = new Array(24);
     }
 
-    for (var a = 0; a < 24; a++) {
-        for (var b = 0; b < 24; b++) {
+    for (var a = 0; a < 24; a++){
+        for (var b = 0; b < 24; b++){
             screenArray[a][b] = {};
             (screenArray[a][b]).value = false;
             (screenArray[a][b]).color = "none";
-            (screenArray[a][b]).seed = (Math.random()) * 1.5;
+            (screenArray[a][b]).row = a;
+            (screenArray[a][b]).column = b;
+            (screenArray[a][b]).left = null;
+            (screenArray[a][b]).right = null;
+            (screenArray[a][b]).up = null;
+            (screenArray[a][b]).down = null;
+            (screenArray[a][b]).selected = false;
+            (screenArray[a][b]).seed = (Math.random())*1.5;
+        }
+
+    }
+    for (var a = 0; a < 24; a++) {
+        for (var b = 0; b < 24; b++) {
+            if((b-1)!=-1){screenArray[a][b].left=screenArray[a][b-1]}
+            if((b+1)!=24){screenArray[a][b].right=screenArray[a][b+1]}
+            if((a+1)!=24){screenArray[a][b].down=screenArray[a+1][b]}
+            if((a-1)!=-1){screenArray[a][b].up=screenArray[a-1][b]}
 
         }
     }
-    for (var c = 0; a < 24; a++) {
-        for (var a = 0; a < 24; a++) {
-            for (var b = 0; b < 24; b++) {
-                layerArrayList[c] = {};
-                (layerArrayList[c][a][b]).value = false;
-                (layerArrayList[c][a][b]).color = "none";
-                (layerArrayList[c][a][b]).seed = (Math.random()) * 1.5;
-
-            }
-        }
-    }
-    layerArrayList[0][10][10].value= true;
-    layerArrayList[0][10][10].brushcolor= "red";
-    layerArrayList[0][10][10].seed = (Math.random()) * 1.5;
-
-
 
     // Start getting floor data automatically (assuming Floor Server is running).
     startRefresh();
@@ -300,6 +287,10 @@ $(document).ready(function () {
 
     });
 });
+
+function paintBucket(row, column, brushcolor, ) {
+
+}
 
 function startRefresh() {
     'use strict';
