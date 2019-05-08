@@ -14,6 +14,14 @@ var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
+function drawButton(y, color){
+    drawObj("square", 0, ledPerSensorY*(y+1), 8, color);
+    drawObj("square", 0, ledPerSensorY*y, 8, color);
+    drawObj("square", ledPerSensorX, ledPerSensorY*y, 8, color);
+    drawObj("square", ledPerSensorX, ledPerSensorY*(y+1), 8, color);
+
+
+}
 function paintBucket (node, color){
     console.log(node.row);
     console.log(node.column);
@@ -116,11 +124,14 @@ function updateScreenArray(arr) {
 }
 brushcolor = 'red';
 function drawScreenArray() {
+    drawButton(0, "red");
 
     for (var i = 0; i < screenArray.length; i += 1) {
+
         var tempRow = screenArray[i];
 
         for (var p = 0; p < tempRow.length; p += 1) {
+
             if ((screenArray[i][p]).value) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
