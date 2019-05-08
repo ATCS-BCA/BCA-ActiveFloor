@@ -244,6 +244,7 @@ $(document).ready(function () {
 
         }
 
+
     }
 
     for (var a = 0; a < 24; a++) {
