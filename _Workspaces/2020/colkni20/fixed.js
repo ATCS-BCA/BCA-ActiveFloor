@@ -57,21 +57,24 @@ function updateScreenArray(arr) {
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 (screenArray[i][p]).value = true;
-                if (brushcolor == "eraser"){
+                if (brushcolor === "eraser"){
                     screenArray[i][p].value = false;
                     screenArray[i][p].color = "none";
                 }
-                if(i == 0 && p == 0){
+                if(i === 0 && p === 0){
                     brushcolor = "red";
                 }
-                if(i == 23 && p == 23){
+                if(i === 0 && p === 3){
                     brushcolor = "blue";
                 }
-                if(i == 12 && p == 12){
+                if(i === 0 && p === 6){
+                    brushcolor = "green";
+                }
+                if(i === 0 && p === 9){
                     brushcolor = "rainbow";
                 }
-                if(i == 0 && p == 23){
-                    brushcolor = "green";
+                if(i === 0 && p === 12){
+                    brushcolor = "eraser";
                 }
             }
         }
@@ -91,7 +94,7 @@ function drawScreenArray() {
                     (screenArray[i][p]).color = brushcolor;
 
                 }
-                if ((screenArray[i][p]).color != "rainbow") {
+                if ((screenArray[i][p]).color !== "rainbow") {
                     drawObj('square', tempX, tempY, 5, (screenArray[i][p]).color);
                 }
 
@@ -117,21 +120,25 @@ function drawScreenArray() {
                 }
             }*/
 
-            if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
-                brushcolor = 'red';
+            if (tempX >= 0 && tempX <= 8 && tempY >= 0 && tempY <= 8){
+                brushcolor = "red";
                 screenArray[i][p].value = false;
 
             }
             else if (tempX >= 0 && tempX <= 2 && tempY >= 184 && tempY <= 186) {
-                brushcolor = "eraser";
-                screenArray[i][p].value = false;
-            }
-            else if (tempX >= 184 && tempX <= 186 && tempY >= 184 && tempY <= 186) {
                 brushcolor = "blue";
                 screenArray[i][p].value = false;
             }
-            else if (tempX >= 184 && tempX <= 186 && tempY >= 0 && tempY <= 2) {
+            else if (tempX >= 184 && tempX <= 186 && tempY >= 184 && tempY <= 186) {
                 brushcolor = "green";
+                screenArray[i][p].value = false;
+            }
+            else if (tempX >= 184 && tempX <= 186 && tempY >= 0 && tempY <= 2) {
+                brushcolor = "rainbow";
+                screenArray[i][p].value = false;
+            }
+            else if (tempX >= 184 && tempX <= 186 && tempY >= 0 && tempY <= 2) {
+                brushcolor = "eraser";
                 screenArray[i][p].value = false;
             }
             cn = 0;

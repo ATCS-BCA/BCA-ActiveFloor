@@ -2,6 +2,7 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
 var myInterval;
+toolCounterY=0;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
 var cn = 0;
@@ -86,21 +87,27 @@ function updateScreenArray(arr) {
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 (screenArray[i][p]).value = true;
-                if (brushcolor == "eraser"){
+                if (brushcolor === "eraser"){
                     screenArray[i][p].value = false;
                     screenArray[i][p].color = "none";
                 }
-                if(i == 0 && p == 0){
+                if(i === 0 && p === 0){
                     brushcolor = "red";
                 }
-                if(i == 23 && p == 23){
+                if(i === 0 && p === 3){
+                    brushcolor = "green";
+                }
+                if(i === 0 && p === 6){
                     brushcolor = "blue";
                 }
-                if(i == 12 && p == 12){
+                if(i === 0 && p === 9){
+                    brushcolor = "purple";
+                }
+                if(i === 0 && p === 12){
                     brushcolor = "rainbow";
                 }
-                if(i == 0 && p == 23){
-                    brushcolor = "green";
+                if(i === 0 && p === 15){
+                    brushcolor = "eraser";
                 }
             }
         }
@@ -116,11 +123,11 @@ function drawScreenArray() {
             if ((screenArray[i][p]).value) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-                if (((screenArray[i][p]).color) == "none") {
+                if (((screenArray[i][p]).color) === "none") {
                     (screenArray[i][p]).color = brushcolor;
 
                 }
-                if ((screenArray[i][p]).color != "rainbow") {
+                if ((screenArray[i][p]).color !== "rainbow") {
                     drawObj('square', tempX, tempY, 5, (screenArray[i][p]).color);
                 }
 
@@ -137,7 +144,6 @@ function drawScreenArray() {
 
             }
             /*if (tempX >= 90 && tempX <= 96 && tempY >= 0 && tempY <= 2){
-
                 for (var apple = 0; apple < 24; apple++){
                     for (var ban = 0; b < 24; ban++){
                         (screenArray[apple][ban]).value = false;
@@ -145,72 +151,60 @@ function drawScreenArray() {
                     }
                 }
             }*/
+            for(i = 0; i<8; i++){
 
-            if (tempX >= 0 && tempX <= 2 && tempY >= 0 && tempY <= 2){
+            }
+            toolCounterY = 0;
+            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
                 brushcolor = 'red';
                 screenArray[i][p].value = false;
 
             }
-            else if (tempX >= 0 && tempX <= 2 && tempY >= 184 && tempY <= 186) {
-                brushcolor = "eraser";
-                screenArray[i][p].value = false;
-            }
-            else if (tempX >= 184 && tempX <= 186 && tempY >= 184 && tempY <= 186) {
-                brushcolor = "blue";
-                screenArray[i][p].value = false;
-            }
-            else if (tempX >= 184 && tempX <= 186 && tempY >= 0 && tempY <= 2) {
+            toolCounterY += 24;
+            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
                 brushcolor = "green";
                 screenArray[i][p].value = false;
             }
-            cn = 0;
-            fox = 0;
-            drawObj('square', fox, cn, 5, 'red');
-            drawObj('square', fox+2, cn+1, 5, 'red');
-            drawObj('square', fox+1, cn+1, 5, 'red');
-            drawObj('square', fox, cn+1, 5, 'red');
-            drawObj('square', fox+1, cn, 5, 'red');
-            drawObj('square', fox, cn+2, 5, 'red');
-            drawObj('square', fox+1, cn+2, 5, 'red');
-            drawObj('square', fox+2, cn+2, 5, 'red');
-            drawObj('square', fox+2, cn, 5, 'red');
-            fox = 0;
-            drawObj('square', 184, cn, 5, 'green');
-            drawObj('square', 184+2, cn+1, 5, 'green');
-            drawObj('square', 184+1, cn+1, 5, 'green');
-            drawObj('square', 184, cn+1, 5, 'green');
-            drawObj('square', 184+1, cn, 5, 'green');
-            drawObj('square', 184, cn+2, 5, 'green');
-            drawObj('square', 184+1, cn+2, 5, 'green');
-            drawObj('square', 184+2, cn+2, 5, 'green');
-            drawObj('square', 184+2, cn, 5, 'green');
-            cn = 184;
-            drawObj('square', 0, cn, 5, 'pink');
-            drawObj('square', 2, cn+1, 5, 'pink');
-            drawObj('square', 1, cn+1, 5, 'pink');
-            drawObj('square', 0, cn+1, 5, 'pink');
-            drawObj('square', 1, cn, 5, 'pink');
-            drawObj('square', 0, cn+2, 5, 'pink');
-            drawObj('square', 1, cn+2, 5, 'pink');
-            drawObj('square', 2, cn+2, 5, 'pink');
-            drawObj('square', 2, cn, 5, 'pink');
-            fox=184;
-            drawObj('square', fox, cn, 5, 'blue');
-            drawObj('square', fox+2, cn+1, 5, 'blue');
-            drawObj('square', fox+1, cn+1, 5, 'blue');
-            drawObj('square', fox, cn+1, 5, 'blue');
-            drawObj('square', fox+1, cn, 5, 'blue');
-            drawObj('square', fox, cn+2, 5, 'blue');
-            drawObj('square', fox+1, cn+2, 5, 'blue');
-            drawObj('square', fox+2, cn+2, 5, 'blue');
-            drawObj('square', fox+2, cn, 5, 'blue');
-            fox  = 90;
-            cn = 90;
-
-            cn-= 7;
-
-            cn += 7;
-            fox -= 7;
+            toolCounterY += 24;
+            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
+                brushcolor = "blue";
+                screenArray[i][p].value = false;
+            }
+            toolCounterY += 24;
+            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
+                brushcolor = "purple";
+                screenArray[i][p].value = false;
+            }
+            toolCounterY += 24;
+            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
+                brushcolor = "rainbow";
+                screenArray[i][p].value = false;
+            }
+            toolCounterY += 24;
+            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
+                brushcolor = "eraser";
+                screenArray[i][p].value = false;
+            }
+            for(f = 0; f<8; f++){
+                for(g = 0; g<8; g++){
+                    drawObj('square', f, g, 5, 'red')
+                }
+                for(g = 24; g<32; g++){
+                    drawObj('square', f, g, 5, 'green')
+                }
+                for(g = 48; g<56; g++){
+                    drawObj('square', f, g, 5, 'blue')
+                }
+                for(g = 72; g<80; g++){
+                    drawObj('square', f, g, 5, 'purple')
+                }
+                for(g = 96; g<104; g++){
+                    drawObj('square', f, g, 5, 'blue')
+                }
+                for(g = 120; g<128; g++){
+                    drawObj('square', f, g, 5, 'pink')
+                }
+            }
 
         }
     }
@@ -289,7 +283,6 @@ $(document).ready(function () {
 
         }
     }
-    paintBucket(screenArray[5][6], "red");
 
 
 
