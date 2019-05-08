@@ -109,6 +109,7 @@ function updateScreenArray(arr) {
                 if(i === 0 && p === 15){
                     brushcolor = "eraser";
                 }
+
             }
         }
     }
