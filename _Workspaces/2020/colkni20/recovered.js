@@ -128,11 +128,11 @@ function drawScreenArray() {
 
                 }
                 if ((screenArray[i][p]).color !== "rainbow") {
-                    drawObj('square', tempX, tempY, 5, (screenArray[i][p]).color);
+                    drawObj('square', tempX, tempY, 8, (screenArray[i][p]).color);
                 }
 
                 else{
-                    drawObj('square', tempX, tempY, 5, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
+                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
                 }
 
                 msCounter += 17;
@@ -151,60 +151,6 @@ function drawScreenArray() {
                     }
                 }
             }*/
-            for(i = 0; i<8; i++){
-
-            }
-            toolCounterY = 0;
-            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
-                brushcolor = 'red';
-                screenArray[i][p].value = false;
-
-            }
-            toolCounterY += 24;
-            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
-                brushcolor = "green";
-                screenArray[i][p].value = false;
-            }
-            toolCounterY += 24;
-            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
-                brushcolor = "blue";
-                screenArray[i][p].value = false;
-            }
-            toolCounterY += 24;
-            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
-                brushcolor = "purple";
-                screenArray[i][p].value = false;
-            }
-            toolCounterY += 24;
-            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
-                brushcolor = "rainbow";
-                screenArray[i][p].value = false;
-            }
-            toolCounterY += 24;
-            if (tempX >= 0 && tempX <= 7 && tempY >= toolCounterY && tempY <= toolCounterY+7){
-                brushcolor = "eraser";
-                screenArray[i][p].value = false;
-            }
-            for(f = 0; f<8; f++){
-                for(g = 0; g<8; g++){
-                    drawObj('square', f, g, 5, 'red')
-                }
-                for(g = 24; g<32; g++){
-                    drawObj('square', f, g, 5, 'green')
-                }
-                for(g = 48; g<56; g++){
-                    drawObj('square', f, g, 5, 'blue')
-                }
-                for(g = 72; g<80; g++){
-                    drawObj('square', f, g, 5, 'purple')
-                }
-                for(g = 96; g<104; g++){
-                    drawObj('square', f, g, 5, 'blue')
-                }
-                for(g = 120; g<128; g++){
-                    drawObj('square', f, g, 5, 'pink')
-                }
-            }
 
         }
     }
