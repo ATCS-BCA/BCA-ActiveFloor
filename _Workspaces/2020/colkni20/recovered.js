@@ -21,7 +21,6 @@ function paintBucket (node, color){
     var right = false;
     var up = false;
     var down = false;
-
     if(!color!==(node.color)){
         if(node.left!=null && node.left.color===(node.color) && !node.left.selected){
             left = true;
