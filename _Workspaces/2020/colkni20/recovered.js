@@ -14,11 +14,19 @@ var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
-function drawButton(y, color){
-    drawObj("square", 0, ledPerSensorY*(y+1), 8, color);
-    drawObj("square", 0, ledPerSensorY*y, 8, color);
-    drawObj("square", ledPerSensorX, ledPerSensorY*y, 8, color);
-    drawObj("square", ledPerSensorX, ledPerSensorY*(y+1), 8, color);
+function drawButton(y, color, rainbow){
+    if(rainbow){
+        drawObj("square", 0, ledPerSensorY * (y + 1), 8, "red");
+        drawObj("square", 0, ledPerSensorY * y, 8, "blue");
+        drawObj("square", ledPerSensorX, ledPerSensorY * y, 8, "purple");
+        drawObj("square", ledPerSensorX, ledPerSensorY * (y + 1), 8, "yellow");
+    }
+    else {
+        drawObj("square", 0, ledPerSensorY * (y + 1), 8, color);
+        drawObj("square", 0, ledPerSensorY * y, 8, color);
+        drawObj("square", ledPerSensorX, ledPerSensorY * y, 8, color);
+        drawObj("square", ledPerSensorX, ledPerSensorY * (y + 1), 8, color);
+    }
 
 
 }
@@ -124,7 +132,13 @@ function updateScreenArray(arr) {
 }
 brushcolor = 'red';
 function drawScreenArray() {
-    drawButton(0, "red");
+    drawButton(0, "red",false);
+    drawButton(3, "green", false);
+    drawButton(6, "blue", false);
+    drawButton(9, "purple", false);
+    drawButton(12, "red", true);
+    drawButton(15, "pink", false);
+
 
     for (var i = 0; i < screenArray.length; i += 1) {
 
