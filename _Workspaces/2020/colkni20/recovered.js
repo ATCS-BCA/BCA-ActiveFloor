@@ -124,7 +124,8 @@ function drawScreenArray() {
         var tempRow = screenArray[i];
 
         for (var p = 0; p < tempRow.length; p += 1) {
-
+                var tempX = p * ledPerSensorX;
+                var tempY = i * ledPerSensorY;
             if ((screenArray[i][p]).value) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
