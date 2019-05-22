@@ -20,7 +20,6 @@ function makeButton(y, color){
     setButton(y, 1, color);
     setButton(y+1, 0, color);
     setButton(y+1, 1, color);
-
 }
 function setButton(y,x, color){
     screenArray[y][x].button = true;
@@ -36,8 +35,7 @@ function paintBucket (node, color, changeVal){
         color = "none";
         changeVal = false;
     }
-    console.log(node.row);
-    console.log(node.column);
+
     node.selected = true;
     var left = false;
     var right = false;
@@ -119,7 +117,7 @@ function updateScreenArray(arr) {
         }
     }
 }
-brushcolor = 'eraser';
+brushcolor = 'red';
 function drawScreenArray() {
     for (var i = 0; i < screenArray.length; i += 1) {
 
@@ -141,14 +139,6 @@ function drawScreenArray() {
                 else{
                     drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
                 }
-                if(screenArray[i][p].button){
-                    if(screenArray[i][p].buttonAppearence==="rainbow"){
-                        drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
-                    }
-                    else{
-                        drawObj('square', tempX, tempY, 8, (screenArray[i][p]).buttonAppearence);
-                    }
-                }
 
                 msCounter += 17;
                 secondCounter = msCounter/1000;
@@ -156,8 +146,8 @@ function drawScreenArray() {
                     msCounter=0;
                     secondCounter=0;
                 }
-
             }
+
             /*if (tempX >= 90 && tempX <= 96 && tempY >= 0 && tempY <= 2){
                 for (var apple = 0; apple < 24; apple++){
                     for (var ban = 0; b < 24; ban++){
@@ -166,7 +156,14 @@ function drawScreenArray() {
                     }
                 }
             }*/
-
+            if(screenArray[i][p].button){
+                if(screenArray[i][p].buttonAppearence==="rainbow"){
+                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
+                }
+                else{
+                    drawObj('square', tempX, tempY, 8, (screenArray[i][p]).buttonAppearence);
+                }
+            }
         }
     }
 }
