@@ -22,44 +22,62 @@ function makeButton(y, color){
     setButton(y+1, 1, color);
 }
 function setButton(y,x, color){
-    screenArray[y][x].button = true;
     screenArray[y][x].buttonColor = color;
+    screenArray[y][x].button = true;
     if(color==="eraser"){
         color = "pink";
     }
     screenArray[y][x].buttonAppearence = color;
 }
-function paintBucket (node, color, changeVal){
+function paintBucket (node, color, changeVal) {
     changeVal = true;
-    if(color = "eraser"){
-        color = "none";
-        changeVal = false;
-    }
+    if (!node.locked) {
+        if (color === "eraser") {
+            color = "none";
+            changeVal = false;
+        }
 
+        node.selected = true;
+        var left = false;
+        var right = false;
+        var up = false;
+        var down = false;
+        if (!color !== (node.color)) {
+            if (node.left != null && node.left.color === (node.color) && !node.left.selected) {
+                left = true;
+            }
+            if (node.right != null && node.right.color === (node.color) && !node.right.selected) {
+                right = true;
+            }
+            if (node.up != null && node.up.color === (node.color) && !node.up.selected) {
+                up = true;
+            }
+            if (node.down != null && node.down.color === (node.color) && !node.down.selected) {
+                down = true;
+            }
+            node.value = changeVal;
+            node.color = color;
+            if (left) {
+                paintBucket(node.left, color, changeVal);
+            }
+            if (right) {
+                paintBucket(node.right, color, changeVal);
+            }
+            if (up) {
+                paintBucket(node.up, color, false, changeVal);
+            }
+            if (down) {
+                paintBucket(node.down, color, false, changeVal);
+            }
+        }
+    }
     node.selected = true;
-    var left = false;
-    var right = false;
-    var up = false;
-    var down = false;
-    if(!color!==(node.color)){
-        if(node.left!=null && node.left.color===(node.color) && !node.left.selected){
-            left = true;
+}
+function clearSelection() {
+    for (var a = 0; a < 24; a++){
+        for (var b = 0; b < 24; b++){
+            screenArray[a][b].selected = false;
         }
-        if(node.right!=null && node.right.color===(node.color) && !node.right.selected){
-            right = true;
-        }
-        if(node.up!=null && node.up.color===(node.color) && !node.up.selected){
-            up = true;
-        }
-        if(node.down!=null && node.down.color===(node.color) && !node.down.selected){
-            down = true;
-        }
-        node.value = changeVal;
-        node.color = color;
-        if(left){paintBucket(node.left, color, changeVal);}
-        if(right){paintBucket(node.right, color, changeVal);}
-        if(up){paintBucket(node.up, color, false, changeVal);}
-        if(down){paintBucket(node.down, color, false, changeVal);}
     }
 }
 function calculatedRainbowResult(seconds) {
@@ -113,6 +131,9 @@ function updateScreenArray(arr) {
                 if(screenArray[i][p].button){
                     brushcolor=screenArray[i][p].buttonColor;
                 }
+                if(screenArray[23][23].value){
+                    tool = "bucket";
+                }
             }
         }
     }
@@ -126,12 +147,14 @@ function drawScreenArray() {
         for (var p = 0; p < tempRow.length; p += 1) {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
-            if ((screenArray[i][p]).value) {
-                var tempX = p * ledPerSensorX;
-                var tempY = i * ledPerSensorY;
-                if (((screenArray[i][p]).color) === "none") {
+            if ((screenArray[i][p]).value && !screenArray[i][p].locked) {
+                if (tool === "brush" && ((screenArray[i][p]).color) === "none") {
                     (screenArray[i][p]).color = brushcolor;
-
+                }
+                else if (tool === "bucket"){
+                    paintBucket(screenArray[i][p], brushcolor, true);
+                    clearSelection();
+                    tool = "brush";
                 }
                 if ((screenArray[i][p]).color !== "rainbow") {
                     drawObj('square', tempX, tempY, 8, (screenArray[i][p]).color);
@@ -230,6 +253,7 @@ $(document).ready(function () {
             (screenArray[a][b]).selected = false;
             (screenArray[a][b]).button = false;
             (screenArray[a][b]).buttonColor = null;
+            (screenArray[a][b]).locked = a<2 || b<2;
             (screenArray[a][b]).buttonAppearence= null;
 
         }
@@ -278,4 +302,3 @@ function stopRefresh() {
     'use strict';
     clearInterval(myInterval);
 }
-
