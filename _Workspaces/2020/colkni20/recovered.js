@@ -14,21 +14,20 @@ var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
-function drawButton(y, color, rainbow){
-    if(rainbow){
-        drawObj("square", 0, ledPerSensorY * (y + 1), 8, "red");
-        drawObj("square", 0, ledPerSensorY * y, 8, "blue");
-        drawObj("square", ledPerSensorX, ledPerSensorY * y, 8, "purple");
-        drawObj("square", ledPerSensorX, ledPerSensorY * (y + 1), 8, "yellow");
-    }
-    else {
-        drawObj("square", 0, ledPerSensorY * (y + 1), 8, color);
-        drawObj("square", 0, ledPerSensorY * y, 8, color);
-        drawObj("square", ledPerSensorX, ledPerSensorY * y, 8, color);
-        drawObj("square", ledPerSensorX, ledPerSensorY * (y + 1), 8, color);
-    }
+function makeButton(y, color){
+    setButton(y, 0, color);
+    setButton(y, 1, color);
+    setButton(y+1, 0, color);
+    setButton(y+1, 1, color);
 
-
+}
+function setButton(y,x, color){
+    screenArray[y][x].button = true;
+    screenArray[y][x].buttonColor = color;
+    if(color==="eraser"){
+        color = "pink";
+    }
+    screenArray[y][x].buttonAppearence = color;
 }
 function paintBucket (node, color){
     console.log(node.row);
@@ -107,39 +106,15 @@ function updateScreenArray(arr) {
                     screenArray[i][p].value = false;
                     screenArray[i][p].color = "none";
                 }
-                if(i === 0 && p === 0){
-                    brushcolor = "red";
+                if(screenArray[i][p].button){
+                    brushcolor=screenArray[i][p].buttonColor;
                 }
-                if(i === 0 && p === 3){
-                    brushcolor = "green";
-                }
-                if(i === 0 && p === 6){
-                    brushcolor = "blue";
-                }
-                if(i === 0 && p === 9){
-                    brushcolor = "purple";
-                }
-                if(i === 0 && p === 12){
-                    brushcolor = "rainbow";
-                }
-                if(i === 0 && p === 15){
-                    brushcolor = "eraser";
-                }
-
             }
         }
     }
 }
-brushcolor = 'red';
+brushcolor = 'eraser';
 function drawScreenArray() {
-    drawButton(0, "red",false);
-    drawButton(3, "green", false);
-    drawButton(6, "blue", false);
-    drawButton(9, "purple", false);
-    drawButton(12, "red", true);
-    drawButton(15, "pink", false);
-
-
     for (var i = 0; i < screenArray.length; i += 1) {
 
         var tempRow = screenArray[i];
@@ -159,6 +134,14 @@ function drawScreenArray() {
 
                 else{
                     drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
+                }
+                if(screenArray[i][p].button){
+                    if(screenArray[i][p].buttonColor==="rainbow"){
+                        drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
+                    }
+                    else{
+                        drawObj('square', tempX, tempY, 8, (screenArray[i][p]).buttonAppearence);
+                    }
                 }
 
                 msCounter += 17;
@@ -241,11 +224,21 @@ $(document).ready(function () {
             (screenArray[a][b]).down = null;
             (screenArray[a][b]).seed = (Math.random())*1.5;
             (screenArray[a][b]).selected = false;
+            (screenArray[a][b]).button = false;
+            (screenArray[a][b]).buttonColor = null;
+            (screenArray[a][b]).buttonAppearence= null;
 
         }
-
-
     }
+    makeButton(0, "red");
+    makeButton(3, "green");
+    makeButton(6, "blue");
+    makeButton(9, "purple");
+    makeButton(12, "rainbow");
+    makeButton(15, "eraser");
+
+
+
 
     for (var a = 0; a < 24; a++) {
         for (var b = 0; b < 24; b++) {
