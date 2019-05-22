@@ -14,6 +14,7 @@ var canvas, context2D;
 var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
+var tool = "brush";
 function makeButton(y, color){
     setButton(y, 0, color);
     setButton(y, 1, color);
@@ -29,7 +30,12 @@ function setButton(y,x, color){
     }
     screenArray[y][x].buttonAppearence = color;
 }
-function paintBucket (node, color){
+function paintBucket (node, color, changeVal){
+    changeVal = true;
+    if(color = "eraser"){
+        color = "none";
+        changeVal = false;
+    }
     console.log(node.row);
     console.log(node.column);
     node.selected = true;
@@ -50,12 +56,12 @@ function paintBucket (node, color){
         if(node.down!=null && node.down.color===(node.color) && !node.down.selected){
             down = true;
         }
-        node.value = true;
+        node.value = changeVal;
         node.color = color;
-        if(left){paintBucket(node.left, color);}
-        if(right){paintBucket(node.right, color);}
-        if(up){paintBucket(node.up, color);}
-        if(down){paintBucket(node.down, color);}
+        if(left){paintBucket(node.left, color, changeVal);}
+        if(right){paintBucket(node.right, color, changeVal);}
+        if(up){paintBucket(node.up, color, false, changeVal);}
+        if(down){paintBucket(node.down, color, false, changeVal);}
     }
 }
 function calculatedRainbowResult(seconds) {
@@ -136,7 +142,7 @@ function drawScreenArray() {
                     drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
                 }
                 if(screenArray[i][p].button){
-                    if(screenArray[i][p].buttonColor==="rainbow"){
+                    if(screenArray[i][p].buttonAppearence==="rainbow"){
                         drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
                     }
                     else{
