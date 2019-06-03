@@ -57,6 +57,7 @@ function paintBucket (node, color, changeVal) {
             }
             node.value = changeVal;
             node.color = color;
+            node.selected = true;
             if (left) {
                 paintBucket(node.left, color, changeVal);
             }
@@ -71,7 +72,7 @@ function paintBucket (node, color, changeVal) {
             }
         }
     }
-    node.selected = true;
+
 }
 function clearSelection() {
     for (var a = 0; a < 24; a++){
