@@ -132,7 +132,7 @@ function updateScreenArray(arr) {
                 if(screenArray[i][p].button){
                     brushcolor=screenArray[i][p].buttonColor;
                 }
-                if(screenArray[23][23].value){
+                if ((i+p)===46){
                     tool = "bucket";
                 }
             }
@@ -152,11 +152,7 @@ function drawScreenArray() {
                 if (tool === "brush" && ((screenArray[i][p]).color) === "none") {
                     (screenArray[i][p]).color = brushcolor;
                 }
-                else if (tool === "bucket"){
-                    paintBucket(screenArray[i][p], brushcolor, true);
-                    clearSelection();
-                    tool = "brush";
-                }
+
                 if ((screenArray[i][p]).color !== "rainbow") {
                     drawObj('square', tempX, tempY, 8, (screenArray[i][p]).color);
                 }

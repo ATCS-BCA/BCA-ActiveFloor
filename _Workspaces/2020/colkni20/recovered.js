@@ -15,6 +15,7 @@ var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
 var tool = "brush";
+console.log(1000);
 function makeButton(y, color){
     setButton(y, 0, color);
     setButton(y, 1, color);
@@ -120,7 +121,7 @@ function updateScreenArray(arr) {
         tempRow = arr[i];
 
         for (p = 0; p < tempRow.length; p += 1) {
-//             console.log("i=" + i, ";p=" + p);
+            console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 (screenArray[i][p]).value = true;
@@ -131,8 +132,9 @@ function updateScreenArray(arr) {
                 if(screenArray[i][p].button){
                     brushcolor=screenArray[i][p].buttonColor;
                 }
-                if(screenArray[23][23].value){
+                if(i === 23 && p === 23){
                     tool = "bucket";
+                    console.log(50);
                 }
             }
         }
@@ -148,14 +150,11 @@ function drawScreenArray() {
                 var tempX = p * ledPerSensorX;
                 var tempY = i * ledPerSensorY;
             if ((screenArray[i][p]).value && !screenArray[i][p].locked) {
+                console.log(19);
                 if (tool === "brush" && ((screenArray[i][p]).color) === "none") {
                     (screenArray[i][p]).color = brushcolor;
                 }
-                else if (tool === "bucket"){
-                    paintBucket(screenArray[i][p], brushcolor, true);
-                    clearSelection();
-                    tool = "brush";
-                }
+
                 if ((screenArray[i][p]).color !== "rainbow") {
                     drawObj('square', tempX, tempY, 8, (screenArray[i][p]).color);
                 }

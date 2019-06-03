@@ -24,6 +24,10 @@
 			<Display displayPurpose="Floor" applicationType="WebApp">ActiveInterface\interface.html</Display>
 		</AppMode>
 
+		<AppMode appModeID="ActivePaint" name="ActivePaint">
+			<Display displayPurpose="Floor" applicationType="WebApp">ActivePaint\floor.html</Display>
+		</AppMode>
+
 		<AppMode appModeID="Dodgeball" name="Dodgeball">
 			<Display displayPurpose="Floor" applicationType="WebApp">Dodgeball\dodgeball.html</Display>
 		</AppMode>
