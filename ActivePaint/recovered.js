@@ -157,6 +157,7 @@ function drawScreenArray() {
                     drawObj('square', tempX, tempY, 8, (screenArray[i][p]).color);
                 }
 
+
                 else{
                     drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
                 }
