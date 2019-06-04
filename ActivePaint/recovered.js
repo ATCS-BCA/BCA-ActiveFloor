@@ -15,6 +15,24 @@ var refreshTime = 17;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
 var tool = "brush";
+var redLocation = 0;
+var greenLocation = 3;
+var blueLocation = 6;
+var purpleLocation = 9;
+var rainbowLocation = 12;
+var eraserLocation = 15;
+brushCoordinates = [23, 0];
+bucketCoordinates = [23, 22];
+function setSingleTransferTool(x, y, type){
+    screenArray[x][y].transferTool = type;
+}
+function makeTransferTool(x,y, type) {
+    setSingleTransferTool(x - 1, y, type);
+    setSingleTransferTool(x - 1, y + 1, type);
+    setSingleTransferTool(x, y, type);
+    setSingleTransferTool(x, y + 1, type);
+}
+
 function makeButton(y, color){
     setButton(y, 0, color);
     setButton(y, 1, color);
@@ -58,6 +76,7 @@ function paintBucket (node, color, changeVal) {
             node.value = changeVal;
             node.color = color;
             node.selected = true;
+
             if (left) {
                 paintBucket(node.left, color, changeVal);
             }
@@ -124,16 +143,18 @@ function updateScreenArray(arr) {
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                (screenArray[i][p]).value = true;
-                if (brushcolor === "eraser"){
-                    screenArray[i][p].value = false;
-                    screenArray[i][p].color = "none";
+                if(!screenArray.locked) {
+                    (screenArray[i][p]).value = true;
+                    if (brushcolor === "eraser") {
+                        screenArray[i][p].value = false;
+                        screenArray[i][p].color = "none";
+                    }
                 }
                 if(screenArray[i][p].button){
                     brushcolor=screenArray[i][p].buttonColor;
                 }
-                if ((i+p)===46){
-                    tool = "bucket";
+                if (screenArray[i][p].transferTool !== null){
+                    tool = screenArray[i][p].transferTool;
                 }
             }
         }
@@ -251,17 +272,19 @@ $(document).ready(function () {
             (screenArray[a][b]).selected = false;
             (screenArray[a][b]).button = false;
             (screenArray[a][b]).buttonColor = null;
-            (screenArray[a][b]).locked = a<2 || b<2;
+            (screenArray[a][b]).locked = a<2 || b<2 || a > 21 || b  > 21;
             (screenArray[a][b]).buttonAppearence= null;
-
+            (screenArray[a][b]).transferTool = null;
         }
     }
-    makeButton(0, "red");
-    makeButton(3, "green");
-    makeButton(6, "blue");
-    makeButton(9, "purple");
-    makeButton(12, "rainbow");
-    makeButton(15, "eraser");
+    makeButton(redLocation, "red");
+    makeButton(greenLocation, "green");
+    makeButton(blueLocation, "blue");
+    makeButton(purpleLocation, "purple");
+    makeButton(rainbowLocation, "rainbow");
+    makeButton(eraserLocation, "eraser");
+    makeTransferTool(bucketCoordinates[0],bucketCoordinates[1], "bucket");
+    makeTransferTool(brushCoordinates[0], brushCoordinates[1], "brush");
 
 
 
