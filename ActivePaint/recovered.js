@@ -23,6 +23,7 @@ var rainbowLocation = 12;
 var eraserLocation = 15;
 brushCoordinates = [23, 0];
 bucketCoordinates = [23, 22];
+brushcolor = 'red';
 function setSingleTransferTool(x, y, type){
     screenArray[x][y].transferTool = type;
 }
@@ -48,53 +49,47 @@ function setButton(y,x, color){
     screenArray[y][x].buttonAppearence = color;
 }
 function paintBucket (node, color, changeVal) {
-    updatedChangeVal = changeVal;
-    updatedColor = color;
-    changeVal = true;
-    if (!node.locked) {
-        if (color === "eraser") {
-            updatedColor = "none";
-            updatedChangeVal = false;
+    console.log(64630000);
+
+    node.selected = true;
+
+    if (color !== (node.color) && !node.locked) {
+        console.log(10000);
+        var left = node.left != null && node.left.color === (node.color) && !node.left.selected;
+        var right = node.right != null && node.right.color === (node.color) && !node.right.selected;
+        var up = node.up != null && node.up.color === (node.color) && !node.up.selected;
+        var down = node.down != null && node.down.color === (node.color) && !node.down.selected;
+        console.log(left);
+        console.log(right);
+        console.log(down);
+        console.log(up);
+        node.value = changeVal;
+        node.color = color;
+        if (left) {
+            node.left.selected = true;
         }
-
-        node.selected = true;
-
-        if (!updatedColor !== (node.color)) {
-            var left = node.left != null && node.left.color === (node.color) && !node.left.selected;
-            var right = node.right != null && node.right.color === (node.color) && !node.right.selected;
-            var up = node.up != null && node.up.color === (node.color) && !node.up.selected;
-            var down = node.down != null && node.down.color === (node.color) && !node.down.selected;
-
-            node.value = updatedChangeVal;
-            node.color = updatedColor;
-            node.selected = true;
-            if (left) {
-                node.left.selected=true;
-            }
-            if (right) {
-                node.right.selected=true;
-            }
-            if (up) {
-                node.up.selected=true;
-            }
-            if (down) {
-                node.down.selected=true;
-            }
-            if (left) {
-                paintBucket(node.left, updatedColor, updatedChangeVal);
-            }
-            if (right) {
-                paintBucket(node.right, updatedColor, updatedChangeVal);
-            }
-            if (up) {
-                paintBucket(node.up, updatedColor, false, updatedChangeVal);
-            }
-            if (down) {
-                paintBucket(node.down, updatedColor, false, updatedChangeVal);
-            }
+        if (right) {
+            node.right.selected = true;
+        }
+        if (up) {
+            node.up.selected = true;
+        }
+        if (down) {
+            node.down.selected = true;
+        }
+        if (left) {
+            paintBucket(node.left, color, changeVal);
+        }
+        if (right) {
+            paintBucket(node.right, color, changeVal);
+        }
+        if (up) {
+            paintBucket(node.up, color, false, changeVal);
+        }
+        if (down) {
+            paintBucket(node.down, color, false, changeVal);
         }
     }
-
 }
 function clearSelection() {
     for (var a = 0; a < 24; a++){
@@ -153,8 +148,14 @@ function updateScreenArray(arr) {
                         screenArray[i][p].color = "none";
                     }
                 }
-                else if(!screenArray.locked && tool === "bucket") {
-                    paintBucket(screenArray[i][p], brushcolor, false);
+                if(tool === "bucket" && screenArray[i][p].locked) {
+
+                    if(brushcolor==="eraser"){
+                        paintBucket(screenArray[i][p], "none", false);
+                    }
+                    else {
+                        paintBucket(screenArray[i][p], brushcolor, brushcolor);
+                    }
                     clearSelection();
                     //tool = "brush";
                 }
@@ -169,7 +170,6 @@ function updateScreenArray(arr) {
         }
     }
 }
-brushcolor = 'red';
 function drawScreenArray() {
     for (var i = 0; i < screenArray.length; i += 1) {
 
