@@ -58,7 +58,8 @@ function paintBucket (node, color, changeVal) {
         }
 
         node.selected = true;
-        if (!color !== (node.color)) {
+
+        if (!updatedColor !== (node.color)) {
             var left = node.left != null && node.left.color === (node.color) && !node.left.selected;
             var right = node.right != null && node.right.color === (node.color) && !node.right.selected;
             var up = node.up != null && node.up.color === (node.color) && !node.up.selected;
@@ -67,7 +68,18 @@ function paintBucket (node, color, changeVal) {
             node.value = updatedChangeVal;
             node.color = updatedColor;
             node.selected = true;
-
+            if (left) {
+                node.left.selected=true;
+            }
+            if (right) {
+                node.right.selected=true;
+            }
+            if (up) {
+                node.up.selected=true;
+            }
+            if (down) {
+                node.down.selected=true;
+            }
             if (left) {
                 paintBucket(node.left, updatedColor, updatedChangeVal);
             }
