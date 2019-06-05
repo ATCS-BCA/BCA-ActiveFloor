@@ -48,46 +48,37 @@ function setButton(y,x, color){
     screenArray[y][x].buttonAppearence = color;
 }
 function paintBucket (node, color, changeVal) {
+    updatedChangeVal = changeVal;
+    updatedColor = color;
     changeVal = true;
     if (!node.locked) {
         if (color === "eraser") {
-            color = "none";
-            changeVal = false;
+            updatedColor = "none";
+            updatedChangeVal = false;
         }
 
         node.selected = true;
-        var left = false;
-        var right = false;
-        var up = false;
-        var down = false;
         if (!color !== (node.color)) {
-            if (node.left != null && node.left.color === (node.color) && !node.left.selected) {
-                left = true;
-            }
-            if (node.right != null && node.right.color === (node.color) && !node.right.selected) {
-                right = true;
-            }
-            if (node.up != null && node.up.color === (node.color) && !node.up.selected) {
-                up = true;
-            }
-            if (node.down != null && node.down.color === (node.color) && !node.down.selected) {
-                down = true;
-            }
-            node.value = changeVal;
-            node.color = color;
+            var left = node.left != null && node.left.color === (node.color) && !node.left.selected;
+            var right = node.right != null && node.right.color === (node.color) && !node.right.selected;
+            var up = node.up != null && node.up.color === (node.color) && !node.up.selected;
+            var down = node.down != null && node.down.color === (node.color) && !node.down.selected;
+
+            node.value = updatedChangeVal;
+            node.color = updatedColor;
             node.selected = true;
 
             if (left) {
-                paintBucket(node.left, color, changeVal);
+                paintBucket(node.left, updatedColor, updatedChangeVal);
             }
             if (right) {
-                paintBucket(node.right, color, changeVal);
+                paintBucket(node.right, updatedColor, updatedChangeVal);
             }
             if (up) {
-                paintBucket(node.up, color, false, changeVal);
+                paintBucket(node.up, updatedColor, false, updatedChangeVal);
             }
             if (down) {
-                paintBucket(node.down, color, false, changeVal);
+                paintBucket(node.down, updatedColor, false, updatedChangeVal);
             }
         }
     }
@@ -143,12 +134,17 @@ function updateScreenArray(arr) {
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                if(!screenArray.locked) {
+                if(!screenArray.locked && tool === "brush") {
                     (screenArray[i][p]).value = true;
                     if (brushcolor === "eraser") {
                         screenArray[i][p].value = false;
                         screenArray[i][p].color = "none";
                     }
+                }
+                else if(!screenArray.locked && tool === "bucket") {
+                    paintBucket(screenArray[i][p], brushcolor, false);
+                    clearSelection();
+                    //tool = "brush";
                 }
                 if(screenArray[i][p].button){
                     brushcolor=screenArray[i][p].buttonColor;
@@ -156,6 +152,7 @@ function updateScreenArray(arr) {
                 if (screenArray[i][p].transferTool !== null){
                     tool = screenArray[i][p].transferTool;
                 }
+
             }
         }
     }
