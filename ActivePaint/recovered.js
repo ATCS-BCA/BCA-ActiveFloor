@@ -84,10 +84,10 @@ function paintBucket (node, color, changeVal) {
             paintBucket(node.right, color, changeVal);
         }
         if (up) {
-            paintBucket(node.up, color, false, changeVal);
+            paintBucket(node.up, color, changeVal);
         }
         if (down) {
-            paintBucket(node.down, color, false, changeVal);
+            paintBucket(node.down, color, changeVal);
         }
     }
 }
@@ -176,8 +176,8 @@ function drawScreenArray() {
         var tempRow = screenArray[i];
 
         for (var p = 0; p < tempRow.length; p += 1) {
-                var tempX = p * ledPerSensorX;
-                var tempY = i * ledPerSensorY;
+            var tempX = p * ledPerSensorX;
+            var tempY = i * ledPerSensorY;
             if ((screenArray[i][p]).value && !screenArray[i][p].locked) {
                 if (tool === "brush" && ((screenArray[i][p]).color) === "none") {
                     (screenArray[i][p]).color = brushcolor;
