@@ -2,16 +2,16 @@
 /*jslint browser: true*/
 /*global $, jQuery*/
 var myInterval;
-toolCounterY=0;
+var toolCounterY=0;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
 var cn = 0;
-var screenArray = [];
-var newarray = [];
+var layerArray = [];
+var baseArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 17;       // Run the loop every 17 milliseconds
+var refreshTime = 20;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
 var tool = "brush";
@@ -21,11 +21,11 @@ var blueLocation = 6;
 var purpleLocation = 9;
 var rainbowLocation = 12;
 var eraserLocation = 15;
-brushCoordinates = [23, 0];
-bucketCoordinates = [23, 22];
-brushcolor = 'red';
+var brushCoordinates = [23, 0];
+var bucketCoordinates = [23, 22];
+var brushcolor = 'red';
 function setSingleTransferTool(x, y, type){
-    screenArray[x][y].transferTool = type;
+    layerArray[0][x][y].transferTool = type;
 }
 function makeTransferTool(x,y, type) {
     setSingleTransferTool(x - 1, y, type);
@@ -41,12 +41,12 @@ function makeButton(y, color){
     setButton(y+1, 1, color);
 }
 function setButton(y,x, color){
-    screenArray[y][x].buttonColor = color;
-    screenArray[y][x].button = true;
+    layerArray[0][y][x].buttonColor = color;
+    layerArray[0][y][x].button = true;
     if(color==="eraser"){
         color = "pink";
     }
-    screenArray[y][x].buttonAppearence = color;
+    layerArray[0][y][x].buttonAppearence = color;
 }
 function paintBucket (node, color, changeVal) {
     console.log(64630000);
@@ -94,21 +94,21 @@ function paintBucket (node, color, changeVal) {
 function clearSelection() {
     for (var a = 0; a < 24; a++){
         for (var b = 0; b < 24; b++){
-            screenArray[a][b].selected = false;
+            layerArray[0][a][b].selected = false;
         }
     }
 }
 function calculatedRainbowResult(seconds) {
-    if(seconds>=0 && seconds < 0.5){
+    if(seconds>=0 && seconds < 2){
         return "blue";
     }
-    else if(seconds>=.5 && seconds < 1){
+    else if(seconds < 4){
         return "green";
     }
-    else if(seconds>= 1 && seconds < 1.5){
+    else if(seconds < 6){
         return "orange";
     }
-    else if(seconds>=1.5 && seconds < 2){
+    else if(seconds<8){
         return "purple";
     }
     return "yellow";
@@ -126,7 +126,7 @@ function drawObj(type, xPos, yPos, size, colorchoice) {
         context2D.fill();
     }
 }
-function updateScreenArray(arr) {
+function updatelayerArray[0](arr) {
     'use strict';
     canvas = document.getElementById('floorCanvas');
     canvas.width = ledsX;
@@ -141,60 +141,60 @@ function updateScreenArray(arr) {
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                if(!screenArray.locked && tool === "brush") {
-                    (screenArray[i][p]).value = true;
+                if(!layerArray[0].locked && tool === "brush") {
+                    (layerArray[0][i][p]).value = true;
                     if (brushcolor === "eraser") {
-                        screenArray[i][p].value = false;
-                        screenArray[i][p].color = "none";
+                        layerArray[0][i][p].value = false;
+                        layerArray[0][i][p].color = "none";
                     }
                 }
-                if(tool === "bucket" && screenArray[i][p].locked) {
+                if(tool === "bucket" && layerArray[0][i][p].locked) {
 
                     if(brushcolor==="eraser"){
-                        paintBucket(screenArray[i][p], "none", false);
+                        paintBucket(layerArray[0][i][p], "none", false);
                     }
                     else {
-                        paintBucket(screenArray[i][p], brushcolor, brushcolor);
+                        paintBucket(layerArray[0][i][p], brushcolor, brushcolor);
                     }
                     clearSelection();
                     //tool = "brush";
                 }
-                if(screenArray[i][p].button){
-                    brushcolor=screenArray[i][p].buttonColor;
+                if(layerArray[0][i][p].button){
+                    brushcolor=layerArray[0][i][p].buttonColor;
                 }
-                if (screenArray[i][p].transferTool !== null){
-                    tool = screenArray[i][p].transferTool;
+                if (layerArray[0][i][p].transferTool !== null){
+                    tool = layerArray[0][i][p].transferTool;
                 }
 
             }
         }
     }
 }
-function drawScreenArray() {
-    for (var i = 0; i < screenArray.length; i += 1) {
+function drawlayerArray[0]() {
+    for (var i = 0; i < layerArray[0].length; i += 1) {
 
-        var tempRow = screenArray[i];
+        var tempRow = layerArray[0][i];
 
         for (var p = 0; p < tempRow.length; p += 1) {
             var tempX = p * ledPerSensorX;
             var tempY = i * ledPerSensorY;
-            if ((screenArray[i][p]).value && !screenArray[i][p].locked) {
-                if (tool === "brush" && ((screenArray[i][p]).color) === "none") {
-                    (screenArray[i][p]).color = brushcolor;
+            if ((layerArray[0][i][p]).value && !layerArray[0][i][p].locked) {
+                if (tool === "brush" && ((layerArray[0][i][p]).color) === "none") {
+                    (layerArray[0][i][p]).color = brushcolor;
                 }
 
-                if ((screenArray[i][p]).color !== "rainbow") {
-                    drawObj('square', tempX, tempY, 8, (screenArray[i][p]).color);
+                if ((layerArray[0][i][p]).color !== "rainbow") {
+                    drawObj('square', tempX, tempY, 8, (layerArray[0][i][p]).color);
                 }
 
 
                 else{
-                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
+                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter));
                 }
 
-                msCounter += 17;
+                msCounter += 20;
                 secondCounter = msCounter/1000;
-                if (secondCounter >= 30.017){
+                if (secondCounter >= 10){
                     msCounter=0;
                     secondCounter=0;
                 }
@@ -203,17 +203,17 @@ function drawScreenArray() {
             /*if (tempX >= 90 && tempX <= 96 && tempY >= 0 && tempY <= 2){
                 for (var apple = 0; apple < 24; apple++){
                     for (var ban = 0; b < 24; ban++){
-                        (screenArray[apple][ban]).value = false;
-                        (screenArray[apple][ban]).color = "none";
+                        (layerArray[0][apple][ban]).value = false;
+                        (layerArray[0][apple][ban]).color = "none";
                     }
                 }
             }*/
-            if(screenArray[i][p].button){
-                if(screenArray[i][p].buttonAppearence==="rainbow"){
-                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter/15+screenArray[i][p].seed));
+            if(layerArray[0][i][p].button){
+                if(layerArray[0][i][p].buttonAppearence==="rainbow"){
+                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter));
                 }
                 else{
-                    drawObj('square', tempX, tempY, 8, (screenArray[i][p]).buttonAppearence);
+                    drawObj('square', tempX, tempY, 8, (layerArray[0][i][p]).buttonAppearence);
                 }
             }
         }
@@ -250,8 +250,8 @@ function loop() {
         });
 
         /* Redraw the screen based upon the data in the array. */
-        updateScreenArray(dataHolderArray);
-        drawScreenArray();
+        updatelayerArray[0](dataHolderArray);
+        drawlayerArray[0]();
     });
 }
 
@@ -260,30 +260,38 @@ $(document).ready(function () {
 
     // Default screen array to 24x24 and set to false
 //    for (i = 0; i < 24; i++)
-//        screenArray.push([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
-    screenArray = new Array(24);
-    for (var i = 0; i < 24; i++) {
-        screenArray[i] = new Array(24);
-    }
+//        layerArray[0].push([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+    layerArray = new Array(3);
+    layerArray[0] = new Array(24);
+    layerArray[1] = new Array(24);
+    layerArray[2] = new Array(24);
 
-    for (var a = 0; a < 24; a++){
-        for (var b = 0; b < 24; b++){
-            screenArray[a][b] = {};
-            (screenArray[a][b]).value = false;
-            (screenArray[a][b]).row = a;
-            (screenArray[a][b]).column = b;
-            (screenArray[a][b]).color = "none";
-            (screenArray[a][b]).left = null;
-            (screenArray[a][b]).right = null;
-            (screenArray[a][b]).up = null;
-            (screenArray[a][b]).down = null;
-            (screenArray[a][b]).seed = (Math.random())*1.5;
-            (screenArray[a][b]).selected = false;
-            (screenArray[a][b]).button = false;
-            (screenArray[a][b]).buttonColor = null;
-            (screenArray[a][b]).locked = a<2 || b<2 || a > 21 || b  > 21;
-            (screenArray[a][b]).buttonAppearence= null;
-            (screenArray[a][b]).transferTool = null;
+    for (var firstLayerIndex = 0; firstLayerIndex < 3; firstLayerIndex++) {
+        layerArray[firstLayerIndex] = new Array(24);
+        for (var i = 0; i < 24; i++) {
+            layerArray[layerIndex][i] = new Array(24);
+        }
+    }
+    for (var layerIndex = 0; layerIndex < 3; layerIndex++) {
+        for (var a = 0; a < 24; a++) {
+            for (var b = 0; b < 24; b++) {
+                layerArray[layerIndex][a][b] = {};
+                (layerArray[layerIndex][a][b]).value = false;
+                (layerArray[layerIndex][a][b]).row = a;
+                (layerArray[layerIndex][a][b]).column = b;
+                (layerArray[layerIndex][a][b]).color = "none";
+                (layerArray[layerIndex][a][b]).left = null;
+                (layerArray[layerIndex][a][b]).right = null;
+                (layerArray[layerIndex][a][b]).up = null;
+                (layerArray[layerIndex][a][b]).down = null;
+                (layerArray[layerIndex][a][b]).seed = (Math.random()) * 1.5;
+                (layerArray[layerIndex][a][b]).selected = false;
+                (layerArray[layerIndex][a][b]).button = false;
+                (layerArray[layerIndex][a][b]).buttonColor = null;
+                (layerArray[layerIndex][a][b]).locked = a < 2 || b < 2 || a > 21 || b > 21;
+                (layerArray[layerIndex][a][b]).buttonAppearence = null;
+                (layerArray[layerIndex][a][b]).transferTool = null;
+            }
         }
     }
     makeButton(redLocation, "red");
@@ -300,10 +308,10 @@ $(document).ready(function () {
 
     for (var a = 0; a < 24; a++) {
         for (var b = 0; b < 24; b++) {
-            if(b>0){(screenArray[a][b]).left=(screenArray[a][b-1]);}
-            if(b<23){(screenArray[a][b]).right=(screenArray[a][b+1]);}
-            if(a<23){(screenArray[a][b]).down=(screenArray[a+1][b]);}
-            if(a>0){(screenArray[a][b]).up=(screenArray[a-1][b]);}
+            if(b>0){(layerArray[0][a][b]).left=(layerArray[0][a][b-1]);}
+            if(b<23){(layerArray[0][a][b]).right=(layerArray[0][a][b+1]);}
+            if(a<23){(layerArray[0][a][b]).down=(layerArray[0][a+1][b]);}
+            if(a>0){(layerArray[0][a][b]).up=(layerArray[0][a-1][b]);}
 
         }
     }
@@ -322,6 +330,7 @@ $(document).ready(function () {
 
     });
 });
+
 
 function startRefresh() {
     'use strict';
