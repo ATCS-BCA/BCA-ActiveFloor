@@ -24,8 +24,11 @@ var eraserLocation = 15;
 var brushCoordinates = [23, 0];
 var bucketCoordinates = [23, 22];
 var brushcolor = 'red';
+var layerCount = 3;
 function setSingleTransferTool(x, y, type){
-    layerArray[0][x][y].transferTool = type;
+    for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
+        layerArray[layerIndex][x][y].transferTool = type;
+    }
 }
 function makeTransferTool(x,y, type) {
     setSingleTransferTool(x - 1, y, type);
@@ -41,18 +44,18 @@ function makeButton(y, color){
     setButton(y+1, 1, color);
 }
 function setButton(y,x, color){
-    layerArray[0][y][x].buttonColor = color;
-    layerArray[0][y][x].button = true;
-    if(color==="eraser"){
-        color = "pink";
+    for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
+
+        layerArray[layerIndex][y][x].buttonColor = color;
+        layerArray[layerIndex][y][x].button = true;
+        if (color === "eraser") {
+            color = "pink";
+        }
+        layerArray[layerIndex][y][x].buttonAppearence = color;
     }
-    layerArray[0][y][x].buttonAppearence = color;
 }
 function paintBucket (node, color, changeVal) {
-    console.log(64630000);
-
     node.selected = true;
-
     if (color !== (node.color) && !node.locked) {
         console.log(10000);
         var left = node.left != null && node.left.color === (node.color) && !node.left.selected;
@@ -126,7 +129,7 @@ function drawObj(type, xPos, yPos, size, colorchoice) {
         context2D.fill();
     }
 }
-function updatelayerArray[0](arr) {
+function updatelayerArray(arr) {
     'use strict';
     canvas = document.getElementById('floorCanvas');
     canvas.width = ledsX;
@@ -250,7 +253,7 @@ function loop() {
         });
 
         /* Redraw the screen based upon the data in the array. */
-        updatelayerArray[0](dataHolderArray);
+        updatelayerArray(dataHolderArray);
         drawlayerArray[0]();
     });
 }
@@ -261,18 +264,15 @@ $(document).ready(function () {
     // Default screen array to 24x24 and set to false
 //    for (i = 0; i < 24; i++)
 //        layerArray[0].push([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
-    layerArray = new Array(3);
-    layerArray[0] = new Array(24);
-    layerArray[1] = new Array(24);
-    layerArray[2] = new Array(24);
+    layerArray = new Array(layerCount);
 
-    for (var firstLayerIndex = 0; firstLayerIndex < 3; firstLayerIndex++) {
-        layerArray[firstLayerIndex] = new Array(24);
+    for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
+        layerArray[layerIndex] = new Array(24);
         for (var i = 0; i < 24; i++) {
             layerArray[layerIndex][i] = new Array(24);
         }
     }
-    for (var layerIndex = 0; layerIndex < 3; layerIndex++) {
+    for (layerIndex = 0; layerIndex < layerCount; layerIndex++) {
         for (var a = 0; a < 24; a++) {
             for (var b = 0; b < 24; b++) {
                 layerArray[layerIndex][a][b] = {};
