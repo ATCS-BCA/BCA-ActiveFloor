@@ -12,8 +12,8 @@ var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
 var refreshTime = 20;       // Run the loop every 17 milliseconds
-var msCounter = 0;
-var secondCounter = 0;
+var rainbowMS_Counter = 0;
+var rainbowSecondCounter = 0;
 var tool = "brush";
 var redLocation = 0;
 var greenLocation = 3;
@@ -190,7 +190,7 @@ function drawScreenArray() {
 
 
                 else{
-                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter));
+                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(rainbowSecondCounter));
                 }
 
 
@@ -206,7 +206,7 @@ function drawScreenArray() {
             }*/
             if(screenArray[i][p].button){
                 if(screenArray[i][p].buttonAppearence==="rainbow"){
-                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(secondCounter));
+                    drawObj('square', tempX, tempY, 8, calculatedRainbowResult(rainbowSecondCounter));
                 }
                 else{
                     drawObj('square', tempX, tempY, 8, (screenArray[i][p]).buttonAppearence);
@@ -214,11 +214,11 @@ function drawScreenArray() {
             }
         }
     }
-    msCounter += 20;
-    secondCounter = msCounter/1000;
-    if (secondCounter > 10){
-        msCounter=0;
-        secondCounter=0;
+    rainbowMS_Counter += 20;
+    rainbowSecondCounter = rainbowMS_Counter/1000;
+    if (rainbowSecondCounter > 10){
+        rainbowMS_Counter=0;
+        rainbowSecondCounter=0;
     }
 }
 
