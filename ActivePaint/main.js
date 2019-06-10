@@ -162,9 +162,13 @@ function updateScreenArray(arr) {
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 if(!layerArray[currentLayer][i][p].locked && tool === "brush") {
-                    (layerArray[currentLayer][i][p]).value = (brushcolor!=="eraser");
-                    (layerArray[currentLayer][i][p]).color = brushcolor;
-                    if(brushcolor==="eraser"){(layerArray[currentLayer][i][p]).color = "none";}
+                    if(brushcolor!=="eraser" && layerArray[currentLayer][i][p].value===false){
+                        (layerArray[currentLayer][i][p]).color = brushcolor;
+                    }
+                    else if(brushcolor==="eraser"){
+                        (layerArray[currentLayer][i][p]).color = "none";
+                    }
+                    layerArray[currentLayer][i][p].value = (brushcolor!=="eraser");
                 }
                 if(tool === "bucket" && !layerArray[currentLayer][i][p].locked) {
 
@@ -307,6 +311,8 @@ $(document).ready(function () {
                 (layerArray[layerIndex][a][b]).locked = a < 2 || a > 21 || b < 2 || b > 21;
                 (layerArray[layerIndex][a][b]).buttonAppearence = null;
                 (layerArray[layerIndex][a][b]).transferTool = null;
+                (layerArray[layerIndex][a][b]).hold = false;
+                (layerArray[layerIndex][a][b]).arrow = null;
             }
         }
     }
