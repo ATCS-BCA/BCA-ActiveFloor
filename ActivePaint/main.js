@@ -37,8 +37,8 @@ function setVisualArray(){
         if(visibleLayers[layerIndex]){
             for (var a = 0; a < 24; a++) {
                 for (var b = 0; b < 24; b++) {
-                   if(layerArray[layerIndex][a][b].color!=="none"){
-                       screenArray[a][b].color=layerArray[layerIndex][a][b].color;
+                   if(layerArray[layerIndex].arr[a][b].color!=="none"){
+                       screenArray[a][b].color=layerArray[layerIndex].arr[a][b].color;
                    }
               }
           }
@@ -47,7 +47,7 @@ function setVisualArray(){
 }
 function setSingleTransferTool(x, y, type){
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
-        layerArray[layerIndex][x][y].transferTool = type;
+        layerArray[layerIndex].arr[x][y].transferTool = type;
     }
 }
 function makeTransferTool(x,y, type) {
@@ -65,12 +65,12 @@ function makeButton(y, color){
 }
 function setButton(y,x, color){
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
-        layerArray[layerIndex][y][x].buttonColor = color;
-        layerArray[layerIndex][y][x].button = true;
+        layerArray[layerIndex].arr[y][x].buttonColor = color;
+        layerArray[layerIndex].arr[y][x].button = true;
         if (color === "eraser") {
             color = "pink";
         }
-        layerArray[layerIndex][y][x].buttonAppearence = color;
+        layerArray[layerIndex].arr[y][x].buttonAppearence = color;
     }
 }
 function paintBucket (node, color, changeVal) {
@@ -114,7 +114,7 @@ function clearSelection() {
 
         for (var a = 0; a < 24; a++) {
             for (var b = 0; b < 24; b++) {
-                layerArray[layerIndex][a][b].selected = false;
+                layerArray[layerIndex].arr[a][b].selected = false;
             }
         }
     }
@@ -161,16 +161,16 @@ function updateScreenArray(arr) {
         for (p = 0; p < tempRow.length; p += 1) {
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                if(!layerArray[currentLayer][i][p].locked && tool === "brush") {
-                    if(brushcolor!=="eraser" && layerArray[currentLayer][i][p].value===false){
-                        (layerArray[currentLayer][i][p]).color = brushcolor;
+                if(!layerArray[currentLayer].arr[i][p].locked && tool === "brush") {
+                    if(brushcolor!=="eraser" && layerArray[currentLayer].arr[i][p].value===false){
+                        (layerArray[currentLayer].arr[i][p]).color = brushcolor;
                     }
                     else if(brushcolor==="eraser"){
-                        (layerArray[currentLayer][i][p]).color = "none";
+                        (layerArray[currentLayer].arr[i][p]).color = "none";
                     }
-                    layerArray[currentLayer][i][p].value = (brushcolor!=="eraser");
+                    layerArray[currentLayer].arr[i][p].value = (brushcolor!=="eraser");
                 }
-                if(tool === "bucket" && !layerArray[currentLayer][i][p].locked) {
+                if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
 
 
                     if(brushcolor==="eraser"){
@@ -286,33 +286,34 @@ $(document).ready(function () {
     }
         layerArray = new Array(layerCount);
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
-        layerArray[layerIndex] = new Array(24);
+        layerArray[layerIndex] = {};
+        layerArray[layerIndex].arr = new Array(24);
         for (var i = 0; i < 24; i++) {
-            layerArray[layerIndex][i] = new Array(24);
+            layerArray[layerIndex].arr[i] = new Array(24);
         }
     }
 
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
         for (var a = 0; a < 24; a++) {
             for (var b = 0; b < 24; b++) {
-                layerArray[layerIndex][a][b] = {};
-                (layerArray[layerIndex][a][b]).value = false;
-                (layerArray[layerIndex][a][b]).row = a;
-                (layerArray[layerIndex][a][b]).column = b;
-                (layerArray[layerIndex][a][b]).color = "none";
-                (layerArray[layerIndex][a][b]).left = null;
-                (layerArray[layerIndex][a][b]).right = null;
-                (layerArray[layerIndex][a][b]).up = null;
-                (layerArray[layerIndex][a][b]).down = null;
-                (layerArray[layerIndex][a][b]).seed = (Math.random()) * 1.5;
-                (layerArray[layerIndex][a][b]).selected = false;
-                (layerArray[layerIndex][a][b]).button = false;
-                (layerArray[layerIndex][a][b]).buttonColor = null;
-                (layerArray[layerIndex][a][b]).locked = a < 2 || a > 21 || b < 2 || b > 21;
-                (layerArray[layerIndex][a][b]).buttonAppearence = null;
-                (layerArray[layerIndex][a][b]).transferTool = null;
-                (layerArray[layerIndex][a][b]).hold = false;
-                (layerArray[layerIndex][a][b]).arrow = null;
+                layerArray[layerIndex].arr[a][b] = {};
+                (layerArray[layerIndex].arr[a][b]).value = false;
+                (layerArray[layerIndex].arr[a][b]).row = a;
+                (layerArray[layerIndex].arr[a][b]).column = b;
+                (layerArray[layerIndex].arr[a][b]).color = "none";
+                (layerArray[layerIndex].arr[a][b]).left = null;
+                (layerArray[layerIndex].arr[a][b]).right = null;
+                (layerArray[layerIndex].arr[a][b]).up = null;
+                (layerArray[layerIndex].arr[a][b]).down = null;
+                (layerArray[layerIndex].arr[a][b]).seed = (Math.random()) * 1.5;
+                (layerArray[layerIndex].arr[a][b]).selected = false;
+                (layerArray[layerIndex].arr[a][b]).button = false;
+                (layerArray[layerIndex].arr[a][b]).buttonColor = null;
+                (layerArray[layerIndex].arr[a][b]).locked = a < 2 || a > 21 || b < 2 || b > 21;
+                (layerArray[layerIndex].arr[a][b]).buttonAppearence = null;
+                (layerArray[layerIndex].arr[a][b]).transferTool = null;
+                (layerArray[layerIndex].arr[a][b]).hold = false;
+                (layerArray[layerIndex].arr[a][b]).arrow = null;
             }
         }
     }
@@ -330,16 +331,16 @@ $(document).ready(function () {
         for (var a = 0; a < 24; a++) {
             for (var b = 0; b < 24; b++) {
                 if (b > 0) {
-                    (layerArray[layerIndex][a][b]).left = (layerArray[layerIndex][a][b - 1]);
+                    (layerArray[layerIndex].arr[a][b]).left = (layerArray[layerIndex].arr[a][b - 1]);
                 }
                 if (b < 23) {
-                    (layerArray[layerIndex][a][b]).right = (layerArray[layerIndex][a][b + 1]);
+                    (layerArray[layerIndex].arr[a][b]).right = (layerArray[layerIndex].arr[a][b + 1]);
                 }
                 if (a < 23) {
-                    (layerArray[layerIndex][a][b]).down = (layerArray[layerIndex][a + 1][b]);
+                    (layerArray[layerIndex].arr[a][b]).down = (layerArray[layerIndex].arr[a + 1][b]);
                 }
                 if (a > 0) {
-                    (layerArray[layerIndex][a][b]).up = (layerArray[layerIndex][a - 1][b]);
+                    (layerArray[layerIndex].arr[a][b]).up = (layerArray[layerIndex].arr[a - 1][b]);
                 }
 
             }
