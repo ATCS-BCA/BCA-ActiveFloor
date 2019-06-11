@@ -113,7 +113,6 @@ function deleteLayer() {
                 (layerArray[0].arr[a][b]).right = null;
                 (layerArray[0].arr[a][b]).up = null;
                 (layerArray[0].arr[a][b]).down = null;
-                (layerArray[0].arr[a][b]).seed = (Math.random()) * 1.5;
                 (layerArray[0].arr[a][b]).selected = false;
                 (layerArray[0].arr[a][b]).button = false;
                 (layerArray[0].arr[a][b]).buttonColor = null;
@@ -134,8 +133,8 @@ function deleteLayer() {
 function setVisualArray(){
     for (var a = 0; a < 24; a++){
         for (var b = 0; b < 24; b++){
-            screenArray.color = "none";
-            screenArray.value = false;
+            screenArray[a][b].color = "none";
+            screenArray[a][b].value = false;
         }
     }
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
@@ -272,7 +271,9 @@ function updateScreenArray(arr) {
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
                 //                if(layerArray[currentLayer].arr[i][p].locked && !layerArray[currentLayer].arr[i][p].hold){
-                if(true){
+                if(layerArray[currentLayer].arr[i][p].locked && !occupied){
+                    layerArray[currentLayer].arr[i][p].hold=true;
+                    occupied = true;
                     if(layerArray[currentLayer].arr[i][p].button){
                         brushcolor=layerArray[currentLayer].arr[i][p].buttonColor;
                     }
@@ -304,7 +305,7 @@ function updateScreenArray(arr) {
                         layerArray[currentLayer].arr[i][p].color = "none";
 
                     }
-                    if(brushcolor!=="eraser"){
+                    else if (!layerArray[currentLayer].arr[i][p].value){
                         console.log("writing");
                         (layerArray[currentLayer].arr[i][p]).value = true;
                         (layerArray[currentLayer].arr[i][p]).color = brushcolor;
@@ -313,8 +314,6 @@ function updateScreenArray(arr) {
                     console.log((screenArray[i][p].value)===(layerArray[currentLayer].arr[i][p].value));
                 }
                 else if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
-
-
                     if(brushcolor==="eraser"){
                         paintBucket(layerArray[currentLayer].arr[i][p], "none", false);
                     }
@@ -323,10 +322,10 @@ function updateScreenArray(arr) {
                     }
                     clearSelection();
                 }
-
             }
             else if (layerArray[currentLayer].arr[i][p].hold){
                 layerArray.arr[i][p].hold = false;
+                occupied=false;
             }
         }
     }
@@ -340,7 +339,7 @@ function drawScreenArray() {
             var tempX = p * ledPerSensorX;
             var tempY = i * ledPerSensorY;
             setVisualArray();
-            if ((screenArray[i][p]).value && !layerArray[currentLayer].arr[i][p].locked) {
+            if ((layerArray[currentLayer].arr[i][p]).value && !layerArray[currentLayer].arr[i][p].locked) {
                 if ((screenArray[i][p]).color !== "rainbow") {
                     drawObj('square', tempX, tempY, 8, screenArray[i][p].color);
                 }
@@ -369,6 +368,7 @@ function drawScreenArray() {
                     drawObj('square', tempX, tempY, 8, (layerArray[currentLayer].arr[i][p]).buttonAppearence);
                 }
             }
+            drawToolBar();
         }
     }
     msCounter += 20;
@@ -444,7 +444,6 @@ $(document).ready(function () {
                 (layerArray[layerIndex].arr[a][b]).right = null;
                 (layerArray[layerIndex].arr[a][b]).up = null;
                 (layerArray[layerIndex].arr[a][b]).down = null;
-                (layerArray[layerIndex].arr[a][b]).seed = (Math.random()) * 1.5;
                 (layerArray[layerIndex].arr[a][b]).selected = false;
                 (layerArray[layerIndex].arr[a][b]).button = false;
                 (layerArray[layerIndex].arr[a][b]).buttonColor = null;
@@ -499,7 +498,6 @@ $(document).ready(function () {
             (screenArray[a][b]).right = null;
             (screenArray[a][b]).up = null;
             (screenArray[a][b]).down = null;
-            (screenArray[a][b]).seed = (Math.random())*1.5;
             (screenArray[a][b]).selected = false;
             (screenArray[a][b]).button = false;
             (screenArray[a][b]).buttonColor = null;
