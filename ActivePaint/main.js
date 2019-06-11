@@ -39,6 +39,7 @@ function setVisualArray(){
             for (var a = 0; a < 24; a++) {
                 for (var b = 0; b < 24; b++) {
                     if(layerArray[layerIndex].arr[a][b].color!=="none"){
+                        screenArray[a][b].value = true;
                         screenArray[a][b].color=layerArray[layerIndex].arr[a][b].color;
                     }
                 }
@@ -75,20 +76,15 @@ function setButton(y,x, color){
     }
 }
 function paintBucket (node, color, changeVal) {
-    console.log(64630000);
 
     node.selected = true;
 
     if ((color !== (node.color)) && (!node.locked)) {
-        console.log(10000);
         var left = (node.left != null) && (node.left.color === (node.color)) && (!node.left.selected);
         var right = (node.right != null) && (node.right.color === (node.color)) && (!node.right.selected);
         var up = (node.up != null) && (node.up.color === (node.color)) && (!node.up.selected);
         var down = (node.down != null) && (node.down.color === (node.color)) && (!node.down.selected);
-        console.log(left);
-        console.log(right);
-        console.log(down);
-        console.log(up);
+
         node.value = changeVal;
         node.color = color;
         if (left) {
@@ -195,7 +191,6 @@ function updateScreenArray(arr) {
                 }
                 if (layerArray[currentLayer].arr[i][p].transferTool !== null){
                     tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
-                    console.log(tool);
                 }
 
             }
@@ -296,6 +291,8 @@ $(document).ready(function () {
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
         layerArray[layerIndex] = {};
         layerArray[layerIndex].arr = new Array (24);
+        layerArray[layerIndex].visible = true;
+
         for (var i = 0; i < 24; i++) {
             layerArray[layerIndex].arr[i] = new Array(24);
         }
