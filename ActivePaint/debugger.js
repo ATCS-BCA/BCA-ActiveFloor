@@ -304,7 +304,7 @@ function updateScreenArray(arr) {
                         layerArray[currentLayer].arr[i][p].color = "none";
 
                     }
-                    if(brushcolor!=="eraser"){
+                    else if (!layerArray[currentLayer].value){
                         console.log("writing");
                         (layerArray[currentLayer].arr[i][p]).value = true;
                         (layerArray[currentLayer].arr[i][p]).color = brushcolor;
