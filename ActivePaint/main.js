@@ -11,7 +11,7 @@ var layerArray = [];
 var charSearch = '*';
 var charDivide = ',';
 var canvas, context2D;
-var refreshTime = 40;       // Run the loop every 17 milliseconds
+var refreshTime = 20;       // Run the loop every 17 milliseconds
 var msCounter = 0;
 var secondCounter = 0;
 var tool = "brush";
@@ -142,7 +142,7 @@ function setVisualArray(){
         if(layerArray[layerIndex].visible){
             for (var a = 0; a < 24; a++) {
                 for (var b = 0; b < 24; b++) {
-                    if(layerArray[layerIndex].arr[a][b].color!=="none"){
+                    if(layerArray[layerIndex].arr[a][b].value){
                         screenArray[a][b].value = true;
                         screenArray[a][b].color=layerArray[layerIndex].arr[a][b].color;
                     }
@@ -271,19 +271,48 @@ function updateScreenArray(arr) {
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                if(!occupied && layerArray[currentLayer].arr[i][p].locked){
-                    layerArray[currentLayer].arr[i][p].hold = true;
-                    occupied = true;
-                }
-                else if(!layerArray[currentLayer].arr[i][p].locked && tool === "brush") {
-                    (layerArray[currentLayer].arr[i][p]).value = true;
-                    (layerArray[currentLayer].arr[i][p]).color = brushcolor;
-                    if (brushcolor === "eraser") {
-                        layerArray[currentLayer].arr[i][p].value = false;
-                        layerArray[currentLayer].arr[i][p].color = "none";
+                //                if(layerArray[currentLayer].arr[i][p].locked && !layerArray[currentLayer].arr[i][p].hold){
+                if(true){
+                    if(layerArray[currentLayer].arr[i][p].button){
+                        brushcolor=layerArray[currentLayer].arr[i][p].buttonColor;
+                        console.log(brushcolor);
+                    }
+                    else if (layerArray[currentLayer].arr[i][p].transferTool !== null){
+                        tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
+                    }
+                    else if (layerArray[currentLayer].arr[i][p].arrow>0){
+                        moveUp();
+                    }
+                    else if (layerArray[currentLayer].arr[i][p].arrow<0){
+                        moveDown();
+                    }
+                    else if (layerArray[currentLayer].arr[i][p].addLayer > 0){
+                        addLayer();
+                    }
+                    else if (layerArray[currentLayer].arr[i][p].addLayer < 0){
+                        deleteLayer();
+                    }
+                    else if (layerArray[currentLayer].arr[i][p].hide){
+                        layerArray[currentLayer].visible = !layerArray[currentLayer].visible;
                     }
                 }
-                if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
+                if(!(layerArray[currentLayer].arr[i][p].locked) && tool === "brush") {
+
+
+                    if (brushcolor === "eraser") {
+                        layerArray[currentLayer].arr[i][p].value = false;
+                        console.log("trying to erase");
+                        layerArray[currentLayer].arr[i][p].color = "none";
+
+                    }
+                    if(brushcolor!=="eraser"){
+                        console.log("writing");
+                        (layerArray[currentLayer].arr[i][p]).value = true;
+                        (layerArray[currentLayer].arr[i][p]).color = brushcolor;
+                    }
+                    console.log(layerArray[currentLayer].arr[i][p].value);
+                }
+                else if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
 
 
                     if(brushcolor==="eraser"){
@@ -296,30 +325,8 @@ function updateScreenArray(arr) {
                 }
 
             }
-            else if (layerArray[currentLayer].arr[i][p].locked.hold){
-                if(layerArray[currentLayer].arr[i][p].button){
-                    brushcolor=layerArray[currentLayer].arr[i][p].buttonColor;
-                }
-                else if (layerArray[currentLayer].arr[i][p].transferTool !== null){
-                    tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
-                }
-                else if (layerArray[currentLayer].arr[i][p].arrow>0){
-                    moveUp();
-                }
-                else if (layerArray[currentLayer].arr[i][p].arrow<0){
-                    moveDown();
-                }
-                else if (layerArray[currentLayer][i][p].addLayer > 0){
-                    addLayer();
-                }
-                else if (layerArray[currentLayer][i][p].addLayer < 0){
-                    deleteLayer();
-                }
-                else if (layerArray[currentLayer][i][p].hide){
-                    layerArray[currentLayer].visible = !layerArray[currentLayer].visible;
-                }
-                screenArray[i][p].hold = false;
-                occupied = false;
+            else if (layerArray[currentLayer].arr[i][p].hold){
+                layerArray.arr[i][p].hold = false;
             }
         }
     }
