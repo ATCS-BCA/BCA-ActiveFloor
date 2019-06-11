@@ -21,8 +21,8 @@ var blueLocation = 6;
 var purpleLocation = 9;
 var rainbowLocation = 12;
 var eraserLocation = 15;
-brushCoordinates = [23, 0];
-bucketCoordinates = [23, 22];
+brushCoordinates = [2, 22];
+bucketCoordinates = [5, 22];
 brushcolor = 'red';
 var occupied = false;
 var currentLayer = 0;
@@ -62,8 +62,9 @@ function addLayer() {
             (layerArray[layerCount].arr[a][b]).buttonAppearence = null;
             (layerArray[layerCount].arr[a][b]).transferTool = null;
             (layerArray[layerCount].arr[a][b]).hold = false;
-            (layerArray[layerCount].arr[a][b]).arrow = null;
-            (layerArray[layerCount].arr[a][b]).move = null;
+            (layerArray[layerCount].arr[a][b]).arrow = 0;
+            (layerArray[layerCount].arr[a][b]).addLayer = null;
+            (layerArray[layerCount].arr[a][b]).hide = false;
         }
     }
     for (var a = 0; a < 24; a++) {
@@ -120,7 +121,9 @@ function deleteLayer() {
                 (layerArray[0].arr[a][b]).buttonAppearence = null;
                 (layerArray[0].arr[a][b]).transferTool = null;
                 (layerArray[0].arr[a][b]).hold = false;
-                (layerArray[0].arr[a][b]).arrow = null;
+                (layerArray[layerCount].arr[a][b]).arrow = 0;
+                (layerArray[layerCount].arr[a][b]).addLayer = null;
+                (layerArray[layerCount].arr[a][b]).hide = false;
             }
         }
         currentLayer=0;
@@ -154,10 +157,10 @@ function setSingleTransferTool(x, y, type){
     }
 }
 function makeTransferTool(x,y, type) {
-    setSingleTransferTool(x - 1, y, type);
-    setSingleTransferTool(x - 1, y + 1, type);
     setSingleTransferTool(x, y, type);
     setSingleTransferTool(x, y + 1, type);
+    setSingleTransferTool(x+1, y, type);
+    setSingleTransferTool(x+1, y + 1, type);
 }
 
 function makeButton(y, color){
@@ -268,7 +271,7 @@ function updateScreenArray(arr) {
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                if(!occupied && !layerArray[currentLayer].arr[i][p].locked){
+                if(!occupied && layerArray[currentLayer].arr[i][p].locked){
                     layerArray[currentLayer].arr[i][p].hold = true;
                     occupied = true;
                 }
@@ -297,8 +300,23 @@ function updateScreenArray(arr) {
                 if(layerArray[currentLayer].arr[i][p].button){
                     brushcolor=layerArray[currentLayer].arr[i][p].buttonColor;
                 }
-                if (layerArray[currentLayer].arr[i][p].transferTool !== null){
+                else if (layerArray[currentLayer].arr[i][p].transferTool !== null){
                     tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
+                }
+                else if (layerArray[currentLayer].arr[i][p].arrow>0){
+                    moveUp();
+                }
+                else if (layerArray[currentLayer].arr[i][p].arrow<0){
+                    moveDown();
+                }
+                else if (layerArray[currentLayer][i][p].addLayer > 0){
+                    addLayer();
+                }
+                else if (layerArray[currentLayer][i][p].addLayer < 0){
+                    deleteLayer();
+                }
+                else if (layerArray[currentLayer][i][p].hide){
+                    layerArray[currentLayer].visible = !layerArray[currentLayer].visible;
                 }
                 screenArray[i][p].hold = false;
                 occupied = false;
