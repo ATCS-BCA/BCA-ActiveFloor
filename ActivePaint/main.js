@@ -268,7 +268,11 @@ function updateScreenArray(arr) {
 //             console.log("i=" + i, ";p=" + p);
             srchStr = tempRow.substring(p, p + 1);
             if (srchStr === charSearch) {
-                if(!layerArray[currentLayer].arr[i][p].locked && tool === "brush") {
+                if(!occupied && !layerArray[currentLayer].arr[i][p].locked){
+                    layerArray[currentLayer].arr[i][p].hold = true;
+                    occupied = true;
+                }
+                else if(!layerArray[currentLayer].arr[i][p].locked && tool === "brush") {
                     (layerArray[currentLayer].arr[i][p]).value = true;
                     (layerArray[currentLayer].arr[i][p]).color = brushcolor;
                     if (brushcolor === "eraser") {
@@ -287,13 +291,17 @@ function updateScreenArray(arr) {
                     }
                     clearSelection();
                 }
+
+            }
+            else if (layerArray[currentLayer].arr[i][p].locked.hold){
                 if(layerArray[currentLayer].arr[i][p].button){
                     brushcolor=layerArray[currentLayer].arr[i][p].buttonColor;
                 }
                 if (layerArray[currentLayer].arr[i][p].transferTool !== null){
                     tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
                 }
-
+                screenArray[i][p].hold = false;
+                occupied = false;
             }
         }
     }
