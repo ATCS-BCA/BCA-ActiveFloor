@@ -5,7 +5,7 @@ var myInterval;
 toolCounterY=0;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
-var layerCount = 3;
+var layerCount = 1;
 var screenArray = [];
 var layerArray = [];
 var charSearch = '*';
@@ -275,7 +275,6 @@ function updateScreenArray(arr) {
                 if(true){
                     if(layerArray[currentLayer].arr[i][p].button){
                         brushcolor=layerArray[currentLayer].arr[i][p].buttonColor;
-                        console.log(brushcolor);
                     }
                     else if (layerArray[currentLayer].arr[i][p].transferTool !== null){
                         tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
@@ -310,7 +309,8 @@ function updateScreenArray(arr) {
                         (layerArray[currentLayer].arr[i][p]).value = true;
                         (layerArray[currentLayer].arr[i][p]).color = brushcolor;
                     }
-                    console.log(layerArray[currentLayer].arr[i][p].value);
+                    setVisualArray();
+                    console.log((screenArray[i][p].value)===(layerArray[currentLayer].arr[i][p].value));
                 }
                 else if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
 
@@ -420,7 +420,7 @@ $(document).ready(function () {
     // Default screen array to 24x24 and set to false
 //    for (i = 0; i < 24; i++)
 //        screenArray.push([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
-    layerCount = 3;
+    layerCount = 1;
     layerArray = new Array(layerCount);
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
         layerArray[layerIndex] = {};
