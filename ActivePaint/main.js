@@ -26,6 +26,18 @@ bucketCoordinates = [5, 22];
 brushcolor = 'red';
 var occupied = false;
 var currentLayer = 0;
+function createArrow(node, direction){
+    node.arrow = direction;
+    node.down.arrow = direction;
+    node.right.arrow = direction;
+    node.down.right.arrow = direction;
+}
+function createAddSub(node, val){
+    node.addLayer = val;
+    node.down.addLayer = val;
+    node.right.addLayer = val;
+    node.down.right.addLayer = val;
+}
 function moveUp() {
     if(currentLayer<(layerCount-1)){
         currentLayer++;
@@ -63,8 +75,9 @@ function addLayer() {
             (layerArray[layerCount].arr[a][b]).transferTool = null;
             (layerArray[layerCount].arr[a][b]).hold = false;
             (layerArray[layerCount].arr[a][b]).arrow = 0;
-            (layerArray[layerCount].arr[a][b]).addLayer = null;
+            (layerArray[layerCount].arr[a][b]).addLayer = 0;
             (layerArray[layerCount].arr[a][b]).hide = false;
+
         }
     }
     for (var a = 0; a < 24; a++) {
@@ -83,6 +96,14 @@ function addLayer() {
             }
         }
     }
+
+    createArrow(layerArray[layerCount].arr[8][22], +1);
+    createArrow(layerArray[layerCount].arr[11][22], -1);
+    createAddSub(layerArray[layerCount].arr[17][22], +1);
+    createAddSub(layerArray[layerCount].arr[20][22], -1);
+
+    currentLayer=layerCount;
+    layerCount++;
     makeButton(redLocation, "red");
     makeButton(greenLocation, "green");
     makeButton(blueLocation, "blue");
@@ -92,14 +113,13 @@ function addLayer() {
     makeTransferTool(bucketCoordinates[0], bucketCoordinates[1], "bucket");
     makeTransferTool(brushCoordinates[0], brushCoordinates[1], "brush");
 
-    currentLayer=layerCount;
-    layerCount++;
 }
 
 function deleteLayer() {
     if(layerCount!==1) {
         layerArray.splice(currentLayer, 1);
         currentLayer--;
+        layerCount--;
     }
     else{
         for (var a = 0; a < 24; a++) {
@@ -121,13 +141,12 @@ function deleteLayer() {
                 (layerArray[0].arr[a][b]).transferTool = null;
                 (layerArray[0].arr[a][b]).hold = false;
                 (layerArray[layerCount].arr[a][b]).arrow = 0;
-                (layerArray[layerCount].arr[a][b]).addLayer = null;
+                (layerArray[layerCount].arr[a][b]).addLayer = 0;
                 (layerArray[layerCount].arr[a][b]).hide = false;
             }
         }
         currentLayer=0;
     }
-    layerCount--;
 }
 
 function setVisualArray(){
@@ -452,6 +471,10 @@ $(document).ready(function () {
                 (layerArray[layerIndex].arr[a][b]).transferTool = null;
             }
         }
+        createArrow(layerArray[layerIndex].arr[8][22], +1);
+        createArrow(layerArray[layerIndex].arr[11][22], -1);
+        createAddSub(layerArray[layerIndex].arr[17][22], +1);
+        createAddSub(layerArray[layerIndex].arr[20][22], -1);
     }
     makeButton(redLocation, "red");
     makeButton(greenLocation, "green");
