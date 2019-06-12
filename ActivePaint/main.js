@@ -44,7 +44,7 @@ function moveDown() {
     }
 }
 function addLayer() {
-    layerArray.add({});
+    layerArray.push({});
     layerArray[layerCount].visible = true;
     layerArray[layerCount].arr = new Array(24);
     for (var i = 0; i < 24; i++) {
@@ -77,16 +77,16 @@ function addLayer() {
     for (var a = 0; a < 24; a++) {
         for (var b = 0; b < 24; b++) {
             if (b > 0) {
-                (layerArray[layerCount].arr[a][b]).left = (layerArray[layerIndex].arr[a][b - 1]);
+                (layerArray[layerCount].arr[a][b]).left = (layerArray[layerCount].arr[a][b - 1]);
             }
             if (b < 23) {
-                (layerArray[layerCount].arr[a][b]).right = (layerArray[layerIndex].arr[a][b + 1]);
+                (layerArray[layerCount].arr[a][b]).right = (layerArray[layerCount].arr[a][b + 1]);
             }
             if (a < 23) {
-                (layerArray[layerCount].arr[a][b]).down = (layerArray[layerIndex].arr[a + 1][b]);
+                (layerArray[layerCount].arr[a][b]).down = (layerArray[layerCount].arr[a + 1][b]);
             }
             if (a > 0) {
-                (layerArray[layerCount].arr[a][b]).up = (layerArray[layerIndex].arr[a - 1][b]);
+                (layerArray[layerCount].arr[a][b]).up = (layerArray[layerCount].arr[a - 1][b]);
             }
         }
     }
@@ -113,7 +113,7 @@ function addLayer() {
 
 
 
-    currentLayer=layerCount;
+    currentLayer=layerCount-1;
     layerCount++;
     makeButton(redLocation, "red");
     makeButton(greenLocation, "green");
@@ -345,6 +345,7 @@ function updateScreenArray(arr) {
                     }
                     else if (layerArray[currentLayer].arr[i][p].addLayer > 0){
                         addLayer();
+                        console.log(currentLayer);
                     }
                     else if (layerArray[currentLayer].arr[i][p].addLayer < 0){
                         deleteLayer();
@@ -359,17 +360,14 @@ function updateScreenArray(arr) {
 
                     if (brushcolor === "eraser") {
                         layerArray[currentLayer].arr[i][p].value = false;
-                        console.log("trying to erase");
                         layerArray[currentLayer].arr[i][p].color = "none";
 
                     }
                     else if (!layerArray[currentLayer].arr[i][p].value){
-                        console.log("writing");
                         (layerArray[currentLayer].arr[i][p]).value = true;
                         (layerArray[currentLayer].arr[i][p]).color = brushcolor;
                     }
                     setVisualArray();
-                    console.log((screenArray[i][p].value)===(layerArray[currentLayer].arr[i][p].value));
                 }
                 else if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
 
