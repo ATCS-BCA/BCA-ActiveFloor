@@ -26,6 +26,11 @@ bucketCoordinates = [5, 22];
 brushcolor = 'red';
 var occupied = false;
 var currentLayer = 0;
+var img=new Array(4);
+for (var i=0;i<1;i++){
+    img[i] = document.createElement('img');
+    img[i].src='toolbar'+'.png';
+}
 function moveUp() {
     if(currentLayer<(layerCount-1)){
         currentLayer++;
@@ -332,6 +337,8 @@ function updateScreenArray(arr) {
     }
 }
 function drawScreenArray() {
+    context2D.drawImage(img[0], 0, 0);
+
     for (var i = 0; i < layerArray[currentLayer].arr.length; i += 1) {
 
         var tempRow = layerArray[currentLayer].arr[i];
@@ -411,12 +418,18 @@ function loop() {
         /* Redraw the screen based upon the data in the array. */
         updateScreenArray(dataHolderArray);
         drawScreenArray();
-        drawToolBar();
     });
 }
 
 $(document).ready(function () {
     'use strict';
+
+    var img=new Array(4);
+
+    for (var i=0;i<1;i++){
+        img[i] = document.createElement('img');
+        img[i].src='toolbar'+'.png';
+    }
 
     // Default screen array to 24x24 and set to false
 //    for (i = 0; i < 24; i++)
@@ -1522,8 +1535,6 @@ function drawToolBar() {
     drawObj('square', 191, 189, 1, "white");
     drawObj('square', 191, 190, 1, "white");
     drawObj('square', 191, 191, 1, "white");
-
-}
 
     drawObj('square', 176, 73, "white");
     drawObj('square', 176, 74, "white");
