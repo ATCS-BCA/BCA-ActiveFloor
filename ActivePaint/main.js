@@ -294,8 +294,11 @@ function updateScreenArray(arr) {
                     }
                     else if (layerArray[currentLayer].arr[i][p].transferTool !== null){
                         tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
-                        console.log(tool);
                     }
+                    /*
+                    else if (layerArray[currentLayer].arr[i][p].export){
+                        console.log(canvas.toDataURL("image/png"));
+                    }*/
                     /*
                     else if (layerArray[currentLayer].arr[i][p].arrow>0){
                         moveUp();
@@ -321,17 +324,14 @@ function updateScreenArray(arr) {
 
                     if (brushcolor === "eraser") {
                         layerArray[currentLayer].arr[i][p].value = false;
-                        console.log("trying to erase");
                         layerArray[currentLayer].arr[i][p].color = "none";
 
                     }
                     else if (!layerArray[currentLayer].arr[i][p].value){
-                        console.log("writing");
                         (layerArray[currentLayer].arr[i][p]).value = true;
                         (layerArray[currentLayer].arr[i][p]).color = brushcolor;
                     }
                     setVisualArray();
-                    console.log((screenArray[i][p].value)===(layerArray[currentLayer].arr[i][p].value));
                 }
                 else if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
 
@@ -482,9 +482,16 @@ $(document).ready(function () {
                 (layerArray[layerIndex].arr[a][b]).locked = a < 2 || a > 21 || b < 2 || b > 21;
                 (layerArray[layerIndex].arr[a][b]).buttonAppearence = null;
                 (layerArray[layerIndex].arr[a][b]).transferTool = null;
+                (layerArray[layerIndex].arr[a][b]).export = false;
             }
         }
     }
+    (layerArray[0].arr[23][23]).export = true;
+    (layerArray[0].arr[22][22]).export = true;
+    (layerArray[0].arr[22][23]).export = true;
+    (layerArray[0].arr[23][22]).export = true;
+
+
     makeButton(redLocation, "red");
     makeButton(greenLocation, "green");
     makeButton(blueLocation, "blue");
