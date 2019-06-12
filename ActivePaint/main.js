@@ -329,7 +329,9 @@ function updateScreenArray(arr) {
                     }
                     else if (layerArray[currentLayer].arr[i][p].transferTool !== null){
                         tool = layerArray[currentLayer].arr[i][p].transferTool.toString();
+                        console.log(tool);
                     }
+                    /*
                     else if (layerArray[currentLayer].arr[i][p].arrow>0){
                         moveUp();
                     }
@@ -350,7 +352,9 @@ function updateScreenArray(arr) {
                     else if (layerArray[currentLayer].arr[i][p].hide){
                         layerArray[currentLayer].visible = !layerArray[currentLayer].visible;
                     }
+                    */
                     occupied = true;
+
                 }
                 if(!(layerArray[currentLayer].arr[i][p].locked) && tool === "brush") {
 
