@@ -90,6 +90,28 @@ function addLayer() {
             }
         }
     }
+    layerArray[layerCount].arr[8][23].arrow=1;
+    layerArray[layerCount].arr[8][23].right.arrow=1;
+    layerArray[layerCount].arr[8][23].down.arrow=1;
+    layerArray[layerCount].arr[8][23].right.down.arrow=1;
+
+    layerArray[layerCount].arr[11][23].arrow=-1;
+    layerArray[layerCount].arr[11][23].right.arrow=-1;
+    layerArray[layerCount].arr[11][23].down.arrow=1;
+    layerArray[layerCount].arr[11][23].right.down.arrow=-1;
+
+    layerArray[layerCount].arr[17][23].addLayer=1;
+    layerArray[layerCount].arr[17][23].right.addLayer=1;
+    layerArray[layerCount].arr[17][23].down.addLayer=1;
+    layerArray[layerCount].arr[17][23].right.down.addLayer=1;
+
+    layerArray[layerCount].arr[20][23].addLayer=-1;
+    layerArray[layerCount].arr[20][23].right.addLayer=-1;
+    layerArray[layerCount].arr[20][23].down.addLayer=-1;
+    layerArray[layerCount].arr[20][23].right.down.addLayer=-1;
+
+
+
 
     currentLayer=layerCount;
     layerCount++;
@@ -136,6 +158,25 @@ function deleteLayer() {
             }
         }
         currentLayer=0;
+        layerArray[currentLayer].arr[8][23].arrow=1;
+        layerArray[currentLayer].arr[8][23].right.arrow=1;
+        layerArray[currentLayer].arr[8][23].down.arrow=1;
+        layerArray[currentLayer].arr[8][23].right.down.arrow=1;
+
+        layerArray[currentLayer].arr[11][23].arrow=-1;
+        layerArray[currentLayer].arr[11][23].right.arrow=-1;
+        layerArray[currentLayer].arr[11][23].down.arrow=1;
+        layerArray[currentLayer].arr[11][23].right.down.arrow=-1;
+
+        layerArray[currentLayer].arr[17][23].addLayer=1;
+        layerArray[currentLayer].arr[17][23].right.addLayer=1;
+        layerArray[currentLayer].arr[17][23].down.addLayer=1;
+        layerArray[currentLayer].arr[17][23].right.down.addLayer=1;
+
+        layerArray[layerCount].arr[20][23].addLayer=-1;
+        layerArray[layerCount].arr[20][23].right.addLayer=-1;
+        layerArray[layerCount].arr[20][23].down.addLayer=-1;
+        layerArray[layerCount].arr[20][23].right.down.addLayer=-1;
     }
     makeButton(redLocation, "red");
     makeButton(greenLocation, "green");
@@ -510,6 +551,25 @@ $(document).ready(function () {
 
             }
         }
+        layerArray[layerIndex].arr[8][23].arrow=1;
+        layerArray[layerIndex].arr[8][23].right.arrow=1;
+        layerArray[layerIndex].arr[8][23].down.arrow=1;
+        layerArray[layerIndex].arr[8][23].right.down.arrow=1;
+
+        layerArray[layerIndex].arr[11][23].arrow=-1;
+        layerArray[layerIndex].arr[11][23].right.arrow=-1;
+        layerArray[layerIndex].arr[11][23].down.arrow=1;
+        layerArray[layerIndex].arr[11][23].right.down.arrow=-1;
+
+        layerArray[layerIndex].arr[17][23].addLayer=1;
+        layerArray[layerIndex].arr[17][23].right.addLayer=1;
+        layerArray[layerIndex].arr[17][23].down.addLayer=1;
+        layerArray[layerIndex].arr[17][23].right.down.addLayer=1;
+
+        layerArray[layerIndex].arr[20][23].addLayer=-1;
+        layerArray[layerIndex].arr[20][23].right.addLayer=-1;
+        layerArray[layerIndex].arr[20][23].down.addLayer=-1;
+        layerArray[layerIndex].arr[20][23].right.down.addLayer=-1;
     }
     screenArray = new Array(24);
     for (var i = 0; i < 24; i++) {
