@@ -299,6 +299,8 @@ function updateScreenArray(arr) {
                     else if (layerArray[currentLayer].arr[i][p].export){
                         console.log(canvas.toDataURL("image/png"));
                     }*/
+
+
                     /*
                     else if (layerArray[currentLayer].arr[i][p].arrow>0){
                         moveUp();
