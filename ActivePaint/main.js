@@ -70,7 +70,7 @@ function addLayer() {
             (layerArray[layerCount].arr[a][b]).transferTool = null;
             (layerArray[layerCount].arr[a][b]).hold = false;
             (layerArray[layerCount].arr[a][b]).arrow = 0;
-            (layerArray[layerCount].arr[a][b]).addLayer = null;
+            (layerArray[layerCount].arr[a][b]).addLayer = 0;
             (layerArray[layerCount].arr[a][b]).hide = false;
         }
     }
@@ -108,6 +108,7 @@ function deleteLayer() {
     if(layerCount!==1) {
         layerArray.splice(currentLayer, 1);
         currentLayer--;
+        layerCount--;
     }
     else{
         for (var a = 0; a < 24; a++) {
@@ -130,13 +131,20 @@ function deleteLayer() {
                 (layerArray[0].arr[a][b]).transferTool = null;
                 (layerArray[0].arr[a][b]).hold = false;
                 (layerArray[layerCount].arr[a][b]).arrow = 0;
-                (layerArray[layerCount].arr[a][b]).addLayer = null;
+                (layerArray[layerCount].arr[a][b]).addLayer = 0;
                 (layerArray[layerCount].arr[a][b]).hide = false;
             }
         }
         currentLayer=0;
     }
-    layerCount--;
+    makeButton(redLocation, "red");
+    makeButton(greenLocation, "green");
+    makeButton(blueLocation, "blue");
+    makeButton(purpleLocation, "purple");
+    makeButton(rainbowLocation, "rainbow");
+    makeButton(eraserLocation, "eraser");
+    makeTransferTool(bucketCoordinates[0], bucketCoordinates[1], "bucket");
+    makeTransferTool(brushCoordinates[0], brushCoordinates[1], "brush");
 }
 
 function setVisualArray(){
