@@ -398,8 +398,7 @@ function drawScreenArray() {
                     drawObj('square', tempX, tempY, 8, (layerArray[currentLayer].arr[i][p]).buttonAppearence);
                 }
             }
-            drawToolBar();
-        }
+            context2D.drawImage(img[0], 0, 0);        }
     }
     msCounter += 20;
     secondCounter = msCounter/1000;
