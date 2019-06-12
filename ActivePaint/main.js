@@ -1,4 +1,3 @@
-
 //Cole Knie
 /*jslint browser: true*/
 /*global $, jQuery*/
@@ -44,7 +43,7 @@ function moveDown() {
     }
 }
 function addLayer() {
-    layerArray.push({});
+    layerArray.add({});
     layerArray[layerCount].visible = true;
     layerArray[layerCount].arr = new Array(24);
     for (var i = 0; i < 24; i++) {
@@ -77,45 +76,22 @@ function addLayer() {
     for (var a = 0; a < 24; a++) {
         for (var b = 0; b < 24; b++) {
             if (b > 0) {
-                (layerArray[layerCount].arr[a][b]).left = (layerArray[layerCount].arr[a][b - 1]);
+                (layerArray[layerCount].arr[a][b]).left = (layerArray[layerIndex].arr[a][b - 1]);
             }
             if (b < 23) {
-                (layerArray[layerCount].arr[a][b]).right = (layerArray[layerCount].arr[a][b + 1]);
+                (layerArray[layerCount].arr[a][b]).right = (layerArray[layerIndex].arr[a][b + 1]);
             }
             if (a < 23) {
-                (layerArray[layerCount].arr[a][b]).down = (layerArray[layerCount].arr[a + 1][b]);
+                (layerArray[layerCount].arr[a][b]).down = (layerArray[layerIndex].arr[a + 1][b]);
             }
             if (a > 0) {
-                (layerArray[layerCount].arr[a][b]).up = (layerArray[layerCount].arr[a - 1][b]);
+                (layerArray[layerCount].arr[a][b]).up = (layerArray[layerIndex].arr[a - 1][b]);
             }
         }
     }
-    layerArray[layerCount].arr[8][22].arrow=1;
-    layerArray[layerCount].arr[8][22].right.arrow=1;
-    layerArray[layerCount].arr[8][22].down.arrow=1;
-    layerArray[layerCount].arr[8][22].right.down.arrow=1;
 
-    layerArray[layerCount].arr[11][22].arrow=-1;
-    layerArray[layerCount].arr[11][22].right.arrow=-1;
-    layerArray[layerCount].arr[11][22].down.arrow=1;
-    layerArray[layerCount].arr[11][22].right.down.arrow=-1;
-
-    layerArray[layerCount].arr[17][22].addLayer=1;
-    layerArray[layerCount].arr[17][22].right.addLayer=1;
-    layerArray[layerCount].arr[17][22].down.addLayer=1;
-    layerArray[layerCount].arr[17][22].right.down.addLayer=1;
-
-    layerArray[layerCount].arr[20][22].addLayer=-1;
-    layerArray[layerCount].arr[20][22].right.addLayer=-1;
-    layerArray[layerCount].arr[20][22].down.addLayer=-1;
-    layerArray[layerCount].arr[20][22].right.down.addLayer=-1;
-
-
-
-
+    currentLayer=layerCount;
     layerCount++;
-    currentLayer=layerCount-1;
-
     makeButton(redLocation, "red");
     makeButton(greenLocation, "green");
     makeButton(blueLocation, "blue");
@@ -128,57 +104,46 @@ function addLayer() {
 }
 
 function deleteLayer() {
-    if(layerCount>1) {
+    if(layerCount!==1) {
         layerArray.splice(currentLayer, 1);
-        console.log(layerArray.length);
         currentLayer--;
-        if(currentLayer<0){
-            currentLayer=0;
-        }
         layerCount--;
     }
     else{
-        layerCount=1;
         for (var a = 0; a < 24; a++) {
             for (var b = 0; b < 24; b++) {
+                layerArray[0].arr[a][b] = {};
                 (layerArray[0].arr[a][b]).value = false;
+                (layerArray[0].arr[a][b]).row = a;
+                (layerArray[0].arr[a][b]).column = b;
                 (layerArray[0].arr[a][b]).color = "none";
+                (layerArray[0].arr[a][b]).left = null;
+                (layerArray[0].arr[a][b]).right = null;
+                (layerArray[0].arr[a][b]).up = null;
+                (layerArray[0].arr[a][b]).down = null;
+                (layerArray[0].arr[a][b]).seed = (Math.random()) * 1.5;
+                (layerArray[0].arr[a][b]).selected = false;
+                (layerArray[0].arr[a][b]).button = false;
+                (layerArray[0].arr[a][b]).buttonColor = null;
+                (layerArray[0].arr[a][b]).locked = a < 2 || a > 21 || b < 2 || b > 21;
+                (layerArray[0].arr[a][b]).buttonAppearence = null;
+                (layerArray[0].arr[a][b]).transferTool = null;
+                (layerArray[0].arr[a][b]).hold = false;
+                (layerArray[layerCount].arr[a][b]).arrow = 0;
+                (layerArray[layerCount].arr[a][b]).addLayer = 0;
+                (layerArray[layerCount].arr[a][b]).hide = false;
             }
         }
-        makeTransferTool(bucketCoordinates[0], bucketCoordinates[1], "bucket");
-        makeTransferTool(brushCoordinates[0], brushCoordinates[1], "brush");
-
         currentLayer=0;
-
-        layerArray[currentLayer].arr[8][22].arrow=1;
-        layerArray[currentLayer].arr[8][22].right.arrow=1;
-        layerArray[currentLayer].arr[8][22].down.arrow=1;
-        layerArray[currentLayer].arr[8][22].right.down.arrow=1;
-
-        layerArray[currentLayer].arr[11][22].arrow=-1;
-        layerArray[currentLayer].arr[11][22].right.arrow=-1;
-        layerArray[currentLayer].arr[11][22].down.arrow=1;
-        layerArray[currentLayer].arr[11][22].right.down.arrow=-1;
-
-        layerArray[currentLayer].arr[17][22].addLayer=1;
-        layerArray[currentLayer].arr[17][22].right.addLayer=1;
-        layerArray[currentLayer].arr[17][22].down.addLayer=1;
-        layerArray[currentLayer].arr[17][22].right.down.addLayer=1;
-
-        layerArray[currentLayer].arr[20][22].addLayer=-1;
-        layerArray[currentLayer].arr[20][22].right.addLayer=-1;
-        layerArray[currentLayer].arr[20][22].down.addLayer=-1;
-        layerArray[currentLayer].arr[20][22].right.down.addLayer=-1;
-        makeButton(redLocation, "red");
-        makeButton(greenLocation, "green");
-        makeButton(blueLocation, "blue");
-        makeButton(purpleLocation, "purple");
-        makeButton(rainbowLocation, "rainbow");
-        makeButton(eraserLocation, "eraser");
-        makeTransferTool(bucketCoordinates[0], bucketCoordinates[1], "bucket");
-        makeTransferTool(brushCoordinates[0], brushCoordinates[1], "brush");
     }
-
+    makeButton(redLocation, "red");
+    makeButton(greenLocation, "green");
+    makeButton(blueLocation, "blue");
+    makeButton(purpleLocation, "purple");
+    makeButton(rainbowLocation, "rainbow");
+    makeButton(eraserLocation, "eraser");
+    makeTransferTool(bucketCoordinates[0], bucketCoordinates[1], "bucket");
+    makeTransferTool(brushCoordinates[0], brushCoordinates[1], "brush");
 }
 
 function setVisualArray(){
@@ -340,14 +305,9 @@ function updateScreenArray(arr) {
                     }
                     else if (layerArray[currentLayer].arr[i][p].addLayer > 0){
                         addLayer();
-                        console.log(layerCount);
-
                     }
                     else if (layerArray[currentLayer].arr[i][p].addLayer < 0){
                         deleteLayer();
-                        console.log("delete");
-
-
                     }
                     else if (layerArray[currentLayer].arr[i][p].hide){
                         layerArray[currentLayer].visible = !layerArray[currentLayer].visible;
@@ -361,14 +321,17 @@ function updateScreenArray(arr) {
 
                     if (brushcolor === "eraser") {
                         layerArray[currentLayer].arr[i][p].value = false;
+                        console.log("trying to erase");
                         layerArray[currentLayer].arr[i][p].color = "none";
 
                     }
                     else if (!layerArray[currentLayer].arr[i][p].value){
+                        console.log("writing");
                         (layerArray[currentLayer].arr[i][p]).value = true;
                         (layerArray[currentLayer].arr[i][p]).color = brushcolor;
                     }
                     setVisualArray();
+                    console.log((screenArray[i][p].value)===(layerArray[currentLayer].arr[i][p].value));
                 }
                 else if(tool === "bucket" && !layerArray[currentLayer].arr[i][p].locked) {
 
@@ -528,7 +491,8 @@ $(document).ready(function () {
     makeButton(purpleLocation, "purple");
     makeButton(rainbowLocation, "rainbow");
     makeButton(eraserLocation, "eraser");
-
+    makeTransferTool(bucketCoordinates[0], bucketCoordinates[1], "bucket");
+    makeTransferTool(brushCoordinates[0], brushCoordinates[1], "brush");
 
 
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
@@ -549,25 +513,6 @@ $(document).ready(function () {
 
             }
         }
-        layerArray[layerIndex].arr[8][22].arrow=1;
-        layerArray[layerIndex].arr[8][22].right.arrow=1;
-        layerArray[layerIndex].arr[8][22].down.arrow=1;
-        layerArray[layerIndex].arr[8][22].right.down.arrow=1;
-
-        layerArray[layerIndex].arr[11][22].arrow=-1;
-        layerArray[layerIndex].arr[11][22].right.arrow=-1;
-        layerArray[layerIndex].arr[11][22].down.arrow=1;
-        layerArray[layerIndex].arr[11][22].right.down.arrow=-1;
-
-        layerArray[layerIndex].arr[17][22].addLayer=1;
-        layerArray[layerIndex].arr[17][22].right.addLayer=1;
-        layerArray[layerIndex].arr[17][22].down.addLayer=1;
-        layerArray[layerIndex].arr[17][22].right.down.addLayer=1;
-
-        layerArray[layerIndex].arr[20][22].addLayer=-1;
-        layerArray[layerIndex].arr[20][22].right.addLayer=-1;
-        layerArray[layerIndex].arr[20][22].down.addLayer=-1;
-        layerArray[layerIndex].arr[20][22].right.down.addLayer=-1;
     }
     screenArray = new Array(24);
     for (var i = 0; i < 24; i++) {
