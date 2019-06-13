@@ -5,7 +5,7 @@ var myInterval;
 toolCounterY=0;
 var $item, ledsX, ledsY, sensorsX, sensorsY, ledPerSensorX, ledPerSensorY, xCenter, yCenter;
 var dataHolderArray = [];
-var layerCount = 2;
+var layerCount = 1;
 var screenArray = [];
 var layerArray = [];
 var charSearch = '*';
@@ -301,13 +301,13 @@ function updateScreenArray(arr) {
                     }*/
 
 
+                    /*
                     else if (layerArray[currentLayer].arr[i][p].arrow>0){
                         moveUp();
                     }
                     else if (layerArray[currentLayer].arr[i][p].arrow<0){
                         moveDown();
                     }
-                    /*
                     else if (layerArray[currentLayer].arr[i][p].addLayer > 0){
                         addLayer();
                     }
@@ -453,7 +453,7 @@ $(document).ready(function () {
     // Default screen array to 24x24 and set to false
 //    for (i = 0; i < 24; i++)
 //        screenArray.push([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
-    layerCount = 3;
+    layerCount = 1;
     layerArray = new Array(layerCount);
     for (var layerIndex = 0; layerIndex < layerCount; layerIndex++) {
         layerArray[layerIndex] = {};
@@ -485,20 +485,13 @@ $(document).ready(function () {
                 (layerArray[layerIndex].arr[a][b]).buttonAppearence = null;
                 (layerArray[layerIndex].arr[a][b]).transferTool = null;
                 (layerArray[layerIndex].arr[a][b]).export = false;
-                (layerArray[layerIndex].arr[a][b]).arrow = 0;
-
             }
         }
-        (layerArray[currentLayer].arr[8][23]).arrow = 1;
-        (layerArray[currentLayer].arr[8][23]).down.arrow = 1;
-        (layerArray[currentLayer].arr[8][23]).right.arrow = 1;
-        (layerArray[currentLayer].arr[8][23]).down.right = 1;
-        (layerArray[currentLayer].arr[11][23]).arrow = -1;
-        (layerArray[currentLayer].arr[11][23]).down.arrow = -1;
-        (layerArray[currentLayer].arr[11][23]).right.arrow = -1;
-        (layerArray[currentLayer].arr[11][23]).down.right = -1;
-
     }
+    (layerArray[0].arr[23][23]).export = true;
+    (layerArray[0].arr[22][22]).export = true;
+    (layerArray[0].arr[22][23]).export = true;
+    (layerArray[0].arr[23][22]).export = true;
 
 
     makeButton(redLocation, "red");
@@ -553,7 +546,6 @@ $(document).ready(function () {
             (screenArray[a][b]).locked = a<2 || a > 21 || b < 2|| b > 21;
             (screenArray[a][b]).buttonAppearence= null;
             (screenArray[a][b]).transferTool = null;
-
         }
     }
 
@@ -583,7 +575,7 @@ function startRefresh() {
 
 function stopRefresh() {
     'use strict';
-
     clearInterval(myInterval);
+
 
 }
