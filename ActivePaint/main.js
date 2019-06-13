@@ -583,6 +583,7 @@ function startRefresh() {
 
 function stopRefresh() {
     'use strict';
+
     clearInterval(myInterval);
 
 }
